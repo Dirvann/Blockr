@@ -9,18 +9,45 @@ public class Grid {
 	private Cell[][] grid;
 	private int width;
 	private int height;
-	
-	public Grid(int height, int width) {
+	private Robot robot;
+	// always a robot on grid
+	// robot is not a cell, but it is part of the grid
+	// example: a cell can be empty with the robot on it
+	public Grid(int height, int width, Robot robot) {
 		this.width = width;
 		this.height = height;
-		grid = new Cell[height][width];
+		this.grid = new Cell[height][width];
 		
 		for (int y = 0; y < getHeight(); y++) {
 			for (int x = 0; x < getWidth(); x++) {
 				grid[y][x] = new EmptyCell();
 			}
 		}
-
+		setRobot(robot);
+	}
+	
+	public Grid(int height, int width, Robot robot,Vector[] locations, Cell[] cells) throws Exception {
+		this(height,width,robot);
+		setCells(locations, cells);
+	}
+	
+	public void setCells(Vector[] locations,Cell[] cells) throws Exception {
+		if(locations.length != cells.length) {
+			throw new Exception();
+		} else {
+			for (int i = 0; i < locations.length; i++) {
+				setCell(locations[i],cells[i]);
+			}
+		}
+		
+	}
+	
+	public void setCell(Vector location, Cell cell) throws Exception {
+		if (isInBounds(location)) {
+			grid[location.getY()][location.getX()] = cell;
+		} else {
+			throw new Exception();
+		}
 	}
 
 	public int getWidth() {
@@ -34,17 +61,37 @@ public class Grid {
 
 	public Cell getCell(int x, int y) throws Exception {
 		// TODO create custom exception
+		if (isInBounds(x, y)) {
+			return grid[y][x];
+		} else {
+			throw new Exception();
+		}
+	}
+	
+	public boolean isInBounds(Vector location) {
+		return isInBounds(location.getX(), location.getY());
+	}
+	
+	public boolean isInBounds(int x, int y) {
 		if (x < 0 || x >= getWidth()) {
-			throw new Exception("getCell out of bounds (x greater than width)");
+			return false;
 		}
 		if (y < 0 || y >= getHeight()) {
-			throw new Exception("getCell out of bounds (y greater than height)");
+			return false;
 		}
-		return grid[y][x];
+		return true;
 	}
 	
 	public boolean isWall(int x, int y) throws Exception {
 		return (getCell(x, y) instanceof Wall);
+	}
+
+	public Robot getRobot() {
+		return robot;
+	}
+
+	public void setRobot(Robot robot) {
+		this.robot = robot;
 	}
 	
 	
