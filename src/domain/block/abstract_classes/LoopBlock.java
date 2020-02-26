@@ -1,5 +1,0 @@
-package domain.block.abstract_classes;
-
-public class LoopBlock {
-
-}

@@ -1,7 +1,7 @@
 package domain.block;
 
-import domain.block.abstract_classes.LoopBlock;
+import domain.block.abstract_classes.SingleSurroundingBlock;
 
-public class WhileBlock extends LoopBlock {
+public class WhileBlock extends SingleSurroundingBlock {
 
 }
