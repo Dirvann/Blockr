@@ -1,4 +1,4 @@
-import canvaswindow.CanvasWindow;
+import gui.CanvasWindow;
 
 
 
