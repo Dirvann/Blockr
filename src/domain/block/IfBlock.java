@@ -32,11 +32,11 @@ public class IfBlock extends SingleSurroundingBlock {
 	 */
 	public boolean evaluateCondition() throws Exception {
 		if (condition == null)
-			throw new Exception("No condition availeble!");
+			throw new Exception("No condition available!");
 		return condition.evaluate();
 	}
 
-	
+	//TODO: add is on the condition block -> get and set
 	/**
 	 * 
 	 * @param blockToAdd The block that needs to be added.
@@ -56,6 +56,7 @@ public class IfBlock extends SingleSurroundingBlock {
 
 	}
 
+	//TODO: get and set -> add on sequenceBlock && Conditionblock -> sequenceBlock
 	/**
 	 * 
 	 * @param blockToAdd The block which gets added.
