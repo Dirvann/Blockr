@@ -49,12 +49,22 @@ public class GameWorld {
 		}
 		
 	}
+	// True if the robots location is equal to the goal location
+	public boolean robotOnGoal() {
+		try {
+			Vector currentPosition =getRobot().getLocation();
+			return getGrid().getCell(currentPosition) instanceof Goal;
+			
+		}catch (Exception e) {
+			return false;
+		}
+	}
 	
 	public void robotStepForwards() {
 		try {
 			Vector positionInFront = getRobot().getPositionInFront();
 			if (getGrid().getCell(positionInFront) instanceof RobotCanEnter);
-			getRobot().stepForwards();
+				getRobot().stepForwards();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -68,4 +78,5 @@ public class GameWorld {
 	public void robotTurnRight() {
 		getRobot().turnRight();
 	}
+	
 }

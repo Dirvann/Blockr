@@ -9,7 +9,24 @@ public final class Vector {
 		this.x = x;
 		this.y = y;
 	}
-
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Vector)) {
+			return false;
+		}
+		Vector obj_ = (Vector) obj;
+		if (obj_.getX() == this.getX() &&
+			obj_.getY() == this.getY()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	public int getX() {
 		return x;
 	}
