@@ -51,7 +51,7 @@ public class SurroundingBlock extends SequenceBlock{
 	 * @return Returns the first condition block (might be of a sequence accessible
 	 *         by block.next()).
 	 */
-	public Block getConditionBlock() {
+	public ConditionBlock getConditionBlock() {
 		ConditionBlock copy = this.condition; // TODO proper copy
 		return copy;
 	}
