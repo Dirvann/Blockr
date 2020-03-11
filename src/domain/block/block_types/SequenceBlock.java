@@ -7,7 +7,7 @@ public abstract class SequenceBlock extends Block {
 	private SurroundingBlock surroundingBlock = null;
 	protected SequenceBlock next = null;
 	protected SequenceBlock previous = null;
-
+	
 	public SequenceBlock getPreviousBlock() {
 		return this.previous;
 	}
@@ -36,7 +36,12 @@ public abstract class SequenceBlock extends Block {
 	/**
 	 * 
 	 * @param block The first block (of a group of blocks) which will be added
-	 *              between this and this.getNextBlock(). 
+	 *              between this and this.getNextBlock(). The surrounding block is
+	 *              adjusted in the added blocks. If the block to be added is an
+	 *              empty surrounding block (like if and while), all sequence blocks
+	 *              after 'block' will be added to the body of this surrounding
+	 *              block. If the 'block' is a non-empty surrounding block, its will
+	 *              be added between 'block' and 'block.next'.
 	 * 
 	 */
 	public void setNextBlock(SequenceBlock block) {
@@ -44,36 +49,52 @@ public abstract class SequenceBlock extends Block {
 		block.setSurroundingBlock(this.surroundingBlock);
 		block.previous = this;
 
-		SequenceBlock last = block;
-		while (last.getNextBlock() != null) {
-			last = last.getNextBlock();
+		if (this.next == null) {
+			this.next = block;// TODO: verify that there are no loops
+		} 
+		else {
+			SequenceBlock last = block.getLastBlock();
+
+			if (block instanceof SurroundingBlock) {
+				block.setNextBlock(this.next);
+			} 
+			else {
+				last.setNextBlock(this.next);
+				this.next.previous = last;
+			}
+			this.next = block;
+
 		}
-		last.setNextBlock(getNextBlock());
-		if (getNextBlock() != null) getNextBlock().previous = last;
-		setNextBlock(block);
-			
+	}
+
+	/**
+	 * removes all the next blocks on the same level (same surrounding bloc). This
+	 * keeps the sequence of the next blocks, but they are now independant.
+	 */
+	public void removeNextBlock() {
+		this.next.setSurroundingBlock(null);
+		this.next = null;
 	}
 
 	/**
 	 * 
-	 * @return The next block directly underneath
+	 * @return Last block of the group of connected blocks with this block.
 	 */
-	public SequenceBlock getNextBlock() {
-		SequenceBlock nextBlock = next;
-		return nextBlock;
+	public SequenceBlock getLastBlock() {
+		if (this.next == null) {
+			return this;
+		} else
+			return this.next.getLastBlock();
 	}
-	
 
 	/**
-	 * removes all the next blocks on the same level (same surrounding bloc). This
-	 * keeps the sequence of the next blocks, but they are now independent.
+	 * 
+	 * @return The next block to be EXECUTED
 	 */
-	public void removeNextBlock() {
-		if (this.next != null) {
-			this.next.setSurroundingBlock(null);
-			this.next.previous = null;
-			this.next = null;
-		}
+	public SequenceBlock getNextBlock() {
+		if (this.next == null)
+			return this.getSurroundingBlock().getNextAfterLoop();
+		return this.next; // TODO appropriate copy
 	}
 
 }
