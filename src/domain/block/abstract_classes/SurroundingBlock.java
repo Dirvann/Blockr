@@ -4,7 +4,7 @@ import domain.block.block_types.Block;
 import domain.block.block_types.ConditionBlock;
 import domain.block.block_types.SequenceBlock;
 
-public abstract class SurroundingBlock extends SequenceBlock{	
+public class SurroundingBlock extends SequenceBlock{	
 	
 	private ConditionBlock condition = null;
 	private SequenceBlock bodyBlock = null;
@@ -62,16 +62,7 @@ public abstract class SurroundingBlock extends SequenceBlock{
 	 *              block in the sequence which is surrounded by the if block
 	 */
 	public void setConditionBlock(ConditionBlock block) {
-		block.setSurroundingBlock(this);
-		if (this.condition != null) {
-			ConditionBlock last = block;
-			while (last.getNextCondition() != null) 
-				last = last.getNextCondition();
-			getConditionBlock().setPrevious(last);
-			last.setNextCondition(getConditionBlock());
-		}
-		condition = block;
-		
+		this.condition = block;
 	}
 
 	/**

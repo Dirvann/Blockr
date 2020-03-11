@@ -42,7 +42,7 @@ public class TestsLogicalBlocks {
 		mF1.setNextBlock(tR1);
 		mF1.setNextBlock(tL1); // result mF1 - tL1 - tR1
 		whileBlock1.setConditionBlock(not1);
-		not1.setNextCondition(iswall1); // isWall returns false for now
+		not1.setNextConditon(iswall1); // isWall returns false for now
 		whileBlock1.setBodyBlock(mF1);
 		/*
 		 * moveForward() 
@@ -59,12 +59,12 @@ public class TestsLogicalBlocks {
 	public void executeInit() throws Exception {
 		System.out.printf("\n test init \n" + "____________________________________________________________" + "\n" +  "\n");
 		init1();
-		Block[] desiredResult = { startBlock, whileBlock1, mF1, tL1, tR1, whileBlock1, mF1, tL1, tR1 };
+		Block[] desiredResult = { startBlock, whileBlock1, mF1, tL1, tR1, mF1, tL1, tR1 };
 		Block current = startBlock;
 		int i = 0;
 		while (current != null && i < desiredResult.length) {
 			assertEquals(desiredResult[i], current);
-			current = current.execute(null);
+			current = current.execute();
 			i += 1;
 		}
 
@@ -79,12 +79,12 @@ public class TestsLogicalBlocks {
 		ifBlock1.setConditionBlock(iswall1);
 		ifBlock1.setBodyBlock(mF2);
 		
-		Block[] desiredResult = {startBlock, whileBlock1, mF1, ifBlock1,tL1, tR1, whileBlock1, mF1, ifBlock1, tL1, tR1};
+		Block[] desiredResult = {startBlock, whileBlock1, mF1, ifBlock1,tL1, tR1, mF1, ifBlock1, tL1, tR1};
 		Block current = startBlock;
 		int i = 0;
 		while (current != null && i < desiredResult.length) {
 			assertEquals(desiredResult[i], current);
-			current = current.execute(null);
+			current = current.execute();
 			i += 1;
 		}		
 		assertEquals(desiredResult.length, i);
@@ -98,12 +98,12 @@ public class TestsLogicalBlocks {
 		mF1.setNextBlock(ifBlock1);
 		ifBlock1.setConditionBlock(not1); //is linked to iswall1, see init()
 		
-		Block[] desiredResult = {startBlock, whileBlock1, mF1, ifBlock1, tL1, tR1,  whileBlock1, mF1, ifBlock1,tL1, tR1};
+		Block[] desiredResult = {startBlock, whileBlock1, mF1, ifBlock1,tL1, tR1,  mF1, ifBlock1,tL1, tR1};
 		Block current = startBlock;
 		int i = 0;
 		while (current != null && i < desiredResult.length) {
 			assertEquals(desiredResult[i], current);
-			current = current.execute(null);
+			current = current.execute();
 			i += 1;
 		}
 		assertEquals(desiredResult.length, i);
@@ -115,7 +115,7 @@ public class TestsLogicalBlocks {
 	public void addRemoveSimpleBlock() {
 		clearAll(); // remove all links of the blocks
 		startBlock.setNextBlock(ifBlock1);
-		not1.setNextCondition(iswall1);
+		not1.setNextConditon(iswall1);
 		ifBlock1.setConditionBlock(not1);
 		ifBlock1.setBodyBlock(mF1);
 		tR1.setNextBlock(tL1);
@@ -130,9 +130,9 @@ public class TestsLogicalBlocks {
 		
 		mF1.removeNextBlock();
 		
-		assertNull(mF1.getNextBlock());
+		assertEquals(mF2, mF1.getNextBlock());
 		assertEquals(tL1, tR1.getNextBlock());
-		assertNull(tR1.getSurroundingBlock()); // this is not in an if or while block anymore
+		assertEquals(null, tR1.getSurroundingBlock()); // this is not in an if or while block anymore
 		
 		ifBlock1.removeNextBlock();
 		startBlock.removeNextBlock();

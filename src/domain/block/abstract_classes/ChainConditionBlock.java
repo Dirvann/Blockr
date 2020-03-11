@@ -33,10 +33,4 @@ public class ChainConditionBlock extends ConditionBlock{
 		return copy;
 	}
 
-	public boolean isValidCondition() {
-		if (getNextCondition() != null)
-			return getNextCondition().isValidCondition();
-		return false;
-	}
-
 }

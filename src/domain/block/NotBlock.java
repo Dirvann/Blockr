@@ -1,6 +1,5 @@
 package domain.block;
 
-import domain.GameController;
 import domain.block.abstract_classes.ChainConditionBlock;
 
 public class NotBlock extends ChainConditionBlock {
@@ -8,10 +7,11 @@ public class NotBlock extends ChainConditionBlock {
 	public NotBlock() {
 		
 	}
-	public boolean evaluate(GameController gamecontroller) {
+	public boolean evaluate() {
 		if (this.getNextCondition() == null) {
 			return false;
 		}
-		return !this.getNextCondition().evaluate(gamecontroller);
+		return !this.getNextCondition().evaluate();
 	}
+
 }
