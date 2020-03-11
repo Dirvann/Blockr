@@ -13,19 +13,19 @@ import domain.block.block_types.SequenceBlock;
 
 public interface Facade {
 
-	public Block makeIfBlock(int ID);
+	public Block makeIfBlock();
 	
-	public Block makeMoveForwardBlock(int ID);
+	public Block makeMoveForwardBlock();
 	
-	public Block makeNotBlock(int ID);
+	public Block makeNotBlock();
 	
-	public Block makeTurnLeftBlock(int ID);
+	public Block makeTurnLeftBlock();
 	
-	public Block makeTurnRightBlock(int ID);
+	public Block makeTurnRightBlock();
 	
-	public Block makeWallInFrontBlock(int ID);
+	public Block makeWallInFrontBlock();
 	
-	public Block makeWhileBlock(int ID);
+	public Block makeWhileBlock();
 	
 	/**
 	 * 
@@ -63,51 +63,44 @@ public interface Facade {
 class Implementation implements Facade{
 
 	@Override
-	public Block makeIfBlock(int ID) {
+	public Block makeIfBlock() {
 		Block block = new IfBlock();
-		block.setID(ID);
 		return block;
 	}
 
 	@Override
-	public Block makeMoveForwardBlock(int ID) {
+	public Block makeMoveForwardBlock() {
 		Block block = new MoveForward();
-		block.setID(ID);
 		return block;
 	}
 
 	@Override
-	public Block makeNotBlock(int ID) {
+	public Block makeNotBlock() {
 		Block block = new NotBlock();
-		block.setID(ID);
 		return block;
 	}
 
 	@Override
-	public Block makeTurnLeftBlock(int ID) {
+	public Block makeTurnLeftBlock() {
 		Block block = new TurnLeft();
-		block.setID(ID);
 		return block;
 	}
 
 	@Override
-	public Block makeTurnRightBlock(int ID) {
+	public Block makeTurnRightBlock() {
 		Block block = new TurnRight();
-		block.setID(ID);
 		return block;
 	}
 
 	@Override
-	public Block makeWallInFrontBlock(int ID) {
+	public Block makeWallInFrontBlock() {
 		Block block = new WallInFront();
-		block.setID(ID);
 		return block;
 	}
 
 	@Override
-	public Block makeWhileBlock(int ID) {
+	public Block makeWhileBlock() {
 		Block block = new WhileBlock();
-		block.setID(ID);
 		return block;
 	}
 

@@ -1,5 +1,6 @@
 package domain.block.block_types;
 
+import domain.GameController;
 import domain.block.abstract_classes.SurroundingBlock;
 
 public abstract class SequenceBlock extends Block {
@@ -36,35 +37,27 @@ public abstract class SequenceBlock extends Block {
 	/**
 	 * 
 	 * @param block The first block (of a group of blocks) which will be added
-	 *              between this and this.getNextBlock(). The surrounding block is
-	 *              adjusted in the added blocks. If the block to be added is an
-	 *              empty surrounding block (like if and while), all sequence blocks
-	 *              after 'block' will be added to the body of this surrounding
-	 *              block. If the 'block' is a non-empty surrounding block, its will
-	 *              be added between 'block' and 'block.next'.
+	 *              between this and this.getNextBlock().
 	 * 
 	 */
 	public void setNextBlock(SequenceBlock block) {
 
-		block.setSurroundingBlock(this.surroundingBlock);
-		block.previous = this;
-
-		if (this.next == null) {
-			this.next = block;// TODO: verify that there are no loops
-		} 
+		if (block == null)
+			removeNextBlock();
 		else {
-			SequenceBlock last = block.getLastBlock();
+			block.setSurroundingBlock(this.surroundingBlock);
+			block.previous = this;
 
-			if (block instanceof SurroundingBlock) {
-				block.setNextBlock(this.next);
-			} 
-			else {
-				last.setNextBlock(this.next);
-				this.next.previous = last;
+			SequenceBlock last = block;
+			while (last.getNextBlock() != null) {
+				last = last.getNextBlock();
 			}
-			this.next = block;
-
+			last.next = getNextBlock();
+			if (getNextBlock() != null)
+				getNextBlock().previous = last;
+			next = block;
 		}
+
 	}
 
 	/**
@@ -96,5 +89,7 @@ public abstract class SequenceBlock extends Block {
 			return this.getSurroundingBlock().getNextAfterLoop();
 		return this.next; // TODO appropriate copy
 	}
+
+	public abstract Block execute(GameController gamecontroller) throws Exception;
 
 }
