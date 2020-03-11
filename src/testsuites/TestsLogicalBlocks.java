@@ -44,7 +44,12 @@ public class TestsLogicalBlocks {
 		not1.setNextConditon(iswall1); // isWall returns false for now
 		whileBlock1.setBodyBlock(mF1);
 		/*
-		 * moveForward() while(not istWall()){ moveForward() turnLeft() turnRight() }
+		 * moveForward() 
+		 * while(not istWall()){ 
+		 * 		moveForward()
+		 * 		turnLeft() 
+		 * 		turnRight() 
+		 *  }
 		 */
 	}
 
@@ -71,8 +76,9 @@ public class TestsLogicalBlocks {
 		init1();
 		mF1.setNextBlock(ifBlock1);
 		ifBlock1.setConditionBlock(iswall1);
+		ifBlock1.setBodyBlock(mF2);
 		
-		Block[] desiredResult = {startBlock, whileBlock1, mF1, ifBlock1, mF1, ifBlock1};
+		Block[] desiredResult = {startBlock, whileBlock1, mF1, ifBlock1,tL1, tR1, mF1, ifBlock1, tL1, tR1};
 		Block current = startBlock;
 		int i = 0;
 		while (current != null && i < desiredResult.length) {

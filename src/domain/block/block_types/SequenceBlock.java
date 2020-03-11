@@ -70,7 +70,7 @@ public abstract class SequenceBlock extends Block {
 	 * 
 	 * @return Last block of the group of connected blocks with this block.
 	 */
-	private SequenceBlock getLastBlock() {
+	public SequenceBlock getLastBlock() {
 		if (this.next == null) {
 			return this;
 		} else

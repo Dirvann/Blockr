@@ -100,5 +100,27 @@ public class SurroundingBlock extends SequenceBlock{
 		if (this.bodyBlock == null) return true;
 		return false;
 	}
+	/**
+	 * 
+	 * @param block The first block (of a group of blocks) which will be added
+	 *              between this and this.getNextBlock(). The surrounding block is
+	 *              adjusted in the added blocks. If the block to be added is an
+	 *              empty surrounding block (like if and while), all sequence blocks
+	 *              after 'block' will be added to the body of this surrounding
+	 *              block. If the 'block' is a non-empty surrounding block, its will
+	 *              be added between 'block' and 'block.next'.
+	 * 
+	 */
+	public void setNextBlock(SequenceBlock block) {
+
+		block.setSurroundingBlock(this.getSurroundingBlock());
+
+		if (this.next == null) {
+			this.next = block;// TODO: verify that there are no loops
+		} else {
+			block.setNextBlock(this.next);
+			this.next = block;
+		}
+	}
 
 }

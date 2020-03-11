@@ -12,8 +12,10 @@ public class IfBlock extends SingleSurroundingBlock {
 		if (!this.hasValidCondition()) {
 			throw new Exception("If-Block does not have a complete condition");
 		}
-		if (this.evaluateCondition()) {
-			return this.getBodyBlock();
+		if (this.getBodyBlock() != null) {
+			if (this.evaluateCondition()) {
+				return this.getBodyBlock();
+			}
 		}
 		return this.getNextBlock();
 	}
