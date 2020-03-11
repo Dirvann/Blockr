@@ -154,7 +154,12 @@ public class TestsLogicalBlocks {
 		assertEquals(tR1, tL1.getNextBlock());
 		assertEquals(mF1, tL1.getPreviousBlock());
 		
+		mF1.removeNextBlock();
 		
+		assertEquals(mF1, mF1.getNextBlock());
+		assertNull(tL1.getPreviousBlock());
 	}
+	
+	
 
 }
