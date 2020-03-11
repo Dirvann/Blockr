@@ -6,6 +6,10 @@ import domain.game_world.Vector;
 
 public abstract class PresentationBlock {
 	
+	//TODO Store safely, maybe elsewhere.
+	public static int blockWidth = 140;
+	public static int blockHeight = 100;
+	
 	private Vector position;
 	
 	
