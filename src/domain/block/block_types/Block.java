@@ -1,5 +1,7 @@
 package domain.block.block_types;
 
+import presentation.block.PresentationBlock;
+
 public abstract class Block {
 	private int ID;
 
@@ -20,4 +22,6 @@ public abstract class Block {
 	public int getID(int newID) {
 		return this.ID;
 	}
+	
+	public abstract PresentationBlock getPresentationBlock();
 }

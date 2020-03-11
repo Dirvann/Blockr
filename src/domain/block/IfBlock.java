@@ -2,10 +2,12 @@ package domain.block;
 
 import domain.block.abstract_classes.SingleSurroundingBlock;
 import domain.block.block_types.*;
+import domain.game_world.Vector;
 
 public class IfBlock extends SingleSurroundingBlock {
 
-	public IfBlock() {
+	public IfBlock(Vector pos) {
+		super(pos);
 	}
 
 	public Block execute() throws Exception {
