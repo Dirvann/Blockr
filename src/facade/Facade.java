@@ -1,5 +1,6 @@
 package facade;
 
+
 import domain.block.block_types.Block;
 
 public interface Facade {
