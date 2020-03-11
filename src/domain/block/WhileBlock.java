@@ -3,12 +3,11 @@ package domain.block;
 import domain.block.abstract_classes.SingleSurroundingBlock;
 import domain.block.block_types.Block;
 import domain.block.block_types.SequenceBlock;
-import domain.game_world.Vector;
 
 public class WhileBlock extends SingleSurroundingBlock {
 	
-	public WhileBlock(Vector pos) {
-		super(pos);
+	public WhileBlock() {
+		
 	}
 	
 	public Block execute() throws Exception {

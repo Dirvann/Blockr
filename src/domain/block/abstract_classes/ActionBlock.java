@@ -2,17 +2,8 @@ package domain.block.abstract_classes;
 
 import domain.block.block_types.Block;
 import domain.block.block_types.SequenceBlock;
-import domain.game_world.Vector;
-import presentation.block.ActionBlockPresentation;
-import presentation.block.PresentationBlock;
 
-public class ActionBlock extends SequenceBlock{
-	
-	ActionBlockPresentation blockPresentation;
-	
-	public ActionBlock(Vector pos) {
-		this.blockPresentation = new ActionBlockPresentation(pos, this);
-	}
+public abstract class ActionBlock extends SequenceBlock{
 	
 	public void performAction() {
 		
@@ -29,10 +20,6 @@ public class ActionBlock extends SequenceBlock{
 			return this.getSurroundingBlock().getNextAfterLoop();
 		}
 		return this.getNextBlock();
-	}
-	
-	public ActionBlockPresentation getPresentationBlock() {
-		return blockPresentation;
 	}
 	
 	/**

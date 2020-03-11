@@ -7,11 +7,11 @@ import domain.game_world.Vector;
 
 public class ChainConditionBlockPresentation extends PresentationBlock{
 	
-	private ChainConditionBlock block;
+	ChainConditionBlock block;
 	
 	public ChainConditionBlockPresentation(Vector position, ChainConditionBlock block) {
 		super(position);
-		this.setBlock(block);
+		this.block = block;
 		
 	}
 
@@ -19,14 +19,6 @@ public class ChainConditionBlockPresentation extends PresentationBlock{
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	public ChainConditionBlock getBlock() {
-		return block;
-	}
-
-	public void setBlock(ChainConditionBlock block) {
-		this.block = block;
 	}
 
 }

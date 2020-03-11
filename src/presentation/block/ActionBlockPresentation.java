@@ -1,6 +1,5 @@
 package presentation.block;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import domain.block.abstract_classes.ActionBlock;
@@ -17,9 +16,7 @@ public class ActionBlockPresentation extends PresentationBlock {
 
 	@Override
 	public void draw(Graphics g) {
-		g.setColor(Color.BLUE);
-		Vector pos = getPosition();
-		g.fillRect(pos.getX(), pos.getY(), PresentationBlock.blockWidth, PresentationBlock.blockHeight);
+		
 	}
 
 	public ActionBlock getBlock() {
