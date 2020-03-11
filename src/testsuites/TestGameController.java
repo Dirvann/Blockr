@@ -38,7 +38,8 @@ class TestGameController {
 			fail();
 			e.printStackTrace();
 		}
-		gameWorld = gameController.getGameWorld();
+		gameWorld = fi.makeGameWorld(testGrid, new Vector(0,0));
+		gameController.setGameWorld(gameWorld);
 		ifBlock = fi.makeIfBlock();
 		forwardBlock = fi.makeMoveForwardBlock();
 		forwardBlock2 = fi.makeMoveForwardBlock();
@@ -105,19 +106,19 @@ class TestGameController {
 			// 2 blocks execute TR/FW
 			gameWorld.getRobot().setDirection(Direction.RIGHT);
 			fi.connect(turnRightBlock, forwardBlock);
-			turnRightBlock.execute(gameController);
+			turnRightBlock.execute(gameController).execute(gameController);
 			assertEquals(gameWorld.getRobot().getLocation(),new Vector(0,1));
 			// add a block to those 2 blocks TR/FW/TL
 			gameWorld.getRobot().setDirection(Direction.RIGHT);
 			gameWorld.getRobot().setLocation(new Vector(0,0));
 			fi.connect(forwardBlock,turnLeftBlock);
-			turnRightBlock.execute(gameController);
+			turnRightBlock.execute(gameController).execute(gameController).execute(gameController);
 			assertEquals(gameWorld.getRobot().getDirection(),Direction.RIGHT);
 			// add a block in between TR/FW/FW2/TL
 			gameWorld.getRobot().setDirection(Direction.RIGHT);
 			gameWorld.getRobot().setLocation(new Vector(0,0));
 			fi.connect(forwardBlock,forwardBlock2);
-			turnRightBlock.execute(gameController);
+			turnRightBlock.execute(gameController).execute(gameController).execute(gameController).execute(gameController);
 			assertEquals(gameWorld.getRobot().getLocation(),new Vector(0,2));
 			assertEquals(gameWorld.getRobot().getDirection(),Direction.RIGHT);
 			// disconnect and reconnect TR/FW/FW2/TL -/-> FW2/TL -> TR//FW -> TR/FW2/TL/FW
@@ -125,19 +126,19 @@ class TestGameController {
 			gameWorld.getRobot().setLocation(new Vector(0,0));
 			fi.disconnect(forwardBlock2);
 			//TR/FW
-			turnRightBlock.execute(gameController);
+			turnRightBlock.execute(gameController).execute(gameController);
 			assertEquals(gameWorld.getRobot().getLocation(),new Vector(0,1)); 
 			//FW2/TL
 			gameWorld.getRobot().setDirection(Direction.DOWN);
 			gameWorld.getRobot().setLocation(new Vector(0,0));
-			forwardBlock2.execute(gameController);
+			forwardBlock2.execute(gameController).execute(gameController);
 			assertEquals(gameWorld.getRobot().getLocation(),new Vector(0,1)); 
 			assertEquals(gameWorld.getRobot().getDirection(),Direction.RIGHT);
 			//TR/FW2/TL/FW
 			gameWorld.getRobot().setDirection(Direction.RIGHT);
 			gameWorld.getRobot().setLocation(new Vector(0,0));
 			fi.connect(turnRightBlock,forwardBlock2);
-			turnRightBlock.execute(gameController);
+			turnRightBlock.execute(gameController).execute(gameController).execute(gameController).execute(gameController);
 			assertEquals(gameWorld.getRobot().getLocation(),new Vector(1,1)); 
 			assertEquals(gameWorld.getRobot().getDirection(),Direction.RIGHT);
 		} catch (Exception e) {
