@@ -13,11 +13,14 @@ public class GameController {
 	private GameWorld gameWorld;
 	
 	public GameController() {
-		
+		this.programArea = new ProgramArea();
 	}
 	
-	
-	
+	public GameController(GameWorld gameWorld) {
+		this.programArea = new ProgramArea();
+		this.gameWorld = gameWorld;
+	}
+
 	
 	public void execute() throws Exception {
 		if (programArea.programInProgress()) {

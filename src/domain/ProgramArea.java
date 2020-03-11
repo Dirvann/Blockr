@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import domain.block.block_types.*;
@@ -11,6 +12,9 @@ public class ProgramArea {
 	private Block nextToExecute = null;
 	
 	
+	public ProgramArea() {
+		this.topLevelBlocks = new ArrayList<Block>();
+	}
 
 	
 	public int nbTopLevelBlocks() {
