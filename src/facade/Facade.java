@@ -3,6 +3,8 @@ package facade;
 import domain.GameController;
 import domain.block.block_types.Block;
 import domain.game_world.GameWorld;
+import domain.game_world.Grid;
+import domain.game_world.Vector;
 
 public interface Facade {
 	//TODO: positions and gameworld
@@ -61,6 +63,10 @@ public interface Facade {
 	public Block getNextBlockToExecute(GameController gameController);
 	
 	public void executeNextBlock(GameController gameController);
+
+	public GameWorld makeGameWorld();
+
+	public GameWorld makeGameWorld(Grid grid, Vector vector);
 	
 	
 	

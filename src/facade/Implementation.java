@@ -14,6 +14,8 @@ import domain.block.block_types.Block;
 import domain.block.block_types.ConditionBlock;
 import domain.block.block_types.SequenceBlock;
 import domain.game_world.GameWorld;
+import domain.game_world.Grid;
+import domain.game_world.Vector;
 
 public class Implementation implements Facade{
 	
@@ -153,6 +155,15 @@ public class Implementation implements Facade{
 		}
 	}
 
+	@Override
+	public GameWorld makeGameWorld() {
+		return new GameWorld();
+	}
+	
+	@Override
+	public GameWorld makeGameWorld(Grid grid, Vector vector) {
+		return new GameWorld(grid, vector);
+	}
 	@Override
 	public void setGameWorldForController(GameController gameController, GameWorld gameWorld) {
 		gameController.setGameWorld(gameWorld);

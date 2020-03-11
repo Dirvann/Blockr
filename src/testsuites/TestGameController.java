@@ -20,6 +20,7 @@ class TestGameController {
 	static GameWorld gameWorld;
 	static Cell[] cells = {new Goal(),new Wall(), new Wall()};
 	static Vector[] locations = {new Vector(1,1), new Vector(1,0), new Vector(2,2) };
+	static Grid testGrid;
 	static Block ifBlock;
 	static Block forwardBlock;
 	static Block forwardBlock2;
@@ -31,7 +32,13 @@ class TestGameController {
 	
 	public static void setup() {
 		gameController = fi.makeGameController();
-		gameWorld = fi.makeGameWorld();// input: (3,3,locations,cells)
+		try {
+			testGrid = new Grid(3,3,locations,cells);
+		} catch (Exception e) {
+			fail();
+			e.printStackTrace();
+		}
+		gameWorld = gameController.getGameWorld();
 		ifBlock = fi.makeIfBlock();
 		forwardBlock = fi.makeMoveForwardBlock();
 		forwardBlock2 = fi.makeMoveForwardBlock();
@@ -52,6 +59,7 @@ class TestGameController {
 	
 	@Test
 	void turnLeftRightBlockExecute() {
+		setup();
 		try {
 			assertEquals(gameWorld.getRobot().getDirection(),Direction.UP);
 			turnLeftBlock.execute(gameController);
@@ -69,6 +77,7 @@ class TestGameController {
 	
 	@Test
 	void forwardBlockExecute() {
+		setup();
 		try {
 			// normal move
 			assertEquals(gameWorld.getRobot().getLocation(),new Vector(0,0));
@@ -91,6 +100,7 @@ class TestGameController {
 	
 	@Test
 	void connectActionBlocks() {
+		setup();
 		try {
 			// 2 blocks execute TR/FW
 			gameWorld.getRobot().setDirection(Direction.RIGHT);
