@@ -50,7 +50,7 @@ public interface Facade {
 
 	
 	
-	
+	public void setGameWorldForController(GameController gameController, GameWorld gameWorld);
 	
 	public void addTopLevelBlockToController(GameController gameController, Block block);
 	

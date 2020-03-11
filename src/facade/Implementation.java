@@ -153,6 +153,11 @@ public class Implementation implements Facade{
 		}
 	}
 
+	@Override
+	public void setGameWorldForController(GameController gameController, GameWorld gameWorld) {
+		gameController.setGameWorld(gameWorld);
+	}
+
 
 	
 	

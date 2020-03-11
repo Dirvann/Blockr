@@ -35,6 +35,10 @@ public class GameController {
 		programArea.executeNextBlock(this);
 	}
 	
+	public void setGameWorld(GameWorld gameWorld) {
+		this.gameWorld = gameWorld;
+	}
+	
 	public GameWorld getGameWorld() {
 		return this.gameWorld;
 	}
