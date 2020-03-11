@@ -77,4 +77,9 @@ public abstract class SurroundingBlock extends SequenceBlock{
 		
 	}
 
+	public SequenceBlock getNextAfterLoop() {
+		return this;
+		
+	}
+
 }
