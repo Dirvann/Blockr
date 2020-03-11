@@ -1,18 +1,7 @@
 package facade;
 
 import domain.GameController;
-import domain.block.IfBlock;
-import domain.block.MoveForward;
-import domain.block.NotBlock;
-import domain.block.TurnLeft;
-import domain.block.TurnRight;
-import domain.block.WallInFront;
-import domain.block.WhileBlock;
-import domain.block.abstract_classes.ChainConditionBlock;
-import domain.block.abstract_classes.SurroundingBlock;
 import domain.block.block_types.Block;
-import domain.block.block_types.ConditionBlock;
-import domain.block.block_types.SequenceBlock;
 import domain.game_world.GameWorld;
 
 public interface Facade {
@@ -51,20 +40,14 @@ public interface Facade {
 	 */
 	public boolean disconnect(Block blockToDisconnect);
 	
-	
-	/**
-	 * 
-	 * @param blockOrCondition: A block or condition where conditionToAdd needs to be added.
-	 * @param conditionToAdd
-	 * @Post condtionToAdd is connected to blockOrCondition
-	 */
-	public void addCondition(Block blockOrCondition, Block conditionToAdd);
+
 	
 	/**
 	 * 
 	 * @param block
-	 * @Post The block will be removed from the game.
+	 * @Post The block will be deleted from the game.
 	 */
-	public void removeBlock(Block block);
+	public void deleteBlock(Block block);
+
 	
 }

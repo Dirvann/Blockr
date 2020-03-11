@@ -8,6 +8,8 @@ import domain.block.TurnLeft;
 import domain.block.TurnRight;
 import domain.block.WallInFront;
 import domain.block.WhileBlock;
+import domain.block.abstract_classes.ChainConditionBlock;
+import domain.block.abstract_classes.SurroundingBlock;
 import domain.block.block_types.Block;
 import domain.block.block_types.ConditionBlock;
 import domain.block.block_types.SequenceBlock;
@@ -65,6 +67,14 @@ public class Implementation implements Facade{
 			((SequenceBlock)firstBlock).setNextBlock((SequenceBlock)secondBlock);
 			return true;
 		}
+		else if (firstBlock instanceof ChainConditionBlock && secondBlock instanceof ConditionBlock) {
+			((ChainConditionBlock)firstBlock).addCondition(((ConditionBlock)secondBlock));
+			return true;
+		}
+		else if (firstBlock instanceof SurroundingBlock && secondBlock instanceof ConditionBlock) {
+			((SurroundingBlock)firstBlock).setConditionBlock(((ConditionBlock)secondBlock));
+			return true;
+		}
 		return false;
 		
 	}
@@ -73,22 +83,34 @@ public class Implementation implements Facade{
 	public boolean disconnect(Block blockToDisconnect) {
 		if (blockToDisconnect instanceof ConditionBlock) {
 			ConditionBlock disc = (ConditionBlock) blockToDisconnect;
+			if	(disc.getPrevious() == null) {
+				if (disc.getSurroundingBlock() != null) {
+					disc.getSurroundingBlock().removeConditionBlock();
+					return true;
+				}
+			}
+			else {
+				((ChainConditionBlock)(disc.getPrevious())).removeNextCondition();
+				return true;
+			}
 		}
-		if (blockToDisconnect instanceof SequenceBlock) {
+		else if (blockToDisconnect instanceof SequenceBlock) {
 			SequenceBlock disc = (SequenceBlock) blockToDisconnect;
+			if (disc.getPreviousBlock() != null) {
+				disc.getPreviousBlock().removeNextBlock();
+				return true;
+			}
+			else if (disc.getSurroundingBlock()!= null) {
+				disc.getSurroundingBlock().removeBodyBlock();
+				return true;
+			}
 		}
 	return false;
 		
 	}
 
 	@Override
-	public void addCondition(Block blockOrCondition, Block conditionToAdd) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeBlock(Block block) {
+	public void deleteBlock(Block block) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -108,4 +130,3 @@ public class Implementation implements Facade{
 	
 	
 }
-
