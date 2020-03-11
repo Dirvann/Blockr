@@ -117,15 +117,40 @@ public class Implementation implements Facade{
 
 	@Override
 	public GameController makeGameController() {
-		// TODO Auto-generated method stub
-		return null;
+		return new GameController();
 	}
 
 	@Override
-	public GameWorld makeGameWorld() {
-		// TODO Auto-generated method stub
-		return null;
+	public void addTopLevelBlockToController(GameController gameController, Block block) {
+		gameController.addTopLevelBlock(block);
 	}
+
+	@Override
+	public void removeTopLevelBlockFromController(GameController gameController, Block block) {
+		gameController.removeTopLevelBlock(block);
+	}
+
+	@Override
+	public void randomiseGameWorld(GameController gameController, int width, int height) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Block getNextBlockToExecute(GameController gameController) {
+		return gameController.getNextBlockToExecute();
+	}
+
+	@Override
+	public void executeNextBlock(GameController gameController) {
+		try {
+			gameController.execute();
+		} catch (Exception e) {
+			System.out.println("Exception during execution of block in interface.");
+			e.printStackTrace();
+		}
+	}
+
 
 	
 	

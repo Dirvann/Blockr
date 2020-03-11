@@ -9,8 +9,6 @@ public interface Facade {
 	
 	public GameController makeGameController();
 
-	public GameWorld makeGameWorld();
-
 	public Block makeIfBlock();
 	
 	public Block makeMoveForwardBlock();
@@ -24,6 +22,7 @@ public interface Facade {
 	public Block makeWallInFrontBlock();
 	
 	public Block makeWhileBlock();
+	
 	
 	/**
 	 * 
@@ -49,5 +48,20 @@ public interface Facade {
 	 */
 	public void deleteBlock(Block block);
 
+	
+	
+	
+	
+	public void addTopLevelBlockToController(GameController gameController, Block block);
+	
+	public void removeTopLevelBlockFromController(GameController gamecontroller, Block block);
+	
+	public void randomiseGameWorld(GameController gameController, int width, int height);
+	
+	public Block getNextBlockToExecute(GameController gameController);
+	
+	public void executeNextBlock(GameController gameController);
+	
+	
 	
 }
