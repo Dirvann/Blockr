@@ -1,5 +1,6 @@
 package testsuites;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
@@ -32,7 +33,7 @@ public class TestsLogicalBlocks {
 		
 	}
 	
-	//General tests to see if exectute, if and while works in a normal case
+	//General tests to see if execute, if and while works in a normal case
 
 	public static void init1() {
 		clearAll();
@@ -135,6 +136,23 @@ public class TestsLogicalBlocks {
 		
 		ifBlock1.removeNextBlock();
 		startBlock.removeNextBlock();
+		
+		
+	}
+	
+	@Test void previousAndNext() {
+		init1();
+		assertNull( startBlock.getPreviousBlock()); 
+		assertEquals(whileBlock1, startBlock.getNextBlock());
+		
+		assertNull(whileBlock1.getNextBlock()); 
+		assertEquals(startBlock, whileBlock1.getPreviousBlock());
+		
+		assertNull(mF1.getPreviousBlock());
+		assertEquals(tL1, mF1.getNextBlock());
+
+		assertEquals(tR1, tL1.getNextBlock());
+		assertEquals(mF1, tL1.getPreviousBlock());
 		
 		
 	}
