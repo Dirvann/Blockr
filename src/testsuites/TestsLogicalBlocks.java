@@ -59,7 +59,7 @@ public class TestsLogicalBlocks {
 	public void executeInit() throws Exception {
 		System.out.printf("\n test init \n" + "____________________________________________________________" + "\n" +  "\n");
 		init1();
-		Block[] desiredResult = { startBlock, whileBlock1, mF1, tL1, tR1, mF1, tL1, tR1 };
+		Block[] desiredResult = { startBlock, whileBlock1, mF1, tL1, tR1, whileBlock1, mF1, tL1, tR1 };
 		Block current = startBlock;
 		int i = 0;
 		while (current != null && i < desiredResult.length) {
@@ -79,7 +79,7 @@ public class TestsLogicalBlocks {
 		ifBlock1.setConditionBlock(iswall1);
 		ifBlock1.setBodyBlock(mF2);
 		
-		Block[] desiredResult = {startBlock, whileBlock1, mF1, ifBlock1,tL1, tR1, mF1, ifBlock1, tL1, tR1};
+		Block[] desiredResult = {startBlock, whileBlock1, mF1, ifBlock1,tL1, tR1, whileBlock1, mF1, ifBlock1, tL1, tR1};
 		Block current = startBlock;
 		int i = 0;
 		while (current != null && i < desiredResult.length) {
@@ -98,7 +98,7 @@ public class TestsLogicalBlocks {
 		mF1.setNextBlock(ifBlock1);
 		ifBlock1.setConditionBlock(not1); //is linked to iswall1, see init()
 		
-		Block[] desiredResult = {startBlock, whileBlock1, mF1, ifBlock1,tL1, tR1,  mF1, ifBlock1,tL1, tR1};
+		Block[] desiredResult = {startBlock, whileBlock1, mF1, ifBlock1, tL1, tR1,  whileBlock1, mF1, ifBlock1,tL1, tR1};
 		Block current = startBlock;
 		int i = 0;
 		while (current != null && i < desiredResult.length) {
@@ -130,9 +130,9 @@ public class TestsLogicalBlocks {
 		
 		mF1.removeNextBlock();
 		
-		assertEquals(mF2, mF1.getNextBlock());
+		assertNull(mF1.getNextBlock());
 		assertEquals(tL1, tR1.getNextBlock());
-		assertEquals(null, tR1.getSurroundingBlock()); // this is not in an if or while block anymore
+		assertNull(tR1.getSurroundingBlock()); // this is not in an if or while block anymore
 		
 		ifBlock1.removeNextBlock();
 		startBlock.removeNextBlock();
