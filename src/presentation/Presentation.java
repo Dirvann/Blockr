@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 import domain.game_world.Direction;
 import domain.game_world.GameWorld;
@@ -19,6 +20,10 @@ import domain.game_world.cell.Wall;
 
 public class Presentation extends Canvas implements MouseListener {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1109041362094124173L;
 	static int width = 800;
 	static int height = 600;
 	static Canvas canvas;
@@ -37,6 +42,7 @@ public class Presentation extends Canvas implements MouseListener {
         canvas.setSize(width, height);
         frame.add(canvas);
         frame.pack();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
     
@@ -139,7 +145,6 @@ public class Presentation extends Canvas implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		System.out.println(arg0.getX() + " " + arg0.getY());
-		
 	}
 
 	@Override
