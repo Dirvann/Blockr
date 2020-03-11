@@ -12,6 +12,7 @@ import domain.block.block_types.ConditionBlock;
 import domain.block.block_types.SequenceBlock;
 
 public interface Facade {
+	//TODO: positions and gameworld
 
 	public Block makeIfBlock(int ID);
 	
