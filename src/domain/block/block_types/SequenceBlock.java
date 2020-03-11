@@ -3,8 +3,9 @@ package domain.block.block_types;
 import domain.block.abstract_classes.SurroundingBlock;
 
 public abstract class SequenceBlock extends Block {
+
 	private SurroundingBlock surroundingBlock = null;
-	private SequenceBlock next = null;
+	protected SequenceBlock next = null;
 	// TODO: Comments
 
 	/**
@@ -48,9 +49,7 @@ public abstract class SequenceBlock extends Block {
 			SequenceBlock last = block.getLastBlock();
 
 			if (block instanceof SurroundingBlock) {
-				SurroundingBlock block1 = (SurroundingBlock) block;
-				if (block1.isempty()) block1.setBodyBlock(this.next);
-				else block1.setNextBlock(this.next);
+				block.setNextBlock(this.next);
 			} else
 				last.setNextBlock(this.next);
 			this.next = block;
@@ -59,14 +58,23 @@ public abstract class SequenceBlock extends Block {
 	}
 
 	/**
+	 * removes all the next blocks on the same level (same surrounding bloc). This
+	 * keeps the sequence of the next blocks, but they are now independant.
+	 */
+	public void removeNextBlock() {
+		this.next.setSurroundingBlock(null);
+		this.next = null;
+	}
+
+	/**
 	 * 
 	 * @return Last block of the group of connected blocks with this block.
 	 */
 	private SequenceBlock getLastBlock() {
-		if (this.getNextBlock() == null) {
+		if (this.next == null) {
 			return this;
 		} else
-			return this.getNextBlock().getLastBlock();
+			return this.next.getLastBlock();
 	}
 
 	/**

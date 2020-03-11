@@ -10,10 +10,10 @@ public class SurroundingBlock extends SequenceBlock{
 	private SequenceBlock bodyBlock = null;
 	
 	public SequenceBlock getNextAfterLoop() {
-		if (this.getNextBlock() == null) {
+		if (this.next == null) {
 			return this.getSurroundingBlock().getNextAfterLoop();
 		}
-		return this.getNextBlock();
+		return this.next;
 	}
 
 
