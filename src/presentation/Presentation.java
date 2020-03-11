@@ -5,9 +5,13 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
+import domain.block.TurnLeft;
+import domain.block.block_types.Block;
 import domain.game_world.Direction;
 import domain.game_world.GameWorld;
 import domain.game_world.Grid;
@@ -16,9 +20,14 @@ import domain.game_world.Vector;
 import domain.game_world.cell.Cell;
 import domain.game_world.cell.Goal;
 import domain.game_world.cell.Wall;
+import presentation.block.PresentationBlock;
 
-public class Presentation extends Canvas implements MouseListener {
+public class Presentation extends Canvas implements MouseListener, MouseMotionListener {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1109041362094124173L;
 	static int width = 800;
 	static int height = 600;
 	static Canvas canvas;
@@ -27,7 +36,14 @@ public class Presentation extends Canvas implements MouseListener {
 	double codeProportion = 0.5;
 	double worldProportion = 0.3;
 	
+	Block[] blockList;
+	
 	GameWorld gameWorld;
+	
+	Vector mouseDownStartPosition = new Vector(0,0);
+	boolean mouseDown = false;
+	Block selectedBlock = null;
+	Vector previousMousePos = null;
 	
 	
 	
@@ -37,10 +53,15 @@ public class Presentation extends Canvas implements MouseListener {
         canvas.setSize(width, height);
         frame.add(canvas);
         frame.pack();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
     
     public Presentation() {
+    	
+    	blockList = new Block[] {new TurnLeft(new Vector(300,300))};
+    	
+    	
     	Vector[] vectors = new Vector[] {new Vector(0,0), new Vector(5,5), new Vector(4,5)};
     	Cell[] cells = new Cell[] {new Wall(), new Goal(), new Wall()};
     	Grid grid;
@@ -49,11 +70,14 @@ public class Presentation extends Canvas implements MouseListener {
 			Vector start = new Vector(4,4);
 	    	gameWorld = new GameWorld(grid, start);
 	    	gameWorld.setRobot(new Robot(new Vector(6,7), Direction.DOWN));
-	    	addMouseListener(this);
+	    	
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		addMouseListener(this);
+    	addMouseMotionListener(this);
     	
     }
 
@@ -62,11 +86,11 @@ public class Presentation extends Canvas implements MouseListener {
         g.drawLine((int)(panelProportion * canvas.getWidth()), 0,(int) (panelProportion * canvas.getWidth()), canvas.getHeight());
         g.drawLine(canvas.getWidth() - (int) (worldProportion * canvas.getWidth()), 0, canvas.getWidth() - (int) (worldProportion * canvas.getWidth()), canvas.getHeight());
         
-        drawWorld(g, this.gameWorld);
+        drawWorld(g, this.gameWorld, this.blockList);
         
     }
     
-    public void drawWorld(Graphics g, GameWorld gameWorld) {
+    public void drawWorld(Graphics g, GameWorld gameWorld, Block[] blockList) {
     	// drawing grid assuming proportions of with are larger than the area
     	//TODO Calc in double then after change to int
     	int worldWidth = (int)(canvas.getWidth() * worldProportion);
@@ -88,9 +112,18 @@ public class Presentation extends Canvas implements MouseListener {
     	}
     	
     	drawCells(g, gameWorld, cellWidth, cellHeight, worldStartX, worldStartY);
+    	
+    	drawBlocks(g, blockList);
     }
     
-    void drawCells(Graphics g, GameWorld gameWorld, int cellWidth, int cellHeight, int worldStartX, int worldStartY) {
+    private void drawBlocks(Graphics g, Block[] blockList) {
+		for(Block b: blockList) {
+			b.getPresentationBlock().draw(g);
+		}
+		
+	}
+
+	void drawCells(Graphics g, GameWorld gameWorld, int cellWidth, int cellHeight, int worldStartX, int worldStartY) {
     	Grid grid = gameWorld.getGrid();
     	for(int x = 0; x < grid.getWidth(); x++) {
     		for(int y = 0; y < grid.getHeight(); y++) {
@@ -137,32 +170,58 @@ public class Presentation extends Canvas implements MouseListener {
     }
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		System.out.println(arg0.getX() + " " + arg0.getY());
-		
+	public void mouseClicked(MouseEvent e) {
+		System.out.println(e.getX() + " " + e.getY());
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {
+	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void mouseExited(MouseEvent arg0) {
+	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mousePressed(MouseEvent e) {
+		Vector p = this.blockList[0].getPresentationBlock().getPosition();
+		int width = PresentationBlock.blockWidth;
+		int height = PresentationBlock.blockHeight;
+		
+		if(e.getX() > p.getX() && e.getX() < (width + p.getX()) && e.getY() > p.getY() && e.getY() < (p.getY() + height)) {
+			this.selectedBlock = this.blockList[0];
+		}
+		previousMousePos = new Vector(e.getX(), e.getY());
+		this.mouseDown = true;
+		
+		
 		
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mouseReleased(MouseEvent e) {
+		this.mouseDown = false;
+		this.selectedBlock = null;
 		
+	}
+	
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		if(this.mouseDown && this.selectedBlock != null) {
+			PresentationBlock pres = this.selectedBlock.getPresentationBlock();
+			Vector newPos = new Vector(pres.getPosition().getX() + e.getX() - this.previousMousePos.getX(),pres.getPosition().getY() + e.getY() - this.previousMousePos.getY());
+			pres.setPosition(newPos);
+			this.previousMousePos = new Vector(e.getX(), e.getY());
+			repaint();
+		}
 	}
 }
