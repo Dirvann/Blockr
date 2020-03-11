@@ -7,7 +7,10 @@ public class MoveForward extends ActionBlock {
 
 	@Override
 	public void performAction(GameController gameController) {
-		gameController.getGameWorld().robotStepForwards();		
+		if (gameController == null) 
+			System.out.println("Move Forward");
+		else
+			gameController.getGameWorld().robotStepForwards();		
 	}
 
 }

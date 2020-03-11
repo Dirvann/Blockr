@@ -42,7 +42,7 @@ public class TestsLogicalBlocks {
 		mF1.setNextBlock(tR1);
 		mF1.setNextBlock(tL1); // result mF1 - tL1 - tR1
 		whileBlock1.setConditionBlock(not1);
-		not1.setNextConditon(iswall1); // isWall returns false for now
+		not1.setNextCondition(iswall1); // isWall returns false for now
 		whileBlock1.setBodyBlock(mF1);
 		/*
 		 * moveForward() 
@@ -64,7 +64,7 @@ public class TestsLogicalBlocks {
 		int i = 0;
 		while (current != null && i < desiredResult.length) {
 			assertEquals(desiredResult[i], current);
-			current = current.execute();
+			current = current.execute(null);
 			i += 1;
 		}
 
@@ -84,7 +84,7 @@ public class TestsLogicalBlocks {
 		int i = 0;
 		while (current != null && i < desiredResult.length) {
 			assertEquals(desiredResult[i], current);
-			current = current.execute();
+			current = current.execute(null);
 			i += 1;
 		}		
 		assertEquals(desiredResult.length, i);
@@ -103,7 +103,7 @@ public class TestsLogicalBlocks {
 		int i = 0;
 		while (current != null && i < desiredResult.length) {
 			assertEquals(desiredResult[i], current);
-			current = current.execute();
+			current = current.execute(null);
 			i += 1;
 		}
 		assertEquals(desiredResult.length, i);
@@ -115,7 +115,7 @@ public class TestsLogicalBlocks {
 	public void addRemoveSimpleBlock() {
 		clearAll(); // remove all links of the blocks
 		startBlock.setNextBlock(ifBlock1);
-		not1.setNextConditon(iswall1);
+		not1.setNextCondition(iswall1);
 		ifBlock1.setConditionBlock(not1);
 		ifBlock1.setBodyBlock(mF1);
 		tR1.setNextBlock(tL1);

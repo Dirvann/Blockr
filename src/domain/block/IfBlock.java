@@ -14,7 +14,7 @@ public class IfBlock extends SingleSurroundingBlock {
 			throw new Exception("If-Block does not have a complete condition");
 		}
 		if (this.getBodyBlock() != null) {
-			if (getConditionBlock().evaluate()) {
+			if (getConditionBlock().evaluate(gameController)) {
 				return this.getBodyBlock();
 			}
 		}

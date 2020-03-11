@@ -14,7 +14,7 @@ public class WhileBlock extends SingleSurroundingBlock {
 		if (getConditionBlock() == null || !getConditionBlock().isValidCondition()) {
 			throw new Exception("While-Block does not have a complete condition");
 		}
-		if (getConditionBlock().evaluate()) {
+		if (getConditionBlock().evaluate(gameController)) {
 			if (this.getBodyBlock() == null) throw new Exception("infinite loop in while");
 			return this.getBodyBlock();
 		}
