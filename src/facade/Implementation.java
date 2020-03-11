@@ -169,6 +169,12 @@ public class Implementation implements Facade{
 		gameController.setGameWorld(gameWorld);
 	}
 
+	@Override
+	public boolean addBodyBlock(SurroundingBlock surroundingBlock, SequenceBlock block) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 	
 	

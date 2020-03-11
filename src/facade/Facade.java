@@ -1,7 +1,9 @@
 package facade;
 
 import domain.GameController;
+import domain.block.abstract_classes.SurroundingBlock;
 import domain.block.block_types.Block;
+import domain.block.block_types.SequenceBlock;
 import domain.game_world.GameWorld;
 import domain.game_world.Grid;
 import domain.game_world.Vector;
@@ -40,6 +42,8 @@ public interface Facade {
 	 * @Post blockToDisconnct is disconnected.
 	 */
 	public boolean disconnect(Block blockToDisconnect);
+	
+	public boolean addBodyBlock(SurroundingBlock surroundingBlock, SequenceBlock block);
 	
 
 	
