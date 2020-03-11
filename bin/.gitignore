@@ -1,4 +1,6 @@
-/domain/
-/testsuites/
 /canvaswindow/
 /presentation/
+/testsuites/
+/domain/
+/facade/
+/gui/

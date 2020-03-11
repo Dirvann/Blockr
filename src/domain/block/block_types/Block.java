@@ -1,6 +1,7 @@
 package domain.block.block_types;
 
 public abstract class Block {
+	private int ID;
 
 	/**
 	 * 
@@ -9,5 +10,14 @@ public abstract class Block {
 	 */
 	public Block execute() throws Exception{
 		return null;		
+	}
+	
+	public void setID(int newID) {
+		this.ID = newID;
+	}
+	
+
+	public int getID(int newID) {
+		return this.ID;
 	}
 }

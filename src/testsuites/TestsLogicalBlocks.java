@@ -1,12 +1,8 @@
 package testsuites;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.awt.List;
-import java.sql.Array;
-import java.util.ArrayList;
-
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import domain.block.*;
 import domain.block.block_types.*;
@@ -37,7 +33,7 @@ public class TestsLogicalBlocks {
 		
 	}
 	
-	//General tests to see if exectute, if and while works in a normal case
+	//General tests to see if execute, if and while works in a normal case
 
 	public static void init1() {
 		clearAll();
@@ -49,7 +45,12 @@ public class TestsLogicalBlocks {
 		not1.setNextConditon(iswall1); // isWall returns false for now
 		whileBlock1.setBodyBlock(mF1);
 		/*
-		 * moveForward() while(not istWall()){ moveForward() turnLeft() turnRight() }
+		 * moveForward() 
+		 * while(not istWall()){ 
+		 * 		moveForward()
+		 * 		turnLeft() 
+		 * 		turnRight() 
+		 *  }
 		 */
 	}
 
@@ -76,8 +77,9 @@ public class TestsLogicalBlocks {
 		init1();
 		mF1.setNextBlock(ifBlock1);
 		ifBlock1.setConditionBlock(iswall1);
+		ifBlock1.setBodyBlock(mF2);
 		
-		Block[] desiredResult = {startBlock, whileBlock1, mF1, ifBlock1, mF1, ifBlock1};
+		Block[] desiredResult = {startBlock, whileBlock1, mF1, ifBlock1,tL1, tR1, mF1, ifBlock1, tL1, tR1};
 		Block current = startBlock;
 		int i = 0;
 		while (current != null && i < desiredResult.length) {
@@ -137,7 +139,22 @@ public class TestsLogicalBlocks {
 		
 		
 	}
+	
+	@Test void previousAndNext() {
+		init1();
+		assertNull( startBlock.getPreviousBlock()); 
+		assertEquals(whileBlock1, startBlock.getNextBlock());
+		
+		assertNull(whileBlock1.getNextBlock()); 
+		assertEquals(startBlock, whileBlock1.getPreviousBlock());
+		
+		assertNull(mF1.getPreviousBlock());
+		assertEquals(tL1, mF1.getNextBlock());
+
+		assertEquals(tR1, tL1.getNextBlock());
+		assertEquals(mF1, tL1.getPreviousBlock());
+		
+		
+	}
 
 }
-
-

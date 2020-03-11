@@ -6,6 +6,11 @@ public abstract class SequenceBlock extends Block {
 
 	private SurroundingBlock surroundingBlock = null;
 	protected SequenceBlock next = null;
+	protected SequenceBlock previous = null;
+	
+	public SequenceBlock getPreviousBlock() {
+		return this.previous;
+	}
 	// TODO: Comments
 
 	/**
@@ -42,16 +47,21 @@ public abstract class SequenceBlock extends Block {
 	public void setNextBlock(SequenceBlock block) {
 
 		block.setSurroundingBlock(this.surroundingBlock);
+		block.previous = this;
 
 		if (this.next == null) {
 			this.next = block;// TODO: verify that there are no loops
-		} else {
+		} 
+		else {
 			SequenceBlock last = block.getLastBlock();
 
 			if (block instanceof SurroundingBlock) {
 				block.setNextBlock(this.next);
-			} else
+			} 
+			else {
 				last.setNextBlock(this.next);
+				this.next.previous = last;
+			}
 			this.next = block;
 
 		}
@@ -70,7 +80,7 @@ public abstract class SequenceBlock extends Block {
 	 * 
 	 * @return Last block of the group of connected blocks with this block.
 	 */
-	private SequenceBlock getLastBlock() {
+	public SequenceBlock getLastBlock() {
 		if (this.next == null) {
 			return this;
 		} else
