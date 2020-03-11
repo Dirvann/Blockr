@@ -24,7 +24,7 @@ public abstract class ConditionBlock extends Block{
 		this.next = condition;
 	}
 
-	public Block getPrevious() {
+	public ConditionBlock getPrevious() {
 		return previous;
 	}
 

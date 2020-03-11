@@ -10,6 +10,7 @@ public class GameController {
 	
 	public GameController() {
 		this.programArea = new ProgramArea();
+		this.gameWorld = new GameWorld();
 	}
 	
 	public GameController(GameWorld gameWorld) {
@@ -34,8 +35,24 @@ public class GameController {
 		programArea.executeNextBlock(this);
 	}
 	
+	public void setGameWorld(GameWorld gameWorld) {
+		this.gameWorld = gameWorld;
+	}
+	
 	public GameWorld getGameWorld() {
 		return this.gameWorld;
+	}
+	
+	public void addTopLevelBlock(Block block) {
+		programArea.addTopLevelBlock(block);
+	}
+	
+	public void removeTopLevelBlock(Block block) {
+		try {
+			programArea.removeTopLevelBlock(block);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 } 
