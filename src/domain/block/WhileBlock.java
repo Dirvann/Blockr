@@ -1,8 +1,8 @@
 package domain.block;
 
+import domain.GameController;
 import domain.block.abstract_classes.SingleSurroundingBlock;
 import domain.block.block_types.Block;
-import domain.block.block_types.SequenceBlock;
 
 public class WhileBlock extends SingleSurroundingBlock {
 	
@@ -10,25 +10,15 @@ public class WhileBlock extends SingleSurroundingBlock {
 		
 	}
 	
-	public Block execute() throws Exception {
-		if (!this.hasValidCondition()) {
-			throw new Exception("If-Block does not have a complete condition");
+	public Block execute(GameController gameController) throws Exception {
+		if (getConditionBlock() == null || !getConditionBlock().isValidCondition()) {
+			throw new Exception("While-Block does not have a complete condition");
 		}
-		if (this.evaluateCondition()) {
+		if (getConditionBlock().evaluate()) {
+			if (this.getBodyBlock() == null) throw new Exception("infinite loop in while");
 			return this.getBodyBlock();
 		}
 		return this.getNextBlock();
-	}
-	
-	public SequenceBlock getNextAfterLoop() {
-		if (this.hasValidCondition()) {
-			if (this.evaluateCondition()) {
-				return this.getBodyBlock();
-			}
-			return this.getNextBlock();
-			
-		}
-		return null;
 	}
 
 }

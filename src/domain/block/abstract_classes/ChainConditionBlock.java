@@ -20,5 +20,10 @@ public abstract class ChainConditionBlock extends ConditionBlock{
 		setNextCondition(block);
 	}
 
+	public boolean isValidCondition() {
+		if (getNextCondition() != null)
+			return getNextCondition().isValidCondition();
+		return false;
+	}
 
 }

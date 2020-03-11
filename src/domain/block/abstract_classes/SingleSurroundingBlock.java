@@ -1,5 +1,5 @@
 package domain.block.abstract_classes;
 
-public class SingleSurroundingBlock extends SurroundingBlock {
+public abstract class SingleSurroundingBlock extends SurroundingBlock {
 	
 }

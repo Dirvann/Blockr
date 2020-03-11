@@ -43,4 +43,8 @@ public abstract class ConditionBlock extends Block{
 			i = i.getNextCondition();
 		}
 	}
+	
+	abstract public boolean isValidCondition();
+
+	abstract public boolean evaluate();
 }
