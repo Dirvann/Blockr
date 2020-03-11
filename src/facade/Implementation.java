@@ -111,7 +111,9 @@ public class Implementation implements Facade{
 
 	@Override
 	public void deleteBlock(Block block) {
-		// TODO Auto-generated method stub
+		disconnect(block);
+		block = null;
+		//TODO counter adding
 		
 	}
 
