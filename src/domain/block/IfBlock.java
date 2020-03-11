@@ -18,6 +18,24 @@ public class IfBlock extends SingleSurroundingBlock {
 				return this.getBodyBlock();
 			}
 		}
+		if (this.getNextBlock() == null) {
+			if (this.getSurroundingBlock() == null) {
+				return null;
+			}
+			return this.getSurroundingBlock().getNextAfterLoop();
+		}
+		return this.getNextBlock();
+	}
+
+	@Override
+	public SequenceBlock getNextAfterLoop() {
+		if (this.getNextBlock() == null) {
+			if (this.getSurroundingBlock() == null) {
+				return null;
+			}
+			
+			return this.getSurroundingBlock().getNextAfterLoop();
+		}
 		return this.getNextBlock();
 	}
 
