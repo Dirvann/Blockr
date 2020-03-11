@@ -87,7 +87,6 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
         g.drawLine(canvas.getWidth() - (int) (worldProportion * canvas.getWidth()), 0, canvas.getWidth() - (int) (worldProportion * canvas.getWidth()), canvas.getHeight());
         
         drawWorld(g, this.gameWorld, this.blockList);
-        
     }
     
     public void drawWorld(Graphics g, GameWorld gameWorld, Block[] blockList) {
@@ -189,8 +188,8 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 	@Override
 	public void mousePressed(MouseEvent e) {
 		Vector p = this.blockList[0].getPresentationBlock().getPosition();
-		int width = PresentationBlock.blockWidth;
-		int height = PresentationBlock.blockHeight;
+		int width = PresentationBlock.getBlockWidth();
+		int height = PresentationBlock.getBlockHeight();
 		
 		if(e.getX() > p.getX() && e.getX() < (width + p.getX()) && e.getY() > p.getY() && e.getY() < (p.getY() + height)) {
 			this.selectedBlock = this.blockList[0];

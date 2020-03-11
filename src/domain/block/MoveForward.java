@@ -2,8 +2,14 @@ package domain.block;
 
 import domain.GameController;
 import domain.block.abstract_classes.ActionBlock;
+import domain.game_world.Vector;
+import presentation.block.PresentationBlock;
 
 public class MoveForward extends ActionBlock {
+
+	public MoveForward(Vector pos) {
+		super(pos);
+	}
 
 	@Override
 	public void performAction(GameController gameController) {

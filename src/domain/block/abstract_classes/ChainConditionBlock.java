@@ -1,8 +1,16 @@
 package domain.block.abstract_classes;
 
 import domain.block.block_types.ConditionBlock;
+import domain.game_world.Vector;
+import presentation.block.ChainConditionBlockPresentation;
 
 public abstract class ChainConditionBlock extends ConditionBlock{
+	
+	private ChainConditionBlockPresentation presentationBlock;
+	
+	public ChainConditionBlock(Vector pos) {
+		this.presentationBlock = new ChainConditionBlockPresentation(pos, this);
+	}
 	
 	/**
 	 * 
@@ -24,6 +32,11 @@ public abstract class ChainConditionBlock extends ConditionBlock{
 		if (getNextCondition() != null)
 			return getNextCondition().isValidCondition();
 		return false;
+	}
+	
+	@Override
+	public ChainConditionBlockPresentation getPresentationBlock() {
+		return this.presentationBlock;
 	}
 
 }

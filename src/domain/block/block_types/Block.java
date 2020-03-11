@@ -1,6 +1,7 @@
 package domain.block.block_types;
 
 import domain.GameController;
+import presentation.block.PresentationBlock;
 
 public abstract class Block {
 
@@ -12,4 +13,7 @@ public abstract class Block {
 	public Block execute(GameController gameController) throws Exception{
 		return null;
 	}
+	
+	public abstract PresentationBlock getPresentationBlock();
+	
 }
