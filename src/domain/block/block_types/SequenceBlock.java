@@ -37,22 +37,27 @@ public abstract class SequenceBlock extends Block {
 	/**
 	 * 
 	 * @param block The first block (of a group of blocks) which will be added
-	 *              between this and this.getNextBlock(). 
+	 *              between this and this.getNextBlock().
 	 * 
 	 */
 	public void setNextBlock(SequenceBlock block) {
 
-		block.setSurroundingBlock(this.surroundingBlock);
-		block.previous = this;
+		if (block == null)
+			removeNextBlock();
+		else {
+			block.setSurroundingBlock(this.surroundingBlock);
+			block.previous = this;
 
-		SequenceBlock last = block;
-		while (last.getNextBlock() != null) {
-			last = last.getNextBlock();
+			SequenceBlock last = block;
+			while (last.getNextBlock() != null) {
+				last = last.getNextBlock();
+			}
+			last.next = getNextBlock();
+			if (getNextBlock() != null)
+				getNextBlock().previous = last;
+			next = block;
 		}
-		last.setNextBlock(getNextBlock());
-		if (getNextBlock() != null) getNextBlock().previous = last;
-		setNextBlock(block);
-			
+
 	}
 
 	/**
@@ -63,7 +68,6 @@ public abstract class SequenceBlock extends Block {
 		SequenceBlock nextBlock = next;
 		return nextBlock;
 	}
-	
 
 	/**
 	 * removes all the next blocks on the same level (same surrounding bloc). This
@@ -76,7 +80,7 @@ public abstract class SequenceBlock extends Block {
 			this.next = null;
 		}
 	}
-	
+
 	public abstract Block execute(GameController gamecontroller) throws Exception;
 
 }

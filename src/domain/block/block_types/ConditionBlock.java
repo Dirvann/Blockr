@@ -37,10 +37,9 @@ public abstract class ConditionBlock extends Block{
 	}
 
 	public void setSurroundingBlock(SurroundingBlock surroundingBlock) {
-		this.surroundingBlock = surroundingBlock;
 		ConditionBlock i = this;
 		while (i != null) {
-			i.setSurroundingBlock(surroundingBlock);
+			i.surroundingBlock = surroundingBlock;
 			i = i.getNextCondition();
 		}
 	}

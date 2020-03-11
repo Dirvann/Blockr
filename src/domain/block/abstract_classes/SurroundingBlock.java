@@ -62,7 +62,7 @@ public abstract class SurroundingBlock extends SequenceBlock{
 			getConditionBlock().setPrevious(last);
 			last.setNextCondition(getConditionBlock());
 		}
-		setConditionBlock(block);
+		condition = block;
 		
 	}
 
