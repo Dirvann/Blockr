@@ -140,7 +140,9 @@ public class TestsLogicalBlocks {
 		
 	}
 	
-	@Test void previousAndNext() {
+	@Test 
+	void previousAndNext() {
+		System.out.printf("\n test prev and next \n" + "____________________________________________________________" + "\n" + "\n");
 		init1();
 		assertNull( startBlock.getPreviousBlock()); 
 		assertEquals(whileBlock1, startBlock.getNextBlock());
@@ -156,8 +158,40 @@ public class TestsLogicalBlocks {
 		
 		mF1.removeNextBlock();
 		
-		assertEquals(mF1, mF1.getNextBlock());
+		assertNull(mF1.getNextBlock());
 		assertNull(tL1.getPreviousBlock());
+	}
+	
+	
+	@Test
+	void testIf() throws Exception {
+		System.out.printf("\n test if loop \n" + "____________________________________________________________" + "\n" + "\n");
+
+		init1();
+		/*
+		 * moveForward() 
+		 * while(not istWall()){ 
+		 * 		moveForward()
+		 * 		turnLeft() 
+		 * 		turnRight() 
+		 *  }
+		 */
+		
+		mF1.setNextBlock(ifBlock1);
+		ifBlock1.setBodyBlock(mF2);
+		ifBlock1.setConditionBlock(not1); //still not iswall
+		
+		Block[] desiredResult = {startBlock, whileBlock1, mF1, ifBlock1, mF2, tL1, tR1,  whileBlock1, mF1, ifBlock1, mF2, tL1, tR1};
+		Block current = startBlock;
+		int i = 0;
+		while (current != null && i < desiredResult.length) {
+			assertEquals(desiredResult[i], current);
+			current = current.execute(null);
+			
+			i += 1;
+		}
+		assertEquals(desiredResult.length, i);
+		
 	}
 	
 	

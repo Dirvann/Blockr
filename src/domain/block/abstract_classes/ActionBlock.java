@@ -14,10 +14,10 @@ public abstract class ActionBlock extends SequenceBlock{
 		
 		if (this.getNextBlock() == null) {
 			if (this.getSurroundingBlock() == null) {
-				return null; //TODO Misschien al een end_block toevoegen in Backend Programming
+				return null;
 			}
 			
-			return this.getSurroundingBlock();
+			return this.getSurroundingBlock().getNextAfterLoop();
 		}
 		return this.getNextBlock();
 	}
