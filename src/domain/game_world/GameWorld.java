@@ -63,9 +63,11 @@ public class GameWorld {
 	public void robotStepForwards() {
 		try {
 			Vector positionInFront = getRobot().getPositionInFront();
-			if (getGrid().getCell(positionInFront) instanceof RobotCanEnter);
+			if (getGrid().getCell(positionInFront) instanceof RobotCanEnter) {
 				getRobot().stepForwards();
+			}
 		} catch (Exception e) {
+			System.out.print("hiersiee");
 			e.printStackTrace();
 		}
 		
