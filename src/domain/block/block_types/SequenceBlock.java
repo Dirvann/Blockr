@@ -1,5 +1,6 @@
 package domain.block.block_types;
 
+import domain.GameController;
 import domain.block.abstract_classes.SurroundingBlock;
 
 public abstract class SequenceBlock extends Block {
@@ -75,5 +76,7 @@ public abstract class SequenceBlock extends Block {
 			this.next = null;
 		}
 	}
+	
+	public abstract Block execute(GameController gamecontroller) throws Exception;
 
 }

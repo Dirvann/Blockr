@@ -13,5 +13,4 @@ public class NotBlock extends ChainConditionBlock {
 		}
 		return !this.getNextCondition().evaluate();
 	}
-
 }
