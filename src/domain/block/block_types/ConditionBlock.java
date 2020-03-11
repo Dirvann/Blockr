@@ -1,5 +1,6 @@
 package domain.block.block_types;
 
+import domain.GameController;
 import domain.block.abstract_classes.SurroundingBlock;
 
 public abstract class ConditionBlock extends Block{
@@ -36,11 +37,14 @@ public abstract class ConditionBlock extends Block{
 	}
 
 	public void setSurroundingBlock(SurroundingBlock surroundingBlock) {
-		this.surroundingBlock = surroundingBlock;
 		ConditionBlock i = this;
 		while (i != null) {
-			i.setSurroundingBlock(surroundingBlock);
+			i.surroundingBlock = surroundingBlock;
 			i = i.getNextCondition();
 		}
 	}
+	
+	abstract public boolean isValidCondition();
+
+	abstract public boolean evaluate(GameController gamecontroller);
 }

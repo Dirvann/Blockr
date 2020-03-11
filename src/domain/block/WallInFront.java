@@ -1,5 +1,6 @@
 package domain.block;
 
+import domain.GameController;
 import domain.block.abstract_classes.SingleConditionBlock;
 
 public class WallInFront extends SingleConditionBlock {
@@ -8,9 +9,13 @@ public class WallInFront extends SingleConditionBlock {
 		
 	}
 	
-	public boolean evaluate() {
-		//TODO
-		return false;
+	public boolean evaluate(GameController gameController) {
+
+		if (gameController == null) {
+			return false;
+		}		
+		else
+			return gameController.getGameWorld().robotWallInFront();
 	}
 
 }

@@ -37,6 +37,15 @@ public class ProgramArea {
 		} 
 	}
 	
+	public void executeNextBlock(GameController gameController) {
+		try {
+			nextToExecute = nextToExecute.execute(gameController);
+		} catch (Exception e) {
+			System.out.println("Execution of next block failed in ProgramArea");
+			e.printStackTrace();
+		}
+	}
+	
 	public void addTopLevelBlock(Block block) {
 		topLevelBlocks.add(block);
 	}
@@ -54,12 +63,5 @@ public class ProgramArea {
 		return this.nextToExecute;
 	}
 	
-	public void finishBlockExecution() {
-		try {
-			nextToExecute = nextToExecute.execute();
-		} catch (Exception e) {
-			System.out.println("Block not executable");
-			e.printStackTrace();
-		}
-	}
+
 }

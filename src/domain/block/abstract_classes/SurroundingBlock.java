@@ -3,7 +3,7 @@ package domain.block.abstract_classes;
 import domain.block.block_types.ConditionBlock;
 import domain.block.block_types.SequenceBlock;
 
-public class SurroundingBlock extends SequenceBlock{	
+public abstract class SurroundingBlock extends SequenceBlock{	
 	
 	private ConditionBlock condition = null;
 	private SequenceBlock bodyBlock = null;
@@ -62,7 +62,7 @@ public class SurroundingBlock extends SequenceBlock{
 			getConditionBlock().setPrevious(last);
 			last.setNextCondition(getConditionBlock());
 		}
-		setConditionBlock(block);
+		condition = block;
 		
 	}
 

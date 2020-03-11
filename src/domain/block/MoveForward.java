@@ -1,16 +1,16 @@
 package domain.block;
 
+import domain.GameController;
 import domain.block.abstract_classes.ActionBlock;
 
 public class MoveForward extends ActionBlock {
 
-	public MoveForward() {
-		
-	}
-	
-	public void performAction() {
-		//TODO
-		System.out.println("Moved Forward");
+	@Override
+	public void performAction(GameController gameController) {
+		if (gameController == null) 
+			System.out.println("Move Forward");
+		else
+			gameController.getGameWorld().robotStepForwards();		
 	}
 
 }
