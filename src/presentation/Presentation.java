@@ -6,16 +6,14 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import domain.GameController;
-import domain.ProgramArea;
-import domain.block.IfBlock;
-import domain.block.MoveForward;
-import domain.block.TurnLeft;
+import domain.block.abstract_classes.ActionBlock;
+import domain.block.abstract_classes.SingleSurroundingBlock;
+import domain.block.abstract_classes.SurroundingBlock;
 import domain.block.block_types.Block;
 import domain.game_world.Direction;
 import domain.game_world.GameWorld;
@@ -25,7 +23,8 @@ import domain.game_world.Vector;
 import domain.game_world.cell.Cell;
 import domain.game_world.cell.Goal;
 import domain.game_world.cell.Wall;
-import presentation.block.PresentationBlock;
+import presentation.block.*;
+
 
 public class Presentation extends Canvas implements MouseListener, MouseMotionListener {
 	
@@ -40,14 +39,12 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 	double panelProportion = 0.2;
 	double codeProportion = 0.5;
 	double worldProportion = 0.3;
-	
-	Block[] blockList;
-	
+		
 	GameWorld gameWorld;
 	
 	Vector mouseDownStartPosition = new Vector(0,0);
 	boolean mouseDown = false;
-	Block selectedBlock = null;
+	PresentationBlock<?> selectedBlock = null;
 	Vector previousMousePos = null;
 	
 	GameController gameController;
@@ -101,10 +98,9 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
         
         // If (!gameController.maxNumberBlocksReached()) {
         paletteP.paint(g);
+        programAreaP.paint(g); 
         
         drawWorld(g, this.gameWorld);
-        
-        drawBlocks(g, gameController.getProgramArea().getTopBlocks());
     }
     
     
@@ -129,17 +125,9 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
     		g.drawLine(worldStartX, worldStartY + cellHeight * i, worldStartX + worldWidth, worldStartY + cellHeight*i);
     	}
     	
-    	drawCells(g, gameWorld, cellWidth, cellHeight, worldStartX, worldStartY);
-    	
-    	
+    	drawCells(g, gameWorld, cellWidth, cellHeight, worldStartX, worldStartY);   	
     }
     
-    private void drawBlocks(Graphics g, List<Block> blockList) {
-		for(Block b: blockList) {
-			b.getPresentationBlock().draw(g);
-		}
-		
-	}
 
 	void drawCells(Graphics g, GameWorld gameWorld, int cellWidth, int cellHeight, int worldStartX, int worldStartY) {
     	Grid grid = gameWorld.getGrid();
@@ -206,22 +194,22 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		Vector p = this.blockList[0].getPresentationBlock().getPosition();
-		int width = PresentationBlock.getBlockWidth();
-		int height = PresentationBlock.getBlockHeight();
-		
-		if(e.getX() > p.getX() && e.getX() < (width + p.getX()) && e.getY() > p.getY() && e.getY() < (p.getY() + height)) {
-			this.selectedBlock = this.blockList[0];
-		}
-		
 		Vector mousePos = new Vector(e.getX(), e.getY());
 		
-		for(Block block: gameController.getProgramArea().getAllBlocks()) {
-			if(block.getPresentationBlock().collidesWithPosition(mousePos)) {
-				this.selectedBlock = block;
-				break;
-			}
+		PresentationBlock<Block> paletteBlockP = paletteP.GetClickedPaletteBlock(mousePos);
+		// Clicked block in palette
+		// Create functional copy of paletteBlock and add to programArea
+		if (paletteBlockP != null) {
+			// Create copy
 		}
+			
+			
+		
+		PresentationBlock<Block> programBlockP = programAreaP.getClickedBlock(mousePos);
+		if (programBlockP != null) {
+			selectedBlock = programBlockP;
+		}
+		
 		previousMousePos = mousePos;
 		this.mouseDown = true;
 		
@@ -244,9 +232,8 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		if(this.mouseDown && this.selectedBlock != null) {
-			PresentationBlock<?> pres = this.selectedBlock.getPresentationBlock();
-			Vector newPos = new Vector(pres.getPosition().getX() + e.getX() - this.previousMousePos.getX(),pres.getPosition().getY() + e.getY() - this.previousMousePos.getY());
-			pres.setPosition(newPos);
+			Vector newPos = new Vector(selectedBlock.getPosition().getX() + e.getX() - this.previousMousePos.getX(),selectedBlock.getPosition().getY() + e.getY() - this.previousMousePos.getY());
+			selectedBlock.setPosition(newPos);
 			this.previousMousePos = new Vector(e.getX(), e.getY());
 			repaint();
 		}
