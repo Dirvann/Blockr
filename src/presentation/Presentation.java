@@ -238,6 +238,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 		Vector mousePos = new Vector(e.getX(), e.getY());
 		
 		if (this.selectedBlock != null) {
+			// Check for snapping
 			Vector snapLocation = selectedBlock.getPossibleSnapLocation();
 			System.out.println("Checking location (" + snapLocation.getX() + ", " + snapLocation.getY() + ")");
 			PresentationBlock blockToGetSnappedTo = programAreaP.getBlockAtPosition(snapLocation);
@@ -245,11 +246,19 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 				// TODO: yeah this wont do it
 				System.out.println("SNAP!");
 			}
+			
+			// Delete if over palette
+			int paletteBorder = (int) (panelProportion * canvas.getWidth());
+			if (mousePos.getX() < paletteBorder) {
+				programAreaP.removeBlock(selectedBlock);
+				// TODO: recursively delete all connected blocks
+			}
+			
 		}
 		
 		this.mouseDown = false;
 		this.selectedBlock = null;
-		
+		repaint();
 	}
 	
 	@Override
