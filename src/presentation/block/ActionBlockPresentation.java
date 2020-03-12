@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import domain.game_world.Vector;
 
-public abstract class ActionBlockPresentation extends PresentationBlock {
+public abstract class ActionBlockPresentation extends SequenceBlockPresentation {
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(Color.GREEN);

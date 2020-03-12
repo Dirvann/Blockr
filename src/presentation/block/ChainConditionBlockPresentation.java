@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import domain.game_world.Vector;
 
-public abstract class ChainConditionBlockPresentation extends PresentationBlock {
+public abstract class ChainConditionBlockPresentation extends ConditionBlockPresentation {
 
 	@Override
 	public void draw(Graphics g) {

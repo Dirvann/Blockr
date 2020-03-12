@@ -29,7 +29,7 @@ public class ProgramAreaPresentation {
 		programAreaBlocks.remove(pBlock);
 	}
 	
-	public PresentationBlock getClickedBlock(Vector position) {
+	public PresentationBlock getBlockAtPosition(Vector position) {
 		for (PresentationBlock pBlock: programAreaBlocks) {
 			if (pBlock.collidesWithPosition(position)) {
 				return pBlock;
@@ -38,7 +38,6 @@ public class ProgramAreaPresentation {
 		
 		return null;
 	}
-	
 	
 	
 }

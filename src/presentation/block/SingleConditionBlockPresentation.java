@@ -2,9 +2,10 @@ package presentation.block;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
 import domain.game_world.Vector;
 
-public abstract class SingleConditionBlockPresentation extends PresentationBlock {
+public abstract class SingleConditionBlockPresentation extends ConditionBlockPresentation {
 	
 	@Override
 	public void draw(Graphics g) {

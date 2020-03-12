@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import domain.game_world.Vector;
 
-public abstract class SingleSurroundBlockPresentation extends PresentationBlock {
+public abstract class SingleSurroundBlockPresentation extends SequenceBlockPresentation {
 
 	@Override
 	public void draw(Graphics g) {

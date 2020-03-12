@@ -57,6 +57,8 @@ public abstract class PresentationBlock {
 	}
 	
 	public abstract PresentationBlock getNewBlockOfThisType(Block block) throws Exception;
+	
+	public abstract Vector getPossibleSnapLocation();
 
 	public String getPresentationName() {
 		return presentationName;

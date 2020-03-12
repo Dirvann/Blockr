@@ -221,7 +221,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 			
 			
 		
-		PresentationBlock programBlockP = programAreaP.getClickedBlock(mousePos);
+		PresentationBlock programBlockP = programAreaP.getBlockAtPosition(mousePos);
 		if (programBlockP != null) {
 			selectedBlock = programBlockP;
 		}
@@ -235,6 +235,18 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		Vector mousePos = new Vector(e.getX(), e.getY());
+		
+		if (this.selectedBlock != null) {
+			Vector snapLocation = selectedBlock.getPossibleSnapLocation();
+			System.out.println("Checking location (" + snapLocation.getX() + ", " + snapLocation.getY() + ")");
+			PresentationBlock blockToGetSnappedTo = programAreaP.getBlockAtPosition(snapLocation);
+			if (blockToGetSnappedTo != null) {
+				// TODO: yeah this wont do it
+				System.out.println("SNAP!");
+			}
+		}
+		
 		this.mouseDown = false;
 		this.selectedBlock = null;
 		
@@ -259,7 +271,6 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == 117) {
 			gameController.setGameWorld(new GameWorld(15, 10));
-			System.out.println("entered If");
 		}
 	}
 	
