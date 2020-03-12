@@ -3,7 +3,6 @@ package domain.block;
 import domain.GameController;
 import domain.block.abstract_classes.SingleSurroundingBlock;
 import domain.block.block_types.Block;
-import domain.game_world.Vector;
 
 public class WhileBlock extends SingleSurroundingBlock {
 	
@@ -21,6 +20,11 @@ public class WhileBlock extends SingleSurroundingBlock {
 			return this.getBodyBlock();
 		}
 		return this.getNextBlock();
+	}
+
+	@Override
+	public Block getNewBlockOfThisType() {
+		return new WhileBlock();
 	}
 
 }

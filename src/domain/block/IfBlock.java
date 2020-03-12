@@ -3,8 +3,6 @@ package domain.block;
 import domain.GameController;
 import domain.block.abstract_classes.SingleSurroundingBlock;
 import domain.block.block_types.*;
-import domain.game_world.Vector;
-import presentation.block.PresentationBlock;
 
 public class IfBlock extends SingleSurroundingBlock {
 	
@@ -43,6 +41,13 @@ public class IfBlock extends SingleSurroundingBlock {
 			return this.getSurroundingBlock().getNextAfterLoop();
 		}
 		return this.getNextBlock();
+	}
+
+
+	
+	@Override
+	public Block getNewBlockOfThisType() {
+		return new IfBlock();
 	}
 
 }

@@ -2,7 +2,7 @@ package domain.block;
 
 import domain.GameController;
 import domain.block.abstract_classes.SingleConditionBlock;
-import domain.game_world.Vector;
+import domain.block.block_types.Block;
 
 public class WallInFront extends SingleConditionBlock {
 	
@@ -18,6 +18,11 @@ public class WallInFront extends SingleConditionBlock {
 		}		
 		else
 			return gameController.getGameWorld().robotWallInFront();
+	}
+
+	@Override
+	public Block getNewBlockOfThisType() {
+		return new WallInFront();
 	}
 
 }
