@@ -20,4 +20,15 @@ public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
 		g.fillRect(pos.getX(), pos.getY(), PresentationBlock.getBlockWidth(), PresentationBlock.getBlockHeight());
 	}
 
+	@Override
+	public boolean conditionCanSnap(int x, int y) {
+		return false;
+	}
+
+	@Override
+	public boolean sequenceBlockCanSnap(int x, int y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

@@ -57,5 +57,10 @@ public abstract class PresentationBlock<T>{
 		this.block = block;
 	}
 	
+	public abstract boolean conditionCanSnap(int x, int y);
+	
+	public abstract boolean sequenceBlockCanSnap(int x, int y);
+	
+	
 	
 }

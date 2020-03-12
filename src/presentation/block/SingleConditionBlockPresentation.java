@@ -20,4 +20,15 @@ public class SingleConditionBlockPresentation extends PresentationBlock<SingleCo
 	
 	}
 
+	@Override
+	public boolean conditionCanSnap(int x, int y) {
+		return false;
+	}
+
+	@Override
+	public boolean sequenceBlockCanSnap(int x, int y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
