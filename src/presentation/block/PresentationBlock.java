@@ -54,6 +54,10 @@ public abstract class PresentationBlock<T extends Block>{
 		return blockHeight;
 	}
 	
+	public int getTotalHeight() {
+		return getBlockHeight();
+	}
+	
 	public static int getBlockSideWidth() {
 		return blockSideWidth;
 	}
@@ -76,17 +80,16 @@ public abstract class PresentationBlock<T extends Block>{
 		this.block = block;
 	}
 	
+	public abstract boolean conditionCanSnap(Vector v);
 	public Font getFont() {
 		return font;
 	}
-	
-	public abstract boolean conditionCanSnap(int x, int y);
 	abstract public int getHeight();
 
 
 	protected abstract Vector getNextBlockPosition(PresentationBlock<?> presentationBlock);
 	
-	public abstract boolean sequenceBlockCanSnap(int x, int y);
+	public abstract boolean sequenceBlockCanSnap(Vector v);
 	
 	
 	
