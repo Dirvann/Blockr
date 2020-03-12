@@ -53,4 +53,16 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 	}
 
 
+	@Override
+	public boolean conditionCanSnap(int x, int y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean sequenceBlockCanSnap(int x, int y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

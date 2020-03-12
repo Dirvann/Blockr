@@ -73,10 +73,14 @@ public abstract class PresentationBlock<T extends Block>{
 		this.block = block;
 	}
 	
+	public abstract boolean conditionCanSnap(int x, int y);
 	abstract public int getHeight();
 
 
 	protected abstract Vector getNextBlockPosition(PresentationBlock<?> presentationBlock);
+	
+	public abstract boolean sequenceBlockCanSnap(int x, int y);
+	
 	
 	
 }

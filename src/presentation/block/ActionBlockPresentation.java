@@ -21,6 +21,17 @@ public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
 	}
 
 	@Override
+	public boolean conditionCanSnap(int x, int y) {
+		return false;
+	}
+
+	@Override
+	public boolean sequenceBlockCanSnap(int x, int y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
 	protected Vector getNextBlockPosition(PresentationBlock<?> presentationBlock) {
 		Vector pos = getPosition();
 		return new Vector(pos.getX(), pos.getY() + PresentationBlock.getBlockHeight());
