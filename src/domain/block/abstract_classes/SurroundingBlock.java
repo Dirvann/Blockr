@@ -1,5 +1,9 @@
 package domain.block.abstract_classes;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import domain.block.block_types.Block;
 import domain.block.block_types.ConditionBlock;
 import domain.block.block_types.SequenceBlock;
 
@@ -80,6 +84,18 @@ public abstract class SurroundingBlock extends SequenceBlock{
 	public SequenceBlock getNextAfterLoop() {
 		return this;
 		
+	}
+	
+	@Override
+	public List<Block> getAllNextBlocks() {
+		List<Block> l = new ArrayList<Block>();
+		
+		l.addAll(super.getAllNextBlocks());
+		
+		if (this.getBodyBlock() != null)
+			l.addAll(getBodyBlock().getAllNextBlocks());
+		
+		return l;
 	}
 
 }

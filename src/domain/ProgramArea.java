@@ -63,5 +63,18 @@ public class ProgramArea {
 		return this.nextToExecute;
 	}
 	
+	public List<Block> getTopBlocks() {
+		return this.topLevelBlocks;
+	}
+	
+	public List<Block> getAllBlocks() {
+		List<Block> list = new ArrayList<Block>();
+		for(Block block: this.getTopBlocks()) {
+			list.addAll(block.getAllNextBlocks());
+		}
+		
+		return list;
+	}
+	
 
 }

@@ -1,5 +1,6 @@
 package presentation.block;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import domain.block.abstract_classes.ChainConditionBlock;
@@ -14,8 +15,10 @@ public class ChainConditionBlockPresentation extends PresentationBlock<ChainCond
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		
+		g.setColor(Color.RED);
+		Vector pos = getPosition();
+		g.fillRect(pos.getX(), pos.getY(), PresentationBlock.getBlockWidth(), PresentationBlock.getBlockHeight());
+	
 	}
 
 }

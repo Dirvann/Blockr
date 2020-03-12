@@ -1,5 +1,8 @@
 package domain.block.block_types;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import domain.GameController;
 import domain.block.abstract_classes.SurroundingBlock;
 
@@ -47,4 +50,16 @@ public abstract class ConditionBlock extends Block{
 	abstract public boolean isValidCondition();
 
 	abstract public boolean evaluate(GameController gamecontroller);
+	
+	@Override
+	public List<Block> getAllNextBlocks() {
+		List<Block> l = new ArrayList<Block>();
+		
+		l.add(this);
+		if(this.getNextCondition() != null) 
+			l.addAll(getNextCondition().getAllNextBlocks());
+		
+		
+		return l;
+	}
 }

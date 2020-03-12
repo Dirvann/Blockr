@@ -1,5 +1,7 @@
 package domain.block.block_types;
 
+import java.util.List;
+
 import domain.GameController;
 import presentation.block.PresentationBlock;
 
@@ -14,6 +16,8 @@ public abstract class Block {
 		return null;
 	}
 	
-	public abstract PresentationBlock getPresentationBlock();
+	public abstract PresentationBlock<?> getPresentationBlock();
+
+	public abstract List<Block> getAllNextBlocks();
 	
 }

@@ -15,7 +15,7 @@ public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
 
 	@Override
 	public void draw(Graphics g) {
-		g.setColor(Color.BLUE);
+		g.setColor(Color.GREEN);
 		Vector pos = getPosition();
 		g.fillRect(pos.getX(), pos.getY(), PresentationBlock.getBlockWidth(), PresentationBlock.getBlockHeight());
 	}

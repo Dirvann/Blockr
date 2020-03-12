@@ -38,4 +38,12 @@ public class GameController {
 		return this.gameWorld;
 	}
 	
+	public ProgramArea getProgramArea() {
+		return this.programArea;
+	}
+	
+	public void setGameWorld(GameWorld g) {
+		this.gameWorld = g;
+	}
+	
 } 

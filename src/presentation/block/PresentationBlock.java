@@ -40,10 +40,13 @@ public abstract class PresentationBlock<T>{
 	}
 	
 	public boolean collidesWithPosition(Vector pos) {
-		/*if(e.getX() > p.getX() && e.getX() < (width + p.getX()) && e.getY() > p.getY() && e.getY() < (p.getY() + height)) {
-			this.selectedBlock = this.blockList[0];
-		}*/
-		return true;
+		if(pos.getX() > this.getPosition().getX() && 
+				pos.getX() < (getBlockWidth() + this.getPosition().getX()) && 
+				pos.getY() > this.getPosition().getY() && 
+				pos.getY() < (this.getPosition().getY() + getBlockHeight())) {
+			return true;
+		}
+		return false;
 	}
 	
 	public T getBlock() {
