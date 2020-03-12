@@ -16,7 +16,9 @@ import domain.ProgramArea;
 import domain.block.IfBlock;
 import domain.block.MoveForward;
 import domain.block.TurnLeft;
+import domain.block.TurnRight;
 import domain.block.block_types.Block;
+import domain.block.block_types.SequenceBlock;
 import domain.game_world.Direction;
 import domain.game_world.GameWorld;
 import domain.game_world.Grid;
@@ -71,11 +73,16 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
     	
     	programArea = gameController.getProgramArea();
     	
+    	SequenceBlock left = new TurnLeft(new Vector(300,300));
+    	
+    	left.setNextBlock(new TurnRight(new Vector(300,300)));
+    	
+    	programArea.addTopLevelBlock(left);
     	
     	
-    	programArea.addTopLevelBlock(new TurnLeft(new Vector(300,300)));
-    	programArea.addTopLevelBlock(new MoveForward(new Vector(100,300)));
-    	programArea.addTopLevelBlock(new IfBlock(new Vector(300,100)));
+    	
+    	//programArea.addTopLevelBlock(new MoveForward(new Vector(100,300)));
+    	//programArea.addTopLevelBlock(new IfBlock(new Vector(300,100)));
     	
     	blockList = new Block[] {new TurnLeft(new Vector(300,300))};
     	
@@ -109,7 +116,8 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
         
         
         
-        drawBlocks(g, gameController.getProgramArea().getTopBlocks());
+     
+        drawBlocks(g, gameController.getProgramArea().getAllBlocks());
     }
     
     public void drawWorld(Graphics g, GameWorld gameWorld) {

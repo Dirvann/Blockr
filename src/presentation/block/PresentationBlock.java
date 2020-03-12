@@ -2,17 +2,19 @@ package presentation.block;
 
 import java.awt.Graphics;
 
+import domain.block.block_types.Block;
 import domain.game_world.Vector;
 
-public abstract class PresentationBlock<T>{
+public abstract class PresentationBlock<T extends Block>{
 	
 	//TODO Store safely, maybe elsewhere.
 	private static final int blockWidth = 100;
 	private static final int blockHeight = 20;
+	private static final int blockSideWidth = 20;
 	
 	private T block;
 	
-	private Vector position;
+	protected Vector position;
 	
 	
 	public PresentationBlock(Vector pos, T block) {
@@ -22,6 +24,16 @@ public abstract class PresentationBlock<T>{
 	
 	
 	public Vector getPosition() {
+		// check if it has a previous block
+		if(getBlock().getPreviousBlock() == null) {
+			return this.position;
+		} 
+		
+		// get the position of the block from the upper block
+		
+		this.setPosition(getBlock().getPreviousBlock().getPresentationBlock().getNextBlockPosition(this));
+		
+		
 		return this.position;
 	}
 	
@@ -37,6 +49,10 @@ public abstract class PresentationBlock<T>{
 	
 	public static int getBlockHeight() {
 		return blockHeight;
+	}
+	
+	public static int getBlockSideWidth() {
+		return blockSideWidth;
 	}
 	
 	public boolean collidesWithPosition(Vector pos) {
@@ -56,6 +72,11 @@ public abstract class PresentationBlock<T>{
 	public void setBlock(T block) {
 		this.block = block;
 	}
+	
+	abstract public int getHeight();
+
+
+	protected abstract Vector getNextBlockPosition(PresentationBlock<?> presentationBlock);
 	
 	
 }

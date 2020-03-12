@@ -30,6 +30,17 @@ public abstract class ConditionBlock extends Block{
 	public Block getPrevious() {
 		return previous;
 	}
+	
+	@Override
+	public Block getPreviousBlock() {
+		if(getPrevious() != null) {
+			return getPrevious();
+		}
+		if (getSurroundingBlock() != null) {
+			return getSurroundingBlock();
+		} 
+		return null;
+	}
 
 	public void setPrevious(ConditionBlock previous) {
 		this.previous = previous;

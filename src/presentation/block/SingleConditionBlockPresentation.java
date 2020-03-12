@@ -17,7 +17,19 @@ public class SingleConditionBlockPresentation extends PresentationBlock<SingleCo
 		g.setColor(Color.ORANGE);
 		Vector pos = getPosition();
 		g.fillRect(pos.getX(), pos.getY(), PresentationBlock.getBlockWidth(), PresentationBlock.getBlockHeight());
-	
 	}
+	
+
+	@Override
+	protected Vector getNextBlockPosition(PresentationBlock<?> presentationBlock) {
+		Vector pos = getPosition();
+		return new Vector(pos.getX() + PresentationBlock.getBlockWidth(), pos.getY());
+	}
+	
+	@Override
+	public int getHeight() {
+		return getBlockHeight();
+	}
+
 
 }

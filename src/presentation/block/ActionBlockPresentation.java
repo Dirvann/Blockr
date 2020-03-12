@@ -20,4 +20,18 @@ public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
 		g.fillRect(pos.getX(), pos.getY(), PresentationBlock.getBlockWidth(), PresentationBlock.getBlockHeight());
 	}
 
+	@Override
+	protected Vector getNextBlockPosition(PresentationBlock<?> presentationBlock) {
+		Vector pos = getPosition();
+		return new Vector(pos.getX(), pos.getY() + PresentationBlock.getBlockHeight());
+	}
+
+	@Override
+	public int getHeight() {
+		return getBlockHeight();
+	}
+	
+	
+	
+
 }
