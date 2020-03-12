@@ -7,8 +7,8 @@ import presentation.block.PresentationBlock;
 
 public class MoveForward extends ActionBlock {
 
-	public MoveForward(Vector pos) {
-		super(pos);
+	public MoveForward() {
+		super();
 	}
 
 	@Override

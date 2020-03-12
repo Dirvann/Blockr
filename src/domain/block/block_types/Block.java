@@ -6,6 +6,8 @@ import domain.GameController;
 import presentation.block.PresentationBlock;
 
 public abstract class Block {
+	
+	private PresentationBlock presentationBlock;
 
 	/**
 	 * 
@@ -16,7 +18,13 @@ public abstract class Block {
 		return null;
 	}
 	
-	public abstract PresentationBlock<?> getPresentationBlock();
+	public PresentationBlock getPresentationBlock() {
+		return this.presentationBlock;
+	}
+	
+	public void setPresentationBlock(PresentationBlock presentationBlock) {
+		
+	}
 
 	public abstract List<Block> getAllNextBlocks();
 	

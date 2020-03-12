@@ -4,7 +4,7 @@ import java.awt.Graphics;
 
 import domain.game_world.Vector;
 
-public abstract class PresentationBlock<T>{
+public abstract class PresentationBlock<T> {
 	
 	//TODO Store safely, maybe elsewhere.
 	private static final int blockWidth = 100;

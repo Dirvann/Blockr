@@ -8,8 +8,8 @@ public abstract class ChainConditionBlock extends ConditionBlock{
 	
 	private ChainConditionBlockPresentation presentationBlock;
 	
-	public ChainConditionBlock(Vector pos) {
-		this.presentationBlock = new ChainConditionBlockPresentation(pos, this);
+	public ChainConditionBlock() {
+
 	}
 	
 	/**

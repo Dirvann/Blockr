@@ -8,8 +8,8 @@ import domain.game_world.Vector;
 public class WhileBlock extends SingleSurroundingBlock {
 	
 	
-	public WhileBlock(Vector pos) {
-		super(pos);
+	public WhileBlock() {
+		super();
 	}
 
 	public Block execute(GameController gameController) throws Exception {

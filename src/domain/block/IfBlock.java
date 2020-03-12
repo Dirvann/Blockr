@@ -10,9 +10,10 @@ public class IfBlock extends SingleSurroundingBlock {
 	
 	
 
-	public IfBlock(Vector pos) {
-		super(pos);
+	public IfBlock() {
+		super();
 	}
+
 
 	public Block execute(GameController gameController) throws Exception {
 		if (getConditionBlock() == null || !getConditionBlock().isValidCondition()) {

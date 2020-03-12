@@ -7,8 +7,8 @@ import domain.game_world.Vector;
 public class NotBlock extends ChainConditionBlock {
 	
 
-	public NotBlock(Vector pos) {
-		super(pos);
+	public NotBlock() {
+		super();
 	}
 
 	public boolean evaluate(GameController gamecontroller) {

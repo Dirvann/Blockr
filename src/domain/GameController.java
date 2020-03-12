@@ -59,8 +59,5 @@ public class GameController {
 		return this.programArea;
 	}
 	
-	public void setGameWorld(GameWorld g) {
-		this.gameWorld = g;
-	}
 	
 } 

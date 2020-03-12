@@ -6,8 +6,8 @@ import domain.game_world.Vector;
 
 public class TurnLeft extends ActionBlock {
 
-	public TurnLeft(Vector pos) {
-		super(pos);
+	public TurnLeft() {
+		super();
 	}
 
 	@Override

@@ -13,8 +13,8 @@ public abstract class ActionBlock extends SequenceBlock{
 	
 	private ActionBlockPresentation presentationBlock;
 	
-	public ActionBlock(Vector pos) {
-		this.presentationBlock = new ActionBlockPresentation(pos, this);
+	public ActionBlock() {
+
 	}
 	
 	@Override
