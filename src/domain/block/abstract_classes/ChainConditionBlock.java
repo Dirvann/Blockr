@@ -1,7 +1,6 @@
 package domain.block.abstract_classes;
 
 import domain.block.block_types.ConditionBlock;
-import domain.game_world.Vector;
 import presentation.block.ChainConditionBlockPresentation;
 
 public abstract class ChainConditionBlock extends ConditionBlock{
