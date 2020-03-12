@@ -64,7 +64,9 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 	 *          |               |
 	 */
 	@Override
-	public boolean conditionCanSnap(int x, int y) {
+	public boolean conditionCanSnap(Vector v) {
+		int x=v.getX();
+		int y=v.getY();
 		int xB = this.getPosition().getX();
 		int yB = this.getPosition().getY();
 		int wB = PresentationBlock.getBlockWidth();
@@ -91,7 +93,9 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 
 	 */
 	@Override
-	public boolean sequenceBlockCanSnap(int x, int y) {
+	public boolean sequenceBlockCanSnap(Vector v) {
+		int x=v.getX();
+		int y=v.getY();
 		int xB = this.getPosition().getX();
 		int yB = this.getPosition().getY();
 		int wB = PresentationBlock.getBlockWidth();
