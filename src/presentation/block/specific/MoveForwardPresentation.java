@@ -10,6 +10,7 @@ public class MoveForwardPresentation extends ActionBlockPresentation {
 	public MoveForwardPresentation(Vector pos, MoveForward block) {
 		setPosition(pos);
 		setBlock(block);
+		setPresentationName("Move Forward");
 	}
 
 	@Override

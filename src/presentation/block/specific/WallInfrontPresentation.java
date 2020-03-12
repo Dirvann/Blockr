@@ -9,6 +9,7 @@ public class WallInfrontPresentation extends SingleConditionBlockPresentation {
 	public WallInfrontPresentation(Vector pos, WallInFront block) {
 		setPosition(pos);
 		setBlock(block);
+		setPresentationName("Wall In Front");
 	}
 
 	@Override

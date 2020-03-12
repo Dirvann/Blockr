@@ -9,6 +9,7 @@ public class WhileBlockPresentation extends SingleSurroundBlockPresentation {
 	public WhileBlockPresentation(Vector pos, WhileBlock block) {
 		setPosition(pos);
 		setBlock(block);
+		setPresentationName("While");
 	}
 
 	@Override

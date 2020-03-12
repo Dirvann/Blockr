@@ -9,6 +9,7 @@ public class TurnRightPresentation extends ActionBlockPresentation {
 	public TurnRightPresentation(Vector pos, TurnRight block) {
 		setPosition(pos);
 		setBlock(block);
+		setPresentationName("Turn Right");
 	}
 
 	@Override

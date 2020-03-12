@@ -5,10 +5,11 @@ import domain.game_world.Vector;
 import presentation.block.SingleSurroundBlockPresentation;
 
 public class IfBlockPresentation extends SingleSurroundBlockPresentation {
-
+	
 	public IfBlockPresentation(Vector pos, IfBlock block) {
 		setPosition(pos);
 		setBlock(block);
+		setPresentationName("If");
 	}
 
 	@Override

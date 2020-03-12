@@ -10,6 +10,7 @@ public class NotBlockPresentation extends ChainConditionBlockPresentation {
 	public NotBlockPresentation(Vector position, NotBlock block) {
 		setPosition(position);
 		setBlock(block);
+		setPresentationName("Not");
 	}
 
 	@Override

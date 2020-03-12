@@ -1,5 +1,6 @@
 package presentation.block;
 
+import java.awt.Font;
 import java.awt.Graphics;
 
 import domain.block.block_types.Block;
@@ -14,6 +15,9 @@ public abstract class PresentationBlock {
 	private Block block;
 	
 	private Vector position;
+	
+	private static final Font font = new Font("Arial", Font.PLAIN, (int)(blockHeight * 0.7));
+	private String presentationName = "Block";
 	
 	
 	public Vector getPosition() {
@@ -53,5 +57,17 @@ public abstract class PresentationBlock {
 	}
 	
 	public abstract PresentationBlock getNewBlockOfThisType();
+
+	public String getPresentationName() {
+		return presentationName;
+	}
+
+	public void setPresentationName(String presentationName) {
+		this.presentationName = presentationName;
+	}
+
+	public static Font getFont() {
+		return font;
+	}
 	
 }
