@@ -14,6 +14,7 @@ import javax.swing.WindowConstants;
 import domain.GameController;
 import domain.ProgramArea;
 import domain.block.IfBlock;
+import domain.block.MoveForward;
 import domain.block.NotBlock;
 import domain.block.TurnLeft;
 import domain.block.TurnRight;
@@ -76,15 +77,23 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
     	
     	SequenceBlock left = new TurnLeft(new Vector(300,300));
     	
-    	left.setNextBlock(new TurnRight(new Vector(300,300)));
+    	SequenceBlock right = new TurnRight(new Vector(300,300));
+    	SequenceBlock forward = new MoveForward(new Vector(300,300));
+    	
+    	left.setNextBlock(right);
     	
     	//programArea.addTopLevelBlock(left);
     	
     	
     	IfBlock ifBlock = new IfBlock(new Vector(200,200));
+    	IfBlock ifBlock2 = new IfBlock(new Vector(200,200));
+    	
     	NotBlock notBlock = new NotBlock(new Vector(2,2));
     	WallInFront wif = new WallInFront(new Vector(2,3));
     	
+    	ifBlock2.setBodyBlock(forward);
+    	
+    	right.setNextBlock(ifBlock2);
     	notBlock.addCondition(wif);
     	
     	ifBlock.setConditionBlock(notBlock);
