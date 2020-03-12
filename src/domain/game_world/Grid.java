@@ -26,7 +26,7 @@ public class Grid {
 	 * @post The width of this new Grid is equal to the given width.
 	 * @post The grid is filled with empty cells.
 	 */
-	public Grid(int height, int width) {
+	public Grid(int width, int height) {
 		this.width = width;
 		this.height = height;
 		this.grid = new Cell[height][width];

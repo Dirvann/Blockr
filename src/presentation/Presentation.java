@@ -3,6 +3,8 @@ package presentation;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -24,7 +26,7 @@ import facade.Implementation;
 import presentation.block.*;
 
 
-public class Presentation extends Canvas implements MouseListener, MouseMotionListener {
+public class Presentation extends Canvas implements MouseListener, MouseMotionListener, KeyListener {
 	
 	/**
 	 * 
@@ -91,6 +93,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 		
 		addMouseListener(this);
     	addMouseMotionListener(this);
+    	addKeyListener(this);
     	
     }
 
@@ -104,7 +107,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
         paletteP.paint(g);
         programAreaP.paint(g); 
         
-        drawWorld(g, this.gameWorld);
+        drawWorld(g, gameController.getGameWorld());
     }
     
     
@@ -250,5 +253,24 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 			this.previousMousePos = new Vector(e.getX(), e.getY());
 			repaint();
 		}
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == 117) {
+			gameController.setGameWorld(new GameWorld(15, 10));
+			System.out.println("entered If");
+		}
+	}
+	
+	@Override
+	public void keyReleased(KeyEvent e) {
+		repaint();
+	}
+	
+	@Override
+	public void keyTyped(KeyEvent e) {
+		System.out.println(e);
+
 	}
 }
