@@ -5,8 +5,6 @@ import domain.block.abstract_classes.ActionBlock;
 import domain.block.block_types.Block;
 
 public class MoveForward extends ActionBlock {
-	private final String displayName = "Move Forward";
-
 	public MoveForward() {
 		super();
 	}

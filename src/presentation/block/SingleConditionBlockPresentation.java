@@ -18,7 +18,7 @@ public abstract class SingleConditionBlockPresentation extends PresentationBlock
 	
 
 	@Override
-	protected Vector getNextBlockPosition(PresentationBlock<?> presentationBlock) {
+	protected Vector getNextBlockPosition(PresentationBlock presentationBlock) {
 		Vector pos = getPosition();
 		return new Vector(pos.getX() + PresentationBlock.getBlockWidth(), pos.getY());
 	}

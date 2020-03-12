@@ -6,10 +6,6 @@ import domain.block.block_types.*;
 
 public class IfBlock extends SingleSurroundingBlock {
 	
-	private final String displayName = "IF";
-	
-	
-
 	public IfBlock() {
 		super();
 	}
@@ -31,11 +27,6 @@ public class IfBlock extends SingleSurroundingBlock {
 			return this.getSurroundingBlock().getNextAfterLoop();
 		}
 		return this.getNextBlock();
-	}
-
-	@Override
-	public String getDisplayName() {
-		return displayName;
 	}
 	@Override
 	public SequenceBlock getNextAfterLoop() {

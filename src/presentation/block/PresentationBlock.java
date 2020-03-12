@@ -90,7 +90,7 @@ public abstract class PresentationBlock {
 	}
 	public abstract boolean conditionCanSnap(Vector v);
 	abstract public int getHeight();
-	protected abstract Vector getNextBlockPosition(PresentationBlock<?> presentationBlock);
+	protected abstract Vector getNextBlockPosition(PresentationBlock presentationBlock);
 	
 	public abstract boolean sequenceBlockCanSnap(Vector v);
 	

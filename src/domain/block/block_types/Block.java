@@ -31,6 +31,4 @@ public abstract class Block {
 	public abstract List<Block> getAllNextBlocks();
 	
 	public abstract Block getPreviousBlock();
-	
-	public abstract String getDisplayName();
 }

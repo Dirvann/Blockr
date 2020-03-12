@@ -50,7 +50,7 @@ public abstract class ActionBlockPresentation extends PresentationBlock {
 	}
 
 	@Override
-	protected Vector getNextBlockPosition(PresentationBlock<?> presentationBlock) {
+	protected Vector getNextBlockPosition(PresentationBlock presentationBlock) {
 		Vector pos = getPosition();
 		return new Vector(pos.getX(), pos.getY() + PresentationBlock.getBlockHeight());
 	}

@@ -2,9 +2,17 @@ package presentation.block;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
+import domain.block.abstract_classes.SingleSurroundingBlock;
+import domain.block.block_types.SequenceBlock;
 import domain.game_world.Vector;
 
 public abstract class SingleSurroundBlockPresentation extends PresentationBlock {
+	
+	@Override
+	public SingleSurroundingBlock getBlock() {
+		return this.getBlock();
+	}
 
 	@Override
 	public void draw(Graphics g) {
@@ -18,7 +26,7 @@ public abstract class SingleSurroundBlockPresentation extends PresentationBlock 
 	
 
 	@Override
-	protected Vector getNextBlockPosition(PresentationBlock<?> presentationBlock) {
+	protected Vector getNextBlockPosition(PresentationBlock presentationBlock) {
 		if(presentationBlock.getBlock() == getBlock().getBodyBlock()) {
 			Vector pos = getPosition();
 			return new Vector(pos.getX() + getBlockSideWidth(), pos.getY()  + PresentationBlock.getBlockHeight());
@@ -35,23 +43,6 @@ public abstract class SingleSurroundBlockPresentation extends PresentationBlock 
 		}
 		
 		return null;
-	}
-	
-	@Override
-	public int getHeight() {
-		int h = 0;
-		if(getBlock().getBodyBlock() != null) {
-			List<Block> blocks = getBlock().getBodyBlock().getAllNextBlocks();
-			
-			for(Block b: blocks) {
-				if(b instanceof SequenceBlock) {
-					h += b.getPresentationBlock().getHeight();
-				}
-			}
-		}
-		
-		h += 2 * getBlockHeight();
-		return h;
 	}
 	
 	@Override
