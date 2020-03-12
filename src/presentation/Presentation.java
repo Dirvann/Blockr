@@ -49,8 +49,10 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 	boolean mouseDown = false;
 	Block selectedBlock = null;
 	Vector previousMousePos = null;
+	
 	GameController gameController;
-	ProgramArea programArea;
+	PalettePresentation paletteP;
+	ProgramAreaPresentation programAreaP;
 	
 	
 	
@@ -66,18 +68,9 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
     
     public Presentation() {
     	
-    	
     	gameController = new GameController();
-    	
-    	programArea = gameController.getProgramArea();
-    	
-    	
-    	
-    	programArea.addTopLevelBlock(new TurnLeft(new Vector(300,300)));
-    	programArea.addTopLevelBlock(new MoveForward(new Vector(100,300)));
-    	programArea.addTopLevelBlock(new IfBlock(new Vector(300,100)));
-    	
-    	blockList = new Block[] {new TurnLeft(new Vector(300,300))};
+    	paletteP = new PalettePresentation();
+    	programAreaP = new ProgramAreaPresentation();
     	
     	
     	Vector[] vectors = new Vector[] {new Vector(0,0), new Vector(5,5), new Vector(4,5)};
@@ -100,17 +93,20 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
     	
     }
 
+    
     public void paint(Graphics g) {
     	g.setColor(Color.BLACK);
         g.drawLine((int)(panelProportion * canvas.getWidth()), 0,(int) (panelProportion * canvas.getWidth()), canvas.getHeight());
         g.drawLine(canvas.getWidth() - (int) (worldProportion * canvas.getWidth()), 0, canvas.getWidth() - (int) (worldProportion * canvas.getWidth()), canvas.getHeight());
         
+        // If (!gameController.maxNumberBlocksReached()) {
+        paletteP.paint(g);
+        
         drawWorld(g, this.gameWorld);
-        
-        
         
         drawBlocks(g, gameController.getProgramArea().getTopBlocks());
     }
+    
     
     public void drawWorld(Graphics g, GameWorld gameWorld) {
     	// drawing grid assuming proportions of with are larger than the area
