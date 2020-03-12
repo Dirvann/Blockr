@@ -2,7 +2,7 @@ package domain.block;
 
 import domain.GameController;
 import domain.block.abstract_classes.ActionBlock;
-import domain.game_world.Vector;
+import domain.block.block_types.Block;
 
 public class TurnRight extends ActionBlock {
 
@@ -17,6 +17,11 @@ public class TurnRight extends ActionBlock {
 			System.out.println("Turn Right");
 		else
 			gameController.getGameWorld().robotTurnRight();
+	}
+
+	@Override
+	public Block getNewBlockOfThisType() {
+		return new TurnRight();
 	}
 
 }

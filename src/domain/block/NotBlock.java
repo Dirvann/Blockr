@@ -2,7 +2,7 @@ package domain.block;
 
 import domain.GameController;
 import domain.block.abstract_classes.ChainConditionBlock;
-import domain.game_world.Vector;
+import domain.block.block_types.Block;
 
 public class NotBlock extends ChainConditionBlock {
 	
@@ -16,5 +16,10 @@ public class NotBlock extends ChainConditionBlock {
 			return false;
 		}
 		return !this.getNextCondition().evaluate(gamecontroller);
+	}
+
+	@Override
+	public Block getNewBlockOfThisType() {
+		return new NotBlock();
 	}
 }

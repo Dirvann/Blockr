@@ -2,8 +2,7 @@ package domain.block;
 
 import domain.GameController;
 import domain.block.abstract_classes.ActionBlock;
-import domain.game_world.Vector;
-import presentation.block.PresentationBlock;
+import domain.block.block_types.Block;
 
 public class MoveForward extends ActionBlock {
 
@@ -17,6 +16,11 @@ public class MoveForward extends ActionBlock {
 			System.out.println("Move Forward");
 		else
 			gameController.getGameWorld().robotStepForwards();		
+	}
+
+	@Override
+	public Block getNewBlockOfThisType() {
+		return new MoveForward();
 	}
 
 }
