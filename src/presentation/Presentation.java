@@ -11,9 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import domain.GameController;
-import domain.block.abstract_classes.ActionBlock;
-import domain.block.abstract_classes.SingleSurroundingBlock;
-import domain.block.abstract_classes.SurroundingBlock;
 import domain.block.block_types.Block;
 import domain.game_world.Direction;
 import domain.game_world.GameWorld;
@@ -201,12 +198,15 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 		// Create functional copy of paletteBlock and add to programArea
 		if (paletteBlockP != null) {
 			Block blockCopy = paletteBlockP.getBlock().getNewBlockOfThisType();
-			PresentationBlock presentationCopy = paletteBlockP.getNewBlockOfThisType();
-			
-			presentationCopy.setBlock(blockCopy);
-			programAreaP.addBlock(presentationCopy);
-			
-			selectedBlock = presentationCopy;
+			PresentationBlock presentationCopy;
+			try {
+				presentationCopy = paletteBlockP.getNewBlockOfThisType(blockCopy);
+				programAreaP.addBlock(presentationCopy);
+				selectedBlock = presentationCopy;
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 			
 			

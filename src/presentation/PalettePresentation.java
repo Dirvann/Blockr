@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.block.*;
-import domain.block.block_types.*;
 import domain.game_world.Vector;
 import presentation.block.*;
 import presentation.block.specific.*;;

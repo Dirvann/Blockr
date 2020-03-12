@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.block.block_types.Block;
 import domain.game_world.Vector;
 import presentation.block.PresentationBlock;
 

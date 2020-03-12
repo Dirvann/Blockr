@@ -1,6 +1,5 @@
 package domain.block.abstract_classes;
 
-import domain.game_world.Vector;
 import presentation.block.SingleSurroundBlockPresentation;
 
 public abstract class SingleSurroundingBlock extends SurroundingBlock {
