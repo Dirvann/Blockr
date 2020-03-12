@@ -13,7 +13,7 @@ public class NotBlockPresentation extends ChainConditionBlockPresentation {
 	}
 
 	@Override
-	public PresentationBlock<?> getNewBlockOfThisType() {
+	public PresentationBlock getNewBlockOfThisType() {
 		return new NotBlockPresentation(getPosition(), null);
 	}
 	

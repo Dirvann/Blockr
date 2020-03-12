@@ -44,7 +44,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 	
 	Vector mouseDownStartPosition = new Vector(0,0);
 	boolean mouseDown = false;
-	PresentationBlock<?> selectedBlock = null;
+	PresentationBlock selectedBlock = null;
 	Vector previousMousePos = null;
 	
 	GameController gameController;
@@ -196,13 +196,14 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 	public void mousePressed(MouseEvent e) {
 		Vector mousePos = new Vector(e.getX(), e.getY());
 		
-		PresentationBlock<Block> paletteBlockP = paletteP.GetClickedPaletteBlock(mousePos);
+		PresentationBlock paletteBlockP = paletteP.GetClickedPaletteBlock(mousePos);
 		// Clicked block in palette
 		// Create functional copy of paletteBlock and add to programArea
 		if (paletteBlockP != null) {
-			PresentationBlock<?> presentationCopy = paletteBlockP.getNewBlockOfThisType();
 			Block blockCopy = paletteBlockP.getBlock().getNewBlockOfThisType();
-			// copy.setBlock(copyBlock);
+			PresentationBlock presentationCopy = paletteBlockP.getNewBlockOfThisType();
+			
+			presentationCopy.setBlock(blockCopy);
 			programAreaP.addBlock(presentationCopy);
 			
 			selectedBlock = presentationCopy;
@@ -210,7 +211,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 			
 			
 		
-		PresentationBlock<?> programBlockP = programAreaP.getClickedBlock(mousePos);
+		PresentationBlock programBlockP = programAreaP.getClickedBlock(mousePos);
 		if (programBlockP != null) {
 			selectedBlock = programBlockP;
 		}
