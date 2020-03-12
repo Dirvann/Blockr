@@ -23,9 +23,14 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 		// top
 		g.fillRect(pos.getX(), pos.getY(), getBlockWidth(), getBlockHeight());
 		// side
-		g.fillRect(pos.getX() - getBlockSideWidth(), pos.getY(), getBlockWidth(), height);
+		g.fillRect(pos.getX(), pos.getY() + getBlockHeight(), getBlockSideWidth(), height-2*getBlockHeight());
 		// bottom
 		g.fillRect(pos.getX(), pos.getY() + height - getBlockHeight(), getBlockWidth(), getBlockHeight());
+	
+		g.setColor(Color.BLACK);
+		g.setFont(getFont());
+		g.drawString(getBlock().getDisplayName(), pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
+	
 	}
 	
 
@@ -39,6 +44,11 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 		if(presentationBlock.getBlock() == getBlock().getNextBlock()) {
 			Vector pos = getPosition();
 			return new Vector(pos.getX(), pos.getY()  + getHeight());
+		}
+		
+		if(presentationBlock.getBlock() == getBlock().getConditionBlock()) {
+			Vector pos = getPosition();
+			return new Vector(pos.getX() + getBlockWidth(), pos.getY());
 		}
 		
 		return null;

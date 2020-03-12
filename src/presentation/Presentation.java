@@ -14,9 +14,10 @@ import javax.swing.WindowConstants;
 import domain.GameController;
 import domain.ProgramArea;
 import domain.block.IfBlock;
-import domain.block.MoveForward;
+import domain.block.NotBlock;
 import domain.block.TurnLeft;
 import domain.block.TurnRight;
+import domain.block.WallInFront;
 import domain.block.block_types.Block;
 import domain.block.block_types.SequenceBlock;
 import domain.game_world.Direction;
@@ -81,8 +82,16 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
     	
     	
     	IfBlock ifBlock = new IfBlock(new Vector(200,200));
+    	NotBlock notBlock = new NotBlock(new Vector(2,2));
+    	WallInFront wif = new WallInFront(new Vector(2,3));
+    	
+    	notBlock.addCondition(wif);
+    	
+    	ifBlock.setConditionBlock(notBlock);
+    
     	
     	ifBlock.setBodyBlock(left);
+    	
     	
     	programArea.addTopLevelBlock(ifBlock);
     	

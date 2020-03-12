@@ -6,6 +6,7 @@ import domain.game_world.Vector;
 import presentation.block.PresentationBlock;
 
 public class MoveForward extends ActionBlock {
+	private final String displayName = "Move Forward";
 
 	public MoveForward(Vector pos) {
 		super(pos);
@@ -13,10 +14,14 @@ public class MoveForward extends ActionBlock {
 
 	@Override
 	public void performAction(GameController gameController) {
-		if (gameController == null) 
+		if (gameController == null)
 			System.out.println("Move Forward");
 		else
-			gameController.getGameWorld().robotStepForwards();		
+			gameController.getGameWorld().robotStepForwards();
 	}
 
+	@Override
+	public String getDisplayName() {
+		return displayName;
+	}
 }

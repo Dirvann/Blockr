@@ -6,7 +6,7 @@ import domain.GameController;
 import presentation.block.PresentationBlock;
 
 public abstract class Block {
-
+	
 	/**
 	 * 
 	 * @return next block in sequence
@@ -22,4 +22,5 @@ public abstract class Block {
 	
 	public abstract Block getPreviousBlock();
 	
+	public abstract String getDisplayName();
 }

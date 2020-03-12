@@ -6,6 +6,8 @@ import domain.game_world.Vector;
 
 public class TurnRight extends ActionBlock {
 
+	private final String displayName = "Turn Right";
+
 	public TurnRight(Vector pos) {
 		super(pos);
 	}
@@ -17,6 +19,12 @@ public class TurnRight extends ActionBlock {
 			System.out.println("Turn Right");
 		else
 			gameController.getGameWorld().robotTurnRight();
+	}
+	
+	
+	@Override
+	public String getDisplayName() {
+		return displayName;
 	}
 
 }

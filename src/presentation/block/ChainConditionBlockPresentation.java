@@ -18,6 +18,10 @@ public class ChainConditionBlockPresentation extends PresentationBlock<ChainCond
 		g.setColor(Color.RED);
 		Vector pos = getPosition();
 		g.fillRect(pos.getX(), pos.getY(), PresentationBlock.getBlockWidth(), PresentationBlock.getBlockHeight());
+		g.setColor(Color.BLACK);
+		g.setFont(getFont());
+		g.drawString(getBlock().getDisplayName(), pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
+	
 	
 	}
 	
@@ -25,7 +29,7 @@ public class ChainConditionBlockPresentation extends PresentationBlock<ChainCond
 	@Override
 	protected Vector getNextBlockPosition(PresentationBlock<?> presentationBlock) {
 		Vector pos = getPosition();
-		return new Vector(pos.getX() + PresentationBlock.getBlockWidth(), pos.getY() );
+		return new Vector(pos.getX() + getBlockWidth(), pos.getY() );
 	}
 	
 	@Override

@@ -7,6 +7,7 @@ import domain.game_world.Vector;
 
 public class WhileBlock extends SingleSurroundingBlock {
 	
+	private final String displayName = "While";
 	
 	public WhileBlock(Vector pos) {
 		super(pos);
@@ -21,6 +22,11 @@ public class WhileBlock extends SingleSurroundingBlock {
 			return this.getBodyBlock();
 		}
 		return this.getNextBlock();
+	}
+
+	@Override
+	public String getDisplayName() {
+		return displayName;
 	}
 
 }

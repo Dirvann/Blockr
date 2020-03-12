@@ -8,6 +8,8 @@ import presentation.block.PresentationBlock;
 
 public class IfBlock extends SingleSurroundingBlock {
 	
+	private final String displayName = "IF";
+	
 	
 
 	public IfBlock(Vector pos) {
@@ -32,6 +34,10 @@ public class IfBlock extends SingleSurroundingBlock {
 		return this.getNextBlock();
 	}
 
+	@Override
+	public String getDisplayName() {
+		return displayName;
+	}
 	@Override
 	public SequenceBlock getNextAfterLoop() {
 		if (this.getNextBlock() == null) {

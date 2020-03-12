@@ -1,5 +1,6 @@
 package presentation.block;
 
+import java.awt.Font;
 import java.awt.Graphics;
 
 import domain.block.block_types.Block;
@@ -11,6 +12,8 @@ public abstract class PresentationBlock<T extends Block>{
 	private static final int blockWidth = 100;
 	private static final int blockHeight = 20;
 	private static final int blockSideWidth = 20;
+	
+	private static final Font font = new Font("Arial", Font.PLAIN, (int)(blockHeight * 0.7));
 	
 	private T block;
 	
@@ -71,6 +74,10 @@ public abstract class PresentationBlock<T extends Block>{
 	
 	public void setBlock(T block) {
 		this.block = block;
+	}
+	
+	public Font getFont() {
+		return font;
 	}
 	
 	public abstract boolean conditionCanSnap(int x, int y);
