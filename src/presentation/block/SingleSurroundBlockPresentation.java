@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import domain.block.abstract_classes.SingleSurroundingBlock;
 import domain.game_world.Vector;
 
-public abstract class SingleSurroundBlockPresentation extends PresentationBlock<SingleSurroundingBlock> {
+public abstract class SingleSurroundBlockPresentation extends PresentationBlock {
 
 	@Override
 	public void draw(Graphics g) {

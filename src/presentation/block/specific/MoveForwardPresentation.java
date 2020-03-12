@@ -13,7 +13,7 @@ public class MoveForwardPresentation extends ActionBlockPresentation {
 	}
 
 	@Override
-	public PresentationBlock<?> getNewBlockOfThisType() {
+	public PresentationBlock getNewBlockOfThisType() {
 		return new MoveForwardPresentation(getPosition(), null);
 	}
 

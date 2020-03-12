@@ -2,15 +2,16 @@ package presentation.block;
 
 import java.awt.Graphics;
 
+import domain.block.block_types.Block;
 import domain.game_world.Vector;
 
-public abstract class PresentationBlock<T> {
+public abstract class PresentationBlock {
 	
 	//TODO Store safely, maybe elsewhere.
 	private static final int blockWidth = 100;
 	private static final int blockHeight = 20;
 	
-	private T block;
+	private Block block;
 	
 	private Vector position;
 	
@@ -43,14 +44,14 @@ public abstract class PresentationBlock<T> {
 		return false;
 	}
 	
-	public T getBlock() {
+	public Block getBlock() {
 		return this.block;
 	}
 	
-	public void setBlock(T block) {
+	public void setBlock(Block block) {
 		this.block = block;
 	}
 	
-	public abstract PresentationBlock<?> getNewBlockOfThisType();
+	public abstract PresentationBlock getNewBlockOfThisType();
 	
 }

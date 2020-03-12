@@ -43,8 +43,8 @@ public class PalettePresentation {
 	}
 	
 	
-	public PresentationBlock<Block> GetClickedPaletteBlock(Vector position) {
-		for (PresentationBlock<Block> pBlock: paletteBlocks) {
+	public PresentationBlock GetClickedPaletteBlock(Vector position) {
+		for (PresentationBlock pBlock: paletteBlocks) {
 			if (pBlock.collidesWithPosition(position)) {
 				return pBlock;
 			}
@@ -55,7 +55,7 @@ public class PalettePresentation {
 	
 	
 	public void paint(Graphics g) {
-		for (PresentationBlock<Block> pBlock: paletteBlocks) {
+		for (PresentationBlock pBlock: paletteBlocks) {
 			pBlock.draw(g);
 		}
 	}

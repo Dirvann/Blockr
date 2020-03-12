@@ -7,7 +7,7 @@ import presentation.block.PresentationBlock;
 
 public abstract class Block {
 	
-	private PresentationBlock<?> presentationBlock;
+	private PresentationBlock presentationBlock;
 
 	/**
 	 * 
@@ -18,11 +18,11 @@ public abstract class Block {
 		return null;
 	}
 	
-	public PresentationBlock<?> getPresentationBlock() {
+	public PresentationBlock getPresentationBlock() {
 		return this.presentationBlock;
 	}
 	
-	public void setPresentationBlock(PresentationBlock<?> presentationBlock) {
+	public void setPresentationBlock(PresentationBlock presentationBlock) {
 		
 	}
 	
