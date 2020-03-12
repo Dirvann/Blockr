@@ -1,5 +1,7 @@
 package domain.game_world;
 
+import java.util.Random;
+
 import domain.game_world.cell.*;
 
 // GameWorld contains a grid and the entities that move around on that grid
@@ -18,6 +20,13 @@ public class GameWorld {
 	// Default 5x5 empty GameWorld with Robot at (0,0) and goal at (4, 4);
 	public GameWorld() {
 		this(new Grid(), new Vector(0, 0));
+	}
+	
+	// Create random GameWorld with given width and height;
+	public GameWorld(int width, int height) {
+		this.setGrid(Grid.randomGrid(width, height));
+		
+		this.randomiseRobotLocation();
 	}
 	
 	public Grid getGrid() {
@@ -79,6 +88,40 @@ public class GameWorld {
 	
 	public void robotTurnRight() {
 		getRobot().turnRight();
+	}
+	
+	private void randomiseRobotLocation() {
+		Random rand = new Random();
+		
+		int attemptX = rand.nextInt(grid.getWidth());
+		int attemptY = rand.nextInt(grid.getHeight());
+		
+		int directionInt = rand.nextInt(3);
+		Direction dir = Direction.UP;
+		
+		switch (directionInt) {
+		case 0:
+			dir = Direction.RIGHT;
+			break;
+		case 1:
+			dir = Direction.DOWN;
+			break;
+		case 2:
+			dir = Direction.LEFT;
+			break;
+		default:
+		}
+		
+		try {
+			if (grid.getCell(new Vector(attemptX, attemptY)) instanceof RobotCanEnter) {
+				setRobot(new Robot(new Vector(attemptX, attemptY), dir));
+			} else {
+				randomiseRobotLocation();
+			}
+		} catch (Exception e) {
+			System.out.println("This exception should not happen. See randomiseRobotLocation");
+			e.printStackTrace();
+		}
 	}
 	
 }

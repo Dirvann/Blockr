@@ -20,6 +20,7 @@ import domain.game_world.Vector;
 import domain.game_world.cell.Cell;
 import domain.game_world.cell.Goal;
 import domain.game_world.cell.Wall;
+import facade.Implementation;
 import presentation.block.*;
 
 
@@ -47,7 +48,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 	GameController gameController;
 	PalettePresentation paletteP;
 	ProgramAreaPresentation programAreaP;
-	
+	Implementation GA; // GameInterface
 	
 	
     public static void main(String[] args) {
@@ -62,25 +63,31 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
     
     public Presentation() {
     	
-    	gameController = new GameController();
+    	GA = new Implementation();
+    	
+    	gameController = GA.makeGameController();
     	paletteP = new PalettePresentation();
     	programAreaP = new ProgramAreaPresentation();
     	
     	
-    	Vector[] vectors = new Vector[] {new Vector(0,0), new Vector(5,5), new Vector(4,5)};
-    	Cell[] cells = new Cell[] {new Wall(), new Goal(), new Wall()};
-    	Grid grid;
-		try {
-			grid = new Grid(10,10, vectors, cells);
-			Vector start = new Vector(4,4);
-	    	gameController.setGameWorld(new GameWorld(grid, start));
-	    	gameWorld = gameController.getGameWorld();
-	    	gameWorld.setRobot(new Robot(new Vector(6,7), Direction.DOWN));
-	    	
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//    	Vector[] vectors = new Vector[] {new Vector(0,0), new Vector(5,5), new Vector(4,5)};
+//    	Cell[] cells = new Cell[] {new Wall(), new Goal(), new Wall()};
+//    	Grid grid;
+//		try {
+//			grid = new Grid(10,10, vectors, cells);
+//			Vector start = new Vector(4,4);
+//	    	gameController.setGameWorld(new GameWorld(grid, start));
+//	    	gameWorld = gameController.getGameWorld();
+//	    	gameWorld.setRobot(new Robot(new Vector(6,7), Direction.DOWN));
+//	    	
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+    	
+    	gameController.setGameWorld(new GameWorld(10, 10));
+    	gameWorld = gameController.getGameWorld();
+    	
 		
 		addMouseListener(this);
     	addMouseMotionListener(this);

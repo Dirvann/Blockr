@@ -1,5 +1,7 @@
 package domain.game_world;
 
+import java.util.Random;
+
 import domain.game_world.cell.*;
 
 /**
@@ -70,6 +72,37 @@ public class Grid {
 			e.printStackTrace();
 		}
 	}
+	
+	static public Grid randomGrid(int width, int height) {
+		Grid result = new Grid(width, height);
+		Random rand = new Random();
+		
+		for (int y = 0; y < result.getHeight(); y++) {
+			for (int x = 0; x < result.getWidth(); x++) {
+				if (rand.nextInt(100) < 30) {
+					try {
+						result.setCell(new Vector(x, y), new Wall());
+					} catch (Exception e) {
+						System.out.println("This exception should not happen. see randomGrid");
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		
+		int goalX = rand.nextInt(width);
+		int goalY = rand.nextInt(height);
+		
+		try {
+			result.setCell(new Vector(goalX, goalY), new Goal());
+		} catch (Exception e) {
+			System.out.println("This exception also should not happen. See randomGrid");
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	/**
 	 * @return width of the grid.
 	 */
