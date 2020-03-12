@@ -7,8 +7,13 @@ import presentation.block.SingleConditionBlockPresentation;
 public class WallInfrontPresentation extends SingleConditionBlockPresentation {
 
 	public WallInfrontPresentation(Vector pos, WallInFront block) {
-		super(pos, block);
-		// TODO Auto-generated constructor stub
+		setPosition(pos);
+		setBlock(block);
+	}
+
+	@Override
+	public WallInfrontPresentation getNewBlockOfThisType() {
+		return new WallInfrontPresentation(getPosition(), null);
 	}
 
 }

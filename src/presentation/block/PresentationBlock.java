@@ -15,12 +15,6 @@ public abstract class PresentationBlock<T> {
 	private Vector position;
 	
 	
-	public PresentationBlock(Vector pos, T block) {
-		this.position = pos;
-		this.setBlock(block);
-	}
-	
-	
 	public Vector getPosition() {
 		return this.position;
 	}
@@ -57,5 +51,6 @@ public abstract class PresentationBlock<T> {
 		this.block = block;
 	}
 	
+	public abstract PresentationBlock<?> getNewBlockOfThisType();
 	
 }

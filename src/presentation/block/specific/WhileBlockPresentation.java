@@ -7,8 +7,13 @@ import presentation.block.SingleSurroundBlockPresentation;
 public class WhileBlockPresentation extends SingleSurroundBlockPresentation {
 
 	public WhileBlockPresentation(Vector pos, WhileBlock block) {
-		super(pos, block);
-		// TODO Auto-generated constructor stub
+		setPosition(pos);
+		setBlock(block);
+	}
+
+	@Override
+	public WhileBlockPresentation getNewBlockOfThisType() {
+		return new WhileBlockPresentation(getPosition(), null);
 	}
 
 }

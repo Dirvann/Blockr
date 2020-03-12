@@ -7,7 +7,13 @@ import presentation.block.SingleSurroundBlockPresentation;
 public class IfBlockPresentation extends SingleSurroundBlockPresentation {
 
 	public IfBlockPresentation(Vector pos, IfBlock block) {
-		super(pos, block);
+		setPosition(pos);
+		setBlock(block);
+	}
+
+	@Override
+	public IfBlockPresentation getNewBlockOfThisType() {
+		return new IfBlockPresentation(getPosition(), null);
 	}
 
 }

@@ -6,13 +6,7 @@ import java.awt.Graphics;
 import domain.block.abstract_classes.ActionBlock;
 import domain.game_world.Vector;
 
-public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
-	
-
-	public ActionBlockPresentation(Vector pos, ActionBlock block) {
-		super(pos,block);
-	}
-
+public abstract class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(Color.GREEN);

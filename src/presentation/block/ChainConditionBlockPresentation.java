@@ -6,12 +6,7 @@ import java.awt.Graphics;
 import domain.block.abstract_classes.ChainConditionBlock;
 import domain.game_world.Vector;
 
-public class ChainConditionBlockPresentation extends PresentationBlock<ChainConditionBlock>{
-	
-	public ChainConditionBlockPresentation(Vector position, ChainConditionBlock block) {
-		super(position, block);
-		
-	}
+public abstract class ChainConditionBlockPresentation extends PresentationBlock<ChainConditionBlock>{
 
 	@Override
 	public void draw(Graphics g) {

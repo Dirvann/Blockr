@@ -7,8 +7,15 @@ import presentation.block.ActionBlockPresentation;
 public class TurnRightPresentation extends ActionBlockPresentation {
 
 	public TurnRightPresentation(Vector pos, TurnRight block) {
-		super(pos, block);
-		// TODO Auto-generated constructor stub
+		setPosition(pos);
+		setBlock(block);
 	}
+
+	@Override
+	public TurnRightPresentation getNewBlockOfThisType() {
+		return new TurnRightPresentation(getPosition(), null);
+	}
+	
+	
 
 }
