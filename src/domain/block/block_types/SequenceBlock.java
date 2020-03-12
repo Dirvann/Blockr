@@ -13,7 +13,13 @@ public abstract class SequenceBlock extends Block {
 	protected SequenceBlock previous = null;
 
 	public SequenceBlock getPreviousBlock() {
-		return this.previous;
+		if(previous != null) {
+			return previous;
+		}
+		if (getSurroundingBlock() != null) {
+			return getSurroundingBlock();
+		} 
+		return null;
 	}
 	// TODO: Comments
 
