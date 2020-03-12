@@ -77,7 +77,14 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
     	
     	left.setNextBlock(new TurnRight(new Vector(300,300)));
     	
-    	programArea.addTopLevelBlock(left);
+    	//programArea.addTopLevelBlock(left);
+    	
+    	
+    	IfBlock ifBlock = new IfBlock(new Vector(200,200));
+    	
+    	ifBlock.setBodyBlock(left);
+    	
+    	programArea.addTopLevelBlock(ifBlock);
     	
     	
     	
