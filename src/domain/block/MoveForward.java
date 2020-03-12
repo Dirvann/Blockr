@@ -5,6 +5,7 @@ import domain.block.abstract_classes.ActionBlock;
 import domain.block.block_types.Block;
 
 public class MoveForward extends ActionBlock {
+	private final String displayName = "Move Forward";
 
 	public MoveForward() {
 		super();
@@ -12,10 +13,10 @@ public class MoveForward extends ActionBlock {
 
 	@Override
 	public void performAction(GameController gameController) {
-		if (gameController == null) 
+		if (gameController == null)
 			System.out.println("Move Forward");
 		else
-			gameController.getGameWorld().robotStepForwards();		
+			gameController.getGameWorld().robotStepForwards();
 	}
 
 	@Override

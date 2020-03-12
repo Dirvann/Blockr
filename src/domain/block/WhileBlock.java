@@ -6,6 +6,7 @@ import domain.block.block_types.Block;
 
 public class WhileBlock extends SingleSurroundingBlock {
 	
+	private final String displayName = "While";
 	
 	public WhileBlock() {
 		super();

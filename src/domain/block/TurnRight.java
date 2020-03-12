@@ -18,6 +18,12 @@ public class TurnRight extends ActionBlock {
 		else
 			gameController.getGameWorld().robotTurnRight();
 	}
+	
+	
+	@Override
+	public String getDisplayName() {
+		return displayName;
+	}
 
 	@Override
 	public Block getNewBlockOfThisType() {

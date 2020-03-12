@@ -11,16 +11,27 @@ public abstract class PresentationBlock {
 	//TODO Store safely, maybe elsewhere.
 	private static final int blockWidth = 100;
 	private static final int blockHeight = 20;
+	private static final int blockSideWidth = 20;
 	
 	private Block block;
 	
-	private Vector position;
+	protected Vector position;
 	
 	private static final Font font = new Font("Arial", Font.PLAIN, (int)(blockHeight * 0.7));
 	private String presentationName = "Block";
 	
 	
 	public Vector getPosition() {
+		// check if it has a previous block
+		if(getBlock().getPreviousBlock() == null) {
+			return this.position;
+		} 
+		
+		// get the position of the block from the upper block
+		
+		this.setPosition(getBlock().getPreviousBlock().getPresentationBlock().getNextBlockPosition(this));
+		
+		
 		return this.position;
 	}
 	
@@ -36,6 +47,14 @@ public abstract class PresentationBlock {
 	
 	public static int getBlockHeight() {
 		return blockHeight;
+	}
+	
+	public int getTotalHeight() {
+		return getBlockHeight();
+	}
+	
+	public static int getBlockSideWidth() {
+		return blockSideWidth;
 	}
 	
 	public boolean collidesWithPosition(Vector pos) {
@@ -69,5 +88,12 @@ public abstract class PresentationBlock {
 	public static Font getFont() {
 		return font;
 	}
+	public abstract boolean conditionCanSnap(Vector v);
+	abstract public int getHeight();
+	protected abstract Vector getNextBlockPosition(PresentationBlock<?> presentationBlock);
+	
+	public abstract boolean sequenceBlockCanSnap(Vector v);
+	
+	
 	
 }

@@ -5,7 +5,6 @@ import domain.block.abstract_classes.ChainConditionBlock;
 import domain.block.block_types.Block;
 
 public class NotBlock extends ChainConditionBlock {
-	
 
 	public NotBlock() {
 		super();

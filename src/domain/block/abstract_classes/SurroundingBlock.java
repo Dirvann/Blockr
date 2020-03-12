@@ -95,6 +95,10 @@ public abstract class SurroundingBlock extends SequenceBlock{
 		if (this.getBodyBlock() != null)
 			l.addAll(getBodyBlock().getAllNextBlocks());
 		
+		if (this.getConditionBlock() != null)
+			l.addAll(getConditionBlock().getAllNextBlocks());
+		
+		
 		return l;
 	}
 

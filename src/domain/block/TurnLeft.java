@@ -13,7 +13,7 @@ public class TurnLeft extends ActionBlock {
 	@Override
 	public void performAction(GameController gameController) {
 
-		if (gameController == null) 
+		if (gameController == null)
 			System.out.println("Turn Left");
 		else
 			gameController.getGameWorld().robotTurnLeft();

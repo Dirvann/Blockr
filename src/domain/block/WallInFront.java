@@ -6,6 +6,7 @@ import domain.block.block_types.Block;
 
 public class WallInFront extends SingleConditionBlock {
 	
+	private final String displayName = "Wall In Front";
 	
 	public WallInFront() {
 		super();
