@@ -10,28 +10,28 @@ import presentation.block.PresentationBlock;
 
 public class ProgramAreaPresentation {
 
-	private List<PresentationBlock<Block>> programAreaBlocks;
+	private List<PresentationBlock<?>> programAreaBlocks;
 	
 	public ProgramAreaPresentation() {
-		programAreaBlocks = new ArrayList<PresentationBlock<Block>>();
+		programAreaBlocks = new ArrayList<PresentationBlock<?>>();
 	}
 	
 	public void paint(Graphics g) {
-		for (PresentationBlock<Block> pBlock: programAreaBlocks) {
+		for (PresentationBlock<?> pBlock: programAreaBlocks) {
 			pBlock.draw(g);
 		}
 	}
 	
-	public void addBlock(PresentationBlock<Block> pBlock) {
-		programAreaBlocks.add(pBlock);
+	public void addBlock(PresentationBlock<?> presentationCopy) {
+		programAreaBlocks.add(presentationCopy);
 	}
 	
-	public void removeBlock(PresentationBlock<Block> pBlock) {
+	public void removeBlock(PresentationBlock<?> pBlock) {
 		programAreaBlocks.remove(pBlock);
 	}
 	
-	public PresentationBlock<Block> getClickedBlock(Vector position) {
-		for (PresentationBlock<Block> pBlock: programAreaBlocks) {
+	public PresentationBlock<?> getClickedBlock(Vector position) {
+		for (PresentationBlock<?> pBlock: programAreaBlocks) {
 			if (pBlock.collidesWithPosition(position)) {
 				return pBlock;
 			}

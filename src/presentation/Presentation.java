@@ -200,12 +200,17 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 		// Clicked block in palette
 		// Create functional copy of paletteBlock and add to programArea
 		if (paletteBlockP != null) {
-			// Create copy
+			PresentationBlock<?> presentationCopy = paletteBlockP.getNewBlockOfThisType();
+			Block blockCopy = paletteBlockP.getBlock().getNewBlockOfThisType();
+			// copy.setBlock(copyBlock);
+			programAreaP.addBlock(presentationCopy);
+			
+			selectedBlock = presentationCopy;
 		}
 			
 			
 		
-		PresentationBlock<Block> programBlockP = programAreaP.getClickedBlock(mousePos);
+		PresentationBlock<?> programBlockP = programAreaP.getClickedBlock(mousePos);
 		if (programBlockP != null) {
 			selectedBlock = programBlockP;
 		}

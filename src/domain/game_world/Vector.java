@@ -9,6 +9,10 @@ public final class Vector {
 		this.x = x;
 		this.y = y;
 	}
+	public Vector(Vector other) {
+		this.x = other.getX();
+		this.y = other.getY();
+	}
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
