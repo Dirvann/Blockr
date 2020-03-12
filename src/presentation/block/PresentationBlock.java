@@ -51,6 +51,10 @@ public abstract class PresentationBlock<T extends Block>{
 		return blockHeight;
 	}
 	
+	public int getTotalHeight() {
+		return getBlockHeight();
+	}
+	
 	public static int getBlockSideWidth() {
 		return blockSideWidth;
 	}

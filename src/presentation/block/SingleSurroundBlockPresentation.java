@@ -51,6 +51,17 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 		h += 2 * getBlockHeight();
 		return h;
 	}
+	
+	@Override
+	public int getTotalHeight() {
+		int totalHeight = this.getHeight() * 2;
+		SequenceBlock current	= 	this.getBlock().getBodyBlock();
+		while (current != null) {
+			totalHeight += current.getPresentationBlock().getTotalHeight();
+			current = current.getNextBlock();
+		}
+		return totalHeight;
+	}
 
 
 	@Override
