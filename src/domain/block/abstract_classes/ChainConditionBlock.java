@@ -27,6 +27,13 @@ public abstract class ChainConditionBlock extends ConditionBlock{
 		if (getNextCondition() != null) getNextCondition().setPrevious(last);
 		setNextCondition(block);
 	}
+	
+	public void removeNextCondition() {
+		if (getNextCondition() != null) {
+			getNextCondition().setPrevious(null);
+			setNextCondition(null);
+		}
+	}
 
 	public boolean isValidCondition() {
 		if (getNextCondition() != null)

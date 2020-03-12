@@ -67,8 +67,8 @@ public class GameWorld {
 				getRobot().stepForwards();
 			}
 		} catch (Exception e) {
-			System.out.print("hiersiee");
-			e.printStackTrace();
+			// Exception thrown because getCell requested cell out of bounds
+			// Robot doesn't move
 		}
 		
 	}
