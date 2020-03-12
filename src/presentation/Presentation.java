@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import domain.GameController;
+import domain.block.MoveForward;
 import domain.block.block_types.Block;
 import domain.game_world.Direction;
 import domain.game_world.GameWorld;
@@ -69,9 +70,11 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
     	
     	gameController = GA.makeGameController();
     	paletteP = new PalettePresentation();
-    	programAreaP = new ProgramAreaPresentation();
-    	
-    	
+//    	programAreaP = new ProgramAreaPresentation();
+//    	Block bla = new MoveForward();
+//    	gameController.addTopLevelBlock(bla);
+//    	GA.connect(bla, new MoveForward());
+
 //    	Vector[] vectors = new Vector[] {new Vector(0,0), new Vector(5,5), new Vector(4,5)};
 //    	Cell[] cells = new Cell[] {new Wall(), new Goal(), new Wall()};
 //    	Grid grid;
@@ -280,6 +283,13 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == 117) {
 			gameController.setGameWorld(new GameWorld(15, 10));
+		}
+		if (e.getKeyCode() == 116) {
+			try {
+				gameController.execute();
+			} catch (Exception e1) {
+				System.out.println("Execute in keyPressed failed");
+			}
 		}
 	}
 	
