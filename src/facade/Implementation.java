@@ -102,7 +102,7 @@ public class Implementation implements Facade{
 				disc.getPreviousBlock().removeNextBlock();
 				return true;
 			}
-			else if (disc.getSurroundingBlock()!= null) {
+			else if (disc.getSurroundingBlock() != null) {
 				disc.getSurroundingBlock().removeBodyBlock();
 				return true;
 			}

@@ -25,6 +25,7 @@ public abstract class ConditionBlock extends Block {
 	
 	public void setNextCondition(ConditionBlock condition) {
 		this.next = condition;
+		condition.setPrevious(this);
 	}
 
 	public ConditionBlock getPrevious() {
