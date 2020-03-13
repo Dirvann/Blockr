@@ -1,20 +1,21 @@
 package presentation.block.specific;
 
 import domain.block.WhileBlock;
-import domain.block.block_types.Block;
+import domain.block.abstract_classes.SingleSurroundingBlock;
 import domain.game_world.Vector;
+import presentation.block.PresentationBlock;
 import presentation.block.SingleSurroundBlockPresentation;
 
 public class WhileBlockPresentation extends SingleSurroundBlockPresentation {
 
-	public WhileBlockPresentation(Vector pos, Block block) {
+	public WhileBlockPresentation(Vector pos, SingleSurroundingBlock block) {
 		setPosition(pos);
 		setBlock(block);
 		setPresentationName("While");
 	}
 
 	@Override
-	public WhileBlockPresentation getNewBlockOfThisType(Block block) throws Exception{
+	public PresentationBlock<SingleSurroundingBlock> getNewBlockOfThisType(SingleSurroundingBlock block) throws Exception {
 		if (block instanceof WhileBlock)
 			return new WhileBlockPresentation(getPosition(), block);
 		else {

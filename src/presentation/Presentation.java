@@ -70,7 +70,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
     	
     	gameController = GA.makeGameController();
     	paletteP = new PalettePresentation();
-//    	programAreaP = new ProgramAreaPresentation();
+    	programAreaP = new ProgramAreaPresentation();
 //    	Block bla = new MoveForward();
 //    	gameController.addTopLevelBlock(bla);
 //    	GA.connect(bla, new MoveForward());
@@ -242,13 +242,14 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 		
 		if (this.selectedBlock != null) {
 			// Check for snapping
-			Vector snapLocation = selectedBlock.getPossibleSnapLocation();
-			System.out.println("Checking location (" + snapLocation.getX() + ", " + snapLocation.getY() + ")");
-			PresentationBlock blockToGetSnappedTo = programAreaP.getBlockAtPosition(snapLocation);
-			if (blockToGetSnappedTo != null) {
-				// TODO: yeah this wont do it
-				System.out.println("SNAP!");
-			}
+			// TODO: replace with new snapping code
+//			Vector snapLocation = selectedBlock.getPossibleSnapLocation();
+//			System.out.println("Checking location (" + snapLocation.getX() + ", " + snapLocation.getY() + ")");
+//			PresentationBlock blockToGetSnappedTo = programAreaP.getBlockAtPosition(snapLocation);
+//			if (blockToGetSnappedTo != null) {
+//				// TODO: yeah this wont do it
+//				System.out.println("SNAP!");
+//			}
 			
 			// Delete if over palette
 			int paletteBorder = (int) (panelProportion * canvas.getWidth());

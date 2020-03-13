@@ -1,20 +1,21 @@
 package presentation.block.specific;
 
 import domain.block.TurnRight;
-import domain.block.block_types.Block;
+import domain.block.abstract_classes.ActionBlock;
 import domain.game_world.Vector;
 import presentation.block.ActionBlockPresentation;
+import presentation.block.PresentationBlock;
 
 public class TurnRightPresentation extends ActionBlockPresentation {
 
-	public TurnRightPresentation(Vector pos, Block block) {
+	public TurnRightPresentation(Vector pos, ActionBlock block) {
 		setPosition(pos);
 		setBlock(block);
 		setPresentationName("Turn Right");
 	}
 
 	@Override
-	public TurnRightPresentation getNewBlockOfThisType(Block block) throws Exception{
+	public PresentationBlock<ActionBlock> getNewBlockOfThisType(ActionBlock block) throws Exception {
 		if (block instanceof TurnRight)
 			return new TurnRightPresentation(getPosition(), block);
 		else {

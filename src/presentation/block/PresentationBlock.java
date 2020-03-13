@@ -56,9 +56,7 @@ public abstract class PresentationBlock<T extends Block> {
 		this.block = block;
 	}
 	
-	public PresentationBlock<T> getNewBlockOfThisType(T block) throws Exception {
-		
-	}
+	public abstract PresentationBlock<T> getNewBlockOfThisType(T block) throws Exception;
 	
 
 	public String getPresentationName() {
