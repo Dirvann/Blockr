@@ -62,4 +62,15 @@ public abstract class ConditionBlock extends Block {
 		
 		return l;
 	}
+	
+	@Override
+	public Block getPreviousBlock() {
+		if(getPrevious() != null) {
+			return getPrevious();
+		}
+		if (getSurroundingBlock() != null) {
+			return getSurroundingBlock();
+		} 
+		return null;
+	}
 }

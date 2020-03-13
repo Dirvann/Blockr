@@ -37,4 +37,7 @@ public abstract class Block {
 	public abstract List<Block> getAllNextBlocks();
 	
 	public abstract String getName();
+	
+
+	public abstract Block getPreviousBlock();
 }

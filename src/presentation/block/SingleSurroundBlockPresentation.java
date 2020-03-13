@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import domain.block.abstract_classes.SingleSurroundingBlock;
-import domain.block.block_types.Block;
 import domain.block.block_types.SequenceBlock;
 import domain.game_world.Vector;
 
@@ -18,10 +17,17 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 	public void draw(Graphics g) {
 		g.setColor(Color.LIGHT_GRAY);
 		Vector pos = getPosition();
-		g.fillRect(pos.getX(), pos.getY(), PresentationBlock.getBlockWidth(), PresentationBlock.getBlockHeight());
+		int height = getTotalHeight();
+		// top
+		g.fillRect(pos.getX(), pos.getY(), getBlockWidth(), getBlockHeight());
+		// side
+		g.fillRect(pos.getX(), pos.getY() + getBlockHeight(), getBlockSideWidth(), height-2*getBlockHeight());
+		// bottom
+		g.fillRect(pos.getX(), pos.getY() + height - getBlockHeight(), getBlockWidth(), getBlockHeight());
+	
 		g.setColor(Color.BLACK);
 		g.setFont(getFont());
-		g.drawString(getPresentationName(), pos.getX(), pos.getY() + (int) (getBlockHeight() * 0.8));
+		g.drawString(getPresentationName(), pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
 	}
 
 	@Override
@@ -58,5 +64,25 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	protected Vector getNextBlockPosition(PresentationBlock<?> presentationBlock) {
+		if(presentationBlock.getBlock() == getBlock().getBodyBlock()) {
+			Vector pos = getPosition();
+			return new Vector(pos.getX() + getBlockSideWidth(), pos.getY()  + PresentationBlock.getBlockHeight());
+		}
+		
+		if(presentationBlock.getBlock() == getBlock().getNextBlock()) {
+			Vector pos = getPosition();
+			return new Vector(pos.getX(), pos.getY()  + getTotalHeight());
+		}
+		
+		if(presentationBlock.getBlock() == getBlock().getConditionBlock()) {
+			Vector pos = getPosition();
+			return new Vector(pos.getX() + getBlockWidth(), pos.getY());
+		}
+		
+		return null;
 	}
 }

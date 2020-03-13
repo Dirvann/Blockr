@@ -37,4 +37,10 @@ public class ChainConditionBlockPresentation extends PresentationBlock<ChainCond
 	public Vector getPossibleSnapLocation() {
 		return new Vector(getPosition().getX() - Math.round(getBlockWidth() / 2), getPosition().getY() + Math.round(getBlockHeight()/2));
 	}
+	
+	@Override
+	protected Vector getNextBlockPosition(PresentationBlock<?> presentationBlock) {
+		Vector pos = getPosition();
+		return new Vector(pos.getX() + getBlockWidth(), pos.getY() );
+	}
 }
