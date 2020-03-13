@@ -296,8 +296,8 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 					gameController.removeTopLevelBlock(selectedBlock.getBlock());
 				}
 
-				// selectedBlock.getBlock().removeFromProgramAreaPresentationRecursively(programAreaP);
-				programAreaP.removeBlock(selectedBlock);
+				selectedBlock.getBlock().removeFromProgramAreaPresentationRecursively(programAreaP);
+				// programAreaP.removeBlock(selectedBlock);
 
 				// TODO: recursively delete all connected blocks
 			}
