@@ -13,7 +13,6 @@ public abstract class ActionBlock extends SequenceBlock{
 	private ActionBlockPresentation presentationBlock;
 	
 	public ActionBlock() {
-
 	}
 	
 	@Override

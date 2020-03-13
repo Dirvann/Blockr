@@ -25,19 +25,40 @@ public class PalettePresentation {
 		final int yOffsetIncrement = 60;
 		
 		// Move Forward
-		list.add(new ActionBlockPresentation(new Vector(xOffset, yOffset), new MoveForward()));
+		MoveForward move = new MoveForward();
+		ActionBlockPresentation movepresentation = new ActionBlockPresentation(new Vector(xOffset, yOffset), move);
+		move.setPresentationBlock(movepresentation);
+		list.add(movepresentation);
 		// Turn Left
-		list.add(new ActionBlockPresentation(new Vector(xOffset, yOffset+yOffsetIncrement), new TurnLeft()));		
+		TurnLeft turnLeft = new TurnLeft();
+		ActionBlockPresentation turnLeftPresentation = new ActionBlockPresentation(new Vector(xOffset, yOffset+yOffsetIncrement), turnLeft);
+		turnLeft.setPresentationBlock(turnLeftPresentation);
+		list.add(turnLeftPresentation);		
 		// Turn Right
-		list.add(new ActionBlockPresentation(new Vector(xOffset, yOffset+yOffsetIncrement*2), new TurnRight()));
+		TurnRight turnRight = new TurnRight();
+		ActionBlockPresentation turnRightPresentation = new ActionBlockPresentation(new Vector(xOffset, yOffset+yOffsetIncrement*2),turnRight);
+		turnRight.setPresentationBlock(turnRightPresentation);
+		list.add(turnRightPresentation);
 		// If
-		list.add(new SingleSurroundBlockPresentation(new Vector(xOffset, yOffset+yOffsetIncrement*3), new IfBlock()));
+		IfBlock ifBlock = new IfBlock();
+		SingleSurroundBlockPresentation ifBlockPresentation = new SingleSurroundBlockPresentation(new Vector(xOffset, yOffset+yOffsetIncrement*3), ifBlock);
+		ifBlock.setPresentationBlock(ifBlockPresentation);
+		list.add(ifBlockPresentation);
 		// While
-		list.add(new SingleSurroundBlockPresentation(new Vector(xOffset, yOffset+yOffsetIncrement*4), new WhileBlock()));
+		WhileBlock whileBlock = new WhileBlock();
+		SingleSurroundBlockPresentation whileBlockPresentaton = new SingleSurroundBlockPresentation(new Vector(xOffset, yOffset+yOffsetIncrement*4), whileBlock);
+		whileBlock.setPresentationBlock(whileBlockPresentaton);
+		list.add(whileBlockPresentaton);
 		// Not
-		list.add(new ChainConditionBlockPresentation(new Vector(xOffset, yOffset+yOffsetIncrement*5), new NotBlock()));
+		NotBlock not = new NotBlock();
+		ChainConditionBlockPresentation notPresentation = new ChainConditionBlockPresentation(new Vector(xOffset, yOffset+yOffsetIncrement*5), not);
+		not.setPresentationBlock(notPresentation);
+		list.add(notPresentation);
 		// Wall In Front
-		list.add(new SingleConditionBlockPresentation(new Vector(xOffset, yOffset+yOffsetIncrement*6), new WallInFront()));
+		WallInFront wall = new WallInFront();
+		SingleConditionBlockPresentation wallPresentation = new SingleConditionBlockPresentation(new Vector(xOffset, yOffset+yOffsetIncrement*6), wall);
+		wall.setPresentationBlock(wallPresentation);
+		list.add(wallPresentation);
 	}
 	
 	

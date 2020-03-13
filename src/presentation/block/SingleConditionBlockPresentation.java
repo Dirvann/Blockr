@@ -24,12 +24,15 @@ public class SingleConditionBlockPresentation extends PresentationBlock<SingleCo
 
 	@Override
 	public PresentationBlock<SingleConditionBlock> getNewBlockOfThisType() {
-		return new SingleConditionBlockPresentation(getPosition(), (SingleConditionBlock) getBlock().getNewBlockOfThisType());
+		SingleConditionBlock block =  (SingleConditionBlock) getBlock().getNewBlockOfThisType();
+		SingleConditionBlockPresentation blockPresentation = new SingleConditionBlockPresentation(getPosition(), block);
+		block.setPresentationBlock(blockPresentation);
+		return blockPresentation;
 	}
 
 	@Override
 	public Vector getPossibleSnapLocation() {
-		return new Vector(getPosition().getX(), getPosition().getY() + Math.round(getBlockHeight()/2));
+		return new Vector(getPosition().getX() - Math.round(getBlockWidth() / 2), getPosition().getY() + Math.round(getBlockHeight()/2));
 	}
 
 }

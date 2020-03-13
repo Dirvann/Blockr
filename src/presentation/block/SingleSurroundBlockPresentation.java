@@ -24,11 +24,14 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 
 	@Override
 	public PresentationBlock<SingleSurroundingBlock> getNewBlockOfThisType() {
-		return new SingleSurroundBlockPresentation(getPosition(), (SingleSurroundingBlock) getBlock().getNewBlockOfThisType());
+		SingleSurroundingBlock block = (SingleSurroundingBlock) getBlock().getNewBlockOfThisType();
+		SingleSurroundBlockPresentation blockPresentation = new SingleSurroundBlockPresentation(getPosition(), block);
+		block.setPresentationBlock(blockPresentation);
+		return blockPresentation;
 	}
 
 	@Override
 	public Vector getPossibleSnapLocation() {
-		return new Vector(getPosition().getX() + Math.round(getBlockWidth()/2), getPosition().getY());
+		return new Vector(getPosition().getX() + Math.round(getBlockWidth()/2), getPosition().getY() - Math.round(getBlockHeight() / 2));
 	}
 }

@@ -24,12 +24,15 @@ public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
 	@Override
 	public PresentationBlock<ActionBlock> getNewBlockOfThisType() {
 		// TODO Auto-generated method stub
-		return new ActionBlockPresentation(getPosition(), (ActionBlock) getBlock().getNewBlockOfThisType());
+		ActionBlock block = (ActionBlock) getBlock().getNewBlockOfThisType();
+		ActionBlockPresentation blockPresentation = new ActionBlockPresentation(getPosition(), block);
+		block.setPresentationBlock(blockPresentation);
+		return blockPresentation;
 	}
 
 	@Override
 	public Vector getPossibleSnapLocation() {
-		return new Vector(getPosition().getX() + Math.round(getBlockWidth()/2), getPosition().getY());
+		return new Vector(getPosition().getX() + Math.round(getBlockWidth()/2), getPosition().getY() - Math.round(getBlockHeight() / 2));
 	}
 
 }

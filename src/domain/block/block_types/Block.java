@@ -23,7 +23,7 @@ public abstract class Block {
 	}
 	
 	public void setPresentationBlock(PresentationBlock<?> presentationBlock) {
-		
+		this.presentationBlock = presentationBlock;
 	}
 	
 	public abstract Block getNewBlockOfThisType();
