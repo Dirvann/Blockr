@@ -46,6 +46,8 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 	double worldProportion = 0.3;
 
 	GameWorld gameWorld;
+	int gameWorldWidth = 10;
+	int gameWorldHeight = 10;
 
 	Vector mouseDownStartPosition = new Vector(0, 0);
 	boolean mouseDown = false;
@@ -93,7 +95,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 //			e.printStackTrace();
 //		}
 
-		gameController.setGameWorld(new GameWorld(10, 10));
+		gameController.setGameWorld(new GameWorld(gameWorldWidth, gameWorldHeight));
 		gameWorld = gameController.getGameWorld();
 
 		addMouseListener(this);
@@ -358,7 +360,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 			break;
 
 		case 117: // F6
-			gameController.setGameWorld(new GameWorld(15, 10));
+			gameController.setGameWorld(new GameWorld(gameWorldWidth, gameWorldHeight));
 			break;
 			
 		default:
