@@ -9,24 +9,23 @@ import domain.block.abstract_classes.SurroundingBlock;
 
 public abstract class ConditionBlock extends Block {
 
-
 	private ConditionBlock next = null;
 	private ConditionBlock previous = null;
 	private SurroundingBlock surroundingBlock = null;
-	
-	
+
 	/**
 	 * 
 	 * @return The next block of the condition as ConditionBlock.
 	 */
 	public ConditionBlock getNextCondition() {
-		ConditionBlock copy = this.next; //TODO: make actual copy
+		ConditionBlock copy = this.next; // TODO: make actual copy
 		return copy;
 	}
-	
+
 	public void setNextCondition(ConditionBlock condition) {
 		this.next = condition;
-		condition.setPrevious(this);
+		if (condition != null)
+			condition.setPrevious(this);
 	}
 
 	public ConditionBlock getPrevious() {
@@ -48,44 +47,42 @@ public abstract class ConditionBlock extends Block {
 			i = i.getNextCondition();
 		}
 	}
-	
+
 	abstract public boolean isValidCondition();
 
 	abstract public boolean evaluate(GameController gamecontroller);
-	
+
 	@Override
 	public List<Block> getAllNextBlocks() {
 		List<Block> l = new ArrayList<Block>();
-		
+
 		l.add(this);
-		if(this.getNextCondition() != null) 
+		if (this.getNextCondition() != null)
 			l.addAll(getNextCondition().getAllNextBlocks());
-		
-		
+
 		return l;
 	}
-	
+
 	@Override
 	public Block getPreviousBlock() {
-		if(getPrevious() != null) {
+		if (getPrevious() != null) {
 			return getPrevious();
 		}
 		if (getSurroundingBlock() != null) {
 			return getSurroundingBlock();
-		} 
+		}
 		return null;
 	}
-	
+
 	@Override
 	public boolean disconnect() {
-		if	(getPrevious() == null) {
+		if (getPrevious() == null) {
 			if (getSurroundingBlock() != null) {
 				getSurroundingBlock().removeConditionBlock();
 				return true;
 			}
-		}
-		else {
-			((ChainConditionBlock)(getPrevious())).removeNextCondition();
+		} else {
+			((ChainConditionBlock) (getPrevious())).removeNextCondition();
 			return true;
 		}
 		return false;

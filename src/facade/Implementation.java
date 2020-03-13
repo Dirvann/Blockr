@@ -84,7 +84,6 @@ public class Implementation implements Facade{
 	@Override
 	public boolean disconnect(Block blockToDisconnect) {
 		return blockToDisconnect.disconnect();
-		
 	}
 
 	@Override
