@@ -3,6 +3,7 @@ package domain.block.block_types;
 import java.util.List;
 
 import domain.GameController;
+import domain.game_world.Vector;
 import presentation.block.PresentationBlock;
 
 public abstract class Block {
@@ -25,6 +26,8 @@ public abstract class Block {
 	public void setPresentationBlock(PresentationBlock<?> presentationBlock) {
 		this.presentationBlock = presentationBlock;
 	}
+	
+	public abstract void setPositionRecursivelyByDifference(Vector deltaPos);
 	
 	public abstract Block getNewBlockOfThisType();
 

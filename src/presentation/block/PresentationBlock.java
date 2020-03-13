@@ -34,6 +34,20 @@ public abstract class PresentationBlock<T extends Block> {
 		this.position = pos;
 	}
 	
+	public void setPositionByDifference(Vector deltaPos) {
+		this.setPosition(getPosition().add(deltaPos));
+	}
+	
+	public void setPositionRecursivelyByDifference(Vector deltaPos) {
+		//this.setPositionByDifference(deltaPos);
+		System.out.println("PresentationBlock.getBlock == null: ");
+		System.out.println(this.getBlock() == null);
+		this.getBlock().setPositionRecursivelyByDifference(deltaPos);
+		// this.getBlock().setPositionRecursivelyByDifference(deltaPos);
+	}
+	
+	
+	
 	abstract public void draw(Graphics g);
 	
 	public static int getBlockWidth() {

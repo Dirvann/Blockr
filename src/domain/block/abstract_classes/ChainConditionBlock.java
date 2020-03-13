@@ -1,6 +1,7 @@
 package domain.block.abstract_classes;
 
 import domain.block.block_types.ConditionBlock;
+import domain.game_world.Vector;
 import presentation.block.ChainConditionBlockPresentation;
 
 public abstract class ChainConditionBlock extends ConditionBlock{
@@ -43,6 +44,13 @@ public abstract class ChainConditionBlock extends ConditionBlock{
 	@Override
 	public ChainConditionBlockPresentation getPresentationBlock() {
 		return this.presentationBlock;
+	}
+	
+	public void setPositionRecursivelyByDifference(Vector deltaPos) {
+		// Set position of this block's presentation
+		System.out.println("ChainConditionBlock.getPresentationBlock() == null: ");
+		System.out.println(this.getPresentationBlock() == null);
+		this.getPresentationBlock().setPositionByDifference(deltaPos);
 	}
 
 }

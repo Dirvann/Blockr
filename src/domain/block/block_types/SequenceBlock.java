@@ -5,6 +5,7 @@ import java.util.List;
 
 import domain.GameController;
 import domain.block.abstract_classes.SurroundingBlock;
+import domain.game_world.Vector;
 
 public abstract class SequenceBlock extends Block {
 
@@ -95,5 +96,10 @@ public abstract class SequenceBlock extends Block {
 			l.addAll(getNextBlock().getAllNextBlocks());
 		
 		return l;
+	}
+	
+	public void setPositionRecursivelyByDifference(Vector deltaPos) {
+		// Set position of this block's presentation
+		this.getPresentationBlock().setPositionByDifference(deltaPos);
 	}
 }

@@ -228,6 +228,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 			presentationCopy = paletteBlockP.getNewBlockOfThisType();
 			programAreaP.addBlock(presentationCopy);
 			selectedBlock = presentationCopy;
+			System.out.println("presentationCopy.getBlock == null: " + presentationCopy.getBlock() == null);
 		}
 
 		PresentationBlock<?> programBlockP = programAreaP.getBlockAtPosition(mousePos);
@@ -310,9 +311,8 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		if (this.mouseDown && this.selectedBlock != null) {
-			Vector newPos = new Vector(selectedBlock.getPosition().getX() + e.getX() - this.previousMousePos.getX(),
-					selectedBlock.getPosition().getY() + e.getY() - this.previousMousePos.getY());
-			selectedBlock.setPosition(newPos);
+			Vector moveDifference = new Vector(e.getX() - previousMousePos.getX(), e.getY() - previousMousePos.getY());
+			selectedBlock.setPositionRecursivelyByDifference(moveDifference);
 			this.previousMousePos = new Vector(e.getX(), e.getY());
 			repaint();
 		}
