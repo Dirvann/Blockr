@@ -88,6 +88,12 @@ public abstract class PresentationBlock<T extends Block> {
 		}
 		return false;
 	}
+
+
+	public boolean collisionWithLowerPart(Vector position) {
+		return false;
+	}
+	
 	
 	public T getBlock() {
 		return this.block;

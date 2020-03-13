@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import domain.block.abstract_classes.SingleSurroundingBlock;
+import domain.block.block_types.Block;
+import domain.block.block_types.SequenceBlock;
 import domain.game_world.Vector;
 
 public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSurroundingBlock> {
@@ -33,5 +35,28 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 	@Override
 	public Vector getPossibleSnapLocation() {
 		return new Vector(getPosition().getX() + Math.round(getBlockWidth()/2), getPosition().getY() - Math.round(getBlockHeight() / 2));
+	}
+	
+	@Override
+	public int getTotalHeight(){
+		int totalHeight = 2 * getBlockHeight();
+		SequenceBlock current = getBlock().getBodyBlock();
+		while (current != null) {
+			totalHeight += current.getPresentationBlock().getTotalHeight();
+			current = current.getNextBlock();
+		}
+		return totalHeight;
+	}
+	@Override
+	public boolean collisionWithLowerPart(Vector position) {
+		int xValueLowerPart = getPosition().getX();
+		int yValueLowerPart = getPosition().getY() + getTotalHeight() - getBlockHeight();
+		if(position.getX() > this.getPosition().getX() && 
+				position.getX() < (getBlockWidth() + xValueLowerPart) && 
+				position.getY() > yValueLowerPart && 
+				position.getY() < (yValueLowerPart + getBlockHeight())) {
+			return true;
+		}
+		return false;
 	}
 }
