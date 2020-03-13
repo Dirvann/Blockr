@@ -38,7 +38,7 @@ public class SingleConditionBlockPresentation extends PresentationBlock<SingleCo
 	@Override
 	protected Vector getNextBlockPosition(PresentationBlock<?> presentationBlock) {
 		Vector pos = getPosition();
-		return new Vector(pos.getX() + PresentationBlock.getBlockWidth(), pos.getY());
+		return new Vector(pos.getX() + getBlockWidth(), pos.getY());
 	}
 
 }
