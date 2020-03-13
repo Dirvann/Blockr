@@ -10,7 +10,7 @@ import presentation.block.PresentationBlock;
 public class ProgramAreaPresentation {
 
 	private List<PresentationBlock<?>> programAreaBlocks;
-	private int blocksLeft = 10;
+	private int blocksLeft = 30;
 	
 	public ProgramAreaPresentation() {
 		programAreaBlocks = new ArrayList<PresentationBlock<?>>();
