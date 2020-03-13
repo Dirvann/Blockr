@@ -249,11 +249,23 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 //				// TODO: yeah this wont do it
 //				System.out.println("SNAP!");
 //			}
-
+			
+			// if (!snapped()) {
+			if (!gameController.isTopLevelBlock(selectedBlock.getBlock())) {
+				gameController.addTopLevelBlock(selectedBlock.getBlock());
+			}
+			
+			
+			
 			// Delete if over palette
 			int paletteBorder = (int) (panelProportion * canvas.getWidth());
 			if (mousePos.getX() < paletteBorder) {
+				if (gameController.isTopLevelBlock(selectedBlock.getBlock())) {
+					gameController.removeTopLevelBlock(selectedBlock.getBlock());
+				}
+				
 				programAreaP.removeBlock(selectedBlock);
+				
 				// TODO: recursively delete all connected blocks
 			}
 

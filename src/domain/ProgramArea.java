@@ -58,6 +58,10 @@ public class ProgramArea {
 		}
 	}
 	
+	public boolean isTopLevelBlock(Block block) {
+		return topLevelBlocks.contains(block);
+	}
+	
 	
 	public Block getNextBlockToExecute() {
 		return this.nextToExecute;

@@ -47,6 +47,10 @@ public class GameController {
 		programArea.addTopLevelBlock(block);
 	}
 	
+	public boolean isTopLevelBlock(Block block) {
+		return programArea.isTopLevelBlock(block);
+	}
+	
 	public void removeTopLevelBlock(Block block) {
 		try {
 			programArea.removeTopLevelBlock(block);
