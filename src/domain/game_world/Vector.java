@@ -38,4 +38,12 @@ public final class Vector {
 	public int getY() {
 		return y;
 	}
+	
+	
+	public Vector add(Vector other) {
+		if (other != null) {
+			return new Vector(this.getX() + other.getX(), this.getY() + other.getY());
+		}
+		return null;
+	}
 }

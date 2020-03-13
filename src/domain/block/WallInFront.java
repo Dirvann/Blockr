@@ -3,6 +3,7 @@ package domain.block;
 import domain.GameController;
 import domain.block.abstract_classes.SingleConditionBlock;
 import domain.block.block_types.Block;
+import domain.game_world.Vector;
 
 public class WallInFront extends SingleConditionBlock {
 	
@@ -31,4 +32,10 @@ public class WallInFront extends SingleConditionBlock {
 		return "Wall In Front";
 	}
 
+	public void setPositionRecursivelyByDifference(Vector deltaPos) {
+		// Set position of this block's presentation
+		this.getPresentationBlock().setPositionByDifference(deltaPos);
+	}
+	
+	
 }
