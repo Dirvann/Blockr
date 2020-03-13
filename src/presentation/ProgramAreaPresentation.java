@@ -45,7 +45,7 @@ public class ProgramAreaPresentation {
 	
 	public PresentationBlock<?> snappebleBlock(Vector position){
 		for (PresentationBlock<?> pBlock: programAreaBlocks) {
-			if (pBlock.collidesWithPosition(position) || pBlock.collisionWithLowePart(position)) {
+			if (pBlock.collidesWithPosition(position) || pBlock.collisionWithLowerPart(position)) {
 				return pBlock;
 			}
 		}
