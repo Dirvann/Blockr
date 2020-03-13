@@ -27,11 +27,11 @@ public class ProgramArea {
 			Block topLevelBlock = topLevelBlocks.get(0);
 
 			if (topLevelBlock instanceof SequenceBlock) {
-				return false;
+				return true;
 			} else if (topLevelBlock instanceof SurroundingBlock) {
 				return ((SurroundingBlock) topLevelBlock).hasValidCondition();
 			} else {
-				return true;
+				return false;
 			}
 		} else {
 			return false;
