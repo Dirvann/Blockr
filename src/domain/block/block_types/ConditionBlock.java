@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import domain.GameController;
 import domain.block.abstract_classes.SurroundingBlock;
 
-public abstract class ConditionBlock extends Block{
+public abstract class ConditionBlock extends Block {
 
 
 	private ConditionBlock next = null;

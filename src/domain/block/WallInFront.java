@@ -33,8 +33,7 @@ public class WallInFront extends SingleConditionBlock {
 	}
 
 	public void setConnectedBlockPositionRecursivelyByDifference(Vector deltaPos) {
-		// Set position of this block's presentation
-		this.getPresentationBlock().setPositionByDifference(deltaPos);
+		// Intentionally blank
 	}
 	
 	
