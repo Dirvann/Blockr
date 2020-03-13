@@ -21,12 +21,20 @@ public class ProgramArea {
 		return topLevelBlocks.size();
 	}
 	
+	public boolean hasValidTopLevelBlock() {
+		if (nbTopLevelBlocks() == 1) {
+			return (topLevelBlocks.get(0) instanceof SequenceBlock);
+		} else {
+			return false;
+		}
+	}
+	
 	public Boolean programInProgress() {
 		return nextToExecute != null;
 	}
 	
 	public Boolean canStartExecution() {
-		return (!programInProgress() && nbTopLevelBlocks() == 1);
+		return (!programInProgress() && hasValidTopLevelBlock());
 		// TODO: maybe check if program is valid
 	}
 	
