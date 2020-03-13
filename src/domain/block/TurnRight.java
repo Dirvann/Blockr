@@ -24,4 +24,10 @@ public class TurnRight extends ActionBlock {
 		return new TurnRight();
 	}
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Turn Right";
+	}
+
 }

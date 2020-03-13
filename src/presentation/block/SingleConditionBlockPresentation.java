@@ -6,8 +6,12 @@ import java.awt.Graphics;
 import domain.block.abstract_classes.SingleConditionBlock;
 import domain.game_world.Vector;
 
-public abstract class SingleConditionBlockPresentation extends PresentationBlock<SingleConditionBlock> {
+public class SingleConditionBlockPresentation extends PresentationBlock<SingleConditionBlock> {
 	
+	public SingleConditionBlockPresentation(Vector pos, SingleConditionBlock block) {
+		super(pos, block);
+	}
+
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(Color.ORANGE);
@@ -16,6 +20,11 @@ public abstract class SingleConditionBlockPresentation extends PresentationBlock
 		g.setColor(Color.BLACK);
 		g.setFont(getFont());
 		g.drawString(getPresentationName(),pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
+	}
+
+	@Override
+	public PresentationBlock<SingleConditionBlock> getNewBlockOfThisType() {
+		return new SingleConditionBlockPresentation(getPosition(), (SingleConditionBlock) getBlock().getNewBlockOfThisType());
 	}
 
 }

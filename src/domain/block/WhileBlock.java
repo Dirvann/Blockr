@@ -27,4 +27,10 @@ public class WhileBlock extends SingleSurroundingBlock {
 		return new WhileBlock();
 	}
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "While";
+	}
+
 }

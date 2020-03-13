@@ -23,4 +23,10 @@ public class MoveForward extends ActionBlock {
 		return new MoveForward();
 	}
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Move Forward";
+	}
+
 }

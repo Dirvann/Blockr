@@ -50,4 +50,10 @@ public class IfBlock extends SingleSurroundingBlock {
 		return new IfBlock();
 	}
 
+
+	@Override
+	public String getName() {
+		return "if";
+	}
+
 }

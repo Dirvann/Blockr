@@ -22,4 +22,10 @@ public class NotBlock extends ChainConditionBlock {
 	public Block getNewBlockOfThisType() {
 		return new NotBlock();
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Not";
+	}
 }

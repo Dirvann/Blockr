@@ -25,4 +25,10 @@ public class WallInFront extends SingleConditionBlock {
 		return new WallInFront();
 	}
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Wall In Front";
+	}
+
 }

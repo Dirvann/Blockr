@@ -6,7 +6,11 @@ import java.awt.Graphics;
 import domain.block.abstract_classes.SingleSurroundingBlock;
 import domain.game_world.Vector;
 
-public abstract class SingleSurroundBlockPresentation extends PresentationBlock<SingleSurroundingBlock> {
+public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSurroundingBlock> {
+
+	public SingleSurroundBlockPresentation(Vector pos, SingleSurroundingBlock block) {
+		super(pos, block);
+	}
 
 	@Override
 	public void draw(Graphics g) {
@@ -15,6 +19,11 @@ public abstract class SingleSurroundBlockPresentation extends PresentationBlock<
 		g.fillRect(pos.getX(), pos.getY(), PresentationBlock.getBlockWidth(), PresentationBlock.getBlockHeight());
 		g.setColor(Color.BLACK);
 		g.setFont(getFont());
-		g.drawString(getPresentationName(),pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
+		g.drawString(getPresentationName(), pos.getX(), pos.getY() + (int) (getBlockHeight() * 0.8));
+	}
+
+	@Override
+	public PresentationBlock<SingleSurroundingBlock> getNewBlockOfThisType() {
+		return new SingleSurroundBlockPresentation(getPosition(), (SingleSurroundingBlock) getBlock().getNewBlockOfThisType());
 	}
 }

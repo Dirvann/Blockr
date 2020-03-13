@@ -16,8 +16,8 @@ public abstract class SingleConditionBlock extends ConditionBlock{
 		return true;
 	}
 	
-	@Override
-	public PresentationBlock getPresentationBlock() {
+	
+	public PresentationBlock<?> getPresentationBlock() {
 		return this.presentationBlock;
 	}
 	

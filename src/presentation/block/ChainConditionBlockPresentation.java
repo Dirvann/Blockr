@@ -6,8 +6,12 @@ import java.awt.Graphics;
 import domain.block.abstract_classes.ChainConditionBlock;
 import domain.game_world.Vector;
 
-public abstract class ChainConditionBlockPresentation extends PresentationBlock<ChainConditionBlock> {
+public class ChainConditionBlockPresentation extends PresentationBlock<ChainConditionBlock> {
 	
+	public ChainConditionBlockPresentation(Vector pos, ChainConditionBlock block) {
+		super(pos, block);
+	}
+
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(Color.RED);
@@ -16,5 +20,10 @@ public abstract class ChainConditionBlockPresentation extends PresentationBlock<
 		g.setColor(Color.BLACK);
 		g.setFont(getFont());
 		g.drawString(getPresentationName(),pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
+	}
+
+	@Override
+	public PresentationBlock<ChainConditionBlock> getNewBlockOfThisType() {
+		return new ChainConditionBlockPresentation(getPosition(), (ChainConditionBlock) getBlock().getNewBlockOfThisType());
 	}
 }

@@ -26,9 +26,8 @@ import domain.game_world.cell.Wall;
 import facade.Implementation;
 import presentation.block.*;
 
-
 public class Presentation extends Canvas implements MouseListener, MouseMotionListener, KeyListener {
-	
+
 	/**
 	 * 
 	 */
@@ -36,41 +35,40 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 	static int width = 800;
 	static int height = 600;
 	static Canvas canvas;
-	
+
 	double panelProportion = 0.2;
 	double codeProportion = 0.5;
 	double worldProportion = 0.3;
-		
+
 	GameWorld gameWorld;
-	
-	Vector mouseDownStartPosition = new Vector(0,0);
+
+	Vector mouseDownStartPosition = new Vector(0, 0);
 	boolean mouseDown = false;
 	PresentationBlock<?> selectedBlock = null;
 	Vector previousMousePos = null;
-	
+
 	GameController gameController;
 	PalettePresentation paletteP;
 	ProgramAreaPresentation programAreaP;
 	Implementation GA; // GameInterface
-	
-	
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Blockr");
-        canvas = new Presentation();
-        canvas.setSize(width, height);
-        frame.add(canvas);
-        frame.pack();
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-    }
-    
-    public Presentation() {
-    	
-    	GA = new Implementation();
-    	
-    	gameController = GA.makeGameController();
-    	paletteP = new PalettePresentation();
-    	programAreaP = new ProgramAreaPresentation();
+
+	public static void main(String[] args) {
+		JFrame frame = new JFrame("Blockr");
+		canvas = new Presentation();
+		canvas.setSize(width, height);
+		frame.add(canvas);
+		frame.pack();
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+	}
+
+	public Presentation() {
+
+		GA = new Implementation();
+
+		gameController = GA.makeGameController();
+		paletteP = new PalettePresentation();
+		programAreaP = new ProgramAreaPresentation();
 //    	Block bla = new MoveForward();
 //    	gameController.addTopLevelBlock(bla);
 //    	GA.connect(bla, new MoveForward());
@@ -89,101 +87,112 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-    	
-    	gameController.setGameWorld(new GameWorld(10, 10));
-    	gameWorld = gameController.getGameWorld();
-    	
-		
-		addMouseListener(this);
-    	addMouseMotionListener(this);
-    	addKeyListener(this);
-    	
-    }
 
-    
-    public void paint(Graphics g) {
-    	g.setColor(Color.BLACK);
-        g.drawLine((int)(panelProportion * canvas.getWidth()), 0,(int) (panelProportion * canvas.getWidth()), canvas.getHeight());
-        g.drawLine(canvas.getWidth() - (int) (worldProportion * canvas.getWidth()), 0, canvas.getWidth() - (int) (worldProportion * canvas.getWidth()), canvas.getHeight());
-        
-        // If (!gameController.maxNumberBlocksReached()) {
-        paletteP.paint(g);
-        programAreaP.paint(g); 
-        
-        drawWorld(g, gameController.getGameWorld());
-    }
-    
-    
-    public void drawWorld(Graphics g, GameWorld gameWorld) {
-    	// drawing grid assuming proportions of with are larger than the area
-    	//TODO Calc in double then after change to int
-    	int worldWidth = (int)(canvas.getWidth() * worldProportion);
-    	Grid grid = gameWorld.getGrid();
-    	int worldHeight = (int)(worldWidth / grid.getWidth() * grid.getHeight());
-    	
-    	int worldStartX = (canvas.getWidth() - worldWidth);
-    	int worldStartY = (canvas.getHeight()- worldHeight)/2;
-    	int cellWidth = worldWidth/grid.getWidth();
-    	int cellHeight = worldHeight/grid.getHeight();
-    	
-    	// Vertical lines
-    	for(int i = 0; i < grid.getWidth() ; i++) {
-    		g.drawLine(worldStartX + cellWidth*i, worldStartY, worldStartX + cellWidth * i, worldStartY + worldHeight);
-    	}
-    	// Horizontal lines
-    	for(int i = 0; i < grid.getHeight() + 1; i++) {
-    		g.drawLine(worldStartX, worldStartY + cellHeight * i, worldStartX + worldWidth, worldStartY + cellHeight*i);
-    	}
-    	
-    	drawCells(g, gameWorld, cellWidth, cellHeight, worldStartX, worldStartY);   	
-    }
-    
+		gameController.setGameWorld(new GameWorld(10, 10));
+		gameWorld = gameController.getGameWorld();
+
+		addMouseListener(this);
+		addMouseMotionListener(this);
+		addKeyListener(this);
+
+	}
+
+	public void paint(Graphics g) {
+		g.setColor(Color.BLACK);
+		g.drawLine((int) (panelProportion * canvas.getWidth()), 0, (int) (panelProportion * canvas.getWidth()),
+				canvas.getHeight());
+		g.drawLine(canvas.getWidth() - (int) (worldProportion * canvas.getWidth()), 0,
+				canvas.getWidth() - (int) (worldProportion * canvas.getWidth()), canvas.getHeight());
+
+		// If (!gameController.maxNumberBlocksReached()) {
+		paletteP.paint(g);
+		programAreaP.paint(g);
+
+		drawWorld(g, gameController.getGameWorld());
+	}
+
+	public void drawWorld(Graphics g, GameWorld gameWorld) {
+		// drawing grid assuming proportions of with are larger than the area
+		// TODO Calc in double then after change to int
+		int worldWidth = (int) (canvas.getWidth() * worldProportion);
+		Grid grid = gameWorld.getGrid();
+		int worldHeight = (int) (worldWidth / grid.getWidth() * grid.getHeight());
+
+		int worldStartX = (canvas.getWidth() - worldWidth);
+		int worldStartY = (canvas.getHeight() - worldHeight) / 2;
+		int cellWidth = worldWidth / grid.getWidth();
+		int cellHeight = worldHeight / grid.getHeight();
+
+		// Vertical lines
+		for (int i = 0; i < grid.getWidth(); i++) {
+			g.drawLine(worldStartX + cellWidth * i, worldStartY, worldStartX + cellWidth * i,
+					worldStartY + worldHeight);
+		}
+		// Horizontal lines
+		for (int i = 0; i < grid.getHeight() + 1; i++) {
+			g.drawLine(worldStartX, worldStartY + cellHeight * i, worldStartX + worldWidth,
+					worldStartY + cellHeight * i);
+		}
+
+		drawCells(g, gameWorld, cellWidth, cellHeight, worldStartX, worldStartY);
+	}
 
 	void drawCells(Graphics g, GameWorld gameWorld, int cellWidth, int cellHeight, int worldStartX, int worldStartY) {
-    	Grid grid = gameWorld.getGrid();
-    	for(int x = 0; x < grid.getWidth(); x++) {
-    		for(int y = 0; y < grid.getHeight(); y++) {
-    			try {
-					if(grid.getCell(x,y) != null) {
-						Cell c = grid.getCell(x,y);
-						if(c instanceof Wall) {
+		Grid grid = gameWorld.getGrid();
+		for (int x = 0; x < grid.getWidth(); x++) {
+			for (int y = 0; y < grid.getHeight(); y++) {
+				try {
+					if (grid.getCell(x, y) != null) {
+						Cell c = grid.getCell(x, y);
+						if (c instanceof Wall) {
 							g.setColor(Color.BLACK);
-							g.fillRect(worldStartX + cellWidth*x, worldStartY + cellHeight*y, cellWidth, cellHeight);
+							g.fillRect(worldStartX + cellWidth * x, worldStartY + cellHeight * y, cellWidth,
+									cellHeight);
 						} else if (c instanceof Goal) {
 							g.setColor(Color.GREEN);
-							g.fillRect(worldStartX + cellWidth*x, worldStartY + cellHeight*y, cellWidth, cellHeight);
+							g.fillRect(worldStartX + cellWidth * x, worldStartY + cellHeight * y, cellWidth,
+									cellHeight);
 						}
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-    		}
-    	}
-    	
-    	Vector robotPostition = gameWorld.getRobot().getLocation();
-    	Direction robotDirection = gameWorld.getRobot().getDirection();
-    	
-    	double circleRatio = 0.9;
-    	double rectWidth = 0.2;
-    	g.setColor(Color.RED);
-    	g.fillOval(worldStartX + cellWidth * robotPostition.getX() + (int)(cellWidth * (1-circleRatio)), worldStartY + cellHeight * robotPostition.getY() + (int)(cellHeight *(1-circleRatio)), (int)(cellWidth*circleRatio), (int)(cellHeight*circleRatio));
-    	g.setColor(Color.BLACK);
-    	switch(robotDirection) {
-    	case RIGHT:
-    		g.fillRect(worldStartX + cellWidth * robotPostition.getX() + cellWidth / 2, worldStartY + cellHeight * robotPostition.getY() + (int)(cellHeight *(1-rectWidth)/2), cellWidth/2, (int)(cellHeight * rectWidth));
-    		break;
-    	case LEFT:
-    		g.fillRect(worldStartX + cellWidth * robotPostition.getX(), worldStartY + cellHeight * robotPostition.getY() + (int)(cellHeight *(1-rectWidth)/2), cellWidth/2, (int)(cellHeight * rectWidth));
-    		break;
-    	case UP:
-    		g.fillRect(worldStartX + cellWidth * robotPostition.getX() + (int)(cellWidth *(1-rectWidth)/2), worldStartY + cellHeight * robotPostition.getY(), (int)(cellWidth * rectWidth), cellHeight/2);
-    		break;
-    	case DOWN:
-    		g.fillRect(worldStartX + cellWidth * robotPostition.getX() + (int)(cellWidth *(1-rectWidth)/2), worldStartY + cellHeight * robotPostition.getY() + (int)(cellHeight *(1-rectWidth)/2), (int)(cellWidth * rectWidth), cellHeight/2);
-    		break;
-    	}
-    }
+			}
+		}
+
+		Vector robotPostition = gameWorld.getRobot().getLocation();
+		Direction robotDirection = gameWorld.getRobot().getDirection();
+
+		double circleRatio = 0.9;
+		double rectWidth = 0.2;
+		g.setColor(Color.RED);
+		g.fillOval(worldStartX + cellWidth * robotPostition.getX() + (int) (cellWidth * (1 - circleRatio)),
+				worldStartY + cellHeight * robotPostition.getY() + (int) (cellHeight * (1 - circleRatio)),
+				(int) (cellWidth * circleRatio), (int) (cellHeight * circleRatio));
+		g.setColor(Color.BLACK);
+		switch (robotDirection) {
+		case RIGHT:
+			g.fillRect(worldStartX + cellWidth * robotPostition.getX() + cellWidth / 2,
+					worldStartY + cellHeight * robotPostition.getY() + (int) (cellHeight * (1 - rectWidth) / 2),
+					cellWidth / 2, (int) (cellHeight * rectWidth));
+			break;
+		case LEFT:
+			g.fillRect(worldStartX + cellWidth * robotPostition.getX(),
+					worldStartY + cellHeight * robotPostition.getY() + (int) (cellHeight * (1 - rectWidth) / 2),
+					cellWidth / 2, (int) (cellHeight * rectWidth));
+			break;
+		case UP:
+			g.fillRect(worldStartX + cellWidth * robotPostition.getX() + (int) (cellWidth * (1 - rectWidth) / 2),
+					worldStartY + cellHeight * robotPostition.getY(), (int) (cellWidth * rectWidth), cellHeight / 2);
+			break;
+		case DOWN:
+			g.fillRect(worldStartX + cellWidth * robotPostition.getX() + (int) (cellWidth * (1 - rectWidth) / 2),
+					worldStartY + cellHeight * robotPostition.getY() + (int) (cellHeight * (1 - rectWidth) / 2),
+					(int) (cellWidth * rectWidth), cellHeight / 2);
+			break;
+		}
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -193,53 +202,43 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		Vector mousePos = new Vector(e.getX(), e.getY());
-		
-		PresentationBlock paletteBlockP = paletteP.GetClickedPaletteBlock(mousePos);
+
+		PresentationBlock<?> paletteBlockP = paletteP.GetClickedPaletteBlock(mousePos);
 		// Clicked block in palette
 		// Create functional copy of paletteBlock and add to programArea
 		if (paletteBlockP != null) {
-			Block blockCopy = paletteBlockP.getBlock().getNewBlockOfThisType();
-			PresentationBlock presentationCopy;
-			try {
-				presentationCopy = paletteBlockP.getNewBlockOfThisType(blockCopy);
-				programAreaP.addBlock(presentationCopy);
-				selectedBlock = presentationCopy;
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			PresentationBlock<?> presentationCopy;
+			presentationCopy = paletteBlockP.getNewBlockOfThisType();
+			programAreaP.addBlock(presentationCopy);
+			selectedBlock = presentationCopy;
 		}
-			
-			
-		
-		PresentationBlock programBlockP = programAreaP.getBlockAtPosition(mousePos);
+
+		PresentationBlock<?> programBlockP = programAreaP.getBlockAtPosition(mousePos);
 		if (programBlockP != null) {
 			selectedBlock = programBlockP;
 		}
-		
+
 		previousMousePos = mousePos;
 		this.mouseDown = true;
-		
-		
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		Vector mousePos = new Vector(e.getX(), e.getY());
-		
+
 		if (this.selectedBlock != null) {
 			// Check for snapping
 			// TODO: replace with new snapping code
@@ -250,36 +249,37 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 //				// TODO: yeah this wont do it
 //				System.out.println("SNAP!");
 //			}
-			
+
 			// Delete if over palette
 			int paletteBorder = (int) (panelProportion * canvas.getWidth());
 			if (mousePos.getX() < paletteBorder) {
 				programAreaP.removeBlock(selectedBlock);
 				// TODO: recursively delete all connected blocks
 			}
-			
+
 		}
-		
+
 		this.mouseDown = false;
 		this.selectedBlock = null;
 		repaint();
 	}
-	
+
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		
+
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		if(this.mouseDown && this.selectedBlock != null) {
-			Vector newPos = new Vector(selectedBlock.getPosition().getX() + e.getX() - this.previousMousePos.getX(),selectedBlock.getPosition().getY() + e.getY() - this.previousMousePos.getY());
+		if (this.mouseDown && this.selectedBlock != null) {
+			Vector newPos = new Vector(selectedBlock.getPosition().getX() + e.getX() - this.previousMousePos.getX(),
+					selectedBlock.getPosition().getY() + e.getY() - this.previousMousePos.getY());
 			selectedBlock.setPosition(newPos);
 			this.previousMousePos = new Vector(e.getX(), e.getY());
 			repaint();
 		}
 	}
-	
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == 117) {
@@ -293,12 +293,12 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 			}
 		}
 	}
-	
+
 	@Override
 	public void keyReleased(KeyEvent e) {
 		repaint();
 	}
-	
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 		System.out.println(e);

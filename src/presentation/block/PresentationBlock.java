@@ -7,17 +7,23 @@ import domain.block.block_types.Block;
 import domain.game_world.Vector;
 
 public abstract class PresentationBlock<T extends Block> {
+
 	
 	//TODO Store safely, maybe elsewhere.
 	private static final int blockWidth = 100;
 	private static final int blockHeight = 20;
+	
+	public PresentationBlock (Vector pos, T block){
+		this.position = pos;
+		this.block = block;
+		
+	}
 	
 	private T block;
 	
 	private Vector position;
 	
 	private static final Font font = new Font("Arial", Font.PLAIN, (int)(blockHeight * 0.7));
-	private String presentationName = "Block";
 	
 	
 	public Vector getPosition() {
@@ -56,15 +62,11 @@ public abstract class PresentationBlock<T extends Block> {
 		this.block = block;
 	}
 	
-	public abstract PresentationBlock<T> getNewBlockOfThisType(T block) throws Exception;
+	public abstract PresentationBlock<T> getNewBlockOfThisType();
 	
 
 	public String getPresentationName() {
-		return presentationName;
-	}
-
-	public void setPresentationName(String presentationName) {
-		this.presentationName = presentationName;
+		return getBlock().getName();
 	}
 
 	public static Font getFont() {

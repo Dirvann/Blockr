@@ -6,7 +6,11 @@ import java.awt.Graphics;
 import domain.block.abstract_classes.ActionBlock;
 import domain.game_world.Vector;
 
-public abstract class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
+public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
+	public ActionBlockPresentation(Vector pos, ActionBlock block) {
+		super(pos, block);
+	}
+
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(Color.GREEN);
@@ -15,6 +19,12 @@ public abstract class ActionBlockPresentation extends PresentationBlock<ActionBl
 		g.setColor(Color.BLACK);
 		g.setFont(getFont());
 		g.drawString(getPresentationName(),pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
+	}
+
+	@Override
+	public PresentationBlock<ActionBlock> getNewBlockOfThisType() {
+		// TODO Auto-generated method stub
+		return new ActionBlockPresentation(getPosition(), (ActionBlock) getBlock().getNewBlockOfThisType());
 	}
 
 }
