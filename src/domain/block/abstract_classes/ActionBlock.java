@@ -4,6 +4,7 @@ import domain.GameController;
 import domain.block.block_types.Block;
 import domain.block.block_types.SequenceBlock;
 import domain.game_world.Vector;
+import presentation.ProgramAreaPresentation;
 import presentation.block.ActionBlockPresentation;
 
 public abstract class ActionBlock extends SequenceBlock{
@@ -37,5 +38,16 @@ public abstract class ActionBlock extends SequenceBlock{
 				System.out.println("nextBlock.getPresentationBlock() == null");
 			}
 		}
+	}
+	
+	public void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP) {
+		programAreaP.removeBlock(this.getPresentationBlock());
+		
+		Block nextBlock = this.getNextBlock();
+		
+		if (nextBlock != null) {
+			nextBlock.removeFromProgramAreaPresentationRecursively(programAreaP);
+		}
+		
 	}
 }

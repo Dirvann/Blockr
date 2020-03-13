@@ -3,6 +3,7 @@ package domain.block.abstract_classes;
 import domain.block.block_types.Block;
 import domain.block.block_types.ConditionBlock;
 import domain.game_world.Vector;
+import presentation.ProgramAreaPresentation;
 import presentation.block.ChainConditionBlockPresentation;
 
 public abstract class ChainConditionBlock extends ConditionBlock{
@@ -44,6 +45,15 @@ public abstract class ChainConditionBlock extends ConditionBlock{
 		Block connectedCondition = this.getNextCondition();
 		if (connectedCondition != null) {
 			connectedCondition.getPresentationBlock().setPositionRecursivelyByDifference(deltaPos);
+		}
+	}
+	
+	public void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP) {
+		programAreaP.removeBlock(getPresentationBlock());
+		
+		Block connectedCondition = this.getNextCondition();
+		if (connectedCondition != null) {
+			connectedCondition.removeFromProgramAreaPresentationRecursively(programAreaP);
 		}
 	}
 

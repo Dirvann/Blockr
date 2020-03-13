@@ -19,7 +19,7 @@ public class GameController {
 	}
 
 	
-	public void execute() throws Exception {
+	public void execute() {
 		if (programArea.programInProgress()) {
 			executeNextBlock();
 		} else {
