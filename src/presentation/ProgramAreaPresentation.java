@@ -10,6 +10,7 @@ import presentation.block.PresentationBlock;
 public class ProgramAreaPresentation {
 
 	private List<PresentationBlock<?>> programAreaBlocks;
+	private int blocksLeft = 30;
 	
 	public ProgramAreaPresentation() {
 		programAreaBlocks = new ArrayList<PresentationBlock<?>>();
@@ -50,6 +51,23 @@ public class ProgramAreaPresentation {
 			}
 		}
 		return null;
+	}
+	
+
+	public int getBlocksLeft() {
+		return blocksLeft;
+	}
+
+	public void setBlocksLeft(int blocksLeft) {
+		this.blocksLeft = blocksLeft;
+	}
+	
+	public void increaseBlocksLeft() {
+		blocksLeft += 1;
+	}
+	
+	public void decreaseBlocksLeft() {
+		blocksLeft -= 1;
 	}
 	
 	

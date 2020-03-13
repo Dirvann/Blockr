@@ -42,6 +42,7 @@ public abstract class ActionBlock extends SequenceBlock{
 	
 	public void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP) {
 		programAreaP.removeBlock(this.getPresentationBlock());
+		programAreaP.increaseBlocksLeft();
 		
 		Block nextBlock = this.getNextBlock();
 		

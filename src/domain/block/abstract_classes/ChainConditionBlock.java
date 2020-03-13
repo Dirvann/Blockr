@@ -50,6 +50,7 @@ public abstract class ChainConditionBlock extends ConditionBlock{
 	
 	public void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP) {
 		programAreaP.removeBlock(getPresentationBlock());
+		programAreaP.increaseBlocksLeft();
 		
 		Block connectedCondition = this.getNextCondition();
 		if (connectedCondition != null) {

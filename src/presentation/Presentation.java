@@ -2,6 +2,7 @@ package presentation;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -111,10 +112,13 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 		g.drawLine(canvas.getWidth() - (int) (worldProportion * canvas.getWidth()), 0,
 				canvas.getWidth() - (int) (worldProportion * canvas.getWidth()), canvas.getHeight());
 
-		// If (!gameController.maxNumberBlocksReached()) {
-		paletteP.paint(g);
+		if (programAreaP.getBlocksLeft() > 0) {
+			paletteP.paint(g);
+		}
+		g.setFont(new Font("Arial", Font.PLAIN, (int) (getHeight()/20)));
+		g.drawString("" + programAreaP.getBlocksLeft(),getWidth()/18, 17 * getHeight()/18);
 		programAreaP.paint(g);
-		
+
 		Block nextToExecute = gameController.getNextBlockToExecute();
 		if (nextToExecute != null) {
 			nextToExecute.getPresentationBlock().highLight(g);
@@ -230,7 +234,8 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 		PresentationBlock<?> paletteBlockP = paletteP.GetClickedPaletteBlock(mousePos);
 		// Clicked block in palette
 		// Create functional copy of paletteBlock and add to programArea
-		if (paletteBlockP != null) {
+		if (paletteBlockP != null && programAreaP.getBlocksLeft() >= 0) {
+			programAreaP.decreaseBlocksLeft();
 			PresentationBlock<?> presentationCopy;
 			presentationCopy = paletteBlockP.getNewBlockOfThisType();
 			programAreaP.addBlock(presentationCopy);
@@ -296,11 +301,11 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 				if (!gameController.isTopLevelBlock(selectedBlock.getBlock())) {
 					gameController.addTopLevelBlock(selectedBlock.getBlock());
 				}
-			}
-			else {
+			} else {
 				if (gameController.isTopLevelBlock(selectedBlock.getBlock())) {
 					gameController.removeTopLevelBlock(selectedBlock.getBlock());
-				}			}
+				}
+			}
 
 			// Delete if over palette
 			int paletteBorder = (int) (panelProportion * canvas.getWidth());
@@ -342,16 +347,16 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 	public void keyPressed(KeyEvent e) {
 
 		switch (e.getKeyCode()) {
-		case 27: 	// Esc
+		case 27: // Esc
 			gameController.stopExecution();
 			gameController.resetWorld();
 			break;
 
-		case 115: 	// F4
+		case 115: // F4
 			gameController.stopExecution();
 			break;
 
-		case 116: 	// F5
+		case 116: // F5
 			try {
 				gameController.execute();
 			} catch (Exception e1) {
@@ -362,7 +367,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 		case 117: // F6
 			gameController.setGameWorld(new GameWorld(gameWorldWidth, gameWorldHeight));
 			break;
-			
+
 		default:
 			break;
 		}
