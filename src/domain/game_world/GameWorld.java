@@ -28,7 +28,7 @@ public class GameWorld {
 		
 		this.randomiseRobotLocation();
 	}
-	
+
 	public Grid getGrid() {
 		return grid;
 	}

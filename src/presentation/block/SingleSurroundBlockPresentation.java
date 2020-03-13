@@ -2,9 +2,11 @@ package presentation.block;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
+import domain.block.abstract_classes.SingleSurroundingBlock;
 import domain.game_world.Vector;
 
-public abstract class SingleSurroundBlockPresentation extends SequenceBlockPresentation {
+public abstract class SingleSurroundBlockPresentation extends PresentationBlock<SingleSurroundingBlock> {
 
 	@Override
 	public void draw(Graphics g) {
@@ -15,5 +17,4 @@ public abstract class SingleSurroundBlockPresentation extends SequenceBlockPrese
 		g.setFont(getFont());
 		g.drawString(getPresentationName(),pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
 	}
-
 }

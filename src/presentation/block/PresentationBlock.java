@@ -6,13 +6,13 @@ import java.awt.Graphics;
 import domain.block.block_types.Block;
 import domain.game_world.Vector;
 
-public abstract class PresentationBlock {
+public abstract class PresentationBlock<T extends Block> {
 	
 	//TODO Store safely, maybe elsewhere.
 	private static final int blockWidth = 100;
 	private static final int blockHeight = 20;
 	
-	private Block block;
+	private T block;
 	
 	private Vector position;
 	
@@ -48,17 +48,18 @@ public abstract class PresentationBlock {
 		return false;
 	}
 	
-	public Block getBlock() {
+	public T getBlock() {
 		return this.block;
 	}
 	
-	public void setBlock(Block block) {
+	public void setBlock(T block) {
 		this.block = block;
 	}
 	
-	public abstract PresentationBlock getNewBlockOfThisType(Block block) throws Exception;
+	public PresentationBlock<T> getNewBlockOfThisType(T block) throws Exception {
+		
+	}
 	
-	public abstract Vector getPossibleSnapLocation();
 
 	public String getPresentationName() {
 		return presentationName;
@@ -70,6 +71,10 @@ public abstract class PresentationBlock {
 
 	public static Font getFont() {
 		return font;
+	}
+	
+	public int getTotalHeight() {
+		return getBlockHeight();
 	}
 	
 }

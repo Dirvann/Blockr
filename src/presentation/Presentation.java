@@ -44,7 +44,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 	
 	Vector mouseDownStartPosition = new Vector(0,0);
 	boolean mouseDown = false;
-	PresentationBlock selectedBlock = null;
+	PresentationBlock<?> selectedBlock = null;
 	Vector previousMousePos = null;
 	
 	GameController gameController;
