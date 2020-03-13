@@ -80,6 +80,14 @@ public abstract class SurroundingBlock extends SequenceBlock{
 		this.condition = null;
 		
 	}
+	
+	public boolean hasValidCondition() {
+		if (this.getConditionBlock() == null) {
+			return false;
+		} else {
+			return this.getConditionBlock().isValidCondition();
+		}
+	}
 
 	public SequenceBlock getNextAfterLoop() {
 		return this;

@@ -3,6 +3,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import domain.block.abstract_classes.SurroundingBlock;
 import domain.block.block_types.*;
 
 
@@ -23,7 +24,15 @@ public class ProgramArea {
 	
 	public boolean hasValidTopLevelBlock() {
 		if (nbTopLevelBlocks() == 1) {
-			return (topLevelBlocks.get(0) instanceof SequenceBlock);
+			Block topLevelBlock = topLevelBlocks.get(0);
+
+			if (topLevelBlock instanceof SequenceBlock) {
+				return false;
+			} else if (topLevelBlock instanceof SurroundingBlock) {
+				return ((SurroundingBlock) topLevelBlock).hasValidCondition();
+			} else {
+				return true;
+			}
 		} else {
 			return false;
 		}
