@@ -19,10 +19,13 @@ public abstract class PresentationBlock<T extends Block>{
 	
 	protected Vector position;
 	
+	private String displayName;
 	
-	public PresentationBlock(Vector pos, T block) {
+	
+	public PresentationBlock(Vector pos, T block, String displayName) {
 		this.position = pos;
 		this.setBlock(block);
+		this.displayName = displayName;
 	}
 	
 	
@@ -90,6 +93,10 @@ public abstract class PresentationBlock<T extends Block>{
 	protected abstract Vector getNextBlockPosition(PresentationBlock<?> presentationBlock);
 	
 	public abstract boolean sequenceBlockCanSnap(Vector v);
+	
+	public String getDisplayName() {
+		return this.displayName;
+	}
 	
 	
 	

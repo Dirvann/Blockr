@@ -8,8 +8,8 @@ import domain.game_world.Vector;
 
 public class SingleConditionBlockPresentation extends PresentationBlock<SingleConditionBlock>{
 
-	public SingleConditionBlockPresentation(Vector pos, SingleConditionBlock block) {
-		super(pos,block);
+	public SingleConditionBlockPresentation(Vector pos, SingleConditionBlock block, String displayName) {
+		super(pos,block, displayName);
 	}
 
 	@Override
@@ -19,7 +19,7 @@ public class SingleConditionBlockPresentation extends PresentationBlock<SingleCo
 		g.fillRect(pos.getX(), pos.getY(), getBlockWidth(), getBlockHeight());
 		g.setColor(Color.BLACK);
 		g.setFont(getFont());
-		g.drawString(getBlock().getDisplayName(), pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
+		g.drawString(getDisplayName(), pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
 	
 	}
 	

@@ -7,8 +7,8 @@ public abstract class SingleSurroundingBlock extends SurroundingBlock {
 	
 	private SingleSurroundBlockPresentation presentationBlock;
 	
-	public SingleSurroundingBlock(Vector pos) {
-		this.presentationBlock = new SingleSurroundBlockPresentation(pos, this);
+	public SingleSurroundingBlock(Vector pos, String displayName) {
+		this.presentationBlock = new SingleSurroundBlockPresentation(pos, this, displayName);
 	}
 	
 	@Override

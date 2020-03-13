@@ -4,16 +4,12 @@ import domain.GameController;
 import domain.block.abstract_classes.SingleSurroundingBlock;
 import domain.block.block_types.*;
 import domain.game_world.Vector;
-import presentation.block.PresentationBlock;
 
 public class IfBlock extends SingleSurroundingBlock {
 	
-	private final String displayName = "IF";
-	
-	
 
 	public IfBlock(Vector pos) {
-		super(pos);
+		super(pos, "IF");
 	}
 
 	public Block execute(GameController gameController) throws Exception {
@@ -34,10 +30,6 @@ public class IfBlock extends SingleSurroundingBlock {
 		return this.getNextBlock();
 	}
 
-	@Override
-	public String getDisplayName() {
-		return displayName;
-	}
 	@Override
 	public SequenceBlock getNextAfterLoop() {
 		if (this.getNextBlock() == null) {

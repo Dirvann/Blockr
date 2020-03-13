@@ -6,11 +6,9 @@ import domain.block.block_types.Block;
 import domain.game_world.Vector;
 
 public class WhileBlock extends SingleSurroundingBlock {
-	
-	private final String displayName = "While";
-	
+
 	public WhileBlock(Vector pos) {
-		super(pos);
+		super(pos, "While");
 	}
 
 	public Block execute(GameController gameController) throws Exception {
@@ -22,11 +20,6 @@ public class WhileBlock extends SingleSurroundingBlock {
 			return this.getBodyBlock();
 		}
 		return this.getNextBlock();
-	}
-
-	@Override
-	public String getDisplayName() {
-		return displayName;
 	}
 
 }

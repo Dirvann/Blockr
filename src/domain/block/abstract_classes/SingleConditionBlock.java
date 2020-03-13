@@ -9,8 +9,8 @@ public abstract class SingleConditionBlock extends ConditionBlock{
 	
 	private SingleConditionBlockPresentation presentationBlock;
 	
-	public SingleConditionBlock(Vector pos) {
-		this.presentationBlock = new SingleConditionBlockPresentation(pos, this);
+	public SingleConditionBlock(Vector pos, String displayName) {
+		this.presentationBlock = new SingleConditionBlockPresentation(pos, this, displayName);
 	}
 	
 	public boolean isValidCondition() {

@@ -6,10 +6,8 @@ import domain.game_world.Vector;
 
 public class WallInFront extends SingleConditionBlock {
 	
-	private final String displayName = "Wall In Front";
-	
 	public WallInFront(Vector pos) {
-		super(pos);
+		super(pos, "Wall In Front");
 	}
 
 	public boolean evaluate(GameController gameController) {
@@ -19,11 +17,6 @@ public class WallInFront extends SingleConditionBlock {
 		}		
 		else
 			return gameController.getGameWorld().robotWallInFront();
-	}
-
-	@Override
-	public String getDisplayName() {
-		return displayName;
 	}
 
 }

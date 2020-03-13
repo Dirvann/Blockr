@@ -11,9 +11,10 @@ import domain.game_world.Vector;
 
 public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSurroundingBlock> {
 	
-	public SingleSurroundBlockPresentation(Vector pos, SingleSurroundingBlock block) {
-		super(pos,block);
+	public SingleSurroundBlockPresentation(Vector pos, SingleSurroundingBlock block, String displayName) {
+		super(pos,block, displayName);
 	}
+
 
 	@Override
 	public void draw(Graphics g) {
@@ -29,7 +30,7 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 	
 		g.setColor(Color.BLACK);
 		g.setFont(getFont());
-		g.drawString(getBlock().getDisplayName(), pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
+		g.drawString(getDisplayName(), pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
 	
 	}
 	

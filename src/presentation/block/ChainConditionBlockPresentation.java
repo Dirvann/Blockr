@@ -8,8 +8,8 @@ import domain.game_world.Vector;
 
 public class ChainConditionBlockPresentation extends PresentationBlock<ChainConditionBlock>{
 	
-	public ChainConditionBlockPresentation(Vector position, ChainConditionBlock block) {
-		super(position, block);
+	public ChainConditionBlockPresentation(Vector position, ChainConditionBlock block, String displayName) {
+		super(position, block, displayName);
 		
 	}
 
@@ -20,7 +20,7 @@ public class ChainConditionBlockPresentation extends PresentationBlock<ChainCond
 		g.fillRect(pos.getX(), pos.getY(), PresentationBlock.getBlockWidth(), PresentationBlock.getBlockHeight());
 		g.setColor(Color.BLACK);
 		g.setFont(getFont());
-		g.drawString(getBlock().getDisplayName(), pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
+		g.drawString(getDisplayName(), pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
 	
 	
 	}
