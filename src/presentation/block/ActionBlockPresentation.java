@@ -26,7 +26,12 @@ public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
 		// TODO Auto-generated method stub
 		ActionBlock block = (ActionBlock) getBlock().getNewBlockOfThisType();
 		ActionBlockPresentation blockPresentation = new ActionBlockPresentation(getPosition(), block);
+		
+		
 		block.setPresentationBlock(blockPresentation);
+		if (block.getPresentationBlock() == null) {
+			System.out.println("block.getPresentationBlock() == null in actionBlockPresentation");
+		}
 		return blockPresentation;
 	}
 

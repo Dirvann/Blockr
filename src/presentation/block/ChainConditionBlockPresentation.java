@@ -27,6 +27,9 @@ public class ChainConditionBlockPresentation extends PresentationBlock<ChainCond
 		ChainConditionBlock block = (ChainConditionBlock) getBlock().getNewBlockOfThisType();
 		ChainConditionBlockPresentation blockPresentation= new ChainConditionBlockPresentation(getPosition(), block);
 		block.setPresentationBlock(blockPresentation);
+		if (block.getPresentationBlock() == null) {
+			System.out.println("block.getPresentationBlock() == null in chainConditionBlockPresentation");
+		}
 		return blockPresentation;
 	}
 
