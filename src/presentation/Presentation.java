@@ -327,15 +327,19 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == 117) {
-			gameController.setGameWorld(new GameWorld(15, 10));
+
+		if (e.getKeyCode() == 115) { // F4
+			gameController.stopExecution();
 		}
-		if (e.getKeyCode() == 116) {
+		if (e.getKeyCode() == 116) { // F5
 			try {
 				gameController.execute();
 			} catch (Exception e1) {
 				System.out.println("Execute in keyPressed failed");
 			}
+		}
+		if (e.getKeyCode() == 117) { // F6
+			gameController.setGameWorld(new GameWorld(15, 10));
 		}
 	}
 

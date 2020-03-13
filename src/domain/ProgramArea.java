@@ -46,6 +46,12 @@ public class ProgramArea {
 		}
 	}
 	
+	public void stopExecution() {
+		if (programInProgress()) {
+			nextToExecute = null;
+		}
+	}
+	
 	public void addTopLevelBlock(Block block) {
 		topLevelBlocks.add(block);
 	}
