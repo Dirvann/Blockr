@@ -65,12 +65,11 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
     }
     
     public Presentation() {
-    	
-    	GA = new Implementation();
+		GA = new Implementation();
     	
     	gameController = GA.makeGameController();
     	paletteP = new PalettePresentation();
-//    	programAreaP = new ProgramAreaPresentation();
+    	programAreaP = new ProgramAreaPresentation();
 //    	Block bla = new MoveForward();
 //    	gameController.addTopLevelBlock(bla);
 //    	GA.connect(bla, new MoveForward());
