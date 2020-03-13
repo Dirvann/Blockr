@@ -6,6 +6,7 @@ import java.awt.Graphics;
 
 import domain.block.block_types.Block;
 import domain.game_world.Vector;
+import presentation.ProgramAreaPresentation;
 
 public abstract class PresentationBlock<T extends Block> {
 
@@ -43,6 +44,10 @@ public abstract class PresentationBlock<T extends Block> {
 		this.setPositionByDifference(deltaPos);
 		this.getBlock().setConnectedBlockPositionRecursivelyByDifference(deltaPos);
 		// this.getBlock().setPositionRecursivelyByDifference(deltaPos);
+	}
+	
+	public void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP) {
+		
 	}
 	
 	

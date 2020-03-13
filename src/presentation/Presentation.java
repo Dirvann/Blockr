@@ -259,7 +259,6 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 			System.out.println("Checking location (" + snapLocation.getX() + ", " + snapLocation.getY() + ")");
 			PresentationBlock blockToGetSnappedTo = programAreaP.snappebleBlock(snapLocation);
 			if (blockToGetSnappedTo != null) {
-				// TODO: yeah this wont do it
 				System.out.println("SNAP!");
 				if (selectedBlock.getBlock() instanceof ConditionBlock) {
 					if (blockToGetSnappedTo.getBlock() instanceof SingleSurroundingBlock
@@ -304,7 +303,8 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 					gameController.removeTopLevelBlock(selectedBlock.getBlock());
 				}
 
-				programAreaP.removeBlock(selectedBlock);
+				selectedBlock.getBlock().removeFromProgramAreaPresentationRecursively(programAreaP);
+				// programAreaP.removeBlock(selectedBlock);
 
 				// TODO: recursively delete all connected blocks
 			}

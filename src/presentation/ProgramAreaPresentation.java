@@ -29,8 +29,12 @@ public class ProgramAreaPresentation {
 		programAreaBlocks.remove(pBlock);
 	}
 	
-	public PresentationBlock<?> getBlockAtPosition(Vector position) {
-		for (PresentationBlock<?> pBlock: programAreaBlocks) {
+	public void removeBlockRecursive(PresentationBlock pBlock) {
+		
+	}
+	
+	public PresentationBlock getBlockAtPosition(Vector position) {
+		for (PresentationBlock pBlock: programAreaBlocks) {
 			if (pBlock.collidesWithPosition(position)) {
 				return pBlock;
 			}

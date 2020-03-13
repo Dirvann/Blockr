@@ -4,6 +4,7 @@ import java.util.List;
 
 import domain.GameController;
 import domain.game_world.Vector;
+import presentation.ProgramAreaPresentation;
 import presentation.block.PresentationBlock;
 
 public abstract class Block {
@@ -28,6 +29,8 @@ public abstract class Block {
 	}
 	
 	public abstract void setConnectedBlockPositionRecursivelyByDifference(Vector deltaPos);
+	
+	public abstract void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP);
 	
 	public abstract Block getNewBlockOfThisType();
 
