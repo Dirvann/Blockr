@@ -6,8 +6,6 @@ import presentation.block.ChainConditionBlockPresentation;
 
 public abstract class ChainConditionBlock extends ConditionBlock{
 	
-	private ChainConditionBlockPresentation presentationBlock;
-	
 	public ChainConditionBlock() {
 
 	}
@@ -39,11 +37,6 @@ public abstract class ChainConditionBlock extends ConditionBlock{
 		if (getNextCondition() != null)
 			return getNextCondition().isValidCondition();
 		return false;
-	}
-	
-	@Override
-	public ChainConditionBlockPresentation getPresentationBlock() {
-		return this.presentationBlock;
 	}
 	
 	public void setConnectedBlockPositionRecursivelyByDifference(Vector deltaPos) {

@@ -6,8 +6,6 @@ import presentation.block.SingleConditionBlockPresentation;
 
 public abstract class SingleConditionBlock extends ConditionBlock{
 	
-	private SingleConditionBlockPresentation presentationBlock;
-	
 	public SingleConditionBlock() {
 
 	}
@@ -16,9 +14,6 @@ public abstract class SingleConditionBlock extends ConditionBlock{
 		return true;
 	}
 	
-	
-	public PresentationBlock<?> getPresentationBlock() {
-		return this.presentationBlock;
-	}
+
 	
 }

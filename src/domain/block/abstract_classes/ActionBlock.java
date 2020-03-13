@@ -10,9 +10,6 @@ public abstract class ActionBlock extends SequenceBlock{
 	
 	abstract public void performAction(GameController gameController);
 	
-	
-	private ActionBlockPresentation presentationBlock;
-	
 	public ActionBlock() {
 	}
 	
@@ -28,12 +25,6 @@ public abstract class ActionBlock extends SequenceBlock{
 			return this.getSurroundingBlock().getNextAfterLoop();
 		}
 		return this.getNextBlock();
-	}
-	
-	
-	@Override
-	public ActionBlockPresentation getPresentationBlock() {
-		return this.presentationBlock;
 	}
 	
 	public void setConnectedBlockPositionRecursivelyByDifference(Vector deltaPos) {

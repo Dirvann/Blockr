@@ -234,6 +234,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 		PresentationBlock<?> programBlockP = programAreaP.getBlockAtPosition(mousePos);
 		if (programBlockP != null) {
 			selectedBlock = programBlockP;
+			GA.disconnect(selectedBlock.getBlock());
 		}
 
 		previousMousePos = mousePos;
