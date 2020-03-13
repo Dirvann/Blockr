@@ -10,10 +10,11 @@ public class GameWorld {
 	
 	private Grid grid;
 	private Robot robot;
-
+	private Robot startRobot;
 	
 	public GameWorld(Grid grid, Vector startPosition) {
 		this.setGrid(grid);
+		this.startRobot = new Robot(startPosition);
 		this.setRobot(new Robot(startPosition));
 	}
 
@@ -25,8 +26,9 @@ public class GameWorld {
 	// Create random GameWorld with given width and height;
 	public GameWorld(int width, int height) {
 		this.setGrid(Grid.randomGrid(width, height));
-		
-		this.randomiseRobotLocation();
+		Vector randomRobotLocation = this.getRandomRobotLocation();
+		this.startRobot = new Robot(randomRobotLocation, getRandomRobotDirection());
+		this.setRobot(new Robot(startRobot));
 	}
 
 	public Grid getGrid() {
@@ -90,11 +92,26 @@ public class GameWorld {
 		getRobot().turnRight();
 	}
 	
-	private void randomiseRobotLocation() {
+	private Vector getRandomRobotLocation() {
 		Random rand = new Random();
-		
+
 		int attemptX = rand.nextInt(grid.getWidth());
 		int attemptY = rand.nextInt(grid.getHeight());
+
+		try {
+			if (grid.getCell(new Vector(attemptX, attemptY)) instanceof RobotCanEnter) {
+				return new Vector(attemptX, attemptY);
+			} else {
+				return getRandomRobotLocation();
+			}
+		} catch (Exception e) {
+			System.out.println("This exception should not happen. See GameWorld.getRandomRobotLocation");
+		}
+		return new Vector(0, 0);
+	}
+	
+	private Direction getRandomRobotDirection() {
+		Random rand = new Random();
 		
 		int directionInt = rand.nextInt(3);
 		Direction dir = Direction.UP;
@@ -112,16 +129,12 @@ public class GameWorld {
 		default:
 		}
 		
-		try {
-			if (grid.getCell(new Vector(attemptX, attemptY)) instanceof RobotCanEnter) {
-				setRobot(new Robot(new Vector(attemptX, attemptY), dir));
-			} else {
-				randomiseRobotLocation();
-			}
-		} catch (Exception e) {
-			System.out.println("This exception should not happen. See randomiseRobotLocation");
-			e.printStackTrace();
-		}
+		return dir;
+	}
+	
+	
+	public void resetWorld() {
+		this.setRobot(new Robot(startRobot));
 	}
 	
 }

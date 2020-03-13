@@ -67,5 +67,9 @@ public class GameController {
 		return this.programArea;
 	}
 	
+	public void resetWorld() {
+		gameWorld.resetWorld();
+	}
+	
 	
 } 

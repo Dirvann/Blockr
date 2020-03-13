@@ -14,6 +14,10 @@ public class Robot {
 		this(location, Direction.UP);
 	}
 	
+	public Robot(Robot other) {
+		this(other.getLocation(), other.getDirection());
+	}
+	
 	public Robot(int x, int y) {
 		this(new Vector(x, y));
 	}
