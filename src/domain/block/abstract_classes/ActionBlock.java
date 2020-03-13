@@ -3,6 +3,7 @@ package domain.block.abstract_classes;
 import domain.GameController;
 import domain.block.block_types.Block;
 import domain.block.block_types.SequenceBlock;
+import domain.game_world.Vector;
 import presentation.block.ActionBlockPresentation;
 
 public abstract class ActionBlock extends SequenceBlock{
@@ -33,5 +34,13 @@ public abstract class ActionBlock extends SequenceBlock{
 	@Override
 	public ActionBlockPresentation getPresentationBlock() {
 		return this.presentationBlock;
+	}
+	
+	public void setConnectedBlockPositionRecursivelyByDifference(Vector deltaPos) {
+		Block nextBlock = this.getNextBlock();
+		
+		if (nextBlock != null) {
+			nextBlock.getPresentationBlock().setPositionRecursivelyByDifference(deltaPos);
+		}
 	}
 }

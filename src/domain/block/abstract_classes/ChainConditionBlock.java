@@ -46,7 +46,7 @@ public abstract class ChainConditionBlock extends ConditionBlock{
 		return this.presentationBlock;
 	}
 	
-	public void setPositionRecursivelyByDifference(Vector deltaPos) {
+	public void setConnectedBlockPositionRecursivelyByDifference(Vector deltaPos) {
 		// Set position of this block's presentation
 		System.out.println("ChainConditionBlock.getPresentationBlock() == null: ");
 		System.out.println(this.getPresentationBlock() == null);

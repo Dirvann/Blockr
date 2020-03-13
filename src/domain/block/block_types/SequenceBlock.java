@@ -98,8 +98,5 @@ public abstract class SequenceBlock extends Block {
 		return l;
 	}
 	
-	public void setPositionRecursivelyByDifference(Vector deltaPos) {
-		// Set position of this block's presentation
-		this.getPresentationBlock().setPositionByDifference(deltaPos);
-	}
+
 }

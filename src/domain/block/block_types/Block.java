@@ -27,7 +27,7 @@ public abstract class Block {
 		this.presentationBlock = presentationBlock;
 	}
 	
-	public abstract void setPositionRecursivelyByDifference(Vector deltaPos);
+	public abstract void setConnectedBlockPositionRecursivelyByDifference(Vector deltaPos);
 	
 	public abstract Block getNewBlockOfThisType();
 

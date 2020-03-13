@@ -39,10 +39,8 @@ public abstract class PresentationBlock<T extends Block> {
 	}
 	
 	public void setPositionRecursivelyByDifference(Vector deltaPos) {
-		//this.setPositionByDifference(deltaPos);
-		System.out.println("PresentationBlock.getBlock == null: ");
-		System.out.println(this.getBlock() == null);
-		this.getBlock().setPositionRecursivelyByDifference(deltaPos);
+		this.setPositionByDifference(deltaPos);
+		this.getBlock().setConnectedBlockPositionRecursivelyByDifference(deltaPos);
 		// this.getBlock().setPositionRecursivelyByDifference(deltaPos);
 	}
 	

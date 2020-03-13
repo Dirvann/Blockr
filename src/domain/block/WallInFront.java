@@ -32,7 +32,7 @@ public class WallInFront extends SingleConditionBlock {
 		return "Wall In Front";
 	}
 
-	public void setPositionRecursivelyByDifference(Vector deltaPos) {
+	public void setConnectedBlockPositionRecursivelyByDifference(Vector deltaPos) {
 		// Set position of this block's presentation
 		this.getPresentationBlock().setPositionByDifference(deltaPos);
 	}
