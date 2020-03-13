@@ -22,7 +22,7 @@ public abstract class SingleSurroundingBlock extends SurroundingBlock {
 			bodyBlock.getPresentationBlock().setPositionRecursivelyByDifference(deltaPos);
 		}
 		if (conditionBlock != null) {
-			conditionBlock.getPresentationBlock().setPositionRecursivelyByDifference(deltaPos);
+			conditionBlock.getPresentationBlock().setPositionRecursivelyByDifference(deltaPos); 
 		}
 	}
 }

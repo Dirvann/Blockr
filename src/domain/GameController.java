@@ -27,6 +27,10 @@ public class GameController {
 		}
 	}
 	
+	public void stopExecution() {
+		programArea.stopExecution();
+	}
+	
 	public Block getNextBlockToExecute() {
 		return programArea.getNextBlockToExecute();
 	}
