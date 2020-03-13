@@ -17,6 +17,7 @@ public abstract class SingleConditionBlock extends ConditionBlock{
 	
 	public void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP) {
 		programAreaP.removeBlock(getPresentationBlock());
+		programAreaP.increaseBlocksLeft();
 	}
 	
 }

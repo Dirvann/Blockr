@@ -29,6 +29,7 @@ public abstract class SingleSurroundingBlock extends SurroundingBlock {
 	
 	public void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP) {
 		programAreaP.removeBlock(getPresentationBlock());
+		programAreaP.increaseBlocksLeft();
 		
 		Block nextBlock = this.getNextBlock();
 		Block bodyBlock = this.getBodyBlock();
