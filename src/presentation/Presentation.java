@@ -257,7 +257,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 			boolean snapped = false;
 			Vector snapLocation = selectedBlock.getPossibleSnapLocation();
 			System.out.println("Checking location (" + snapLocation.getX() + ", " + snapLocation.getY() + ")");
-			PresentationBlock blockToGetSnappedTo = programAreaP.getBlockAtPosition(snapLocation);
+			PresentationBlock blockToGetSnappedTo = programAreaP.snappebleBlock(snapLocation);
 			if (blockToGetSnappedTo != null) {
 				// TODO: yeah this wont do it
 				System.out.println("SNAP!");
