@@ -1,5 +1,6 @@
 package presentation.block;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
@@ -47,6 +48,23 @@ public abstract class PresentationBlock<T extends Block> {
 	
 	
 	abstract public void draw(Graphics g);
+	
+	public void highLight(Graphics g) {
+		g.setColor(Color.black);
+		int left = this.getPosition().getX();
+		int right = this.getPosition().getX() + PresentationBlock.getBlockWidth();
+		int top = this.getPosition().getY();
+		int bottom = this.getPosition().getY() + this.getTotalHeight();
+		
+		// Horizontal line top
+		g.drawLine(left, top, right, top);
+		// Horizontal line bottom
+		g.drawLine(left, bottom, right, bottom);
+		// Vertical line left
+		g.drawLine(left, top, left, bottom);
+		// Vertical line right
+		g.drawLine(right, top, right, bottom);
+	}
 	
 	public static int getBlockWidth() {
 		return blockWidth;

@@ -112,6 +112,11 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 		// If (!gameController.maxNumberBlocksReached()) {
 		paletteP.paint(g);
 		programAreaP.paint(g);
+		
+		Block nextToExecute = gameController.getNextBlockToExecute();
+		if (nextToExecute != null) {
+			nextToExecute.getPresentationBlock().highLight(g);
+		}
 
 		drawWorld(g, gameController.getGameWorld());
 	}
