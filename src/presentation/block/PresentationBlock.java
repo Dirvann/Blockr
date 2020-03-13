@@ -66,6 +66,8 @@ public abstract class PresentationBlock<T extends Block> {
 		return false;
 	}
 	
+	
+	
 	public T getBlock() {
 		return this.block;
 	}
@@ -90,5 +92,9 @@ public abstract class PresentationBlock<T extends Block> {
 	}
 
 	public abstract Vector getPossibleSnapLocation();
+
+	public boolean collisionWithLowePart(Vector position) {
+		return false;
+	}
 	
 }

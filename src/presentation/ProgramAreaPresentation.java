@@ -9,33 +9,42 @@ import presentation.block.PresentationBlock;
 
 public class ProgramAreaPresentation {
 
-	private List<PresentationBlock> programAreaBlocks;
+	private List<PresentationBlock<?>> programAreaBlocks;
 	
 	public ProgramAreaPresentation() {
-		programAreaBlocks = new ArrayList<PresentationBlock>();
+		programAreaBlocks = new ArrayList<PresentationBlock<?>>();
 	}
 	
 	public void paint(Graphics g) {
-		for (PresentationBlock pBlock: programAreaBlocks) {
+		for (PresentationBlock<?> pBlock: programAreaBlocks) {
 			pBlock.draw(g);
 		}
 	}
 	
-	public void addBlock(PresentationBlock presentationCopy) {
+	public void addBlock(PresentationBlock<?> presentationCopy) {
 		programAreaBlocks.add(presentationCopy);
 	}
 	
-	public void removeBlock(PresentationBlock pBlock) {
+	public void removeBlock(PresentationBlock<?> pBlock) {
 		programAreaBlocks.remove(pBlock);
 	}
 	
-	public PresentationBlock getBlockAtPosition(Vector position) {
-		for (PresentationBlock pBlock: programAreaBlocks) {
+	public PresentationBlock<?> getBlockAtPosition(Vector position) {
+		for (PresentationBlock<?> pBlock: programAreaBlocks) {
 			if (pBlock.collidesWithPosition(position)) {
 				return pBlock;
 			}
 		}
 		
+		return null;
+	}
+	
+	public PresentationBlock<?> snappebleBlock(Vector position){
+		for (PresentationBlock<?> pBlock: programAreaBlocks) {
+			if (pBlock.collidesWithPosition(position) || pBlock.collisionWithLowePart(position)) {
+				return pBlock;
+			}
+		}
 		return null;
 	}
 	

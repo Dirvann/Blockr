@@ -34,4 +34,17 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 	public Vector getPossibleSnapLocation() {
 		return new Vector(getPosition().getX() + Math.round(getBlockWidth()/2), getPosition().getY() - Math.round(getBlockHeight() / 2));
 	}
+	
+	@Override
+	public boolean collisionWithLowePart(Vector position) {
+		int xValueLowerPart = position.getX();
+		int yValueLowerPart = position.getY() + getTotalHeight() - getBlockHeight();
+		if(position.getX() > this.getPosition().getX() && 
+				position.getX() < (getBlockWidth() + xValueLowerPart) && 
+				position.getY() > yValueLowerPart && 
+				position.getY() < (yValueLowerPart + getBlockHeight())) {
+			return true;
+		}
+		return false;
+	}
 }
