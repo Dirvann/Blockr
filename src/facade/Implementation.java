@@ -83,31 +83,7 @@ public class Implementation implements Facade{
 
 	@Override
 	public boolean disconnect(Block blockToDisconnect) {
-		if (blockToDisconnect instanceof ConditionBlock) {
-			ConditionBlock disc = (ConditionBlock) blockToDisconnect;
-			if	(disc.getPrevious() == null) {
-				if (disc.getSurroundingBlock() != null) {
-					disc.getSurroundingBlock().removeConditionBlock();
-					return true;
-				}
-			}
-			else {
-				((ChainConditionBlock)(disc.getPrevious())).removeNextCondition();
-				return true;
-			}
-		}
-		else if (blockToDisconnect instanceof SequenceBlock) {
-			SequenceBlock disc = (SequenceBlock) blockToDisconnect;
-			if (disc.getPreviousBlock() != null) {
-				disc.getPreviousBlock().removeNextBlock();
-				return true;
-			}
-			else if (disc.getSurroundingBlock() != null) {
-				disc.getSurroundingBlock().removeBodyBlock();
-				return true;
-			}
-		}
-	return false;
+		return blockToDisconnect.disconnect();
 		
 	}
 

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import domain.GameController;
+import domain.block.abstract_classes.ChainConditionBlock;
 import domain.block.abstract_classes.SurroundingBlock;
 
 public abstract class ConditionBlock extends Block {
@@ -73,5 +74,20 @@ public abstract class ConditionBlock extends Block {
 			return getSurroundingBlock();
 		} 
 		return null;
+	}
+	
+	@Override
+	public boolean disconnect() {
+		if	(getPrevious() == null) {
+			if (getSurroundingBlock() != null) {
+				getSurroundingBlock().removeConditionBlock();
+				return true;
+			}
+		}
+		else {
+			((ChainConditionBlock)(getPrevious())).removeNextCondition();
+			return true;
+		}
+		return false;
 	}
 }
