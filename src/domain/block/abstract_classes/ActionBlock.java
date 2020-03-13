@@ -40,7 +40,11 @@ public abstract class ActionBlock extends SequenceBlock{
 		Block nextBlock = this.getNextBlock();
 		
 		if (nextBlock != null) {
-			nextBlock.getPresentationBlock().setPositionRecursivelyByDifference(deltaPos);
+			if (nextBlock.getPresentationBlock() != null) {
+				nextBlock.getPresentationBlock().setPositionRecursivelyByDifference(deltaPos);
+			} else {
+				System.out.println("nextBlock.getPresentationBlock() == null");
+			}
 		}
 	}
 }
