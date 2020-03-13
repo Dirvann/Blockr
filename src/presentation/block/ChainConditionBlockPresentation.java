@@ -26,4 +26,9 @@ public class ChainConditionBlockPresentation extends PresentationBlock<ChainCond
 	public PresentationBlock<ChainConditionBlock> getNewBlockOfThisType() {
 		return new ChainConditionBlockPresentation(getPosition(), (ChainConditionBlock) getBlock().getNewBlockOfThisType());
 	}
+
+	@Override
+	public Vector getPossibleSnapLocation() {
+		return new Vector(getPosition().getX(), getPosition().getY() + Math.round(getBlockHeight()/2));
+	}
 }

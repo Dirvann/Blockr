@@ -14,7 +14,12 @@ import javax.swing.WindowConstants;
 
 import domain.GameController;
 import domain.block.MoveForward;
+import domain.block.abstract_classes.ActionBlock;
+import domain.block.abstract_classes.ChainConditionBlock;
+import domain.block.abstract_classes.SingleSurroundingBlock;
 import domain.block.block_types.Block;
+import domain.block.block_types.ConditionBlock;
+import domain.block.block_types.SequenceBlock;
 import domain.game_world.Direction;
 import domain.game_world.GameWorld;
 import domain.game_world.Grid;
@@ -242,30 +247,51 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 		if (this.selectedBlock != null) {
 			// Check for snapping
 			// TODO: replace with new snapping code
-//			Vector snapLocation = selectedBlock.getPossibleSnapLocation();
-//			System.out.println("Checking location (" + snapLocation.getX() + ", " + snapLocation.getY() + ")");
-//			PresentationBlock blockToGetSnappedTo = programAreaP.getBlockAtPosition(snapLocation);
-//			if (blockToGetSnappedTo != null) {
-//				// TODO: yeah this wont do it
-//				System.out.println("SNAP!");
-//			}
-			
-			// if (!snapped()) {
-			if (!gameController.isTopLevelBlock(selectedBlock.getBlock())) {
-				gameController.addTopLevelBlock(selectedBlock.getBlock());
+			boolean snapped = false;
+			Vector snapLocation = selectedBlock.getPossibleSnapLocation();
+			System.out.println("Checking location (" + snapLocation.getX() + ", " + snapLocation.getY() + ")");
+			PresentationBlock blockToGetSnappedTo = programAreaP.getBlockAtPosition(snapLocation);
+			if (blockToGetSnappedTo != null) {
+				// TODO: yeah this wont do it
+				System.out.println("SNAP!");
+				if (selectedBlock.getBlock() instanceof ConditionBlock) {
+					if (blockToGetSnappedTo.getBlock() instanceof SingleSurroundingBlock) {
+						((SingleSurroundingBlock) blockToGetSnappedTo.getBlock())
+								.setConditionBlock((ConditionBlock) selectedBlock.getBlock());
+						snapped = true;
+					} else if (blockToGetSnappedTo.getBlock() instanceof ChainConditionBlock) {
+						((ChainConditionBlock) blockToGetSnappedTo.getBlock())
+								.setNextCondition((ConditionBlock) selectedBlock.getBlock());
+						snapped = true;
+					}
+				} else if (selectedBlock.getBlock() instanceof SequenceBlock) {
+					if (blockToGetSnappedTo instanceof ActionBlockPresentation) {
+						((ActionBlock) blockToGetSnappedTo.getBlock())
+								.setNextBlock((SequenceBlock) selectedBlock.getBlock());
+						snapped = true;
+					} else if (blockToGetSnappedTo instanceof SingleSurroundBlockPresentation) {
+						((SingleSurroundingBlock) blockToGetSnappedTo.getBlock())
+								.setBodyBlock((SequenceBlock) selectedBlock.getBlock());
+						snapped = true;
+					}
+				}
 			}
-			
-			
-			
+
+			if (!snapped) {
+				if (!gameController.isTopLevelBlock(selectedBlock.getBlock())) {
+					gameController.addTopLevelBlock(selectedBlock.getBlock());
+				}
+			}
+
 			// Delete if over palette
 			int paletteBorder = (int) (panelProportion * canvas.getWidth());
 			if (mousePos.getX() < paletteBorder) {
 				if (gameController.isTopLevelBlock(selectedBlock.getBlock())) {
 					gameController.removeTopLevelBlock(selectedBlock.getBlock());
 				}
-				
+
 				programAreaP.removeBlock(selectedBlock);
-				
+
 				// TODO: recursively delete all connected blocks
 			}
 

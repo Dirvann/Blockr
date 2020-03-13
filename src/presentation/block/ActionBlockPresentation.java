@@ -27,4 +27,9 @@ public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
 		return new ActionBlockPresentation(getPosition(), (ActionBlock) getBlock().getNewBlockOfThisType());
 	}
 
+	@Override
+	public Vector getPossibleSnapLocation() {
+		return new Vector(getPosition().getX() + Math.round(getBlockWidth()/2), getPosition().getY());
+	}
+
 }
