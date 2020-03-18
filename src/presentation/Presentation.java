@@ -275,7 +275,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 						snapped = true;
 					} else if (blockToGetSnappedTo.getBlock() instanceof ChainConditionBlock) {
 						((ChainConditionBlock) blockToGetSnappedTo.getBlock())
-								.setNextCondition((ConditionBlock) selectedBlock.getBlock());
+								.addCondition((ConditionBlock) selectedBlock.getBlock());
 						snapped = true;
 					}
 				} else if (selectedBlock.getBlock() instanceof SequenceBlock) {
