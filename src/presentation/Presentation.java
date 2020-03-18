@@ -337,7 +337,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 		if (this.mouseDown && this.selectedBlock != null) {
 			Vector moveDifference = new Vector(e.getX() - previousMousePos.getX(), e.getY() - previousMousePos.getY());
 			// selectedBlock.setPositionByDifference(moveDifference);
-			selectedBlock.setPositionRecursivelyByDifference(moveDifference);
+			selectedBlock.setPosition(selectedBlock.getPosition().add(moveDifference));
 			this.previousMousePos = new Vector(e.getX(), e.getY());
 			repaint();
 		}

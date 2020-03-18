@@ -26,6 +26,7 @@ public abstract class SequenceBlock extends Block {
 	public SequenceBlock getPrevious() {
 		return previous;
 	}
+	
 	// TODO: Comments
 
 	/**

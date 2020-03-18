@@ -28,8 +28,6 @@ public abstract class Block {
 		this.presentationBlock = presentationBlock;
 	}
 	
-	public abstract void setConnectedBlockPositionRecursivelyByDifference(Vector deltaPos);
-	
 	public abstract void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP);
 	
 	public abstract Block getNewBlockOfThisType();

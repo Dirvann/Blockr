@@ -49,11 +49,6 @@ public abstract class PresentationBlock<T extends Block> {
 		this.setPosition(getPosition().add(deltaPos));
 	}
 
-	public void setPositionRecursivelyByDifference(Vector deltaPos) {
-		this.setPositionByDifference(deltaPos);
-		this.getBlock().setConnectedBlockPositionRecursivelyByDifference(deltaPos);
-		// this.getBlock().setPositionRecursivelyByDifference(deltaPos);
-	}
 
 	public void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP) {
 

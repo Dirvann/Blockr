@@ -28,17 +28,6 @@ public abstract class ActionBlock extends SequenceBlock{
 		return this.getNextBlock();
 	}
 	
-	public void setConnectedBlockPositionRecursivelyByDifference(Vector deltaPos) {
-		Block nextBlock = this.getNextBlock();
-		
-		if (nextBlock != null) {
-			if (nextBlock.getPresentationBlock() != null) {
-				nextBlock.getPresentationBlock().setPositionRecursivelyByDifference(deltaPos);
-			} else {
-				System.out.println("nextBlock.getPresentationBlock() == null");
-			}
-		}
-	}
 	
 	public void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP) {
 		programAreaP.removeBlock(this.getPresentationBlock());

@@ -18,6 +18,13 @@ public abstract class SurroundingBlock extends SequenceBlock{
 	 * @param block Sets this block as first (of a sequence) under the if statement.
 	 */
 	public void setBodyBlock(SequenceBlock block) {
+		if(this.bodyBlock != null) {
+			SequenceBlock last = block;
+			while (last.getNextBlock() != null) {
+				last = last.getNextBlock();
+			}
+			last.setNextBlock(this.bodyBlock);
+		}
 		this.bodyBlock = block;
 		block.setSurroundingBlock(this);
 
