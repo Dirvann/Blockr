@@ -1,5 +1,9 @@
 package domain.block.abstract_classes;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import domain.block.block_types.Block;
 import domain.block.block_types.ConditionBlock;
 import domain.block.block_types.SequenceBlock;
 
@@ -14,6 +18,13 @@ public abstract class SurroundingBlock extends SequenceBlock{
 	 * @param block Sets this block as first (of a sequence) under the if statement.
 	 */
 	public void setBodyBlock(SequenceBlock block) {
+		if(this.bodyBlock != null) {
+			SequenceBlock last = block;
+			while (last.getNextBlock() != null) {
+				last = last.getNextBlock();
+			}
+			last.setNextBlock(this.bodyBlock);
+		}
 		this.bodyBlock = block;
 		block.setSurroundingBlock(this);
 
@@ -76,10 +87,30 @@ public abstract class SurroundingBlock extends SequenceBlock{
 		this.condition = null;
 		
 	}
+	
+	public boolean hasValidCondition() {
+		if (this.getConditionBlock() == null) {
+			return false;
+		} else {
+			return this.getConditionBlock().isValidCondition();
+		}
+	}
 
 	public SequenceBlock getNextAfterLoop() {
 		return this;
 		
+	}
+	
+	@Override
+	public List<Block> getAllNextBlocks() {
+		List<Block> l = new ArrayList<Block>();
+		
+		l.addAll(super.getAllNextBlocks());
+		
+		if (this.getBodyBlock() != null)
+			l.addAll(getBodyBlock().getAllNextBlocks());
+		
+		return l;
 	}
 
 }

@@ -1,7 +1,11 @@
 package domain.block.block_types;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import domain.GameController;
 import domain.block.abstract_classes.SurroundingBlock;
+import domain.game_world.Vector;
 
 public abstract class SequenceBlock extends Block {
 
@@ -10,8 +14,19 @@ public abstract class SequenceBlock extends Block {
 	protected SequenceBlock previous = null;
 
 	public SequenceBlock getPreviousBlock() {
-		return this.previous;
+		if(previous != null) {
+			return previous;
+		}
+		if (getSurroundingBlock() != null) {
+			return getSurroundingBlock();
+		} 
+		return null;
 	}
+	
+	public SequenceBlock getPrevious() {
+		return previous;
+	}
+	
 	// TODO: Comments
 
 	/**
@@ -82,5 +97,30 @@ public abstract class SequenceBlock extends Block {
 	}
 
 	public abstract Block execute(GameController gamecontroller) throws Exception;
+
+	@Override
+	public List<Block> getAllNextBlocks() {
+		List<Block> l = new ArrayList<Block>();
+
+		l.add(this);
+		if (this.getNextBlock() != null)
+			l.addAll(getNextBlock().getAllNextBlocks());
+		
+		return l;
+	}
+	
+	@Override
+	public boolean disconnect() {
+		if (getPrevious() != null) {
+			getPrevious().removeNextBlock();
+			return true;
+		}
+		else if (getSurroundingBlock() != null) {
+			getSurroundingBlock().removeBodyBlock();
+			return true;
+		}
+		return false;
+	}
+	
 
 }

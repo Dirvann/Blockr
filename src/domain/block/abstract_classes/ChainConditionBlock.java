@@ -1,8 +1,16 @@
 package domain.block.abstract_classes;
 
+import domain.block.block_types.Block;
 import domain.block.block_types.ConditionBlock;
+import domain.game_world.Vector;
+import presentation.ProgramAreaPresentation;
+import presentation.block.ChainConditionBlockPresentation;
 
 public abstract class ChainConditionBlock extends ConditionBlock{
+	
+	public ChainConditionBlock() {
+
+	}
 	
 	/**
 	 * 
@@ -31,6 +39,18 @@ public abstract class ChainConditionBlock extends ConditionBlock{
 		if (getNextCondition() != null)
 			return getNextCondition().isValidCondition();
 		return false;
+	}
+	
+
+	
+	public void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP) {
+		programAreaP.removeBlock(getPresentationBlock());
+		programAreaP.increaseBlocksLeft();
+		
+		Block connectedCondition = this.getNextCondition();
+		if (connectedCondition != null) {
+			connectedCondition.removeFromProgramAreaPresentationRecursively(programAreaP);
+		}
 	}
 
 }
