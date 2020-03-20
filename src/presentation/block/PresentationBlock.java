@@ -3,6 +3,7 @@ package presentation.block;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.util.List;
 
 import domain.block.block_types.Block;
 import domain.game_world.Vector;
@@ -127,5 +128,16 @@ public abstract class PresentationBlock<T extends Block> {
 	public int getHeight() {
 		return blockHeight;
 	}
+	/**
+	 * Returns the position of the snap point of the block that can snap into another.
+	 * @return snap point as vector
+	 */
+	public abstract Vector getGivingSnapPoint();
+	
+	/**
+	 * Return a list of snap points that can be snapped into
+	 * @return list of snap points as vectors
+	 */
+	public abstract List<Vector> getReceivingSnapPoints();
 
 }

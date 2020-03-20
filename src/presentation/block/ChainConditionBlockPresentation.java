@@ -2,6 +2,8 @@ package presentation.block;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Arrays;
+import java.util.List;
 
 import domain.block.abstract_classes.ChainConditionBlock;
 import domain.game_world.Vector;
@@ -42,5 +44,17 @@ public class ChainConditionBlockPresentation extends PresentationBlock<ChainCond
 	protected Vector getNextBlockPosition(PresentationBlock<?> presentationBlock) {
 		Vector pos = getPosition();
 		return new Vector(pos.getX() + getBlockWidth(), pos.getY() );
+	}
+
+	@Override
+	public Vector getGivingSnapPoint() {
+		Vector pos = getPosition();
+		return new Vector(pos.getX(), pos.getY() + (int)(getBlockHeight()/2));
+	}
+
+	@Override
+	public List<Vector> getReceivingSnapPoints() {
+		Vector pos = getPosition();
+		return Arrays.asList(new Vector(pos.getX() + (int)(getBlockWidth()), pos.getY() + (int)(getBlockHeight()/2)));
 	}
 }

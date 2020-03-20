@@ -2,6 +2,8 @@ package presentation.block;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.List;
 
 import domain.block.abstract_classes.SingleConditionBlock;
 import domain.game_world.Vector;
@@ -39,6 +41,17 @@ public class SingleConditionBlockPresentation extends PresentationBlock<SingleCo
 	protected Vector getNextBlockPosition(PresentationBlock<?> presentationBlock) {
 		Vector pos = getPosition();
 		return new Vector(pos.getX() + getBlockWidth(), pos.getY());
+	}
+	
+	@Override
+	public Vector getGivingSnapPoint() {
+		Vector pos = getPosition();
+		return new Vector(pos.getX(), pos.getY() + (int)(getBlockHeight()/2));
+	}
+
+	@Override
+	public List<Vector> getReceivingSnapPoints() {
+		return new ArrayList<Vector>();	
 	}
 
 }

@@ -2,6 +2,8 @@ package presentation.block;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.List;
 
 import domain.block.abstract_classes.SingleSurroundingBlock;
 import domain.block.block_types.SequenceBlock;
@@ -84,5 +86,36 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 		}
 		
 		return null;
+	}
+	
+	@Override
+	public Vector getGivingSnapPoint() {
+		Vector pos = getPosition();
+		return new Vector(pos.getX() + (int)(getBlockWidth()/2), pos.getY());
+	}
+
+	@Override
+	public List<Vector> getReceivingSnapPoints() {
+		Vector pos = getPosition();
+		List<Vector> snapPoints = new ArrayList<Vector>();
+		snapPoints.add(getConditionSnapPoint());
+		snapPoints.add(getBodySnapPoint());
+		snapPoints.add(getSequenceSnapPoint());
+		return snapPoints;
+	}
+	
+	public Vector getConditionSnapPoint() {
+		Vector pos = getPosition();
+		return new Vector(pos.getX() + getBlockWidth(), pos.getY() + (int)(getBlockHeight()/2));
+	}
+	
+	public Vector getBodySnapPoint() {
+		Vector pos = getPosition();
+		return new Vector(pos.getX() + (int)(getBlockWidth()/2 + getBlockSideWidth()), pos.getY() + getBlockHeight());
+	}
+	
+	public Vector getSequenceSnapPoint() {
+		Vector pos = getPosition();
+		return new Vector(pos.getX() + (int)(getBlockWidth()/2), getTotalHeight());
 	}
 }
