@@ -9,7 +9,7 @@ import domain.block.abstract_classes.SurroundingBlock;
 
 public abstract class ConditionBlock extends Block {
 
-	private ConditionBlock next = null;
+	protected ConditionBlock next = null;
 	private ConditionBlock previous = null;
 	private SurroundingBlock surroundingBlock = null;
 
@@ -86,5 +86,14 @@ public abstract class ConditionBlock extends Block {
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public ConditionBlock getLastBlock() {
+		if(next == null) {
+			return this;
+		} else {
+			return next.getLastBlock();
+		}
 	}
 }

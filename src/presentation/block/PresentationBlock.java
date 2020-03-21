@@ -3,6 +3,7 @@ package presentation.block;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.util.List;
 
 import domain.block.block_types.Block;
 import domain.game_world.Vector;
@@ -15,16 +16,37 @@ public abstract class PresentationBlock<T extends Block> {
 	private static final int blockHeight = 20;
 
 	private static final int blockSideWidth = 20;
+	
+	private static double snapDistance = 14;
+	
+	private static int plugHeight = 4;
+	private static int plugWidth = 8;
+	
+	private static Color backgroundColor = Color.WHITE;
+	
+	private T block;
+
+	private Vector position;
 
 	public PresentationBlock(Vector pos, T block) {
 		this.position = pos;
 		this.block = block;
 
 	}
+	
+	public static int getPlugHeight() {
+		return plugHeight;
+	}
+	
+	public static int getPlugWidth() {
+		return plugWidth;
+	}
+	
+	public static Color getBackgroundColor() {
+		return backgroundColor;
+	}
 
-	private T block;
-
-	private Vector position;
+	
 
 	private static final Font font = new Font("Arial", Font.PLAIN, (int) (blockHeight * 0.7));
 
@@ -76,6 +98,10 @@ public abstract class PresentationBlock<T extends Block> {
 	public static int getBlockWidth() {
 		return blockWidth;
 	}
+	
+	public static double getSnapDistance() {
+		return snapDistance;
+	}
 
 	public static int getBlockHeight() {
 		return blockHeight;
@@ -115,8 +141,6 @@ public abstract class PresentationBlock<T extends Block> {
 	public int getTotalHeight() {
 		return getBlockHeight();
 	}
-
-	public abstract Vector getPossibleSnapLocation();
 	
 	protected abstract Vector getNextBlockPosition(PresentationBlock<?> presentationBlock);
 	
@@ -127,5 +151,23 @@ public abstract class PresentationBlock<T extends Block> {
 	public int getHeight() {
 		return blockHeight;
 	}
+	/**
+	 * Returns the position of the snap point of the block that can snap into another.
+	 * @return snap point as vector
+	 */
+	public abstract Vector getGivingSnapPoint();
+	
+	/**
+	 * Return a list of snap points that can be snapped into
+	 * @return list of snap points as vectors
+	 */
+	public abstract List<Vector> getReceivingSnapPoints();
+	
+	/**
+	 * Check if the given block can snap into this presentationBlock
+	 * @param b
+	 * @return
+	 */
+	public abstract boolean snap(PresentationBlock<?> b);
 
 }

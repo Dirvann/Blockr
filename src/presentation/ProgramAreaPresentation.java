@@ -44,13 +44,14 @@ public class ProgramAreaPresentation {
 		return null;
 	}
 	
-	public PresentationBlock<?> snappebleBlock(Vector position){
+	public boolean snapBlock(PresentationBlock<?> block){
+		
 		for (PresentationBlock<?> pBlock: programAreaBlocks) {
-			if (pBlock.collidesWithPosition(position) || pBlock.collisionWithLowerPart(position)) {
-				return pBlock;
+			if (pBlock.snap(block)) {
+				return true;
 			}
 		}
-		return null;
+		return false;
 	}
 	
 

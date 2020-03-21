@@ -63,13 +63,9 @@ public abstract class SequenceBlock extends Block {
 			block.setSurroundingBlock(this.surroundingBlock);
 			block.previous = this;
 
-			SequenceBlock last = block;
-			while (last.getNextBlock() != null) {
-				last = last.getNextBlock();
-			}
-			last.next = getNextBlock();
+			block.getLastBlock().next = getNextBlock();
 			if (getNextBlock() != null)
-				getNextBlock().previous = last;
+				getNextBlock().previous = block.getLastBlock();
 			next = block;
 		}
 
@@ -120,6 +116,27 @@ public abstract class SequenceBlock extends Block {
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public SequenceBlock getLastBlock() {
+		if(next == null) {
+			return this;
+		} else {
+			return next.getLastBlock();
+		}
+	}
+	
+	@Override
+	public void connectTo(Block block) {
+		if(!(block instanceof SequenceBlock)) return;
+		SequenceBlock b = (SequenceBlock) block;
+		if(next != null) {
+			SequenceBlock last = b.getLastBlock();
+			last.setNextBlock(next);
+			setNextBlock(null);
+		}
+		setNextBlock((SequenceBlock)b);
 	}
 	
 

@@ -40,4 +40,8 @@ public abstract class Block {
 	public abstract Block getPreviousBlock();
 	
 	public abstract boolean disconnect();
+	
+	public abstract void connectTo(Block b);
+	
+	public abstract Block getLastBlock();
 }

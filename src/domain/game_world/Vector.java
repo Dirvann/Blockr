@@ -46,4 +46,8 @@ public final class Vector {
 		}
 		return null;
 	}
+	
+	public double distanceTo(Vector other) {
+		return Math.sqrt(Math.pow(getX() - other.getX(), 2) + Math.pow(getY() - other.getY(),2));
+	}
 }
