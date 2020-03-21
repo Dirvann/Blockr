@@ -141,8 +141,6 @@ public abstract class PresentationBlock<T extends Block> {
 	public int getTotalHeight() {
 		return getBlockHeight();
 	}
-
-	public abstract Vector getPossibleSnapLocation();
 	
 	protected abstract Vector getNextBlockPosition(PresentationBlock<?> presentationBlock);
 	

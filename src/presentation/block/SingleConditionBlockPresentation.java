@@ -33,10 +33,6 @@ public class SingleConditionBlockPresentation extends PresentationBlock<SingleCo
 		return blockPresentation;
 	}
 
-	@Override
-	public Vector getPossibleSnapLocation() {
-		return new Vector(getPosition().getX() - Math.round(getBlockWidth() / 2), getPosition().getY() + Math.round(getBlockHeight()/2));
-	}
 	
 	@Override
 	protected Vector getNextBlockPosition(PresentationBlock<?> presentationBlock) {
