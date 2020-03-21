@@ -2,9 +2,8 @@ package domain.block.abstract_classes;
 
 import domain.block.block_types.Block;
 import domain.block.block_types.ConditionBlock;
-import domain.game_world.Vector;
+import domain.block.block_types.SequenceBlock;
 import presentation.ProgramAreaPresentation;
-import presentation.block.ChainConditionBlockPresentation;
 
 public abstract class ChainConditionBlock extends ConditionBlock{
 	
@@ -51,6 +50,21 @@ public abstract class ChainConditionBlock extends ConditionBlock{
 		if (connectedCondition != null) {
 			connectedCondition.removeFromProgramAreaPresentationRecursively(programAreaP);
 		}
+	}
+	
+	@Override
+	public void connectTo(Block block) {
+		if(!(block instanceof ConditionBlock)) return;
+		ConditionBlock b = (ConditionBlock) block;
+		if(next != null) {
+			ConditionBlock last = b.getLastBlock();
+			if(last instanceof ChainConditionBlock) {
+				last.setNextCondition(next);
+			} else if(last instanceof SingleConditionBlock) {
+				next.setPrevious(null);
+			}
+		}
+		setNextCondition(b);
 	}
 
 }

@@ -261,41 +261,8 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 		if (this.selectedBlock != null) {
 			// Check for snapping
 			// TODO: replace with new snapping code
-			boolean snapped = false;
-			Vector snapLocation = selectedBlock.getPossibleSnapLocation();
-			System.out.println("Checking location (" + snapLocation.getX() + ", " + snapLocation.getY() + ")");
-			PresentationBlock<?> blockToGetSnappedTo = programAreaP.snappebleBlock(snapLocation);
-			if (blockToGetSnappedTo != null) {
-				System.out.println("SNAP!");
-				if (selectedBlock.getBlock() instanceof ConditionBlock) {
-					if (blockToGetSnappedTo.getBlock() instanceof SingleSurroundingBlock
-							&& blockToGetSnappedTo.collidesWithPosition(snapLocation)) {
-						((SingleSurroundingBlock) blockToGetSnappedTo.getBlock())
-								.setConditionBlock((ConditionBlock) selectedBlock.getBlock());
-						snapped = true;
-					} else if (blockToGetSnappedTo.getBlock() instanceof ChainConditionBlock) {
-						((ChainConditionBlock) blockToGetSnappedTo.getBlock())
-								.addCondition((ConditionBlock) selectedBlock.getBlock());
-						snapped = true;
-					}
-				} else if (selectedBlock.getBlock() instanceof SequenceBlock) {
-					if (blockToGetSnappedTo instanceof ActionBlockPresentation) {
-						((ActionBlock) blockToGetSnappedTo.getBlock())
-								.setNextBlock((SequenceBlock) selectedBlock.getBlock());
-						snapped = true;
-					} else if (blockToGetSnappedTo instanceof SingleSurroundBlockPresentation) {
-						if (blockToGetSnappedTo.collidesWithPosition(snapLocation)) {
-							((SingleSurroundingBlock) blockToGetSnappedTo.getBlock())
-									.setBodyBlock((SequenceBlock) selectedBlock.getBlock());
-							snapped = true;
-						} else {
-							((SingleSurroundingBlock) blockToGetSnappedTo.getBlock())
-									.setNextBlock((SequenceBlock) selectedBlock.getBlock());
-							snapped = true;
-						}
-					}
-				}
-			}
+			boolean snapped = programAreaP.snapBlock(selectedBlock);
+			
 
 			if (!snapped) {
 				if (!gameController.isTopLevelBlock(selectedBlock.getBlock())) {

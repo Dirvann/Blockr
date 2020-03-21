@@ -16,16 +16,37 @@ public abstract class PresentationBlock<T extends Block> {
 	private static final int blockHeight = 20;
 
 	private static final int blockSideWidth = 20;
+	
+	private static double snapDistance = 14;
+	
+	private static int plugHeight = 4;
+	private static int plugWidth = 8;
+	
+	private static Color backgroundColor = Color.WHITE;
+	
+	private T block;
+
+	private Vector position;
 
 	public PresentationBlock(Vector pos, T block) {
 		this.position = pos;
 		this.block = block;
 
 	}
+	
+	public static int getPlugHeight() {
+		return plugHeight;
+	}
+	
+	public static int getPlugWidth() {
+		return plugWidth;
+	}
+	
+	public static Color getBackgroundColor() {
+		return backgroundColor;
+	}
 
-	private T block;
-
-	private Vector position;
+	
 
 	private static final Font font = new Font("Arial", Font.PLAIN, (int) (blockHeight * 0.7));
 
@@ -76,6 +97,10 @@ public abstract class PresentationBlock<T extends Block> {
 
 	public static int getBlockWidth() {
 		return blockWidth;
+	}
+	
+	public static double getSnapDistance() {
+		return snapDistance;
 	}
 
 	public static int getBlockHeight() {
@@ -139,5 +164,12 @@ public abstract class PresentationBlock<T extends Block> {
 	 * @return list of snap points as vectors
 	 */
 	public abstract List<Vector> getReceivingSnapPoints();
+	
+	/**
+	 * Check if the given block can snap into this presentationBlock
+	 * @param b
+	 * @return
+	 */
+	public abstract boolean snap(PresentationBlock<?> b);
 
 }

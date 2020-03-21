@@ -19,6 +19,7 @@ public class SingleConditionBlockPresentation extends PresentationBlock<SingleCo
 		g.setColor(Color.ORANGE);
 		Vector pos = getPosition();
 		g.fillRect(pos.getX(), pos.getY(), PresentationBlock.getBlockWidth(), PresentationBlock.getBlockHeight());
+		g.fillRect(pos.getX() - getPlugHeight(), pos.getY() + getBlockHeight()/2 - getPlugWidth()/2, getPlugHeight(), getPlugWidth());
 		g.setColor(Color.BLACK);
 		g.setFont(getFont());
 		g.drawString(getPresentationName(),pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
@@ -52,6 +53,11 @@ public class SingleConditionBlockPresentation extends PresentationBlock<SingleCo
 	@Override
 	public List<Vector> getReceivingSnapPoints() {
 		return new ArrayList<Vector>();	
+	}
+
+	@Override
+	public boolean snap(PresentationBlock<?> b) {
+		return false;
 	}
 
 }

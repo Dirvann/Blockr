@@ -112,5 +112,24 @@ public abstract class SurroundingBlock extends SequenceBlock{
 		
 		return l;
 	}
+	
+	public void connectBodyBlock(SequenceBlock b) {
+		if(this.bodyBlock != null) {
+			b.getLastBlock().setNextBlock(this.bodyBlock);
+		}
+		this.bodyBlock = b;
+		b.setSurroundingBlock(this);
+	}
+	
+	public void connectConditionBlock(ConditionBlock b) {
+		if(condition != null) {
+			ConditionBlock last = b.getLastBlock();
+			if(last instanceof ChainConditionBlock) {
+				last.setNextCondition(condition);
+			}
+		}
+		this.condition = b;
+		b.setSurroundingBlock(this);
+	}
 
 }
