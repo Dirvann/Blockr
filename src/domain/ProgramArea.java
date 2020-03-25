@@ -3,7 +3,9 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.block.abstract_classes.SurroundingBlock;
+import domain.block.Block;
+import domain.block.SequenceBlock;
+import domain.block.SurroundingBlock;
 import domain.block.block_types.*;
 
 

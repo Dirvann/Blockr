@@ -1,17 +1,15 @@
 package domain.block;
 
 import domain.GameController;
-import domain.block.abstract_classes.ActionBlock;
-import domain.block.block_types.Block;
 
-public class MoveForward extends ActionBlock {
+class MoveForward extends ActionBlock {
 
-	public MoveForward() {
+	protected MoveForward() {
 		super();
 	}
 
 	@Override
-	public void performAction(GameController gameController) {
+	protected void performAction(GameController gameController) {
 		if (gameController == null) 
 			System.out.println("Move Forward");
 		else
@@ -19,12 +17,12 @@ public class MoveForward extends ActionBlock {
 	}
 
 	@Override
-	public Block getNewBlockOfThisType() {
+	protected Block getNewBlockOfThisType() {
 		return new MoveForward();
 	}
 
 	@Override
-	public String getName() {
+	protected String getName() {
 		// TODO Auto-generated method stub
 		return "Move Forward";
 	}

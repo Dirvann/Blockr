@@ -1,6 +1,6 @@
 package domain;
 
-import domain.block.block_types.Block;
+import domain.block.Block;
 import domain.game_world.GameWorld;
 
 public class GameController {

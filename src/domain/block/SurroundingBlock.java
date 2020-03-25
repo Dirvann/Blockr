@@ -1,23 +1,19 @@
-package domain.block.abstract_classes;
+package domain.block;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.block.block_types.Block;
-import domain.block.block_types.ConditionBlock;
-import domain.block.block_types.SequenceBlock;
-
-public abstract class SurroundingBlock extends SequenceBlock{	
+abstract class SurroundingBlock extends SequenceBlock{	
 	
-	private ConditionBlock condition = null;
-	private SequenceBlock bodyBlock = null;
+	protected ConditionBlock condition = null;
+	protected SequenceBlock bodyBlock = null;
 
 
 	/**
 	 * 
 	 * @param block Sets this block as first (of a sequence) under the if statement.
 	 */
-	public void setBodyBlock(SequenceBlock block) {
+	protected void setBodyBlock(SequenceBlock block) {
 		if(this.bodyBlock != null) {
 			SequenceBlock last = block;
 			while (last.getNextBlock() != null) {
@@ -34,7 +30,7 @@ public abstract class SurroundingBlock extends SequenceBlock{
 	 * 
 	 * @return The first block which is surrounded by this if block
 	 */
-	public SequenceBlock getBodyBlock() {
+	protected SequenceBlock getBodyBlock() {
 		SequenceBlock copy = this.bodyBlock; // TODO: decent copy
 		return copy;
 	}
@@ -44,7 +40,7 @@ public abstract class SurroundingBlock extends SequenceBlock{
 	 * @ removes all blocks which are surrounded by this if block. Sets the pointer
 	 * to the first block to null.
 	 */
-	public void removeBodyBlock() {
+	protected void removeBodyBlock() {
 		this.bodyBlock.setSurroundingBlock(null);
 		this.bodyBlock = null;
 	}
@@ -54,7 +50,7 @@ public abstract class SurroundingBlock extends SequenceBlock{
 	 * @return Returns the first condition block (might be of a sequence accessible
 	 *         by block.next()).
 	 */
-	public ConditionBlock getConditionBlock() {
+	protected ConditionBlock getConditionBlock() {
 		ConditionBlock copy = this.condition; // TODO proper copy
 		return copy;
 	}
@@ -64,7 +60,7 @@ public abstract class SurroundingBlock extends SequenceBlock{
 	 * @param block The block that needs to be added. @ sets this block as the first
 	 *              block in the sequence which is surrounded by the if block.
 	 */
-	public void setConditionBlock(ConditionBlock block) {
+	protected void setConditionBlock(ConditionBlock block) {
 		block.setSurroundingBlock(this);
 		if (this.condition != null) {
 			ConditionBlock last = block;
@@ -81,14 +77,14 @@ public abstract class SurroundingBlock extends SequenceBlock{
 	 * 
 	 * @ removes the condition block and sets this to null.
 	 */
-	public void removeConditionBlock() {
+	protected void removeConditionBlock() {
 		if (condition != null) 
 			condition.setSurroundingBlock(null);
 		this.condition = null;
 		
 	}
 	
-	public boolean hasValidCondition() {
+	protected boolean hasValidCondition() {
 		if (this.getConditionBlock() == null) {
 			return false;
 		} else {
@@ -96,13 +92,13 @@ public abstract class SurroundingBlock extends SequenceBlock{
 		}
 	}
 
-	public SequenceBlock getNextAfterLoop() {
+	protected SequenceBlock getNextAfterLoop() {
 		return this;
 		
 	}
 	
 	@Override
-	public List<Block> getAllNextBlocks() {
+	protected List<Block> getAllNextBlocks() {
 		List<Block> l = new ArrayList<Block>();
 		
 		l.addAll(super.getAllNextBlocks());
@@ -113,7 +109,7 @@ public abstract class SurroundingBlock extends SequenceBlock{
 		return l;
 	}
 	
-	public void connectBodyBlock(SequenceBlock b) {
+	protected void connectBodyBlock(SequenceBlock b) {
 		if(this.bodyBlock != null) {
 			b.getLastBlock().setNextBlock(this.bodyBlock);
 		}
@@ -121,7 +117,7 @@ public abstract class SurroundingBlock extends SequenceBlock{
 		b.setSurroundingBlock(this);
 	}
 	
-	public void connectConditionBlock(ConditionBlock b) {
+	protected void connectConditionBlock(ConditionBlock b) {
 		if(condition != null) {
 			ConditionBlock last = b.getLastBlock();
 			if(last instanceof ChainConditionBlock) {

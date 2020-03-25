@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.util.List;
 
-import domain.block.block_types.Block;
+import domain.block.Block;
 import domain.game_world.Vector;
 import presentation.ProgramAreaPresentation;
 

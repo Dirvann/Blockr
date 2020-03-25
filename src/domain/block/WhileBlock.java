@@ -1,17 +1,15 @@
 package domain.block;
 
 import domain.GameController;
-import domain.block.abstract_classes.SingleSurroundingBlock;
-import domain.block.block_types.Block;
 
-public class WhileBlock extends SingleSurroundingBlock {
+class WhileBlock extends SingleSurroundingBlock {
 	
 	
-	public WhileBlock() {
+	protected WhileBlock() {
 		super();
 	}
 
-	public Block execute(GameController gameController) throws Exception {
+	protected Block execute(GameController gameController) throws Exception {
 		if (getConditionBlock() == null || !getConditionBlock().isValidCondition()) {
 			throw new Exception("While-Block does not have a complete condition");
 		}
@@ -23,12 +21,12 @@ public class WhileBlock extends SingleSurroundingBlock {
 	}
 
 	@Override
-	public Block getNewBlockOfThisType() {
+	protected Block getNewBlockOfThisType() {
 		return new WhileBlock();
 	}
 
 	@Override
-	public String getName() {
+	protected String getName() {
 		// TODO Auto-generated method stub
 		return "While";
 	}

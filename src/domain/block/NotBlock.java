@@ -1,17 +1,15 @@
 package domain.block;
 
 import domain.GameController;
-import domain.block.abstract_classes.ChainConditionBlock;
-import domain.block.block_types.Block;
 
-public class NotBlock extends ChainConditionBlock {
+class NotBlock extends ChainConditionBlock {
 	
 
-	public NotBlock() {
+	protected NotBlock() {
 		super();
 	}
 
-	public boolean evaluate(GameController gamecontroller) {
+	protected boolean evaluate(GameController gamecontroller) {
 		if (this.getNextCondition() == null) {
 			return false;
 		}
@@ -19,12 +17,12 @@ public class NotBlock extends ChainConditionBlock {
 	}
 
 	@Override
-	public Block getNewBlockOfThisType() {
+	protected Block getNewBlockOfThisType() {
 		return new NotBlock();
 	}
 
 	@Override
-	public String getName() {
+	protected String getName() {
 		// TODO Auto-generated method stub
 		return "Not";
 	}

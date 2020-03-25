@@ -1,13 +1,10 @@
-package domain.block.abstract_classes;
+package domain.block;
 
-import domain.block.block_types.Block;
-import domain.block.block_types.ConditionBlock;
-import domain.block.block_types.SequenceBlock;
 import presentation.ProgramAreaPresentation;
 
-public abstract class ChainConditionBlock extends ConditionBlock{
+abstract class ChainConditionBlock extends ConditionBlock{
 	
-	public ChainConditionBlock() {
+	protected ChainConditionBlock() {
 
 	}
 	
@@ -15,7 +12,7 @@ public abstract class ChainConditionBlock extends ConditionBlock{
 	 * 
 	 * @param block The block which gets connected to the current one.
 	 */
-	public void addCondition(ConditionBlock block) {
+	protected void addCondition(ConditionBlock block) {
 		block.setPrevious(this);
 		
 		ConditionBlock last = block;
@@ -27,14 +24,14 @@ public abstract class ChainConditionBlock extends ConditionBlock{
 		setNextCondition(block);
 	}
 	
-	public void removeNextCondition() {
+	protected void removeNextCondition() {
 		if (getNextCondition() != null) {
 			getNextCondition().setPrevious(null);
 			setNextCondition(null);
 		}
 	}
 
-	public boolean isValidCondition() {
+	protected boolean isValidCondition() {
 		if (getNextCondition() != null)
 			return getNextCondition().isValidCondition();
 		return false;
@@ -42,7 +39,7 @@ public abstract class ChainConditionBlock extends ConditionBlock{
 	
 
 	
-	public void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP) {
+	protected void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP) {
 		programAreaP.removeBlock(getPresentationBlock());
 		programAreaP.increaseBlocksLeft();
 		
@@ -53,7 +50,7 @@ public abstract class ChainConditionBlock extends ConditionBlock{
 	}
 	
 	@Override
-	public void connectTo(Block block) {
+	protected void connectTo(Block block) {
 		if(!(block instanceof ConditionBlock)) return;
 		ConditionBlock b = (ConditionBlock) block;
 		if(next != null) {

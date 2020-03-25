@@ -1,13 +1,11 @@
-package domain.block.block_types;
+package domain.block;
 
 import java.util.List;
 import java.util.ArrayList;
 
 import domain.GameController;
-import domain.block.abstract_classes.ChainConditionBlock;
-import domain.block.abstract_classes.SurroundingBlock;
 
-public abstract class ConditionBlock extends Block {
+abstract class ConditionBlock extends Block {
 
 	protected ConditionBlock next = null;
 	private ConditionBlock previous = null;
@@ -17,30 +15,30 @@ public abstract class ConditionBlock extends Block {
 	 * 
 	 * @return The next block of the condition as ConditionBlock.
 	 */
-	public ConditionBlock getNextCondition() {
+	protected ConditionBlock getNextCondition() {
 		ConditionBlock copy = this.next; // TODO: make actual copy
 		return copy;
 	}
 
-	public void setNextCondition(ConditionBlock condition) {
+	protected void setNextCondition(ConditionBlock condition) {
 		this.next = condition;
 		if (condition != null)
 			condition.setPrevious(this);
 	}
 
-	public ConditionBlock getPrevious() {
+	protected ConditionBlock getPrevious() {
 		return previous;
 	}
 
-	public void setPrevious(ConditionBlock previous) {
+	protected void setPrevious(ConditionBlock previous) {
 		this.previous = previous;
 	}
 
-	public SurroundingBlock getSurroundingBlock() {
+	protected SurroundingBlock getSurroundingBlock() {
 		return surroundingBlock;
 	}
 
-	public void setSurroundingBlock(SurroundingBlock surroundingBlock) {
+	protected void setSurroundingBlock(SurroundingBlock surroundingBlock) {
 		ConditionBlock i = this;
 		while (i != null) {
 			i.surroundingBlock = surroundingBlock;
@@ -48,12 +46,12 @@ public abstract class ConditionBlock extends Block {
 		}
 	}
 
-	abstract public boolean isValidCondition();
+	abstract protected boolean isValidCondition();
 
-	abstract public boolean evaluate(GameController gamecontroller);
+	abstract protected boolean evaluate(GameController gamecontroller);
 
 	@Override
-	public List<Block> getAllNextBlocks() {
+	protected List<Block> getAllNextBlocks() {
 		List<Block> l = new ArrayList<Block>();
 
 		l.add(this);
@@ -64,7 +62,7 @@ public abstract class ConditionBlock extends Block {
 	}
 
 	@Override
-	public Block getPreviousBlock() {
+	protected Block getPreviousBlock() {
 		if (getPrevious() != null) {
 			return getPrevious();
 		}
@@ -75,7 +73,7 @@ public abstract class ConditionBlock extends Block {
 	}
 
 	@Override
-	public boolean disconnect() {
+	protected boolean disconnect() {
 		if (getPrevious() == null) {
 			if (getSurroundingBlock() != null) {
 				getSurroundingBlock().removeConditionBlock();
@@ -89,7 +87,7 @@ public abstract class ConditionBlock extends Block {
 	}
 	
 	@Override
-	public ConditionBlock getLastBlock() {
+	protected ConditionBlock getLastBlock() {
 		if(next == null) {
 			return this;
 		} else {

@@ -1,19 +1,17 @@
-package domain.block.block_types;
+package domain.block;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import domain.GameController;
-import domain.block.abstract_classes.SurroundingBlock;
-import domain.game_world.Vector;
 
-public abstract class SequenceBlock extends Block {
+abstract class SequenceBlock extends Block {
 
 	private SurroundingBlock surroundingBlock = null;
 	protected SequenceBlock next = null;
 	protected SequenceBlock previous = null;
 
-	public SequenceBlock getPreviousBlock() {
+	protected SequenceBlock getPreviousBlock() {
 		if(previous != null) {
 			return previous;
 		}
@@ -23,7 +21,7 @@ public abstract class SequenceBlock extends Block {
 		return null;
 	}
 	
-	public SequenceBlock getPrevious() {
+	protected SequenceBlock getPrevious() {
 		return previous;
 	}
 	
@@ -35,7 +33,7 @@ public abstract class SequenceBlock extends Block {
 	 *              block this.block and all of the blocks which comes after
 	 *              this.block
 	 */
-	public void setSurroundingBlock(SurroundingBlock block) {
+	protected void setSurroundingBlock(SurroundingBlock block) {
 		SequenceBlock i = this;
 		while (i != null) {
 			i.surroundingBlock = block;
@@ -44,7 +42,7 @@ public abstract class SequenceBlock extends Block {
 
 	}
 
-	public SurroundingBlock getSurroundingBlock() {
+	protected SurroundingBlock getSurroundingBlock() {
 		SurroundingBlock copy = this.surroundingBlock; // TODO make proper clone
 		return copy;
 	}
@@ -55,7 +53,7 @@ public abstract class SequenceBlock extends Block {
 	 *              between this and this.getNextBlock().
 	 * 
 	 */
-	public void setNextBlock(SequenceBlock block) {
+	protected void setNextBlock(SequenceBlock block) {
 
 		if (block == null)
 			removeNextBlock();
@@ -75,7 +73,7 @@ public abstract class SequenceBlock extends Block {
 	 * 
 	 * @return The next block directly underneath
 	 */
-	public SequenceBlock getNextBlock() {
+	protected SequenceBlock getNextBlock() {
 		SequenceBlock nextBlock = next;
 		return nextBlock;
 	}
@@ -84,7 +82,7 @@ public abstract class SequenceBlock extends Block {
 	 * removes all the next blocks on the same level (same surrounding bloc). This
 	 * keeps the sequence of the next blocks, but they are now independent.
 	 */
-	public void removeNextBlock() {
+	protected void removeNextBlock() {
 		if (this.next != null) {
 			this.next.setSurroundingBlock(null);
 			this.next.previous = null;
@@ -92,10 +90,10 @@ public abstract class SequenceBlock extends Block {
 		}
 	}
 
-	public abstract Block execute(GameController gamecontroller) throws Exception;
+	protected abstract Block execute(GameController gamecontroller) throws Exception;
 
 	@Override
-	public List<Block> getAllNextBlocks() {
+	protected List<Block> getAllNextBlocks() {
 		List<Block> l = new ArrayList<Block>();
 
 		l.add(this);
@@ -106,7 +104,7 @@ public abstract class SequenceBlock extends Block {
 	}
 	
 	@Override
-	public boolean disconnect() {
+	protected boolean disconnect() {
 		if (getPrevious() != null) {
 			getPrevious().removeNextBlock();
 			return true;
@@ -119,7 +117,7 @@ public abstract class SequenceBlock extends Block {
 	}
 	
 	@Override
-	public SequenceBlock getLastBlock() {
+	protected SequenceBlock getLastBlock() {
 		if(next == null) {
 			return this;
 		} else {
@@ -128,7 +126,7 @@ public abstract class SequenceBlock extends Block {
 	}
 	
 	@Override
-	public void connectTo(Block block) {
+	protected void connectTo(Block block) {
 		if(!(block instanceof SequenceBlock)) return;
 		SequenceBlock b = (SequenceBlock) block;
 		if(next != null) {

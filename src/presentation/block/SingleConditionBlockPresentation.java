@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.block.abstract_classes.SingleConditionBlock;
+import domain.block.SingleConditionBlock;
 import domain.game_world.Vector;
 
 public class SingleConditionBlockPresentation extends PresentationBlock<SingleConditionBlock> {

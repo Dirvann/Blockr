@@ -1,21 +1,19 @@
-package domain.block.abstract_classes;
+package domain.block;
 
 import domain.GameController;
-import domain.block.block_types.Block;
-import domain.block.block_types.SequenceBlock;
 import domain.game_world.Vector;
 import presentation.ProgramAreaPresentation;
 import presentation.block.ActionBlockPresentation;
 
-public abstract class ActionBlock extends SequenceBlock{
+abstract class ActionBlock extends SequenceBlock{
 	
-	abstract public void performAction(GameController gameController);
+	abstract protected void performAction(GameController gameController);
 	
-	public ActionBlock() {
+	protected ActionBlock() {
 	}
 	
 	@Override
-	public Block execute(GameController gameController) throws Exception {
+	protected Block execute(GameController gameController) throws Exception {
 		performAction(gameController);
 		
 		if (this.getNextBlock() == null) {
@@ -29,7 +27,7 @@ public abstract class ActionBlock extends SequenceBlock{
 	}
 	
 	
-	public void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP) {
+	protected void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP) {
 		programAreaP.removeBlock(this.getPresentationBlock());
 		programAreaP.increaseBlocksLeft();
 		

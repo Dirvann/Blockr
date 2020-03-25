@@ -6,7 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import domain.GameController;
-import domain.block.block_types.Block;
+import domain.block.Block;
+import domain.block.Implementation;
 import domain.game_world.*;
 import domain.game_world.cell.Cell;
 import domain.game_world.cell.Goal;

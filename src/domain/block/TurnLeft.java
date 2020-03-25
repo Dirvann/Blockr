@@ -1,17 +1,15 @@
 package domain.block;
 
 import domain.GameController;
-import domain.block.abstract_classes.ActionBlock;
-import domain.block.block_types.Block;
 
-public class TurnLeft extends ActionBlock {
+class TurnLeft extends ActionBlock {
 
-	public TurnLeft() {
+	protected TurnLeft() {
 		super();
 	}
 
 	@Override
-	public void performAction(GameController gameController) {
+	protected void performAction(GameController gameController) {
 
 		if (gameController == null) 
 			System.out.println("Turn Left");
@@ -20,12 +18,12 @@ public class TurnLeft extends ActionBlock {
 	}
 
 	@Override
-	public Block getNewBlockOfThisType() {
+	protected Block getNewBlockOfThisType() {
 		return new TurnLeft();
 	}
 
 	@Override
-	public String getName() {
+	protected String getName() {
 		// TODO Auto-generated method stub
 		return "Turn Left";
 	}

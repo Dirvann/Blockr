@@ -1,19 +1,17 @@
 package domain.block;
 
 import domain.GameController;
-import domain.block.abstract_classes.SingleSurroundingBlock;
-import domain.block.block_types.*;
 
-public class IfBlock extends SingleSurroundingBlock {
+class IfBlock extends SingleSurroundingBlock {
 	
 	
 
-	public IfBlock() {
+	protected IfBlock() {
 		super();
 	}
 
 
-	public Block execute(GameController gameController) throws Exception {
+	protected Block execute(GameController gameController) throws Exception {
 		if (getConditionBlock() == null || !getConditionBlock().isValidCondition()) {
 			throw new Exception("If-Block does not have a complete condition");
 		}
@@ -32,7 +30,7 @@ public class IfBlock extends SingleSurroundingBlock {
 	}
 
 	@Override
-	public SequenceBlock getNextAfterLoop() {
+	protected SequenceBlock getNextAfterLoop() {
 		if (this.getNextBlock() == null) {
 			if (this.getSurroundingBlock() == null) {
 				return null;
@@ -46,13 +44,13 @@ public class IfBlock extends SingleSurroundingBlock {
 
 	
 	@Override
-	public Block getNewBlockOfThisType() {
+	protected Block getNewBlockOfThisType() {
 		return new IfBlock();
 	}
 
 
 	@Override
-	public String getName() {
+	protected String getName() {
 		return "if";
 	}
 

@@ -8,8 +8,8 @@ import java.awt.geom.Area;
 import java.util.Arrays;
 import java.util.List;
 
-import domain.block.abstract_classes.ChainConditionBlock;
-import domain.block.block_types.ConditionBlock;
+import domain.block.ChainConditionBlock;
+import domain.block.ConditionBlock;
 import domain.game_world.Vector;
 
 public class ChainConditionBlockPresentation extends PresentationBlock<ChainConditionBlock> {

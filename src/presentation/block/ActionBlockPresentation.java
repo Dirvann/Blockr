@@ -8,8 +8,8 @@ import java.awt.geom.Area;
 import java.util.Arrays;
 import java.util.List;
 
-import domain.block.abstract_classes.ActionBlock;
-import domain.block.block_types.SequenceBlock;
+import domain.block.ActionBlock;
+import domain.block.SequenceBlock;
 import domain.game_world.Vector;
 
 public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {

@@ -14,13 +14,14 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import domain.GameController;
+import domain.block.ActionBlock;
+import domain.block.Block;
+import domain.block.ChainConditionBlock;
+import domain.block.ConditionBlock;
+import domain.block.Implementation;
 import domain.block.MoveForward;
-import domain.block.abstract_classes.ActionBlock;
-import domain.block.abstract_classes.ChainConditionBlock;
-import domain.block.abstract_classes.SingleSurroundingBlock;
-import domain.block.block_types.Block;
-import domain.block.block_types.ConditionBlock;
-import domain.block.block_types.SequenceBlock;
+import domain.block.SequenceBlock;
+import domain.block.SingleSurroundingBlock;
 import domain.game_world.Direction;
 import domain.game_world.GameWorld;
 import domain.game_world.Grid;
@@ -29,7 +30,6 @@ import domain.game_world.Vector;
 import domain.game_world.cell.Cell;
 import domain.game_world.cell.Goal;
 import domain.game_world.cell.Wall;
-import facade.Implementation;
 import presentation.block.*;
 
 public class Presentation extends Canvas implements MouseListener, MouseMotionListener, KeyListener {
