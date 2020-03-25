@@ -7,6 +7,7 @@ public interface GameWorldFacade {
 	public GameWorld makeGameWorld(Grid grid, Vector startPosition);
 	public GameWorld makeStandardEmptyGameWorld();
 	public GameWorld makeRandomGameWorld(int width,int height);
+	public void resetGameWorld();
 	
 	public boolean robotWallInFront();
 	public boolean robotOnGoal();

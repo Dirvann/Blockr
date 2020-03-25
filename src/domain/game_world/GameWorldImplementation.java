@@ -60,6 +60,12 @@ public class GameWorldImplementation implements GameWorldFacade{
 	public Grid makeRandomGrid(int width, int height) {
 		return new Grid(width,height);
 	}
+
+	@Override
+	public void resetGameWorld() {
+		resetGameWorld();
+		
+	}
 	
 
 }

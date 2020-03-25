@@ -26,7 +26,7 @@ public class Grid {
 	 * @post The width of this new Grid is equal to the given width.
 	 * @post The grid is filled with empty cells.
 	 */
-	public Grid(int width, int height) {
+	protected Grid(int width, int height) {
 		this.width = width;
 		this.height = height;
 		this.grid = new Cell[height][width];
@@ -51,7 +51,7 @@ public class Grid {
 	 * 		 all the other cells are empty.
 	 * @throws Exception
 	 */
-	public Grid(int height, int width,Vector[] locations, Cell[] cells) throws Exception {
+	protected Grid(int height, int width,Vector[] locations, Cell[] cells) throws Exception {
 		this(height,width);
 		setCells(locations, cells);
 	}
@@ -62,7 +62,7 @@ public class Grid {
 	 * @post The goal is located at grid[4][4]
 	 * @post All cells except the goal cell are empty
 	 */
-	public Grid() {
+	protected Grid() {
 		this(5, 5);
 		try {
 			setCell(new Vector(4, 4), new Goal());
@@ -73,7 +73,7 @@ public class Grid {
 		}
 	}
 	
-	static public Grid randomGrid(int width, int height) {
+	static protected Grid randomGrid(int width, int height) {
 		Grid result = new Grid(width, height);
 		Random rand = new Random();
 		
@@ -106,13 +106,13 @@ public class Grid {
 	/**
 	 * @return width of the grid.
 	 */
-	public int getWidth() {
+	protected int getWidth() {
 		return width;
 	}
 	/**
 	 * @return height of the grid
 	 */
-	public int getHeight() {
+	protected int getHeight() {
 		return height;
 	}
 	/**
@@ -124,7 +124,7 @@ public class Grid {
 	 * @throws Exception
 	 * 
 	 */
-	public void setCell(Vector location, Cell cell) throws Exception {
+	protected void setCell(Vector location, Cell cell) throws Exception {
 		if (isInBounds(location)) {
 			grid[location.getY()][location.getX()] = cell;
 		} else {
@@ -140,7 +140,7 @@ public class Grid {
 	 * @throws Exception
 	 * 
 	 */
-	public void setCells(Vector[] locations,Cell[] cells) throws Exception {
+	protected void setCells(Vector[] locations,Cell[] cells) throws Exception {
 		if(locations.length != cells.length) {
 			throw new Exception();
 		} else {
@@ -157,7 +157,7 @@ public class Grid {
 	 * @return the cell at given location
 	 * @throws Exception
 	 */
-	public Cell getCell(Vector location) throws Exception {
+	protected Cell getCell(Vector location) throws Exception {
 		return getCell(location.getX(), location.getY());
 	}
 	/**
@@ -168,7 +168,7 @@ public class Grid {
 	 * @return the cell at given x,y coordinates
 	 * @throws Exception
 	 */
-	public Cell getCell(int x, int y) throws Exception {
+	protected Cell getCell(int x, int y) throws Exception {
 		// TODO create custom exception
 		if (isInBounds(x, y)) {
 			return grid[y][x];
@@ -182,7 +182,7 @@ public class Grid {
 	 * @param location
 	 * @return true if the location isInBounds()
 	 */
-	public boolean isInBounds(Vector location) {
+	protected boolean isInBounds(Vector location) {
 		return isInBounds(location.getX(), location.getY());
 	}
 	/**
@@ -194,7 +194,7 @@ public class Grid {
 	 * 		   false if y is lower than 0 or bigger then or equal to height of the grid.
 	 * 		   otherwise return true.
 	 */
-	public boolean isInBounds(int x, int y) {
+	protected boolean isInBounds(int x, int y) {
 		if (x < 0 || x >= getWidth()) {
 			return false;
 		}
