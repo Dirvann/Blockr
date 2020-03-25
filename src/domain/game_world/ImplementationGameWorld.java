@@ -2,9 +2,9 @@ package domain.game_world;
 
 import domain.game_world.cell.Cell;
 
-public class GameWorldImplementation implements GameWorldFacade{
+public class ImplementationGameWorld implements FacadeGameWorld{
 
-	public GameWorldImplementation() {};
+	public ImplementationGameWorld() {};
 	
 	@Override
 	public GameWorld makeGameWorld(Grid grid, Vector startPosition) {

@@ -2,7 +2,7 @@ package domain.game_world;
 
 import domain.game_world.cell.Cell;
 
-public interface GameWorldFacade {
+public interface FacadeGameWorld {
 	
 	public GameWorld makeGameWorld(Grid grid, Vector startPosition);
 	public GameWorld makeStandardEmptyGameWorld();
