@@ -68,7 +68,7 @@ public class GameController {
 	}
 	
 	public void resetWorld() {
-		gameWorld.resetWorld();
+		gameWorld.resetGameWorld();
 	}
 	
 	

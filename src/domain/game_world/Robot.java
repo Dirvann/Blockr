@@ -13,7 +13,7 @@ public class Robot {
 	 * @param location
 	 * @param direction
 	 */
-	public Robot(Vector location, Direction direction) {
+	protected Robot(Vector location, Direction direction) {
 		this.setLocation(location);
 		this.setDirection(direction);
 	}
@@ -23,7 +23,7 @@ public class Robot {
 	 * @param location
 	 * @param direction
 	 */
-	public Robot(Vector location) {
+	protected Robot(Vector location) {
 		this(location, Direction.UP);
 	}
 	/**
@@ -33,7 +33,7 @@ public class Robot {
 	 * @param location
 	 * @param direction
 	 */
-	public Robot(Robot other) {
+	protected Robot(Robot other) {
 		this(other.getLocation(), other.getDirection());
 	}
 	/**
@@ -42,7 +42,7 @@ public class Robot {
 	 * @param x
 	 * @param y
 	 */
-	public Robot(int x, int y) {
+	protected Robot(int x, int y) {
 		this(new Vector(x, y));
 	}
 	
@@ -51,7 +51,7 @@ public class Robot {
 	 * 
 	 * @return location of the robot.
 	 */
-	public Vector getLocation() {
+	protected Vector getLocation() {
 		return location;
 	}
 	/**
@@ -59,7 +59,7 @@ public class Robot {
 	 * 
 	 * @param location
 	 */
-	public void setLocation(Vector location) {
+	protected void setLocation(Vector location) {
 		this.location = location;
 	}
 	/**
@@ -67,7 +67,7 @@ public class Robot {
 	 * 
 	 * @return direction of the robot.
 	 */
-	public Direction getDirection() {
+	protected Direction getDirection() {
 		return direction;
 	}
 	/**
@@ -75,7 +75,7 @@ public class Robot {
 	 * 
 	 * @param direction
 	 */
-	public void setDirection(Direction direction) {
+	protected void setDirection(Direction direction) {
 		this.direction = direction;
 	}
 	
@@ -87,7 +87,7 @@ public class Robot {
 	 * @throws Exception
 	 * 		   If the given location is not in bounds.
 	 */
-	public Vector getPositionInFront() throws Exception {
+	protected Vector getPositionInFront() throws Exception {
 		switch (this.direction) {
 			case UP:
 				return new Vector(location.getX(),location.getY()-1);
@@ -108,7 +108,7 @@ public class Robot {
 	 * if the location in front of the robot is a wall or not inside of the gird,
 	 * then the location is set to the current location.
 	 */
-	public void stepForwards() {
+	protected void stepForwards() {
 		try {
 			Vector positionInFront = getPositionInFront();
 			setLocation(positionInFront);
@@ -120,7 +120,7 @@ public class Robot {
 	/**
 	 * Set the direction of the robot to the direction to the left of the current direction.
 	 */
-	public void turnLeft() {
+	protected void turnLeft() {
 		switch (getDirection()) {
 			case DOWN:
 				setDirection(Direction.RIGHT);
@@ -145,7 +145,7 @@ public class Robot {
 	/**
 	 * Set the direction of the robot to the direction to the right of the current direction.
 	 */
-	public void turnRight() {
+	protected void turnRight() {
 		switch (getDirection()) {
 			case DOWN:
 				setDirection(Direction.LEFT);
