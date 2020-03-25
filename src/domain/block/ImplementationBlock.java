@@ -1,8 +1,8 @@
 package domain.block;
 
-class Implementation implements FacadeBlock{
+class ImplementationBlock implements FacadeBlock{
 	
-	protected Implementation() {};
+	protected ImplementationBlock() {};
 
 	@Override
 	public Block makeIfBlock() {

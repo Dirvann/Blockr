@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import domain.GameController;
 import domain.block.Block;
-import domain.block.Implementation;
+import domain.block.ImplementationBlock;
 import domain.game_world.Direction;
 import domain.game_world.GameWorld;
 import domain.game_world.Grid;
@@ -21,7 +21,7 @@ import domain.game_world.cell.Wall;
 class UseCase3 {
 	// Escape = gameController.resetWorld();
 	
-	static Implementation fi = new Implementation();
+	static ImplementationBlock fi = new ImplementationBlock();
 	static GameController gameController;
 	static GameWorld gameWorld;
 	static Grid testGrid;

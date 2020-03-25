@@ -18,7 +18,7 @@ import domain.block.ActionBlock;
 import domain.block.Block;
 import domain.block.ChainConditionBlock;
 import domain.block.ConditionBlock;
-import domain.block.Implementation;
+import domain.block.ImplementationBlock;
 import domain.block.MoveForward;
 import domain.block.SequenceBlock;
 import domain.block.SingleSurroundingBlock;
@@ -58,7 +58,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 	GameController gameController;
 	PalettePresentation paletteP;
 	ProgramAreaPresentation programAreaP;
-	Implementation GA; // GameInterface
+	ImplementationBlock GA; // GameInterface
 
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Blockr");
@@ -72,7 +72,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 
 	public Presentation() {
 
-		GA = new Implementation();
+		GA = new ImplementationBlock();
 
 		gameController = GA.makeGameController();
 		paletteP = new PalettePresentation();

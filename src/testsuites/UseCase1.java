@@ -15,7 +15,7 @@ import javax.swing.WindowConstants;
 import org.junit.jupiter.api.Test;
 
 import domain.GameController;
-import domain.block.Implementation;
+import domain.block.ImplementationBlock;
 import domain.game_world.GameWorld;
 import domain.game_world.Vector;
 import presentation.PalettePresentation;
