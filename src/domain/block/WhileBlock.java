@@ -31,4 +31,9 @@ class WhileBlock extends SingleSurroundingBlock {
 		return "While";
 	}
 
+	@Override
+	protected SequenceBlock getNextAfterLoop() {
+		return this;
+	}
+
 }

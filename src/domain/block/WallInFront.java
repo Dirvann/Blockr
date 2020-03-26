@@ -1,7 +1,6 @@
 package domain.block;
 
 import domain.GameController;
-import domain.game_world.Vector;
 
 class WallInFront extends SingleConditionBlock {
 	
@@ -16,7 +15,7 @@ class WallInFront extends SingleConditionBlock {
 			return false;
 		}		
 		else
-			return gameController.getGameWorld().robotWallInFront();
+			return gameController.robotWallInFront();
 	}
 
 	@Override
@@ -26,13 +25,7 @@ class WallInFront extends SingleConditionBlock {
 
 	@Override
 	protected String getName() {
-		// TODO Auto-generated method stub
 		return "Wall In Front";
 	}
-
-	protected void setConnectedBlockPositionRecursivelyByDifference(Vector deltaPos) {
-		// Intentionally blank
-	}
-	
 	
 }

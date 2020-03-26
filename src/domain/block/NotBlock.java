@@ -10,10 +10,10 @@ class NotBlock extends ChainConditionBlock {
 	}
 
 	protected boolean evaluate(GameController gamecontroller) {
-		if (this.getNextCondition() == null) {
+		if (!this.isValidCondition()) {
 			return false;
 		}
-		return !this.getNextCondition().evaluate(gamecontroller);
+		return !this.next.evaluate(gamecontroller);
 	}
 
 	@Override
@@ -23,7 +23,6 @@ class NotBlock extends ChainConditionBlock {
 
 	@Override
 	protected String getName() {
-		// TODO Auto-generated method stub
 		return "Not";
 	}
 }

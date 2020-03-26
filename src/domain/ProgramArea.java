@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.block.Block;
-import domain.block.SequenceBlock;
-import domain.block.SurroundingBlock;
-import domain.block.block_types.*;
+import domain.block.ImplementationBlock;
 
 
 public class ProgramArea {
 	
 	private List<Block> topLevelBlocks;
 	private Block nextToExecute = null;
+	private ImplementationBlock blockFunctions = new ImplementationBlock();
 	
 	/**
 	 * Creates a new ProgramArea
@@ -37,13 +36,7 @@ public class ProgramArea {
 		if (nbTopLevelBlocks() == 1) {
 			Block topLevelBlock = topLevelBlocks.get(0);
 
-			if (topLevelBlock instanceof SurroundingBlock) {
-				return ((SurroundingBlock) topLevelBlock).hasValidCondition();
-			} else if (topLevelBlock instanceof SequenceBlock) {
-				return true;
-			} else {
-				return false;
-			}
+			return blockFunctions.isValidStartingBlock(topLevelBlock);
 		} else {
 			return false;
 		}
@@ -81,7 +74,7 @@ public class ProgramArea {
 	 */
 	public void executeNextBlock(GameController gameController) {
 		try {
-			nextToExecute = nextToExecute.execute(gameController);
+			nextToExecute = blockFunctions.execute(nextToExecute, gameController);
 		} catch (Exception e) {
 			System.out.println("Execution of next block failed in ProgramArea");
 			e.printStackTrace();

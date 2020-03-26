@@ -25,13 +25,13 @@ public class SingleConditionBlockPresentation extends PresentationBlock<SingleCo
 		g.drawString(getPresentationName(),pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
 	}
 
-	@Override
-	public PresentationBlock<SingleConditionBlock> getNewBlockOfThisType() {
-		SingleConditionBlock block =  (SingleConditionBlock) getBlock().getNewBlockOfThisType();
-		SingleConditionBlockPresentation blockPresentation = new SingleConditionBlockPresentation(getPosition(), block);
-		block.setPresentationBlock(blockPresentation);
-		return blockPresentation;
-	}
+//	@Override
+//	public PresentationBlock<SingleConditionBlock> getNewBlockOfThisType() {
+//		SingleConditionBlock block =  (SingleConditionBlock) getBlock().getNewBlockOfThisType();
+//		SingleConditionBlockPresentation blockPresentation = new SingleConditionBlockPresentation(getPosition(), block);
+//		block.setPresentationBlock(blockPresentation);
+//		return blockPresentation;
+//	}
 
 	
 	@Override
@@ -49,11 +49,6 @@ public class SingleConditionBlockPresentation extends PresentationBlock<SingleCo
 	@Override
 	public List<Vector> getReceivingSnapPoints() {
 		return new ArrayList<Vector>();	
-	}
-
-	@Override
-	public boolean snap(PresentationBlock<?> b) {
-		return false;
 	}
 
 }

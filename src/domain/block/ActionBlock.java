@@ -1,11 +1,9 @@
 package domain.block;
 
 import domain.GameController;
-import domain.game_world.Vector;
 import presentation.ProgramAreaPresentation;
-import presentation.block.ActionBlockPresentation;
 
-abstract class ActionBlock extends SequenceBlock{
+public abstract class ActionBlock extends SequenceBlock{
 	
 	abstract protected void performAction(GameController gameController);
 	

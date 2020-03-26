@@ -3,18 +3,17 @@ package domain.block;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class SurroundingBlock extends SequenceBlock{	
-	
+public abstract class SurroundingBlock extends SequenceBlock {
+
 	protected ConditionBlock condition = null;
 	protected SequenceBlock bodyBlock = null;
-
 
 	/**
 	 * 
 	 * @param block Sets this block as first (of a sequence) under the if statement.
 	 */
 	protected void setBodyBlock(SequenceBlock block) {
-		if(this.bodyBlock != null) {
+		if (this.bodyBlock != null) {
 			SequenceBlock last = block;
 			while (last.getNextBlock() != null) {
 				last = last.getNextBlock();
@@ -23,6 +22,7 @@ abstract class SurroundingBlock extends SequenceBlock{
 		}
 		this.bodyBlock = block;
 		block.setSurroundingBlock(this);
+		block.previous = null;
 
 	}
 
@@ -62,70 +62,48 @@ abstract class SurroundingBlock extends SequenceBlock{
 	 */
 	protected void setConditionBlock(ConditionBlock block) {
 		block.setSurroundingBlock(this);
-		if (this.condition != null) {
-			ConditionBlock last = block;
-			while (last.getNextCondition() != null) 
-				last = last.getNextCondition();
-			getConditionBlock().setPrevious(last);
-			last.setNextCondition(getConditionBlock());
-		}
+		block.getLastBlock().setNextBlock(condition);
 		condition = block;
-		
+
 	}
 
 	/**
 	 * 
-	 * @ removes the condition block and sets this to null.
+	 * @ removes the condition block and sets this to null. The surroundingBlock of
+	 * the condition will be null too.
 	 */
 	protected void removeConditionBlock() {
-		if (condition != null) 
+		if (condition != null)
 			condition.setSurroundingBlock(null);
 		this.condition = null;
-		
+
 	}
-	
+
 	protected boolean hasValidCondition() {
-		if (this.getConditionBlock() == null) {
+		if (this.condition == null) {
 			return false;
 		} else {
-			return this.getConditionBlock().isValidCondition();
+			return this.condition.isValidCondition();
 		}
 	}
 
-	protected SequenceBlock getNextAfterLoop() {
-		return this;
-		
-	}
-	
+	/**
+	 * 
+	 * @return The block that needs to be executed or checked after the body has
+	 *         been executed.
+	 */
+	protected abstract SequenceBlock getNextAfterLoop();
+
 	@Override
 	protected List<Block> getAllNextBlocks() {
 		List<Block> l = new ArrayList<Block>();
-		
+
 		l.addAll(super.getAllNextBlocks());
-		
-		if (this.getBodyBlock() != null)
-			l.addAll(getBodyBlock().getAllNextBlocks());
-		
+
+		if (this.bodyBlock != null)
+			l.addAll(bodyBlock.getAllNextBlocks());
+
 		return l;
-	}
-	
-	protected void connectBodyBlock(SequenceBlock b) {
-		if(this.bodyBlock != null) {
-			b.getLastBlock().setNextBlock(this.bodyBlock);
-		}
-		this.bodyBlock = b;
-		b.setSurroundingBlock(this);
-	}
-	
-	protected void connectConditionBlock(ConditionBlock b) {
-		if(condition != null) {
-			ConditionBlock last = b.getLastBlock();
-			if(last instanceof ChainConditionBlock) {
-				last.setNextCondition(condition);
-			}
-		}
-		this.condition = b;
-		b.setSurroundingBlock(this);
 	}
 
 }

@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import domain.block.ChainConditionBlock;
-import domain.block.ConditionBlock;
 import domain.game_world.Vector;
 
 public class ChainConditionBlockPresentation extends PresentationBlock<ChainConditionBlock> {
@@ -33,16 +32,16 @@ public class ChainConditionBlockPresentation extends PresentationBlock<ChainCond
 		g.drawString(getPresentationName(),pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
 	}
 
-	@Override
-	public PresentationBlock<ChainConditionBlock> getNewBlockOfThisType() {
-		ChainConditionBlock block = (ChainConditionBlock) getBlock().getNewBlockOfThisType();
-		ChainConditionBlockPresentation blockPresentation= new ChainConditionBlockPresentation(getPosition(), block);
-		block.setPresentationBlock(blockPresentation);
-		if (block.getPresentationBlock() == null) {
-			System.out.println("block.getPresentationBlock() == null in chainConditionBlockPresentation");
-		}
-		return blockPresentation;
-	}
+//	@Override
+//	public PresentationBlock<ChainConditionBlock> getNewBlockOfThisType() {
+//		ChainConditionBlock block = (ChainConditionBlock) getBlock().getNewBlockOfThisType();
+//		ChainConditionBlockPresentation blockPresentation= new ChainConditionBlockPresentation(getPosition(), block);
+//		block.setPresentationBlock(blockPresentation);
+//		if (block.getPresentationBlock() == null) {
+//			System.out.println("block.getPresentationBlock() == null in chainConditionBlockPresentation");
+//		}
+//		return blockPresentation;
+//	}
 
 	
 	@Override
@@ -61,15 +60,5 @@ public class ChainConditionBlockPresentation extends PresentationBlock<ChainCond
 	public List<Vector> getReceivingSnapPoints() {
 		Vector pos = getPosition();
 		return Arrays.asList(new Vector(pos.getX() + (int)(getBlockWidth()), pos.getY() + (int)(getBlockHeight()/2)));
-	}
-
-	@Override
-	public boolean snap(PresentationBlock<?> b) {
-		if(b.getBlock() instanceof ConditionBlock 
-				&&  b.getGivingSnapPoint().distanceTo(getReceivingSnapPoints().get(0)) <= getSnapDistance()) {
-			getBlock().connectTo(b.getBlock());
-			return true;
-		}
-		return false;
 	}
 }

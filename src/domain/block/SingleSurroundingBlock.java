@@ -2,7 +2,7 @@ package domain.block;
 
 import presentation.ProgramAreaPresentation;
 
-abstract class SingleSurroundingBlock extends SurroundingBlock {
+public abstract class SingleSurroundingBlock extends SurroundingBlock {
 	
 	protected SingleSurroundingBlock() {
 

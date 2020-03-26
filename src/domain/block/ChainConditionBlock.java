@@ -1,67 +1,90 @@
 package domain.block;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import presentation.ProgramAreaPresentation;
 
-abstract class ChainConditionBlock extends ConditionBlock{
-	
-	protected ChainConditionBlock() {
+public abstract class ChainConditionBlock extends ConditionBlock {
 
-	}
-	
-	/**
-	 * 
-	 * @param block The block which gets connected to the current one.
-	 */
-	protected void addCondition(ConditionBlock block) {
-		block.setPrevious(this);
-		
-		ConditionBlock last = block;
-		while(last.getNextCondition() != null) {
-			last = last.getNextCondition();
-		}
-		last.setNextCondition(getNextCondition());
-		if (getNextCondition() != null) getNextCondition().setPrevious(last);
-		setNextCondition(block);
-	}
-	
-	protected void removeNextCondition() {
-		if (getNextCondition() != null) {
-			getNextCondition().setPrevious(null);
-			setNextCondition(null);
-		}
-	}
+	protected ConditionBlock next = null;
 
+	@Override
 	protected boolean isValidCondition() {
-		if (getNextCondition() != null)
-			return getNextCondition().isValidCondition();
+		if (next != null)
+			return next.isValidCondition();
 		return false;
 	}
-	
 
-	
+	@Override
 	protected void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP) {
 		programAreaP.removeBlock(getPresentationBlock());
 		programAreaP.increaseBlocksLeft();
-		
-		Block connectedCondition = this.getNextCondition();
+
+		Block connectedCondition = this.getNextBlock();
 		if (connectedCondition != null) {
 			connectedCondition.removeFromProgramAreaPresentationRecursively(programAreaP);
 		}
 	}
-	
+
+	// Function that controls and chacks the connections
+	// ___________________________________________________________________________________________//
 	@Override
-	protected void connectTo(Block block) {
-		if(!(block instanceof ConditionBlock)) return;
-		ConditionBlock b = (ConditionBlock) block;
-		if(next != null) {
-			ConditionBlock last = b.getLastBlock();
-			if(last instanceof ChainConditionBlock) {
-				last.setNextCondition(next);
-			} else if(last instanceof SingleConditionBlock) {
-				next.setPrevious(null);
+	protected boolean setNextBlock(Block block) {
+		if (block == null) {
+			removeNextBlock();
+			return true;
+		}
+		if (!(block instanceof ConditionBlock))
+			return false;
+		
+		block.setSurroundingBlock(surroundingBlock);
+		ConditionBlock cBlock = (ConditionBlock) block;
+		
+		// put this.next after block.last
+		if (this.next != null) {
+			ConditionBlock next = this.next;
+			ConditionBlock last = cBlock.getLastBlock();
+			next.disconnect();
+			if (last instanceof ChainConditionBlock) {
+				((ChainConditionBlock) last).next = next;
+				next.previous = (ChainConditionBlock) last;
 			}
 		}
-		setNextCondition(b);
+		this.next = cBlock;
+		cBlock.previous = this;
+		return true;
+	}
+
+	@Override
+	protected Block getNextBlock() {
+		return next;
+	}
+
+	@Override
+	protected ConditionBlock getLastBlock() {
+		if (next == null) {
+			return this;
+		} else {
+			return next.getLastBlock();
+		}
+	}
+
+	@Override
+	protected List<Block> getAllNextBlocks() {
+		List<Block> l = new ArrayList<Block>();
+
+		l.add(this);
+		if (this.getNextBlock() != null)
+			l.addAll(getNextBlock().getAllNextBlocks());
+
+		return l;
+	}
+
+	@Override
+	protected void removeNextBlock() {
+		this.next.disconnect();
+
 	}
 
 }

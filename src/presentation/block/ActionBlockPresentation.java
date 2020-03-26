@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import domain.block.ActionBlock;
-import domain.block.SequenceBlock;
 import domain.game_world.Vector;
 
 public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
@@ -32,19 +31,19 @@ public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
 		g.drawString(getPresentationName(),pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
 	}
 
-	@Override
-	public PresentationBlock<ActionBlock> getNewBlockOfThisType() {
-		// TODO Auto-generated method stub
-		ActionBlock block = (ActionBlock) getBlock().getNewBlockOfThisType();
-		ActionBlockPresentation blockPresentation = new ActionBlockPresentation(getPosition(), block);
-		
-		
-		block.setPresentationBlock(blockPresentation);
-		if (block.getPresentationBlock() == null) {
-			System.out.println("block.getPresentationBlock() == null in actionBlockPresentation");
-		}
-		return blockPresentation;
-	}
+//	@Override
+//	public PresentationBlock<ActionBlock> getNewBlockOfThisType() {
+//		// TODO Auto-generated method stub
+//		ActionBlock block = (ActionBlock) getBlock().getNewBlockOfThisType();
+//		ActionBlockPresentation blockPresentation = new ActionBlockPresentation(getPosition(), block);
+//		
+//		
+//		block.setPresentationBlock(blockPresentation);
+//		if (block.getPresentationBlock() == null) {
+//			System.out.println("block.getPresentationBlock() == null in actionBlockPresentation");
+//		}
+//		return blockPresentation;
+//	}
 
 	
 	@Override
@@ -63,16 +62,6 @@ public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
 	public List<Vector> getReceivingSnapPoints() {
 		Vector pos = getPosition();
 		return Arrays.asList(new Vector(pos.getX() + (int)(getBlockWidth()/2), pos.getY() + getBlockHeight()));
-	}
-
-	@Override
-	public boolean snap(PresentationBlock<?> b) {
-		if(b.getBlock() instanceof SequenceBlock 
-				&& b.getGivingSnapPoint().distanceTo(getReceivingSnapPoints().get(0)) <= getSnapDistance()) {
-			getBlock().connectTo(b.getBlock());
-			return true;
-		}
-		return false;
 	}
 
 }
