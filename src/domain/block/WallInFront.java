@@ -18,7 +18,7 @@ public class WallInFront extends SingleConditionBlock {
 			return false;
 		}		
 		else
-			return gameController.getGameWorld().robotWallInFront();
+			return gameController.IGW.robotWallInFront();
 	}
 
 	@Override

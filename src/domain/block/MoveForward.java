@@ -15,7 +15,7 @@ public class MoveForward extends ActionBlock {
 		if (gameController == null) 
 			System.out.println("Move Forward");
 		else
-			gameController.getGameWorld().robotStepForwards();		
+			gameController.IGW.robotStepForwards();		
 	}
 
 	@Override

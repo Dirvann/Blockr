@@ -1,16 +1,20 @@
 package domain;
 
 import domain.block.block_types.Block;
+import domain.block.ImplementationBlock;
 import domain.game_world.GameWorld;
+import domain.game_world.ImplementationGameWorld;
 
 public class GameController {
-
+	
+	public ImplementationGameWorld IGW = new ImplementationGameWorld();
+	public ImplementationBlock IBL = new ImplementationBlock();
 	private ProgramArea programArea;
 	private GameWorld gameWorld;
 	
 	public GameController() {
 		this.programArea = new ProgramArea();
-		this.gameWorld = new GameWorld();
+		this.gameWorld = IGW.makeStandardEmptyGameWorld();
 	}
 	
 	public GameController(GameWorld gameWorld) {
@@ -68,7 +72,7 @@ public class GameController {
 	}
 	
 	public void resetWorld() {
-		gameWorld.resetWorld();
+		gameWorld.resetGameWorld();
 	}
 	
 	

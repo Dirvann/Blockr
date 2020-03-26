@@ -16,7 +16,7 @@ public class TurnLeft extends ActionBlock {
 		if (gameController == null) 
 			System.out.println("Turn Left");
 		else
-			gameController.getGameWorld().robotTurnLeft();
+			gameController.IGW.robotTurnLeft();
 	}
 
 	@Override

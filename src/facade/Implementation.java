@@ -1,5 +1,6 @@
 package facade;
 
+<<<<<<< Updated upstream:src/facade/Implementation.java
 import domain.GameController;
 import domain.block.IfBlock;
 import domain.block.MoveForward;
@@ -20,6 +21,11 @@ import domain.game_world.Vector;
 public class Implementation implements Facade{
 	
 	public Implementation() {};
+=======
+public class ImplementationBlock implements FacadeBlock{
+	
+	public ImplementationBlock() {};
+>>>>>>> Stashed changes:src/domain/block/ImplementationBlock.java
 
 	@Override
 	public Block makeIfBlock() {
