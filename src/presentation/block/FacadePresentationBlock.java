@@ -1,5 +1,7 @@
 package presentation.block;
 
+import java.awt.Graphics;
+
 import domain.block.ActionBlock;
 import domain.block.Block;
 import domain.block.ChainConditionBlock;
@@ -7,7 +9,7 @@ import domain.block.SingleConditionBlock;
 import domain.block.SingleSurroundingBlock;
 import domain.game_world.Vector;
 
-public interface PresentationBlockInterface {
+public interface FacadePresentationBlock {
 	
 	// Make The Blocks:
 		// _________________________________________________________________________________________________________\\
@@ -57,12 +59,24 @@ public interface PresentationBlockInterface {
 		 */
 		public PresentationBlock<SingleSurroundingBlock> makeWhileBlock(Vector pos);
 
-		/**
-		 * 
-		 * @param firstBlock  The block where the secondBlock needs to get connected to.
-		 * @param secondBlock The block which gets connected to the firstBlock
-		 * @Post The secondBlock is connected to the first block.
-		 */
+		
+		public boolean collidesWithPosition(Vector pos, PresentationBlock<?> block);
+		
+		public void draw(Graphics g, PresentationBlock<?> block);
+		
+		public void highLight(PresentationBlock<?> block, Graphics g);
+		
+		public Block getBlock(PresentationBlock<?> block);
+		
+		public PresentationBlock<?> makeCopy(PresentationBlock<?> block);
+
+		public boolean snap(PresentationBlock<?> firstBlock, PresentationBlock<?> secondBlock);
+		
+		public void setPosition(PresentationBlock<?> block, Vector position);
+		
+		public Vector getPosition(PresentationBlock<?> block);
+		
+		public void addToPosition(PresentationBlock<?> block, Vector deltaPos);
 		
 		//______________________________________________________________________________________//
 		

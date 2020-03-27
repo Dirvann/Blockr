@@ -173,7 +173,7 @@ public class Grid {
 		if (isInBounds(x, y)) {
 			return grid[y][x];
 		} else {
-			throw new Exception();
+			throw new Exception("Out of Bounds");
 		}
 	}
 	/**

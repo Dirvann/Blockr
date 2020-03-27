@@ -17,7 +17,7 @@ class NotBlock extends ChainConditionBlock {
 	}
 
 	@Override
-	protected Block getNewBlockOfThisType() {
+	protected NotBlock getNewBlockOfThisType() {
 		return new NotBlock();
 	}
 

@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import domain.block.ImplementationBlock;
 import domain.block.SingleConditionBlock;
 import domain.game_world.Vector;
 
@@ -49,6 +50,12 @@ public class SingleConditionBlockPresentation extends PresentationBlock<SingleCo
 	@Override
 	public List<Vector> getReceivingSnapPoints() {
 		return new ArrayList<Vector>();	
+	}
+
+	@Override
+	protected PresentationBlock<SingleConditionBlock> makeCopyWithoutConnections() {
+		ImplementationBlock BF = new ImplementationBlock();
+		return new SingleConditionBlockPresentation(getPosition(), (SingleConditionBlock) BF.makeNewBlockOfThisType(getBlock())) ;
 	}
 
 }

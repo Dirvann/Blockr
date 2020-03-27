@@ -17,7 +17,7 @@ class MoveForward extends ActionBlock {
 	}
 
 	@Override
-	protected Block getNewBlockOfThisType() {
+	protected MoveForward getNewBlockOfThisType() {
 		return new MoveForward();
 	}
 

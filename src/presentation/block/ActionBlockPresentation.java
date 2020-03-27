@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import domain.block.ActionBlock;
+import domain.block.ImplementationBlock;
 import domain.game_world.Vector;
 
 public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
@@ -62,6 +63,12 @@ public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
 	public List<Vector> getReceivingSnapPoints() {
 		Vector pos = getPosition();
 		return Arrays.asList(new Vector(pos.getX() + (int)(getBlockWidth()/2), pos.getY() + getBlockHeight()));
+	}
+
+	@Override
+	protected PresentationBlock<ActionBlock> makeCopyWithoutConnections() {
+		ImplementationBlock BF = new ImplementationBlock();
+		return new ActionBlockPresentation(getPosition(), (ActionBlock) BF.makeNewBlockOfThisType(getBlock())) ;
 	}
 
 }

@@ -21,13 +21,12 @@ class WhileBlock extends SingleSurroundingBlock {
 	}
 
 	@Override
-	protected Block getNewBlockOfThisType() {
+	protected WhileBlock getNewBlockOfThisType() {
 		return new WhileBlock();
 	}
 
 	@Override
 	protected String getName() {
-		// TODO Auto-generated method stub
 		return "While";
 	}
 

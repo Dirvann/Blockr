@@ -19,7 +19,7 @@ class WallInFront extends SingleConditionBlock {
 	}
 
 	@Override
-	protected Block getNewBlockOfThisType() {
+	protected WallInFront getNewBlockOfThisType() {
 		return new WallInFront();
 	}
 

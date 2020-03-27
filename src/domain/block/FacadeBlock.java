@@ -1,5 +1,8 @@
 package domain.block;
 
+
+import java.util.List;
+
 import domain.GameController;
 import presentation.block.PresentationBlock;
 
@@ -148,7 +151,7 @@ public interface FacadeBlock {
 	 * @Post every necessary command in the block is executed.
 	 * @throws Exception if a block in the sequence is not executable.
 	 */
-	public Block execute(Block block, GameController gameController);
+	public Block execute(Block block, GameController gameController) throws Exception;
 	
 
 	//________________________________________________________________________________________________//
@@ -173,4 +176,12 @@ public interface FacadeBlock {
 	 * @return the name of the block.
 	 */
 	public String getName(Block block);
+	
+	/**
+	 * 
+	 * @param block
+	 * @return All the blocks connected beneath or to the right of this block.
+	 */
+	public List<Block> getAllNextBlocks(Block block);
+	
 }

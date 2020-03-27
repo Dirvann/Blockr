@@ -70,25 +70,25 @@ public class GameController {
 	}
 
 	public void resetWorld() {
-		gameWorldFunctions.resetGameWorld();
+		gameWorldFunctions.resetGameWorld(gameWorld);
 	}
 
 	public void robotTurnLeft() {
-		gameWorldFunctions.robotTurnLeft();
+		gameWorldFunctions.robotTurnLeft(gameWorld);
 
 	}
 
 	public void robotTurnRight() {
-		gameWorldFunctions.robotTurnRight();
+		gameWorldFunctions.robotTurnRight(gameWorld);
 
 	}
 
 	public boolean robotWallInFront() {
-		return gameWorldFunctions.robotWallInFront();
+		return gameWorldFunctions.robotWallInFront(gameWorld);
 	}
 
 	public void robotStepForwards() {
-		gameWorldFunctions.robotStepForwards();
+		gameWorldFunctions.robotStepForwards(gameWorld);
 	}
 
 }

@@ -1,5 +1,7 @@
 package domain.block;
 
+import java.util.List;
+
 import domain.GameController;
 import presentation.block.PresentationBlock;
 
@@ -70,57 +72,53 @@ public class ImplementationBlock implements FacadeBlock{
 	}
 
 	@Override
-	public Block execute(Block block, GameController gameController) {
-		// TODO Auto-generated method stub
-		return null;
+	public Block execute(Block block, GameController gameController) throws Exception {
+		return block.execute(gameController);
 	}
 
 	@Override
 	public Block getNextBlock(Block block) {
-		// TODO Auto-generated method stub
-		return null;
+		return block.getNextBlock();
 	}
 
 	@Override
 	public Block getPreviousBlock(Block block) {
-		// TODO Auto-generated method stub
-		return null;
+		return block.getPreviousBlock();
 	}
 
 	@Override
 	public ConditionBlock getConditionBlock(SurroundingBlock block) {
-		// TODO Auto-generated method stub
-		return null;
+		return block.getConditionBlock();
 	}
 
 	@Override
 	public SequenceBlock getBodyBlock(SurroundingBlock block) {
-		// TODO Auto-generated method stub
-		return null;
+		return block.getBodyBlock();
 	}
 
 	@Override
 	public PresentationBlock<?> getPresentationBlock(Block block) {
-		// TODO Auto-generated method stub
-		return null;
+		return block.getPresentationBlock();
 	}
 
 	@Override
 	public void setPresentationBlock(Block block, PresentationBlock<?> presentationBlock) {
-		// TODO Auto-generated method stub
-		
+		block.setPresentationBlock(presentationBlock);		
 	}
 
 	@Override
 	public String getName(Block block) {
-		// TODO Auto-generated method stub
-		return null;
+		return block.getName();
 	}
 
 	@Override
 	public Block makeNewBlockOfThisType(Block block) {
-		// TODO Auto-generated method stub
-		return null;
+		return block.getNewBlockOfThisType();
+	}
+
+	@Override
+	public List<Block> getAllNextBlocks(Block block) {
+		return block.getAllNextBlocks();
 	}
 
 

@@ -34,6 +34,7 @@ public abstract class PresentationBlock<T extends Block> {
 	protected PresentationBlock(Vector pos, T block) {
 		this.position = pos;
 		this.block = block;
+		blockFunctions.setPresentationBlock(block, this);
 
 	}
 
@@ -54,7 +55,7 @@ public abstract class PresentationBlock<T extends Block> {
 	protected Vector getPosition() {
 		// check if it has a previous block
 		if (blockFunctions.getPreviousBlock(getBlock()) == null) {
-			return this.position;
+			return new Vector(position.getX(), position.getY());
 		}
 
 		// get the position of the block from the upper block
@@ -108,6 +109,11 @@ public abstract class PresentationBlock<T extends Block> {
 		return blockHeight;
 	}
 
+	/**
+	 * 
+	 * @param pos
+	 * @return Checks if the position is in the block
+	 */
 	protected boolean collidesWithPosition(Vector pos) {
 		if (pos.getX() > this.getPosition().getX() && pos.getX() < (getBlockWidth() + this.getPosition().getX())
 				&& pos.getY() > this.getPosition().getY()
@@ -172,14 +178,17 @@ public abstract class PresentationBlock<T extends Block> {
 	 * Check if the given block can snap into this presentationBlock
 	 * 
 	 * @param b
-	 * @return
+	 * @return true if b can connect to this block, false if not.
+	 * @Post b is connected to this if possible.
 	 */
-	public boolean snap(PresentationBlock<?> b) {
+	protected boolean snap(PresentationBlock<?> b) {
 		if (b.getGivingSnapPoint().distanceTo(getReceivingSnapPoints().get(0)) <= getSnapDistance()
 				&& blockFunctions.connect(b.getBlock(), getBlock())) {
 			return true;
 		}
 		return false;
 	}
+	
+	abstract protected PresentationBlock<T> makeCopyWithoutConnections(); 
 
 }

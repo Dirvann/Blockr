@@ -1,9 +1,11 @@
 package presentation.block;
 
+import java.awt.Graphics;
+
 import domain.block.*;
 import domain.game_world.Vector;
 
-public class ImplementationPresentationBlock implements PresentationBlockInterface{
+public class ImplementationPresentationBlock implements FacadePresentationBlock{
 	private ImplementationBlock BF = new ImplementationBlock();
 
 	@Override
@@ -53,6 +55,55 @@ public class ImplementationPresentationBlock implements PresentationBlockInterfa
 		ActionBlock block = BF.makeMoveForwardBlock();
 		PresentationBlock<ActionBlock> presentation = new ActionBlockPresentation(pos, block);
 		return presentation;
+	}
+
+	@Override
+	public boolean collidesWithPosition(Vector pos, PresentationBlock<?> block) {
+		return block.collidesWithPosition(pos);
+	}
+
+	@Override
+	public void draw(Graphics g, PresentationBlock<?> block) {
+		block.draw(g);
+		
+	}
+
+	@Override
+	public void highLight(PresentationBlock<?> block, Graphics g) {
+		block.highLight(g);
+		
+	}
+
+	@Override
+	public Block getBlock(PresentationBlock<?> block) {
+		return block.getBlock();
+	}
+
+	@Override
+	public PresentationBlock<?> makeCopy(PresentationBlock<?> block) {
+		return block.makeCopyWithoutConnections();
+	}
+
+	@Override
+	public boolean snap(PresentationBlock<?> firstBlock, PresentationBlock<?> secondBlock) {
+		return firstBlock.snap(secondBlock);
+	}
+
+	@Override
+	public void setPosition(PresentationBlock<?> block, Vector position) {
+		block.setPosition(position);
+		
+	}
+
+	@Override
+	public Vector getPosition(PresentationBlock<?> block) {
+		return block.getPosition();
+	}
+
+	@Override
+	public void addToPosition(PresentationBlock<?> block, Vector deltaPos) {
+		block.setPositionByDifference(deltaPos);
+		
 	}
 
 }

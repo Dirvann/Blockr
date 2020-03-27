@@ -1,6 +1,8 @@
 package domain.game_world;
 
 import domain.game_world.cell.Cell;
+import domain.game_world.cell.Goal;
+import domain.game_world.cell.Wall;
 
 public class ImplementationGameWorld implements FacadeGameWorld{
 
@@ -22,28 +24,28 @@ public class ImplementationGameWorld implements FacadeGameWorld{
 	}
 
 	@Override
-	public boolean robotWallInFront() {
-		return robotWallInFront();
+	public boolean robotWallInFront(GameWorld world) {
+		return world.robotWallInFront();
 	}
 
 	@Override
-	public boolean robotOnGoal() {
-		return robotOnGoal();
+	public boolean robotOnGoal(GameWorld world) {
+		return world.robotOnGoal();
 	}
 
 	@Override
-	public boolean robotStepForwards() {
-		return robotStepForwards();
+	public void robotStepForwards(GameWorld world) {
+		world.robotStepForwards();
 	}
 
 	@Override
-	public boolean robotTurnLeft() {
-		return robotTurnLeft();
+	public void robotTurnLeft(GameWorld world) {
+		world.robotTurnLeft();
 	}
 
 	@Override
-	public boolean robotTurnRight() {
-		return robotTurnRight();
+	public void robotTurnRight(GameWorld world) {
+		world.robotTurnRight();
 	}
 
 	@Override
@@ -62,9 +64,49 @@ public class ImplementationGameWorld implements FacadeGameWorld{
 	}
 
 	@Override
-	public void resetGameWorld() {
-		resetGameWorld();
+	public void resetGameWorld(GameWorld world) {
+		world.resetGameWorld();
 		
+	}
+
+	@Override
+	public Integer getGridWidth(GameWorld world) {
+		return world.getGrid().getHeight();
+	}
+
+	@Override
+	public Integer getGridHeight(GameWorld world) {
+		return world.getGrid().getHeight();
+	}
+
+	@Override
+	public boolean isWall(GameWorld world, Integer x, Integer y) {
+		try {
+			Cell cell = world.getGrid().getCell(x, y);
+			return (cell instanceof Wall);
+		} catch (Exception e) {
+			return true;
+		}
+	}
+
+	@Override
+	public boolean isGoal(GameWorld world, Integer x, Integer y) {
+		try {
+			Cell cell = world.getGrid().getCell(x, y);
+			return (cell instanceof Goal);
+		} catch (Exception e) {
+			return true;
+		}
+	}
+
+	@Override
+	public Vector getRobotLocation(GameWorld world) {
+		return world.getRobot().getLocation();
+	}
+
+	@Override
+	public Direction getRobotDirection(GameWorld world) {
+		return world.getRobot().getDirection();
 	}
 	
 

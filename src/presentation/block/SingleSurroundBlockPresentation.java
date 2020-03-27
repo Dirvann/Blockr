@@ -165,4 +165,10 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 		return false;
 	}
 
+	@Override
+	protected PresentationBlock<SingleSurroundingBlock> makeCopyWithoutConnections() {
+		ImplementationBlock BF = new ImplementationBlock();
+		return new SingleSurroundBlockPresentation(getPosition(), (SingleSurroundingBlock) BF.makeNewBlockOfThisType(getBlock())) ;
+	}
+
 }

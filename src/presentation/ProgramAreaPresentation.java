@@ -1,43 +1,56 @@
 package presentation;
 
 import java.awt.Graphics;
-import java.util.ArrayList;
 import java.util.List;
 
+import domain.ProgramArea;
+import domain.block.Block;
+import domain.block.ImplementationBlock;
 import domain.game_world.Vector;
+import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 
 public class ProgramAreaPresentation {
-
-	private List<PresentationBlock<?>> programAreaBlocks;
-	private int blocksLeft = 15;
 	
-	public ProgramAreaPresentation() {
-		programAreaBlocks = new ArrayList<PresentationBlock<?>>();
+	private int blocksLeft = 15;
+	private ImplementationPresentationBlock BFP = new ImplementationPresentationBlock();
+	private ImplementationBlock BF = new ImplementationBlock();
+	private ProgramArea programArea;
+	
+	public ProgramAreaPresentation(ProgramArea programArea) {
+		this.programArea = programArea;
 	}
 	
 	public void paint(Graphics g) {
-		for (PresentationBlock<?> pBlock: programAreaBlocks) {
-			pBlock.draw(g);
+		List<Block> programAreaBlocks = programArea.getAllBlocks();
+		for (Block pBlock: programAreaBlocks) {
+			BFP.draw(g, BF.getPresentationBlock(pBlock));
 		}
 	}
 	
-	public void addBlock(PresentationBlock<?> presentationCopy) {
-		programAreaBlocks.add(presentationCopy);
+	public void addBlock(PresentationBlock<?> pBlock) {		
+		Block block = BFP.getBlock(pBlock);
+		programArea.addTopLevelBlock(block);
+		blocksLeft -= BF.getAllNextBlocks(block).size();
 	}
 	
 	public void removeBlock(PresentationBlock<?> pBlock) {
-		programAreaBlocks.remove(pBlock);
-	}
-	
-	public void removeBlockRecursive(PresentationBlock pBlock) {
+		Block block = BFP.getBlock(pBlock);
+		BF.disconnect(BFP.getBlock(pBlock));
+		blocksLeft += BF.getAllNextBlocks(block).size();
 		
+		try {
+			programArea.removeTopLevelBlock(block);
+			System.out.println("a top-level block is removed");
+		} catch (Exception e) {
+			System.out.println("a non top-level block is removed");
+		}
 	}
 	
-	public PresentationBlock getBlockAtPosition(Vector position) {
-		for (PresentationBlock pBlock: programAreaBlocks) {
-			if (pBlock.collidesWithPosition(position)) {
-				return pBlock;
+	public PresentationBlock<?> getBlockAtPosition(Vector position) {
+		for (Block block: programArea.getAllBlocks()) {
+			if (BFP.collidesWithPosition(position, BF.getPresentationBlock(block))) {
+				return BF.getPresentationBlock(block);
 			}
 		}
 		
@@ -46,8 +59,8 @@ public class ProgramAreaPresentation {
 	
 	public boolean snapBlock(PresentationBlock<?> block){
 		
-		for (PresentationBlock<?> pBlock: programAreaBlocks) {
-			if (pBlock.snap(block)) {
+		for (Block blockListElement: programArea.getAllBlocks()) {
+			if (BFP.snap(BF.getPresentationBlock(blockListElement), block)) {
 				return true;
 			}
 		}

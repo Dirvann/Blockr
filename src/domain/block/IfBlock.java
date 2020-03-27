@@ -44,7 +44,7 @@ class IfBlock extends SingleSurroundingBlock {
 
 	
 	@Override
-	protected Block getNewBlockOfThisType() {
+	protected IfBlock getNewBlockOfThisType() {
 		return new IfBlock();
 	}
 

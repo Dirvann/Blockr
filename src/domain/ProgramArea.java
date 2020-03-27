@@ -144,7 +144,7 @@ public class ProgramArea {
 	public List<Block> getAllBlocks() {
 		List<Block> list = new ArrayList<Block>();
 		for(Block block: this.getTopBlocks()) {
-			list.addAll(block.getAllNextBlocks());
+			list.addAll(blockFunctions.getAllNextBlocks(block));
 		}
 		
 		return list;

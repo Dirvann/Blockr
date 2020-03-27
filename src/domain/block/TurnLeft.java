@@ -18,7 +18,7 @@ class TurnLeft extends ActionBlock {
 	}
 
 	@Override
-	protected Block getNewBlockOfThisType() {
+	protected TurnLeft getNewBlockOfThisType() {
 		return new TurnLeft();
 	}
 
