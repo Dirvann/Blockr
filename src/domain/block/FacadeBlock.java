@@ -1,6 +1,5 @@
 package domain.block;
 
-
 import java.util.List;
 
 import domain.GameController;
@@ -55,17 +54,17 @@ public interface FacadeBlock {
 	 *         body.
 	 */
 	public SingleSurroundingBlock makeWhileBlock();
-	
+
 	/**
 	 * 
 	 * @param block
 	 * @return A block of the same type with no connections at all.
 	 */
 	public Block makeNewBlockOfThisType(Block block);
-	
-	//________________________________________________________________________________________//
-	//Connection of the blocks
-	//________________________________________________________________________________________//
+
+	// ________________________________________________________________________________________//
+	// Connection of the blocks
+	// ________________________________________________________________________________________//
 
 	/**
 	 * 
@@ -104,21 +103,21 @@ public interface FacadeBlock {
 	 *       conditionBlock.
 	 */
 	public void setConditionBlock(SurroundingBlock surroundingBlock, ConditionBlock conditionBlock);
-	
+
 	/**
 	 * @param block
 	 * @return The block that is connected after this block (on the right side for
 	 *         conditionBlocks or on the down side of sequenceBlocks).
 	 */
 	public Block getNextBlock(Block block);
-	
+
 	/**
 	 * @param block
 	 * @return The block that is connected before this block (on the left side for
 	 *         conditionBlocks or on the upper side of sequenceBlocks).
 	 */
 	public Block getPreviousBlock(Block block);
-	
+
 	/**
 	 * 
 	 * @param block
@@ -126,24 +125,24 @@ public interface FacadeBlock {
 	 *         by block.next()).
 	 */
 	public ConditionBlock getConditionBlock(SurroundingBlock block);
-	
+
 	/**
 	 * 
 	 * @param block
 	 * @return The first block which is surrounded by this if block
 	 */
 	public SequenceBlock getBodyBlock(SurroundingBlock block);
-	
-	//________________________________________________________________________________________________//
-	//execution functions
-	//________________________________________________________________________________________________//
+
+	// ________________________________________________________________________________________________//
+	// execution functions
+	// ________________________________________________________________________________________________//
 	/**
 	 * 
 	 * @param block
 	 * @return True if block is a possible block to start the program with.
 	 */
 	public boolean isValidStartingBlock(Block block);
-	
+
 	/**
 	 * @param gameController
 	 * @param block
@@ -152,12 +151,11 @@ public interface FacadeBlock {
 	 * @throws Exception if a block in the sequence is not executable.
 	 */
 	public Block execute(Block block, GameController gameController) throws Exception;
-	
 
-	//________________________________________________________________________________________________//
-	//presentation functions
-	//________________________________________________________________________________________________//
-	
+	// ________________________________________________________________________________________________//
+	// presentation functions
+	// ________________________________________________________________________________________________//
+
 	/**
 	 * 
 	 * @return The presentation of this block. Returns null if none has been set.
@@ -169,19 +167,27 @@ public interface FacadeBlock {
 	 * @param presentationBlock The desired presentation for this Block.
 	 */
 	public void setPresentationBlock(Block block, PresentationBlock<?> presentationBlock);
-	
+
 	/**
 	 * 
 	 * @param block
 	 * @return the name of the block.
 	 */
 	public String getName(Block block);
-	
+
 	/**
 	 * 
 	 * @param block
 	 * @return All the blocks connected beneath or to the right of this block.
 	 */
 	public List<Block> getAllNextBlocks(Block block);
-	
+
+	/**
+	 * 
+	 * @param block
+	 * @return the surrounding block where block is positioned in or (in case block
+	 *         is a condition) connected to.
+	 */
+	public SurroundingBlock getSurroundingBlock(Block block);
+
 }

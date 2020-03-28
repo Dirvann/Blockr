@@ -31,9 +31,10 @@ public abstract class SequenceBlock extends Block {
 
 		sBlock.previous = this;
 
-		sBlock.getLastBlock().next = next;
+		SequenceBlock last = sBlock.getLastBlock();
+		last.next = next;
 		if (next != null)
-			next.previous = sBlock.getLastBlock();
+			next.previous = last;
 		next = sBlock;
 		return true;
 	}

@@ -50,7 +50,8 @@ public class ImplementationBlock implements FacadeBlock{
 
 	@Override
 	public void disconnect(Block blockToDisconnect) {
-		blockToDisconnect.disconnect();
+		if (blockToDisconnect != null)
+			blockToDisconnect.disconnect();
 	}
 
 
@@ -119,6 +120,11 @@ public class ImplementationBlock implements FacadeBlock{
 	@Override
 	public List<Block> getAllNextBlocks(Block block) {
 		return block.getAllNextBlocks();
+	}
+
+	@Override
+	public SurroundingBlock getSurroundingBlock(Block block) {
+		return block.getSurroundingBlock();
 	}
 
 

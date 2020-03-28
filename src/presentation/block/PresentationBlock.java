@@ -183,7 +183,7 @@ public abstract class PresentationBlock<T extends Block> {
 	 */
 	protected boolean snap(PresentationBlock<?> b) {
 		if (b.getGivingSnapPoint().distanceTo(getReceivingSnapPoints().get(0)) <= getSnapDistance()
-				&& blockFunctions.connect(b.getBlock(), getBlock())) {
+				&& blockFunctions.connect(getBlock(), b.getBlock())) {
 			return true;
 		}
 		return false;

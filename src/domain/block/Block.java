@@ -51,6 +51,7 @@ public abstract class Block {
 	 */
 	protected List<Block> getAllNextBlocks() {
 		List<Block> list = new ArrayList<Block>();
+		list.add(this);
 		if (this.getNextBlock() != null) {
 			list.addAll(getNextBlock().getAllNextBlocks());
 		}

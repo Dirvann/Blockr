@@ -83,7 +83,8 @@ public abstract class ChainConditionBlock extends ConditionBlock {
 
 	@Override
 	protected void removeNextBlock() {
-		this.next.disconnect();
+		if(this.next != null)
+			this.next.disconnect();
 
 	}
 
