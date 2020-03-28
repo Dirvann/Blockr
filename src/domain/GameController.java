@@ -1,8 +1,12 @@
 package domain;
 
 import domain.block.Block;
+import domain.game_world.Direction;
 import domain.game_world.GameWorld;
+import domain.game_world.Grid;
 import domain.game_world.ImplementationGameWorld;
+import domain.game_world.Vector;
+import domain.game_world.cell.Cell;
 
 public class GameController {
 
@@ -19,6 +23,26 @@ public class GameController {
 	public GameController(GameWorld gameWorld) {
 		this.programArea = new ProgramArea();
 		this.gameWorld = gameWorld;
+	}	
+	
+	/**
+	 * Function made to use custom gameWorlds.
+	 * 
+	 * @param height
+	 * @param width
+	 * @param locations
+	 * @param cells
+	 * @param startPositionRobot
+	 */
+	public GameController(int height, int width, Vector[] locations, Cell[] cells,Vector startPositionRobot) {
+		this.programArea = new ProgramArea();
+		Grid grid = null;
+		try {
+			grid = gameWorldFunctions.makeGrid(height,width,locations,cells);
+		} catch (Exception e) {
+			System.out.println("The fail happens in the Grid Creation"); //TODO: fix die exception
+		}
+		this.gameWorld = gameWorldFunctions.makeGameWorld(grid, startPositionRobot);
 	}
 
 	public void execute() {
@@ -89,6 +113,10 @@ public class GameController {
 
 	public void robotStepForwards() {
 		gameWorldFunctions.robotStepForwards(gameWorld);
+	}
+	
+	public Direction robotGetDirection() {
+		return gameWorldFunctions.getRobotDirection(gameWorld);
 	}
 
 }
