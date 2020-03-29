@@ -15,7 +15,7 @@ import domain.game_world.cell.Wall;
 
 class TestGameController {
 	static GameController GC;
-	static ImplementationBlock IB;
+	static ImplementationBlock IB = new ImplementationBlock();
 	static Cell[] cells = {new Goal(),new Wall(), new Wall()};
 	static Vector[] locations = {new Vector(1,1), new Vector(1,0), new Vector(2,2) };
 
