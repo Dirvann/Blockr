@@ -34,7 +34,7 @@ public class GameController {
 	 * @param cells
 	 * @param startPositionRobot
 	 */
-	public GameController(int height, int width, Vector[] locations, Cell[] cells,Vector startPositionRobot) {
+	public GameController(int height, int width, Vector[] locations, Cell[] cells,Vector startPositionRobot,Direction robotDirection) {
 		this.programArea = new ProgramArea();
 		Grid grid = null;
 		try {
@@ -42,7 +42,7 @@ public class GameController {
 		} catch (Exception e) {
 			System.out.println("The fail happens in the Grid Creation"); //TODO: fix die exception
 		}
-		this.gameWorld = gameWorldFunctions.makeGameWorld(grid, startPositionRobot);
+		this.gameWorld = gameWorldFunctions.makeGameWorld(grid, gameWorldFunctions.makeRobot(startPositionRobot,robotDirection));
 	}
 
 	public void execute() throws Exception {
@@ -111,8 +111,13 @@ public class GameController {
 		gameWorldFunctions.robotStepForwards(gameWorld);
 	}
 	
-	public Direction robotGetDirection() {
+	public Direction getDirectionRobot() {
 		return gameWorldFunctions.getRobotDirection(gameWorld);
+	}
+	
+	public Vector getLocationRobot() {
+		return gameWorldFunctions.getRobotLocation(gameWorld);
+
 	}
 
 }

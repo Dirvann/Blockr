@@ -16,6 +16,20 @@ public class GameWorld {
 	private Grid grid;
 	private Robot robot;
 	private Robot startRobot;
+	
+	/**
+	 * Initialize a new gameworld with a given grid and height. 
+	 * Also sets the startRobot and robot to the given robot.
+	 * 
+	 * @param grid
+	 * @param robot
+	 */
+	protected GameWorld(Grid grid, Robot robot) {
+		this.setGrid(grid);
+		this.startRobot = robot;
+		this.setRobot(robot);
+	}
+	
 	/**
 	 * Initialize a new gameworld with a given grid and height. 
 	 * Also sets the startRobot and robot to the givenstartposition.

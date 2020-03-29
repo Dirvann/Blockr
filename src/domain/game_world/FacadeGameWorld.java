@@ -4,11 +4,13 @@ import domain.game_world.cell.Cell;
 
 public interface FacadeGameWorld {
 	
+	public GameWorld makeGameWorld(Grid grid, Robot robot);
 	public GameWorld makeGameWorld(Grid grid, Vector startPosition);
 	public GameWorld makeStandardEmptyGameWorld();
 	public GameWorld makeRandomGameWorld(int width,int height);
 	public void resetGameWorld(GameWorld world);
 	
+	public Robot makeRobot(Vector location,Direction direction);
 	public boolean robotWallInFront(GameWorld world);
 	public boolean robotOnGoal(GameWorld world);
 	public void robotStepForwards(GameWorld world);

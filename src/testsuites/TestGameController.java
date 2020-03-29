@@ -15,12 +15,17 @@ import domain.game_world.cell.Wall;
 
 class TestGameController {
 	static GameController GC;
+	static GameController GC2;
+	static GameController GC3;
 	static ImplementationBlock IB = new ImplementationBlock();
 	static Cell[] cells = {new Goal(),new Wall(), new Wall()};
-	static Vector[] locations = {new Vector(1,1), new Vector(1,0), new Vector(2,2) };
+	static Vector[] locations = {new Vector(1,1), new Vector(1,0), new Vector(2,2)};
 
-	public static void setup() {
-		GC = new GameController(3, 3, locations, cells, new Vector(0,0));
+	public static void setup() { 
+		GC = new GameController(3, 3, locations, cells, new Vector(0,0), Direction.DOWN);
+		GC2 = new GameController(3, 3, locations, cells, new Vector(0,0), Direction.LEFT);
+		GC3 = new GameController(3, 3, locations, cells, new Vector(0,0), Direction.RIGHT);
+
 	}
 	
 	/**
@@ -35,43 +40,51 @@ class TestGameController {
 	void turnLeftRightBlockExecute() {
 		setup();
 		try {
-			assertEquals(GC.robotGetDirection(),Direction.UP);
-			Block left = IB.makeTurnLeftBlock();
-			GC.addTopLevelBlock(left);
+			assertEquals(Direction.DOWN,GC.getDirectionRobot());
+			Block left = IB.makeTurnLeftBlock(); // create block
+			GC.addTopLevelBlock(left); //drag in programArea
+			GC.execute(); // Run key
+			GC.execute(); // Run key
+			assertEquals(Direction.RIGHT,GC.getDirectionRobot());
 			GC.execute();
-			assertEquals(GC.robotGetDirection(),Direction.LEFT);
 			GC.execute();
-			assertEquals(GC.robotGetDirection(),Direction.DOWN);
+			assertEquals(Direction.UP,GC.getDirectionRobot());
 			GC.execute();
-			assertEquals(GC.robotGetDirection(),Direction.RIGHT);
+			GC.execute();
+			assertEquals(Direction.LEFT,GC.getDirectionRobot());
 			GC.removeTopLevelBlock(left);
 			Block right = IB.makeTurnRightBlock();
 			GC.addTopLevelBlock(right);
 			GC.execute();
-			assertEquals(GC.robotGetDirection(),Direction.DOWN);
+			GC.execute();
+			assertEquals(Direction.UP,GC.getDirectionRobot());
 		} catch (Exception e) {
 			fail();
 		}
 	}
-/*	
+	
 	@Test
 	void forwardBlockExecute() {
 		setup();
 		try {
 			// normal move
-			assertEquals(gameWorld.getRobot().getLocation(),new Vector(0,0));
-			gameWorld.getRobot().setDirection(Direction.DOWN);
-			forwardBlock.execute(gameController);
-			assertEquals(gameWorld.getRobot().getLocation(),new Vector(0,1));
+			assertEquals(new Vector(0,0),GC.getLocationRobot());
+			assertEquals(Direction.DOWN,GC.getDirectionRobot());
+			Block forward = IB.makeMoveForwardBlock();
+			GC.addTopLevelBlock(forward);
+			GC.execute();
+			GC.execute();
+			assertEquals(new Vector(0,1),GC.getLocationRobot());
 			// end of grid
-			gameWorld.getRobot().setDirection(Direction.LEFT);
-			forwardBlock.execute(gameController);
-			assertEquals(gameWorld.getRobot().getLocation(),new Vector(0,1));
+			GC2.addTopLevelBlock(forward);
+			GC2.execute();
+			GC2.execute();
+			assertEquals(new Vector(0,0),GC2.getLocationRobot());
 			// against wall
-			gameWorld.getRobot().setLocation(new Vector(0,0));
-			gameWorld.getRobot().setDirection(Direction.RIGHT);
-			forwardBlock.execute(gameController);
-			assertEquals(gameWorld.getRobot().getLocation(),new Vector(0,0));
+			GC3.addTopLevelBlock(forward);
+			GC3.execute();
+			GC3.execute();
+			assertEquals(new Vector(0,0),GC3.getLocationRobot());
 		} catch (Exception e) {
 			fail();
 		}
@@ -123,5 +136,4 @@ class TestGameController {
 			fail();
 		}
 	}
-*/
 }

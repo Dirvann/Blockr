@@ -9,6 +9,11 @@ public class ImplementationGameWorld implements FacadeGameWorld{
 	public ImplementationGameWorld() {};
 	
 	@Override
+	public GameWorld makeGameWorld(Grid grid, Robot robot) {
+		return new GameWorld(grid,robot);
+	}
+	
+	@Override
 	public GameWorld makeGameWorld(Grid grid, Vector startPosition) {
 		return new GameWorld(grid,startPosition);
 	}
@@ -22,7 +27,12 @@ public class ImplementationGameWorld implements FacadeGameWorld{
 	public GameWorld makeRandomGameWorld(int width, int height) {
 		return new GameWorld(width, height);
 	}
-
+	
+	@Override
+	public Robot makeRobot(Vector location, Direction direction) {
+		return new Robot(location,direction);
+	}
+	
 	@Override
 	public boolean robotWallInFront(GameWorld world) {
 		return world.robotWallInFront();
@@ -109,5 +119,4 @@ public class ImplementationGameWorld implements FacadeGameWorld{
 		return world.getRobot().getDirection();
 	}
 	
-
 }
