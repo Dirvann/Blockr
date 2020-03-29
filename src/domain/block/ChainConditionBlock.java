@@ -3,8 +3,6 @@ package domain.block;
 import java.util.ArrayList;
 import java.util.List;
 
-import presentation.ProgramAreaPresentation;
-
 public abstract class ChainConditionBlock extends ConditionBlock {
 
 	protected ConditionBlock next = null;
@@ -14,17 +12,6 @@ public abstract class ChainConditionBlock extends ConditionBlock {
 		if (next != null)
 			return next.isValidCondition();
 		return false;
-	}
-
-	@Override
-	protected void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP) {
-		programAreaP.removeBlock(getPresentationBlock());
-		programAreaP.increaseBlocksLeft();
-
-		Block connectedCondition = this.getNextBlock();
-		if (connectedCondition != null) {
-			connectedCondition.removeFromProgramAreaPresentationRecursively(programAreaP);
-		}
 	}
 
 	// Function that controls and chacks the connections
@@ -37,10 +24,10 @@ public abstract class ChainConditionBlock extends ConditionBlock {
 		}
 		if (!(block instanceof ConditionBlock))
 			return false;
-		
+
 		block.setSurroundingBlock(surroundingBlock);
 		ConditionBlock cBlock = (ConditionBlock) block;
-		
+
 		// put this.next after block.last
 		if (this.next != null) {
 			ConditionBlock next = this.next;
@@ -83,9 +70,11 @@ public abstract class ChainConditionBlock extends ConditionBlock {
 
 	@Override
 	protected void removeNextBlock() {
-		if(this.next != null)
-			this.next.disconnect();
-
+		if (this.next != null) {
+			this.next.previous = null;
+			this.next.setSurroundingBlock(null);
+			this.next = null;
+		}
 	}
 
 }

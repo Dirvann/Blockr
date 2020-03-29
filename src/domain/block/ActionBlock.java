@@ -1,7 +1,6 @@
 package domain.block;
 
 import domain.GameController;
-import presentation.ProgramAreaPresentation;
 
 public abstract class ActionBlock extends SequenceBlock{
 	
@@ -22,18 +21,5 @@ public abstract class ActionBlock extends SequenceBlock{
 			return this.getSurroundingBlock().getNextAfterLoop();
 		}
 		return this.getNextBlock();
-	}
-	
-	
-	protected void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP) {
-		programAreaP.removeBlock(this.getPresentationBlock());
-		programAreaP.increaseBlocksLeft();
-		
-		Block nextBlock = this.getNextBlock();
-		
-		if (nextBlock != null) {
-			nextBlock.removeFromProgramAreaPresentationRecursively(programAreaP);
-		}
-		
 	}
 }

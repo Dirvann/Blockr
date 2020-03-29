@@ -12,7 +12,6 @@ import presentation.block.PresentationBlock;
 
 public class ProgramAreaPresentation {
 	
-	private int blocksLeft = 15;
 	private ImplementationPresentationBlock BFP = new ImplementationPresentationBlock();
 	private ImplementationBlock BF = new ImplementationBlock();
 	private ProgramArea programArea;
@@ -28,24 +27,7 @@ public class ProgramAreaPresentation {
 		}
 	}
 	
-	public void addBlock(PresentationBlock<?> pBlock) {		
-		Block block = BFP.getBlock(pBlock);
-		programArea.addTopLevelBlock(block);
-		blocksLeft -= BF.getAllNextBlocks(block).size();
-	}
 	
-	public void removeBlock(PresentationBlock<?> pBlock) {
-		Block block = BFP.getBlock(pBlock);
-		BF.disconnect(BFP.getBlock(pBlock));
-		blocksLeft += BF.getAllNextBlocks(block).size();
-		
-		try {
-			programArea.removeTopLevelBlock(block);
-			System.out.println("a top-level block is removed");
-		} catch (Exception e) {
-			System.out.println("a non top-level block is removed");
-		}
-	}
 	
 	public PresentationBlock<?> getBlockAtPosition(Vector position) {
 		for (Block block: programArea.getAllBlocks()) {
@@ -68,21 +50,6 @@ public class ProgramAreaPresentation {
 	}
 	
 
-	public int getBlocksLeft() {
-		return blocksLeft;
-	}
-
-	public void setBlocksLeft(int blocksLeft) {
-		this.blocksLeft = blocksLeft;
-	}
-	
-	public void increaseBlocksLeft() {
-		blocksLeft += 1;
-	}
-	
-	public void decreaseBlocksLeft() {
-		blocksLeft -= 1;
-	}
 	
 	
 }

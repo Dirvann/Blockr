@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import domain.GameController;
+import domain.ProgramArea;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
 import domain.game_world.Direction;
@@ -44,6 +45,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 	boolean mouseDown = false;
 	PresentationBlock<?> selectedBlock = null;
 	Vector previousMousePos = null;
+	String errorMessage = "The error message will appear here!";
 
 	private ImplementationBlock BF = new ImplementationBlock();
 	private ImplementationPresentationBlock BFP = new ImplementationPresentationBlock();
@@ -51,6 +53,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 
 	GameController gameController;
 	PalettePresentation paletteP;
+	ProgramArea programArea;
 	ProgramAreaPresentation programAreaP;
 	ImplementationBlock GA; // GameInterface
 
@@ -70,7 +73,8 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 
 		gameController = new GameController();
 		paletteP = new PalettePresentation();
-		programAreaP = new ProgramAreaPresentation(gameController.getProgramArea());
+		programArea = gameController.getProgramArea();
+		programAreaP = new ProgramAreaPresentation(programArea);
 //    	Block bla = new MoveForward();
 //    	gameController.addTopLevelBlock(bla);
 //    	GA.connect(bla, new MoveForward());
@@ -106,11 +110,13 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 		g.drawLine(canvas.getWidth() - (int) (worldProportion * canvas.getWidth()), 0,
 				canvas.getWidth() - (int) (worldProportion * canvas.getWidth()), canvas.getHeight());
 
-		if (programAreaP.getBlocksLeft() > 0) {
+		if (programArea.getBlocksLeft() > 0) {
 			paletteP.paint(g);
 		}
 		g.setFont(new Font("Arial", Font.PLAIN, (int) (getHeight() / 20)));
-		g.drawString("" + programAreaP.getBlocksLeft(), getWidth() / 18, 17 * getHeight() / 18);
+		g.drawString("" + programArea.getBlocksLeft(), getWidth() / 18, 17 * getHeight() / 18);
+		g.setFont(new Font("Arial", Font.PLAIN, (int) (getHeight() / 40)));
+		g.drawString(errorMessage, getWidth() / 4, 17 * getHeight() / 18);
 		programAreaP.paint(g);
 
 		Block nextToExecute = gameController.getNextBlockToExecute();
@@ -191,6 +197,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		errorMessage = "";
 		System.out.println(e.getX() + " " + e.getY());
 	}
 
@@ -208,14 +215,15 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		errorMessage = "";
 		Vector mousePos = new Vector(e.getX(), e.getY());
 
 		PresentationBlock<?> paletteBlockP = paletteP.GetClickedPaletteBlock(mousePos);
 		// Clicked block in palette
 		// Create functional copy of paletteBlock and add to programArea
-		if (paletteBlockP != null && programAreaP.getBlocksLeft() >= 0) {
+		if (paletteBlockP != null && programArea.getBlocksLeft() >= 0) {
 			PresentationBlock<?> presentationCopy = BFP.makeCopy(paletteBlockP);
-			programAreaP.addBlock(presentationCopy);
+			programArea.addBlock(presentationCopy);
 			selectedBlock = presentationCopy;
 			System.out.println("New Block made of type: " + BF.getName(BFP.getBlock(selectedBlock) ));
 		}
@@ -253,10 +261,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 			// Delete if over palette
 			int paletteBorder = (int) (panelProportion * canvas.getWidth());
 			if (mousePos.getX() < paletteBorder) {
-				if (gameController.isTopLevelBlock(BFP.getBlock(selectedBlock))) {
-					gameController.removeTopLevelBlock(BFP.getBlock(selectedBlock));
-				}
-				programAreaP.removeBlock(selectedBlock);
+				programArea.removeBlock(selectedBlock);
 				// programAreaP.removeBlock(selectedBlock);
 
 				// TODO: recursively delete all connected blocks
@@ -301,7 +306,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 			try {
 				gameController.execute();
 			} catch (Exception e1) {
-				System.out.println("Execute in keyPressed failed");
+				errorMessage = e1.getMessage();
 			}
 			break;
 

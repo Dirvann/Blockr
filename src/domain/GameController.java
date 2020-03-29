@@ -21,9 +21,9 @@ public class GameController {
 		this.gameWorld = gameWorld;
 	}
 
-	public void execute() {
+	public void execute() throws Exception {
 		if (programArea.programInProgress()) {
-			executeNextBlock();
+			programArea.executeNextBlock(this);
 		} else {
 			programArea.startExecution();
 		}
@@ -35,10 +35,6 @@ public class GameController {
 
 	public Block getNextBlockToExecute() {
 		return programArea.getNextBlockToExecute();
-	}
-
-	private void executeNextBlock() {
-		programArea.executeNextBlock(this);
 	}
 
 	public void setGameWorld(GameWorld gameWorld) {
