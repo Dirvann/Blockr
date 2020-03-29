@@ -182,6 +182,8 @@ public abstract class PresentationBlock<T extends Block> {
 	 * @Post b is connected to this if possible.
 	 */
 	protected boolean snap(PresentationBlock<?> b) {
+		List<Vector> receivers = getReceivingSnapPoints();
+		if (receivers.size() == 0) return false;
 		if (b.getGivingSnapPoint().distanceTo(getReceivingSnapPoints().get(0)) <= getSnapDistance()
 				&& blockFunctions.connect(getBlock(), b.getBlock())) {
 			return true;

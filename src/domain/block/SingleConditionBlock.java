@@ -1,16 +1,9 @@
 package domain.block;
 
-import presentation.ProgramAreaPresentation;
-
 public abstract class SingleConditionBlock extends ConditionBlock {
 
 	protected boolean isValidCondition() {
 		return true;
-	}
-
-	protected void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP) {
-		programAreaP.removeBlock(getPresentationBlock());
-		programAreaP.increaseBlocksLeft();
 	}
 	
 	@Override

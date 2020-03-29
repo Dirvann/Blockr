@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.GameController;
-import presentation.ProgramAreaPresentation;
 import presentation.block.PresentationBlock;
 
 public abstract class Block {
@@ -35,9 +34,6 @@ public abstract class Block {
 	 * @throws Exception if a block in the sequence is not executable.
 	 */
 	protected abstract Block execute(GameController gameController) throws Exception;
-
-	// TODO: move to programArea
-	protected abstract void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP);
 
 	/**
 	 * 

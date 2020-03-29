@@ -69,7 +69,7 @@ public class ImplementationBlock implements FacadeBlock{
 	@Override
 	public boolean isValidStartingBlock(Block block) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
