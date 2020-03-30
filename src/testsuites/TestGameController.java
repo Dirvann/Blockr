@@ -95,17 +95,27 @@ class TestGameController {
 		setup();
 		try {
 			// 2 blocks execute TR/FW
-			gameWorld.getRobot().setDirection(Direction.RIGHT);
-			fi.connect(turnRightBlock, forwardBlock);
-			turnRightBlock.execute(gameController).execute(gameController);
-			assertEquals(gameWorld.getRobot().getLocation(),new Vector(0,1));
+			Block forward = IB.makeMoveForwardBlock();
+			Block right = IB.makeTurnRightBlock();
+			GC3.addTopLevelBlock(right);
+			IB.connect(right,forward);
+			GC3.execute();
+			GC3.execute();
+			GC3.execute();
+			GC3.execute();
+			assertEquals(new Vector(0,1),GC3.getLocationRobot());
+			assertEquals(Direction.DOWN,GC3.getDirectionRobot());
 			// add a block to those 2 blocks TR/FW/TL
-			gameWorld.getRobot().setDirection(Direction.RIGHT);
-			gameWorld.getRobot().setLocation(new Vector(0,0));
-			fi.connect(forwardBlock,turnLeftBlock);
-			turnRightBlock.execute(gameController).execute(gameController).execute(gameController);
-			assertEquals(gameWorld.getRobot().getDirection(),Direction.RIGHT);
+			GC3.resetWorld();
+			assertEquals(new Vector(0,0),GC3.getLocationRobot());
+			assertEquals(Direction.RIGHT,GC3.getDirectionRobot());
+			Block left = IB.makeTurnLeftBlock();
+			IB.connect(forward, left);
+			GC3.execute();
+			GC3.execute();
+			assertEquals(Direction.RIGHT,GC3.getDirectionRobot());
 			// add a block in between TR/FW/FW2/TL
+			/*
 			gameWorld.getRobot().setDirection(Direction.RIGHT);
 			gameWorld.getRobot().setLocation(new Vector(0,0));
 			fi.connect(forwardBlock,forwardBlock2);
@@ -132,6 +142,7 @@ class TestGameController {
 			turnRightBlock.execute(gameController).execute(gameController).execute(gameController).execute(gameController);
 			assertEquals(gameWorld.getRobot().getLocation(),new Vector(1,1)); 
 			assertEquals(gameWorld.getRobot().getDirection(),Direction.RIGHT);
+			*/
 		} catch (Exception e) {
 			fail();
 		}
