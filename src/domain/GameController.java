@@ -69,22 +69,6 @@ public class GameController {
 		return this.gameWorld;
 	}
 
-	public void addTopLevelBlock(Block block) {
-		programArea.addTopLevelBlock(block);
-	}
-
-	public boolean isTopLevelBlock(Block block) {
-		return programArea.isTopLevelBlock(block);
-	}
-
-	public void removeTopLevelBlock(Block block) {
-		try {
-			programArea.removeTopLevelBlock(block);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public ProgramArea getProgramArea() {
 		return this.programArea;
 	}
@@ -109,15 +93,6 @@ public class GameController {
 
 	public void robotStepForwards() {
 		gameWorldFunctions.robotStepForwards(gameWorld);
-	}
-	
-	public Direction getDirectionRobot() {
-		return gameWorldFunctions.getRobotDirection(gameWorld);
-	}
-	
-	public Vector getLocationRobot() {
-		return gameWorldFunctions.getRobotLocation(gameWorld);
-
 	}
 
 }
