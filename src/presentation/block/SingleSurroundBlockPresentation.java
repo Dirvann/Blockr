@@ -146,7 +146,7 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 	}
 
 	@Override
-	public boolean snap(PresentationBlock<?> b) {
+	public boolean canSnap(PresentationBlock<?> b) {
 		if (b.getBlock() instanceof ConditionBlock
 				&& b.getGivingSnapPoint().distanceTo(getConditionSnapPoint()) <= getSnapDistance()) {
 			BF.setConditionBlock(getBlock(), (ConditionBlock) b.getBlock());

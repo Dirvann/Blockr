@@ -120,11 +120,9 @@ public class ProgramArea {
 	 * @param block, block to remove from topLevelBlocks
 	 * @throws Exception block is not a top level block
 	 */
-	public void removeTopLevelBlock(Block block) throws Exception {
+	public void removeTopLevelBlock(Block block) {
 		if (topLevelBlocks.contains(block)) {
 			topLevelBlocks.remove(block);
-		} else {
-			throw new Exception("Block is not a top level block");
 		}
 	}
 
@@ -164,16 +162,6 @@ public class ProgramArea {
 		}
 
 		return list;
-	}
-
-	public boolean snapBlock(PresentationBlock<?> block) {
-
-		for (Block blockListElement : getAllBlocks()) {
-			if (BFP.snap(BF.getPresentationBlock(blockListElement), block)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public int getBlocksLeft() {

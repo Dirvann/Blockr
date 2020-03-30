@@ -70,7 +70,7 @@ public interface FacadePresentationBlock {
 		
 		public PresentationBlock<?> makeCopy(PresentationBlock<?> block);
 
-		public boolean snap(PresentationBlock<?> firstBlock, PresentationBlock<?> secondBlock);
+		public boolean canSnap(PresentationBlock<?> firstBlock, PresentationBlock<?> secondBlock);
 		
 		public void setPosition(PresentationBlock<?> block, Vector position);
 		

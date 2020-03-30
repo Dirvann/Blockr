@@ -39,6 +39,17 @@ public class ProgramAreaPresentation {
 		return null;
 	}
 	
+	public PresentationBlock<?> canSnapBlock(PresentationBlock<?> block){
+		
+		for (Block blockListElement: programArea.getAllBlocks()) {
+			PresentationBlock<?> pBlock = BF.getPresentationBlock(blockListElement);
+			if (BFP.canSnap(pBlock, block)) {
+				return pBlock;
+			}
+		}
+		return null;
+	}
+	
 
 	
 	

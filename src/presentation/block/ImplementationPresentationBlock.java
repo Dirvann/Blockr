@@ -85,8 +85,8 @@ public class ImplementationPresentationBlock implements FacadePresentationBlock{
 	}
 
 	@Override
-	public boolean snap(PresentationBlock<?> firstBlock, PresentationBlock<?> secondBlock) {
-		return firstBlock.snap(secondBlock);
+	public boolean canSnap(PresentationBlock<?> firstBlock, PresentationBlock<?> secondBlock) {
+		return firstBlock.canSnap(secondBlock);
 	}
 
 	@Override
