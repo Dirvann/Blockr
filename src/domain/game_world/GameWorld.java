@@ -26,7 +26,7 @@ public class GameWorld {
 	 */
 	protected GameWorld(Grid grid, Robot robot) {
 		this.setGrid(grid);
-		this.startRobot = robot;
+		this.startRobot = new Robot(robot.getLocation(),robot.getDirection()); //make copy
 		this.setRobot(robot);
 	}
 	
