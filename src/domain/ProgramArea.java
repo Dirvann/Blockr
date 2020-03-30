@@ -74,8 +74,8 @@ public class ProgramArea {
 	/**
 	 * 
 	 * @param gameController gameController to execute the next function in
-	 * @throws Exception when execute is not possible 
-	 */ 
+	 * @throws Exception when execute is not possible
+	 */
 	public void executeNextBlock(GameController gameController) throws Exception {
 		nextToExecute = BF.execute(nextToExecute, gameController);
 	}
@@ -164,6 +164,16 @@ public class ProgramArea {
 		}
 
 		return list;
+	}
+
+	public boolean snapBlock(PresentationBlock<?> block) {
+
+		for (Block blockListElement : getAllBlocks()) {
+			if (BFP.snap(BF.getPresentationBlock(blockListElement), block)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public int getBlocksLeft() {

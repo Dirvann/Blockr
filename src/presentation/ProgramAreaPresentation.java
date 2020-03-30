@@ -39,16 +39,6 @@ public class ProgramAreaPresentation {
 		return null;
 	}
 	
-	public boolean snapBlock(PresentationBlock<?> block){
-		
-		for (Block blockListElement: programArea.getAllBlocks()) {
-			if (BFP.snap(BF.getPresentationBlock(blockListElement), block)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
 
 	
 	
