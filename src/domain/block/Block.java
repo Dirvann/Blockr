@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.GameController;
+import domain.ImplementationGameController;
+import domain.game_world.ImplementationGameWorld;
 import presentation.block.PresentationBlock;
 
 public abstract class Block {
-
+	ImplementationGameController IGC = new ImplementationGameController();
+	ImplementationGameWorld IGW = new ImplementationGameWorld();
 	protected PresentationBlock<?> presentationBlock = null;
 	protected SurroundingBlock surroundingBlock = null;
 

@@ -1,9 +1,7 @@
 package domain.block;
 
 import domain.GameController;
-
 class MoveForward extends ActionBlock {
-
 	protected MoveForward() {
 		super();
 	}
@@ -13,7 +11,7 @@ class MoveForward extends ActionBlock {
 		if (gameController == null) 
 			System.out.println("Move Forward");
 		else
-			gameController.robotStepForwards();		
+			IGW.robotStepForwards(IGC.getGameWorld(gameController));
 	}
 
 	@Override
