@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import domain.GameController;
+import domain.ImplementationGameController;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
 import domain.game_world.*;
@@ -14,17 +15,22 @@ import domain.game_world.cell.Goal;
 import domain.game_world.cell.Wall;
 
 class TestGameController {
-	static GameController GC;
-	static GameController GC2;
-	static GameController GC3;
+	GameController gc;
+	static ImplementationGameController IGC= new ImplementationGameController();
 	static ImplementationBlock IB = new ImplementationBlock();
+	static ImplementationGameWorld IGW = new ImplementationGameWorld();
 	static Cell[] cells = {new Goal(),new Wall(), new Wall()};
 	static Vector[] locations = {new Vector(1,1), new Vector(1,0), new Vector(2,2)};
 
-	public static void setup() { 
-		GC = new GameController(3, 3, locations, cells, new Vector(0,0), Direction.DOWN);
-		GC2 = new GameController(3, 3, locations, cells, new Vector(0,0), Direction.LEFT);
-		GC3 = new GameController(3, 3, locations, cells, new Vector(0,0), Direction.RIGHT);
+	public static void setup() {
+		try {
+			GameController gc = IGC.makeGameController(IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.DOWN)));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//GC2 = new GameController(3, 3, locations, cells, new Vector(0,0), Direction.LEFT);
+		//GC3 = new GameController(3, 3, locations, cells, new Vector(0,0), Direction.RIGHT);
 
 	}
 	
@@ -40,24 +46,24 @@ class TestGameController {
 	void turnLeftRightBlockExecute() {
 		setup();
 		try {
-			assertEquals(Direction.DOWN,GC.getDirectionRobot());
+			assertEquals(Direction.DOWN,IGW.getRobotDirection(IGC.getGameWorld(gc)));
 			Block left = IB.makeTurnLeftBlock(); // create block
-			GC.addTopLevelBlock(left); //drag in programArea
-			GC.execute(); // Run key
-			GC.execute(); // Run key
-			assertEquals(Direction.RIGHT,GC.getDirectionRobot());
-			GC.execute();
-			GC.execute();
-			assertEquals(Direction.UP,GC.getDirectionRobot());
-			GC.execute();
-			GC.execute();
-			assertEquals(Direction.LEFT,GC.getDirectionRobot());
-			GC.removeTopLevelBlock(left);
+			IGC.addTopLevelBlock(gc,left); //drag in programArea
+			IGC.execute(gc); // Run key
+			IGC.execute(gc); // Run key
+			assertEquals(Direction.RIGHT,IGW.getRobotDirection(IGC.getGameWorld(gc)));
+			IGC.execute(gc);
+			IGC.execute(gc);
+			assertEquals(Direction.UP,IGW.getRobotDirection(IGC.getGameWorld(gc)));
+			IGC.execute(gc);
+			IGC.execute(gc);
+			assertEquals(Direction.LEFT,IGW.getRobotDirection(IGC.getGameWorld(gc)));
+			IGC.removeTopLevelBlock(gc,left);
 			Block right = IB.makeTurnRightBlock();
-			GC.addTopLevelBlock(right);
-			GC.execute();
-			GC.execute();
-			assertEquals(Direction.UP,GC.getDirectionRobot());
+			IGC.addTopLevelBlock(gc,right);
+			IGC.execute(gc);
+			IGC.execute(gc);
+			assertEquals(Direction.UP,IGW.getRobotDirection(IGC.getGameWorld(gc)));
 		} catch (Exception e) {
 			fail();
 		}
