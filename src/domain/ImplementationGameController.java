@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 import domain.block.Block;
 import domain.game_world.GameWorld;
 import presentation.block.PresentationBlock;
@@ -80,5 +82,10 @@ public class ImplementationGameController implements FacadeGameController{
 	@Override
 	public int getAmountOfBlocksLeft(GameController gameController) {
 		return gameController.getProgramArea().getBlocksLeft();
+	}
+
+	@Override
+	public List<Block> getCopyOfAllTopLevelBlocks(GameController gameController) {
+		return gameController.getProgramArea().getAllBlocks();		
 	}
 }

@@ -155,7 +155,7 @@ public class ProgramArea {
 	 * 
 	 * @return copy of topLevelBlocks
 	 */
-	public List<Block> getAllBlocks() {
+	protected List<Block> getAllBlocks() {
 		List<Block> list = new ArrayList<Block>();
 		for (Block block : this.getTopBlocks()) {
 			list.addAll(BF.getAllNextBlocks(block));

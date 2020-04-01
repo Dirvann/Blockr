@@ -3,6 +3,8 @@ package presentation;
 import java.awt.Graphics;
 import java.util.List;
 
+import domain.GameController;
+import domain.ImplementationGameController;
 import domain.ProgramArea;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
@@ -14,14 +16,15 @@ public class ProgramAreaPresentation {
 	
 	private ImplementationPresentationBlock BFP = new ImplementationPresentationBlock();
 	private ImplementationBlock BF = new ImplementationBlock();
-	private ProgramArea programArea;
+	private ImplementationGameController GC = new ImplementationGameController();
+	private GameController gameController;
 	
-	public ProgramAreaPresentation(ProgramArea programArea) {
-		this.programArea = programArea;
+	public ProgramAreaPresentation(GameController gameController) {
+		this.gameController = gameController;
 	}
 	
 	public void paint(Graphics g) {
-		List<Block> programAreaBlocks = programArea.getAllBlocks();
+		List<Block> programAreaBlocks = GC.getCopyOfAllTopLevelBlocks(gameController);
 		for (Block pBlock: programAreaBlocks) {
 			BFP.draw(g, BF.getPresentationBlock(pBlock));
 		}
@@ -30,7 +33,7 @@ public class ProgramAreaPresentation {
 	
 	
 	public PresentationBlock<?> getBlockAtPosition(Vector position) {
-		for (Block block: programArea.getAllBlocks()) {
+		for (Block block:  GC.getCopyOfAllTopLevelBlocks(gameController)) {
 			if (BFP.collidesWithPosition(position, BF.getPresentationBlock(block))) {
 				return BF.getPresentationBlock(block);
 			}
@@ -41,7 +44,7 @@ public class ProgramAreaPresentation {
 	
 	public boolean snapBlock(PresentationBlock<?> block){
 		
-		for (Block blockListElement: programArea.getAllBlocks()) {
+		for (Block blockListElement:  GC.getCopyOfAllTopLevelBlocks(gameController)) {
 			PresentationBlock<?> pBlock = BF.getPresentationBlock(blockListElement);
 			if (BFP.canSnap(pBlock, block)) {
 				return true;

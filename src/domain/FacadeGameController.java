@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 import domain.block.Block;
 import domain.game_world.GameWorld;
 import presentation.block.PresentationBlock;
@@ -18,6 +20,7 @@ public interface FacadeGameController {
 	
 	public void addTopLevelBlock(GameController gameController,Block block);
 	public void removeTopLevelBlock(GameController gameController,Block block);
+	public List<Block> getCopyOfAllTopLevelBlocks(GameController gameController);
 	public Boolean isTopLevelBlock(GameController gameController, Block block);
 
 	public void execute(GameController gameController) throws Exception;
