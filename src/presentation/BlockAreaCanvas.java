@@ -11,9 +11,13 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import domain.GameController;
-import domain.block.block_types.Block;
+import domain.ImplementationGameController;
+import domain.block.Block;
+import domain.block.ImplementationBlock;
 import domain.game_world.GameWorld;
+import domain.game_world.ImplementationGameWorld;
 import domain.game_world.Vector;
+import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 
 public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotionListener, KeyListener {
@@ -27,17 +31,24 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	private PalettePresentation paletteP;
 	private ProgramAreaPresentation programAreaP;
 	
+	private ImplementationBlock BF = new ImplementationBlock();
+	private ImplementationPresentationBlock BFP = new ImplementationPresentationBlock();
+	private ImplementationGameWorld GW = new ImplementationGameWorld();
+	private ImplementationGameController GC = new ImplementationGameController(); 
+	
 	private BlockrPanel blockrPanel;
 	
 	private PresentationBlock<?> selectedBlock = null;
 	
+	String errorMessage = "The error message will appear here!";
+
 	Vector previousMousePos = null;
 	boolean mouseDown = false;
 	
 	
 	public BlockAreaCanvas(BlockrPanel blockrPanel) {
 		paletteP = new PalettePresentation();
-		programAreaP = new ProgramAreaPresentation();
+		programAreaP = new ProgramAreaPresentation(blockrPanel.getGameController());
 		
 		this.blockrPanel = blockrPanel;
 		addMouseListener(this);
@@ -58,19 +69,21 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		
 		// Draw number of blocks left
 		g.setFont(new Font("Arial", Font.PLAIN, (int) (this.getHeight()/20)));
-		g.drawString("" + programAreaP.getBlocksLeft(),getWidth()/18, 17 * getHeight()/18);
+		g.drawString("" + GC.getAmountOfBlocksLeft(blockrPanel.getGameController()), getWidth() / 18, 17 * getHeight() / 18);
+		g.setFont(new Font("Arial", Font.PLAIN, (int) (getHeight() / 40)));
+		g.drawString(errorMessage, getWidth() / 4, 17 * getHeight() / 18);
 		
 		// Draw palette only if max number of blocks not reached
-		if (programAreaP.getBlocksLeft() > 0) {
+		if (GC.getAmountOfBlocksLeft(blockrPanel.getGameController()) > 0) {
 			paletteP.paint(g);
 		}
 		
 		// Draw programArea
 		programAreaP.paint(g);
 		
-		Block nextToExecute = blockrPanel.getGameController().getNextBlockToExecute();
+		Block nextToExecute = GC.getNextBlockToExecute(blockrPanel.getGameController());
 		if (nextToExecute != null) {
-			nextToExecute.getPresentationBlock().highLight(g);
+			BFP.highLight(BF.getPresentationBlock(nextToExecute), g);
 		}
 	}
 
@@ -81,19 +94,17 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		PresentationBlock<?> paletteBlockP = paletteP.GetClickedPaletteBlock(mousePos);
 		// Clicked block in palette
 		// Create functional copy of paletteBlock and add to programArea
-		if (paletteBlockP != null && programAreaP.getBlocksLeft() >= 0) {
-			programAreaP.decreaseBlocksLeft();
-			PresentationBlock<?> presentationCopy;
-			presentationCopy = paletteBlockP.getNewBlockOfThisType();
-			programAreaP.addBlock(presentationCopy);
+		if (paletteBlockP != null && GC.getAmountOfBlocksLeft(blockrPanel.getGameController()) >= 0) {
+			PresentationBlock<?> presentationCopy = BFP.makeCopy(paletteBlockP);
+			GC.addBlockToProgramArea(blockrPanel.getGameController(), presentationCopy);
 			selectedBlock = presentationCopy;
-			System.out.println("presentationCopy.getBlock == null: " + presentationCopy.getBlock() == null);
+			System.out.println("New Block made of type: " + BF.getName(BFP.getBlock(selectedBlock) ));
 		}
 
 		PresentationBlock<?> programBlockP = programAreaP.getBlockAtPosition(mousePos);
 		if (programBlockP != null) {
 			selectedBlock = programBlockP;
-			blockrPanel.getGameInterface().disconnect(selectedBlock.getBlock());
+			BF.disconnect(BFP.getBlock(selectedBlock));
 		}
 
 		previousMousePos = mousePos;
@@ -104,8 +115,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	public void handleMouseDragged(int x, int y) {
 		if (this.mouseDown && this.selectedBlock != null) {
 			Vector moveDifference = new Vector(x - previousMousePos.getX(), y - previousMousePos.getY());
-			// selectedBlock.setPositionByDifference(moveDifference);
-			selectedBlock.setPosition(selectedBlock.getPosition().add(moveDifference));
+			BFP.addToPosition(selectedBlock, moveDifference);
 			this.previousMousePos = new Vector(x, y);
 			repaint();
 		}
@@ -119,26 +129,23 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 			// Check for snapping
 			// TODO: replace with new snapping code
 			boolean snapped = programAreaP.snapBlock(selectedBlock);
-			GameController gameController = blockrPanel.getGameController();
-
 			if (!snapped) {
-				if (!gameController.isTopLevelBlock(selectedBlock.getBlock())) {
-					gameController.addTopLevelBlock(selectedBlock.getBlock());
+				if (!GC.isTopLevelBlock(blockrPanel.getGameController(), BFP.getBlock(selectedBlock))) {
+					GC.addTopLevelBlock(blockrPanel.getGameController(), BFP.getBlock(selectedBlock));
 				}
 			} else {
-				if (gameController.isTopLevelBlock(selectedBlock.getBlock())) {
-					gameController.removeTopLevelBlock(selectedBlock.getBlock());
-				}
+				if (GC.isTopLevelBlock(blockrPanel.getGameController(), BFP.getBlock(selectedBlock))) {
+					GC.removeTopLevelBlock(blockrPanel.getGameController(), BFP.getBlock(selectedBlock));
+				} 
 			}
 
 			// Delete if over palette
 			int paletteBorder = (int) (panelProportion * this.getWidth());
 			if (mousePos.getX() < paletteBorder) {
-				if (gameController.isTopLevelBlock(selectedBlock.getBlock())) {
-					gameController.removeTopLevelBlock(selectedBlock.getBlock());
-				}
+				GC.removeBlockFromProgramArea(blockrPanel.getGameController(), selectedBlock);
+				// programAreaP.removeBlock(selectedBlock);
 
-				selectedBlock.getBlock().removeFromProgramAreaPresentationRecursively(programAreaP);
+				// TODO: recursively delete all connected blocks
 			}
 
 		}
@@ -153,18 +160,18 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		
 		switch (keyCode) {
 		case 27: // Esc
-			gameController.stopExecution();
-			gameController.resetWorld();
+			GC.stopExecution(gameController);
+			GW.resetGameWorld(GC.getGameWorld(gameController));
 			blockrPanel.redrawGameWorld();
 			break;
 
 		case 115: // F4
-			gameController.stopExecution();
+			GC.stopExecution(gameController);
 			break;
 
 		case 116: // F5
 			try {
-				gameController.execute();
+				GC.execute(gameController);
 				blockrPanel.redrawGameWorld();
 			} catch (Exception e1) {
 				System.out.println("Execute in keyPressed failed");
@@ -175,7 +182,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 			System.out.println("Changed gameWorld");
 			int width = blockrPanel.getPreferredGameWorldWidth();
 			int height = blockrPanel.getPreferredGameWorldHeight();
-			gameController.setGameWorld(new GameWorld(width, height));
+			GC.setGameWorld(gameController, GW.makeRandomGameWorld(width, height));
 			blockrPanel.redrawGameWorld();
 			break;
 

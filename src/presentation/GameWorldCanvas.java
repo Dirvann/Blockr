@@ -4,13 +4,12 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import domain.ImplementationGameController;
 import domain.game_world.Direction;
 import domain.game_world.GameWorld;
-import domain.game_world.Grid;
+import domain.game_world.ImplementationGameWorld;
 import domain.game_world.Vector;
-import domain.game_world.cell.Cell;
-import domain.game_world.cell.Goal;
-import domain.game_world.cell.Wall;
+
 
 public class GameWorldCanvas extends Canvas {
 
@@ -20,62 +19,55 @@ public class GameWorldCanvas extends Canvas {
 	private static final long serialVersionUID = -5278879530185183350L;
 	
 	private BlockrPanel blockrPanel;
+	private ImplementationGameController GC;
+	private ImplementationGameWorld GW;
 	
 	public GameWorldCanvas(BlockrPanel blockrPanel) {
+		GC = new ImplementationGameController();
+		GW = new ImplementationGameWorld();
 		this.blockrPanel = blockrPanel;
 	}
 	
 	public void paint(Graphics g) {
-		drawGameWorld(g, blockrPanel.getGameController().getGameWorld());
+		drawGameWorld(g, GC.getGameWorld(blockrPanel.getGameController()));
 	}
 	
 	public void drawGameWorld(Graphics g, GameWorld gameWorld) {
-		Grid grid = gameWorld.getGrid();
-		
 		int worldWidth = this.getWidth();
-		int worldHeight = worldWidth / grid.getWidth() * grid.getHeight();
+		int worldHeight = worldWidth / GW.getGridWidth(gameWorld) * GW.getGridHeight(gameWorld);
 		
-		int cellWidth = worldWidth / grid.getWidth();
-		int cellHeight = worldHeight /grid.getHeight();
+		int cellWidth = worldWidth / GW.getGridWidth(gameWorld);
+		int cellHeight = worldHeight /GW.getGridHeight(gameWorld);
 		
 		
 		// Vertical lines
-		for (int i = 0; i < grid.getWidth() +1; i++) {
+		for (int i = 0; i < GW.getGridWidth(gameWorld) +1; i++) {
 			g.drawLine(i * cellWidth, 0, i * cellWidth, worldHeight);
 		}
 		
 		// Horizontal lines
-		for (int i = 0; i < grid.getHeight() +1; i++) {
+		for (int i = 0; i < GW.getGridHeight(gameWorld) +1; i++) {
 			g.drawLine(0, i * cellHeight, worldWidth, i * cellHeight);
 		}
 		
 		drawCells(g, gameWorld, cellWidth, cellHeight);
 	}
 	
-	private void drawCells(Graphics g, GameWorld gameWorld, int cellWidth, int cellHeight) {
-		Grid grid = gameWorld.getGrid();
-		for (int x = 0; x < grid.getWidth(); x++) {
-			for (int y = 0; y < grid.getHeight(); y++) {
-				try {	
-					if (grid.getCell(x, y) != null) {
-						Cell c = grid.getCell(x, y);
-						if (c instanceof Wall) {
-							g.setColor(Color.BLACK);
-							g.fillRect(cellWidth * x, cellHeight * y, cellWidth, cellHeight);
-						} else if (c instanceof Goal) {
-							g.setColor(Color.GREEN);
-							g.fillRect(cellWidth * x +1, cellHeight * y +1, cellWidth -1, cellHeight -1);
-						}
-					}
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+	void drawCells(Graphics g, GameWorld gameWorld, int cellWidth, int cellHeight) {
+		for (int x = 0; x < GW.getGridWidth(gameWorld); x++) {
+			for (int y = 0; y < GW.getGridHeight(gameWorld); y++) {
+				if (GW.isWall(gameWorld, x, y)) {
+					g.setColor(Color.BLACK);
+					g.fillRect(cellWidth * x, cellHeight * y, cellWidth, cellHeight);
+				} else if (GW.isGoal(gameWorld, x, y)) {
+					g.setColor(Color.GREEN);
+					g.fillRect(cellWidth * x, cellHeight * y, cellWidth, cellHeight);
 				}
 			}
 		}
 		
-		Vector robotPostition = gameWorld.getRobot().getLocation();
-		Direction robotDirection = gameWorld.getRobot().getDirection();
+		Vector robotPostition = GW.getRobotLocation(gameWorld);
+		Direction robotDirection = GW.getRobotDirection(gameWorld);
 
 		double circleRatio = 0.9;
 		double rectWidth = 0.2;

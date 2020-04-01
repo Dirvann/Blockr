@@ -4,8 +4,9 @@ import java.awt.Color;
 import java.awt.Panel;
 
 import domain.GameController;
-import domain.game_world.GameWorld;
-import facade.Implementation;
+import domain.ImplementationGameController;
+import domain.game_world.ImplementationGameWorld;
+
 
 public class BlockrPanel extends Panel {
 
@@ -20,7 +21,8 @@ public class BlockrPanel extends Panel {
 	private final double worldProportion = 0.3;
 	
 	private GameController gameController;
-	private Implementation GI; // GameInterface
+	private ImplementationGameController GC;
+	private ImplementationGameWorld GW;
 	
 	private int preferredGameWorldWidth = 10;
 	private int preferredGameWorldHeight = 10;
@@ -31,9 +33,10 @@ public class BlockrPanel extends Panel {
 		this.setBackground(Color.LIGHT_GRAY);
 		
 		// Set variables for game functions
-		GI = new Implementation();
-		gameController = GI.makeGameController();
-		gameController.setGameWorld(new GameWorld(preferredGameWorldWidth, preferredGameWorldHeight));
+		GC = new ImplementationGameController();
+		GW = new ImplementationGameWorld();
+		gameController = GC.makeGameController();
+		GC.setGameWorld(gameController, GW.makeRandomGameWorld(preferredGameWorldWidth, preferredGameWorldHeight));
 		
 		// Define panel borders
 		int worldPanelStart = (int) (this.getWidth() * (1 - worldProportion));
@@ -53,9 +56,9 @@ public class BlockrPanel extends Panel {
 		
 	}
 	
-	public Implementation getGameInterface() {
-		return this.GI;
-	}
+//	public Implementation getGameInterface() {
+//		return this.GI;
+//	}
 	
 	public GameController getGameController() {
 		return this.gameController;
