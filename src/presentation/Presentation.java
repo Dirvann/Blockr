@@ -15,7 +15,6 @@ import javax.swing.WindowConstants;
 
 import domain.GameController;
 import domain.ImplementationGameController;
-import domain.ProgramArea;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
 import domain.game_world.Direction;
@@ -55,7 +54,6 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 
 	GameController gameController;
 	PalettePresentation paletteP;
-	ProgramArea programArea;
 	ProgramAreaPresentation programAreaP;
 	ImplementationBlock GA; // GameInterface
 
@@ -75,8 +73,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 
 		gameController = GC.makeGameController();
 		paletteP = new PalettePresentation();
-		programArea = GC.getProgramArea(gameController);
-		programAreaP = new ProgramAreaPresentation(programArea);
+		programAreaP = new ProgramAreaPresentation(GC.getProgramArea(gameController));
 //    	Block bla = new MoveForward();
 //    	gameController.addTopLevelBlock(bla);
 //    	GA.connect(bla, new MoveForward());

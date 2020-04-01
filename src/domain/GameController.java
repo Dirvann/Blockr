@@ -24,26 +24,6 @@ public class GameController {
 		this.programArea = new ProgramArea();
 		this.gameWorld = gameWorld;
 	}	
-	
-//	/**
-//	 * Function made to use custom gameWorlds.
-//	 * 
-//	 * @param height
-//	 * @param width
-//	 * @param locations
-//	 * @param cells
-//	 * @param startPositionRobot
-//	 */
-//	public GameController(int height, int width, Vector[] locations, Cell[] cells,Vector startPositionRobot,Direction robotDirection) {
-//		this.programArea = new ProgramArea();
-//		Grid grid = null;
-//		try {
-//			grid = gameWorldFunctions.makeGrid(height,width,locations,cells);
-//		} catch (Exception e) {
-//			System.out.println("The fail happens in the Grid Creation"); //TODO: fix die exception
-//		}
-//		this.gameWorld = gameWorldFunctions.makeGameWorld(grid, gameWorldFunctions.makeRobot(startPositionRobot,robotDirection));
-//	}
 
 	protected void execute() throws Exception {
 		if (programArea.programInProgress()) {
@@ -72,27 +52,5 @@ public class GameController {
 	protected ProgramArea getProgramArea() {
 		return this.programArea;
 	}
-
-//	public void resetWorld() {
-//		gameWorldFunctions.resetGameWorld(gameWorld);
-//	}
-//
-//	public void robotTurnLeft() {
-//		gameWorldFunctions.robotTurnLeft(gameWorld);
-//
-//	}
-//
-//	public void robotTurnRight() {
-//		gameWorldFunctions.robotTurnRight(gameWorld);
-//
-//	}
-//
-//	public boolean robotWallInFront() {
-//		return gameWorldFunctions.robotWallInFront(gameWorld);
-//	}
-//
-//	public void robotStepForwards() {
-//		gameWorldFunctions.robotStepForwards(gameWorld);
-//	}
 
 }
