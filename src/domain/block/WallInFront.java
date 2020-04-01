@@ -1,40 +1,31 @@
 package domain.block;
 
 import domain.GameController;
-import domain.block.abstract_classes.SingleConditionBlock;
-import domain.block.block_types.Block;
-import domain.game_world.Vector;
 
-public class WallInFront extends SingleConditionBlock {
+class WallInFront extends SingleConditionBlock {
 	
 	
-	public WallInFront() {
+	protected WallInFront() {
 		super();
 	}
 
-	public boolean evaluate(GameController gameController) {
+	protected boolean evaluate(GameController gameController) {
 
 		if (gameController == null) {
 			return false;
 		}		
 		else
-			return gameController.getGameWorld().robotWallInFront();
+			return IGW.robotWallInFront(IGC.getGameWorld(gameController));
 	}
 
 	@Override
-	public Block getNewBlockOfThisType() {
+	protected WallInFront getNewBlockOfThisType() {
 		return new WallInFront();
 	}
 
 	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
+	protected String getName() {
 		return "Wall In Front";
 	}
-
-	public void setConnectedBlockPositionRecursivelyByDifference(Vector deltaPos) {
-		// Intentionally blank
-	}
-	
 	
 }

@@ -8,8 +8,8 @@ import java.awt.geom.Area;
 import java.util.Arrays;
 import java.util.List;
 
-import domain.block.abstract_classes.ActionBlock;
-import domain.block.block_types.SequenceBlock;
+import domain.block.ActionBlock;
+import domain.block.ImplementationBlock;
 import domain.game_world.Vector;
 
 public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
@@ -32,19 +32,19 @@ public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
 		g.drawString(getPresentationName(),pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
 	}
 
-	@Override
-	public PresentationBlock<ActionBlock> getNewBlockOfThisType() {
-		// TODO Auto-generated method stub
-		ActionBlock block = (ActionBlock) getBlock().getNewBlockOfThisType();
-		ActionBlockPresentation blockPresentation = new ActionBlockPresentation(getPosition(), block);
-		
-		
-		block.setPresentationBlock(blockPresentation);
-		if (block.getPresentationBlock() == null) {
-			System.out.println("block.getPresentationBlock() == null in actionBlockPresentation");
-		}
-		return blockPresentation;
-	}
+//	@Override
+//	public PresentationBlock<ActionBlock> getNewBlockOfThisType() {
+//		// TODO Auto-generated method stub
+//		ActionBlock block = (ActionBlock) getBlock().getNewBlockOfThisType();
+//		ActionBlockPresentation blockPresentation = new ActionBlockPresentation(getPosition(), block);
+//		
+//		
+//		block.setPresentationBlock(blockPresentation);
+//		if (block.getPresentationBlock() == null) {
+//			System.out.println("block.getPresentationBlock() == null in actionBlockPresentation");
+//		}
+//		return blockPresentation;
+//	}
 
 	
 	@Override
@@ -66,13 +66,9 @@ public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
 	}
 
 	@Override
-	public boolean snap(PresentationBlock<?> b) {
-		if(b.getBlock() instanceof SequenceBlock 
-				&& b.getGivingSnapPoint().distanceTo(getReceivingSnapPoints().get(0)) <= getSnapDistance()) {
-			getBlock().connectTo(b.getBlock());
-			return true;
-		}
-		return false;
+	protected PresentationBlock<ActionBlock> makeCopyWithoutConnections() {
+		ImplementationBlock BF = new ImplementationBlock();
+		return new ActionBlockPresentation(getPosition(), (ActionBlock) BF.makeNewBlockOfThisType(getBlock())) ;
 	}
 
 }

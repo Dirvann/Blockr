@@ -1,31 +1,28 @@
 package domain.block;
 
 import domain.GameController;
-import domain.block.abstract_classes.ChainConditionBlock;
-import domain.block.block_types.Block;
 
-public class NotBlock extends ChainConditionBlock {
+class NotBlock extends ChainConditionBlock {
 	
 
-	public NotBlock() {
+	protected NotBlock() {
 		super();
 	}
 
-	public boolean evaluate(GameController gamecontroller) {
-		if (this.getNextCondition() == null) {
+	protected boolean evaluate(GameController gamecontroller) {
+		if (!this.isValidCondition()) {
 			return false;
 		}
-		return !this.getNextCondition().evaluate(gamecontroller);
+		return !this.next.evaluate(gamecontroller);
 	}
 
 	@Override
-	public Block getNewBlockOfThisType() {
+	protected NotBlock getNewBlockOfThisType() {
 		return new NotBlock();
 	}
 
 	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
+	protected String getName() {
 		return "Not";
 	}
 }

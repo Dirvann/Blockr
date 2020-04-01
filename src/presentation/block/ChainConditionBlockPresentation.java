@@ -8,8 +8,8 @@ import java.awt.geom.Area;
 import java.util.Arrays;
 import java.util.List;
 
-import domain.block.abstract_classes.ChainConditionBlock;
-import domain.block.block_types.ConditionBlock;
+import domain.block.ChainConditionBlock;
+import domain.block.ImplementationBlock;
 import domain.game_world.Vector;
 
 public class ChainConditionBlockPresentation extends PresentationBlock<ChainConditionBlock> {
@@ -33,16 +33,6 @@ public class ChainConditionBlockPresentation extends PresentationBlock<ChainCond
 		g.drawString(getPresentationName(),pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
 	}
 
-	@Override
-	public PresentationBlock<ChainConditionBlock> getNewBlockOfThisType() {
-		ChainConditionBlock block = (ChainConditionBlock) getBlock().getNewBlockOfThisType();
-		ChainConditionBlockPresentation blockPresentation= new ChainConditionBlockPresentation(getPosition(), block);
-		block.setPresentationBlock(blockPresentation);
-		if (block.getPresentationBlock() == null) {
-			System.out.println("block.getPresentationBlock() == null in chainConditionBlockPresentation");
-		}
-		return blockPresentation;
-	}
 
 	
 	@Override
@@ -64,12 +54,8 @@ public class ChainConditionBlockPresentation extends PresentationBlock<ChainCond
 	}
 
 	@Override
-	public boolean snap(PresentationBlock<?> b) {
-		if(b.getBlock() instanceof ConditionBlock 
-				&&  b.getGivingSnapPoint().distanceTo(getReceivingSnapPoints().get(0)) <= getSnapDistance()) {
-			getBlock().connectTo(b.getBlock());
-			return true;
-		}
-		return false;
+	protected PresentationBlock<ChainConditionBlock> makeCopyWithoutConnections() {
+		ImplementationBlock BF = new ImplementationBlock();
+		return new ChainConditionBlockPresentation(getPosition(), (ChainConditionBlock) BF.makeNewBlockOfThisType(getBlock())) ;
 	}
 }

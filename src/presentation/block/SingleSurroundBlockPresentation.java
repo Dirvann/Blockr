@@ -8,12 +8,16 @@ import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.block.abstract_classes.SingleSurroundingBlock;
-import domain.block.block_types.ConditionBlock;
-import domain.block.block_types.SequenceBlock;
+import domain.block.Block;
+import domain.block.ConditionBlock;
+import domain.block.ImplementationBlock;
+import domain.block.SequenceBlock;
+import domain.block.SingleSurroundingBlock;
 import domain.game_world.Vector;
 
 public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSurroundingBlock> {
+	
+	ImplementationBlock BF = new ImplementationBlock();
 
 	public SingleSurroundBlockPresentation(Vector pos, SingleSurroundingBlock block) {
 		super(pos, block);
@@ -59,22 +63,22 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 		
 	}
 
-	@Override
-	public PresentationBlock<SingleSurroundingBlock> getNewBlockOfThisType() {
-		SingleSurroundingBlock block = (SingleSurroundingBlock) getBlock().getNewBlockOfThisType();
-		SingleSurroundBlockPresentation blockPresentation = new SingleSurroundBlockPresentation(getPosition(), block);
-		block.setPresentationBlock(blockPresentation);
-		return blockPresentation;
-	}
+//	@Override
+//	public PresentationBlock<SingleSurroundingBlock> getNewBlockOfThisType() {
+//		SingleSurroundingBlock block = (SingleSurroundingBlock) getBlock().getNewBlockOfThisType();
+//		SingleSurroundBlockPresentation blockPresentation = new SingleSurroundBlockPresentation(getPosition(), block);
+//		block.setPresentationBlock(blockPresentation);
+//		return blockPresentation;
+//	}
 
 
 	@Override
 	public int getTotalHeight() {
 		int totalHeight = 2 * getBlockHeight();
-		SequenceBlock current = getBlock().getBodyBlock();
+		Block current =  BF.getBodyBlock(getBlock());
 		while (current != null) {
-			totalHeight += current.getPresentationBlock().getTotalHeight();
-			current = current.getNextBlock();
+			totalHeight += BF.getPresentationBlock(current).getTotalHeight();
+			current = BF.getNextBlock(current);
 		}
 		return totalHeight;
 	}
@@ -92,17 +96,17 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 
 	@Override
 	protected Vector getNextBlockPosition(PresentationBlock<?> presentationBlock) {
-		if (presentationBlock.getBlock() == getBlock().getBodyBlock()) {
+		if (presentationBlock.getBlock() == BF.getBodyBlock(getBlock())) {
 			Vector pos = getPosition();
 			return new Vector(pos.getX() + getBlockSideWidth(), pos.getY() + PresentationBlock.getBlockHeight());
 		}
 
-		if (presentationBlock.getBlock() == getBlock().getNextBlock()) {
+		if (presentationBlock.getBlock() == BF.getNextBlock(getBlock())) {
 			Vector pos = getPosition();
 			return new Vector(pos.getX(), pos.getY() + getTotalHeight());
 		}
 
-		if (presentationBlock.getBlock() == getBlock().getConditionBlock()) {
+		if (presentationBlock.getBlock() == BF.getConditionBlock(getBlock())) {
 			Vector pos = getPosition();
 			return new Vector(pos.getX() + getBlockWidth(), pos.getY());
 		}
@@ -118,7 +122,6 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 
 	@Override
 	public List<Vector> getReceivingSnapPoints() {
-		Vector pos = getPosition();
 		List<Vector> snapPoints = new ArrayList<Vector>();
 		snapPoints.add(getConditionSnapPoint());
 		snapPoints.add(getBodySnapPoint());
@@ -143,23 +146,29 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 	}
 
 	@Override
-	public boolean snap(PresentationBlock<?> b) {
+	public boolean canSnap(PresentationBlock<?> b) {
 		if (b.getBlock() instanceof ConditionBlock
 				&& b.getGivingSnapPoint().distanceTo(getConditionSnapPoint()) <= getSnapDistance()) {
-			getBlock().connectConditionBlock((ConditionBlock)b.getBlock());
+			BF.setConditionBlock(getBlock(), (ConditionBlock) b.getBlock());
 			return true;
 		}
 		if (b.getBlock() instanceof SequenceBlock) {
 			if (b.getGivingSnapPoint().distanceTo(getBodySnapPoint()) <= getSnapDistance()) {
-				getBlock().connectBodyBlock((SequenceBlock)b.getBlock());
+				BF.addBodyBlock(getBlock(), (SequenceBlock) b.getBlock());
 				return true;
 			}
 			if (b.getGivingSnapPoint().distanceTo(getSequenceSnapPoint()) <= getSnapDistance()) {
-				getBlock().connectTo(b.getBlock());
+				BF.connect(getBlock(), b.getBlock());
 				return true;
 			}
 		}
 		return false;
+	}
+
+	@Override
+	protected PresentationBlock<SingleSurroundingBlock> makeCopyWithoutConnections() {
+		ImplementationBlock BF = new ImplementationBlock();
+		return new SingleSurroundBlockPresentation(getPosition(), (SingleSurroundingBlock) BF.makeNewBlockOfThisType(getBlock())) ;
 	}
 
 }

@@ -5,7 +5,8 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.block.abstract_classes.SingleConditionBlock;
+import domain.block.ImplementationBlock;
+import domain.block.SingleConditionBlock;
 import domain.game_world.Vector;
 
 public class SingleConditionBlockPresentation extends PresentationBlock<SingleConditionBlock> {
@@ -25,13 +26,13 @@ public class SingleConditionBlockPresentation extends PresentationBlock<SingleCo
 		g.drawString(getPresentationName(),pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
 	}
 
-	@Override
-	public PresentationBlock<SingleConditionBlock> getNewBlockOfThisType() {
-		SingleConditionBlock block =  (SingleConditionBlock) getBlock().getNewBlockOfThisType();
-		SingleConditionBlockPresentation blockPresentation = new SingleConditionBlockPresentation(getPosition(), block);
-		block.setPresentationBlock(blockPresentation);
-		return blockPresentation;
-	}
+//	@Override
+//	public PresentationBlock<SingleConditionBlock> getNewBlockOfThisType() {
+//		SingleConditionBlock block =  (SingleConditionBlock) getBlock().getNewBlockOfThisType();
+//		SingleConditionBlockPresentation blockPresentation = new SingleConditionBlockPresentation(getPosition(), block);
+//		block.setPresentationBlock(blockPresentation);
+//		return blockPresentation;
+//	}
 
 	
 	@Override
@@ -52,8 +53,9 @@ public class SingleConditionBlockPresentation extends PresentationBlock<SingleCo
 	}
 
 	@Override
-	public boolean snap(PresentationBlock<?> b) {
-		return false;
+	protected PresentationBlock<SingleConditionBlock> makeCopyWithoutConnections() {
+		ImplementationBlock BF = new ImplementationBlock();
+		return new SingleConditionBlockPresentation(getPosition(), (SingleConditionBlock) BF.makeNewBlockOfThisType(getBlock())) ;
 	}
 
 }

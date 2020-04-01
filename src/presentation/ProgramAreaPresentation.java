@@ -1,43 +1,40 @@
 package presentation;
 
 import java.awt.Graphics;
-import java.util.ArrayList;
 import java.util.List;
 
+import domain.GameController;
+import domain.ImplementationGameController;
+import domain.block.Block;
+import domain.block.ImplementationBlock;
 import domain.game_world.Vector;
+import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 
 public class ProgramAreaPresentation {
-
-	private List<PresentationBlock<?>> programAreaBlocks;
-	private int blocksLeft = 15;
 	
-	public ProgramAreaPresentation() {
-		programAreaBlocks = new ArrayList<PresentationBlock<?>>();
+	private ImplementationPresentationBlock BFP = new ImplementationPresentationBlock();
+	private ImplementationBlock BF = new ImplementationBlock();
+	private ImplementationGameController GC = new ImplementationGameController();
+	private GameController gameController;
+	
+	public ProgramAreaPresentation(GameController gameController) {
+		this.gameController = gameController;
 	}
 	
 	public void paint(Graphics g) {
-		for (PresentationBlock<?> pBlock: programAreaBlocks) {
-			pBlock.draw(g);
+		List<Block> programAreaBlocks = GC.getCopyOfAllTopLevelBlocks(gameController);
+		for (Block pBlock: programAreaBlocks) {
+			BFP.draw(g, BF.getPresentationBlock(pBlock));
 		}
 	}
 	
-	public void addBlock(PresentationBlock<?> presentationCopy) {
-		programAreaBlocks.add(presentationCopy);
-	}
 	
-	public void removeBlock(PresentationBlock<?> pBlock) {
-		programAreaBlocks.remove(pBlock);
-	}
 	
-	public void removeBlockRecursive(PresentationBlock pBlock) {
-		
-	}
-	
-	public PresentationBlock getBlockAtPosition(Vector position) {
-		for (PresentationBlock pBlock: programAreaBlocks) {
-			if (pBlock.collidesWithPosition(position)) {
-				return pBlock;
+	public PresentationBlock<?> getBlockAtPosition(Vector position) {
+		for (Block block:  GC.getCopyOfAllTopLevelBlocks(gameController)) {
+			if (BFP.collidesWithPosition(position, BF.getPresentationBlock(block))) {
+				return BF.getPresentationBlock(block);
 			}
 		}
 		
@@ -46,8 +43,9 @@ public class ProgramAreaPresentation {
 	
 	public boolean snapBlock(PresentationBlock<?> block){
 		
-		for (PresentationBlock<?> pBlock: programAreaBlocks) {
-			if (pBlock.snap(block)) {
+		for (Block blockListElement:  GC.getCopyOfAllTopLevelBlocks(gameController)) {
+			PresentationBlock<?> pBlock = BF.getPresentationBlock(blockListElement);
+			if (BFP.canSnap(pBlock, block)) {
 				return true;
 			}
 		}
@@ -55,21 +53,6 @@ public class ProgramAreaPresentation {
 	}
 	
 
-	public int getBlocksLeft() {
-		return blocksLeft;
-	}
-
-	public void setBlocksLeft(int blocksLeft) {
-		this.blocksLeft = blocksLeft;
-	}
-	
-	public void increaseBlocksLeft() {
-		blocksLeft += 1;
-	}
-	
-	public void decreaseBlocksLeft() {
-		blocksLeft -= 1;
-	}
 	
 	
 }

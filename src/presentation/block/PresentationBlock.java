@@ -5,7 +5,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.util.List;
 
-import domain.block.block_types.Block;
+import domain.block.Block;
+import domain.block.ImplementationBlock;
 import domain.game_world.Vector;
 import presentation.ProgramAreaPresentation;
 
@@ -16,69 +17,70 @@ public abstract class PresentationBlock<T extends Block> {
 	private static final int blockHeight = 20;
 
 	private static final int blockSideWidth = 20;
-	
+
 	private static double snapDistance = 14;
-	
+
 	private static int plugHeight = 4;
 	private static int plugWidth = 8;
-	
+
 	private static Color backgroundColor = Color.WHITE;
-	
+
 	private T block;
 
 	private Vector position;
 
-	public PresentationBlock(Vector pos, T block) {
+	private ImplementationBlock blockFunctions = new ImplementationBlock();
+
+	protected PresentationBlock(Vector pos, T block) {
 		this.position = pos;
 		this.block = block;
+		blockFunctions.setPresentationBlock(block, this);
 
 	}
-	
-	public static int getPlugHeight() {
+
+	protected static int getPlugHeight() {
 		return plugHeight;
 	}
-	
-	public static int getPlugWidth() {
+
+	protected static int getPlugWidth() {
 		return plugWidth;
 	}
-	
-	public static Color getBackgroundColor() {
+
+	protected static Color getBackgroundColor() {
 		return backgroundColor;
 	}
 
-	
-
 	private static final Font font = new Font("Arial", Font.PLAIN, (int) (blockHeight * 0.7));
 
-	public Vector getPosition() {
+	protected Vector getPosition() {
 		// check if it has a previous block
-		if (getBlock().getPreviousBlock() == null) {
-			return this.position;
+		if (blockFunctions.getPreviousBlock(getBlock()) == null) {
+			return new Vector(position.getX(), position.getY());
 		}
 
 		// get the position of the block from the upper block
+		Block previous = blockFunctions.getPreviousBlock(getBlock());
 
-		this.setPosition(getBlock().getPreviousBlock().getPresentationBlock().getNextBlockPosition(this));
+		this.setPosition(blockFunctions.getPresentationBlock(previous).getNextBlockPosition(this));
 
 		return this.position;
 	}
 
-	public void setPosition(Vector pos) {
+	protected void setPosition(Vector pos) {
 		this.position = pos;
 	}
 
-	public void setPositionByDifference(Vector deltaPos) {
+	protected void setPositionByDifference(Vector deltaPos) {
 		this.setPosition(getPosition().add(deltaPos));
 	}
 
-
-	public void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP) {
+	protected void removeFromProgramAreaPresentationRecursively(ProgramAreaPresentation programAreaP) {
 
 	}
 
-	abstract public void draw(Graphics g);
+	abstract protected void draw(Graphics g);
 
-	public void highLight(Graphics g) {
+	protected void highLight(Graphics g) {
 		g.setColor(Color.black);
 		int left = this.getPosition().getX();
 		int right = this.getPosition().getX() + PresentationBlock.getBlockWidth();
@@ -95,19 +97,24 @@ public abstract class PresentationBlock<T extends Block> {
 		g.drawLine(right, top, right, bottom);
 	}
 
-	public static int getBlockWidth() {
+	protected static int getBlockWidth() {
 		return blockWidth;
 	}
-	
-	public static double getSnapDistance() {
+
+	protected static double getSnapDistance() {
 		return snapDistance;
 	}
 
-	public static int getBlockHeight() {
+	protected static int getBlockHeight() {
 		return blockHeight;
 	}
 
-	public boolean collidesWithPosition(Vector pos) {
+	/**
+	 * 
+	 * @param pos
+	 * @return Checks if the position is in the block
+	 */
+	protected boolean collidesWithPosition(Vector pos) {
 		if (pos.getX() > this.getPosition().getX() && pos.getX() < (getBlockWidth() + this.getPosition().getX())
 				&& pos.getY() > this.getPosition().getY()
 				&& pos.getY() < (this.getPosition().getY() + getBlockHeight())) {
@@ -116,58 +123,74 @@ public abstract class PresentationBlock<T extends Block> {
 		return false;
 	}
 
-	public boolean collisionWithLowerPart(Vector position) {
+	protected boolean collisionWithLowerPart(Vector position) {
 		return false;
 	}
 
-	public T getBlock() {
+	protected T getBlock() {
 		return this.block;
 	}
 
-	public void setBlock(T block) {
+	protected void setBlock(T block) {
 		this.block = block;
 	}
 
-	public abstract PresentationBlock<T> getNewBlockOfThisType();
+	// protected abstract PresentationBlock<T> getNewBlockOfThisType();
 
-	public String getPresentationName() {
-		return getBlock().getName();
+	protected String getPresentationName() {
+		return blockFunctions.getName(getBlock());
 	}
 
-	public static Font getFont() {
+	protected static Font getFont() {
 		return font;
 	}
 
-	public int getTotalHeight() {
+	protected int getTotalHeight() {
 		return getBlockHeight();
 	}
-	
+
 	protected abstract Vector getNextBlockPosition(PresentationBlock<?> presentationBlock);
-	
-	public int getBlockSideWidth() {
+
+	protected int getBlockSideWidth() {
 		return blockSideWidth;
 	}
-	
-	public int getHeight() {
+
+	protected int getHeight() {
 		return blockHeight;
 	}
+
 	/**
-	 * Returns the position of the snap point of the block that can snap into another.
+	 * Returns the position of the snap point of the block that can snap into
+	 * another.
+	 * 
 	 * @return snap point as vector
 	 */
-	public abstract Vector getGivingSnapPoint();
-	
+	protected abstract Vector getGivingSnapPoint();
+
 	/**
 	 * Return a list of snap points that can be snapped into
+	 * 
 	 * @return list of snap points as vectors
 	 */
-	public abstract List<Vector> getReceivingSnapPoints();
-	
+	protected abstract List<Vector> getReceivingSnapPoints();
+
 	/**
 	 * Check if the given block can snap into this presentationBlock
+	 * 
 	 * @param b
-	 * @return
+	 * @return true if b can connect to this block, false if not.
+	 * @Post b is connected to this if possible.
 	 */
-	public abstract boolean snap(PresentationBlock<?> b);
+	protected boolean canSnap(PresentationBlock<?> b) {
+		List<Vector> receivers = getReceivingSnapPoints();
+		if (receivers.size() == 0) return false;
+		if (b.getGivingSnapPoint().distanceTo(getReceivingSnapPoints().get(0)) <= getSnapDistance()
+				&& blockFunctions.connect(getBlock(), b.getBlock())) {
+			return true;
+		}
+		return false;
+	}
+	
+	abstract protected PresentationBlock<T> makeCopyWithoutConnections(); 
 
 }

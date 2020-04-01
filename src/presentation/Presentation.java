@@ -14,22 +14,13 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import domain.GameController;
-import domain.block.MoveForward;
-import domain.block.abstract_classes.ActionBlock;
-import domain.block.abstract_classes.ChainConditionBlock;
-import domain.block.abstract_classes.SingleSurroundingBlock;
-import domain.block.block_types.Block;
-import domain.block.block_types.ConditionBlock;
-import domain.block.block_types.SequenceBlock;
+import domain.ImplementationGameController;
+import domain.block.Block;
+import domain.block.ImplementationBlock;
 import domain.game_world.Direction;
 import domain.game_world.GameWorld;
-import domain.game_world.Grid;
-import domain.game_world.Robot;
+import domain.game_world.ImplementationGameWorld;
 import domain.game_world.Vector;
-import domain.game_world.cell.Cell;
-import domain.game_world.cell.Goal;
-import domain.game_world.cell.Wall;
-import facade.Implementation;
 import presentation.block.*;
 
 public class Presentation extends Canvas implements MouseListener, MouseMotionListener, KeyListener {
@@ -54,11 +45,17 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 	boolean mouseDown = false;
 	PresentationBlock<?> selectedBlock = null;
 	Vector previousMousePos = null;
+	String errorMessage = "The error message will appear here!";
+
+	private ImplementationBlock BF = new ImplementationBlock();
+	private ImplementationPresentationBlock BFP = new ImplementationPresentationBlock();
+	private ImplementationGameWorld GW = new ImplementationGameWorld();
+	private ImplementationGameController GC = new ImplementationGameController(); 
 
 	GameController gameController;
 	PalettePresentation paletteP;
 	ProgramAreaPresentation programAreaP;
-	Implementation GA; // GameInterface
+	ImplementationBlock GA; // GameInterface
 
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Blockr");
@@ -72,11 +69,11 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 
 	public Presentation() {
 
-		GA = new Implementation();
+		GA = new ImplementationBlock();
 
-		gameController = GA.makeGameController();
+		gameController = GC.makeGameController();
 		paletteP = new PalettePresentation();
-		programAreaP = new ProgramAreaPresentation();
+		programAreaP = new ProgramAreaPresentation(gameController);
 //    	Block bla = new MoveForward();
 //    	gameController.addTopLevelBlock(bla);
 //    	GA.connect(bla, new MoveForward());
@@ -96,8 +93,8 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 //			e.printStackTrace();
 //		}
 
-		gameController.setGameWorld(new GameWorld(gameWorldWidth, gameWorldHeight));
-		gameWorld = gameController.getGameWorld();
+		GC.setGameWorld(gameController,GW.makeRandomGameWorld(gameWorldWidth, gameWorldHeight));
+		gameWorld = GC.getGameWorld(gameController);
 
 		addMouseListener(this);
 		addMouseMotionListener(this);
@@ -112,40 +109,40 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 		g.drawLine(canvas.getWidth() - (int) (worldProportion * canvas.getWidth()), 0,
 				canvas.getWidth() - (int) (worldProportion * canvas.getWidth()), canvas.getHeight());
 
-		if (programAreaP.getBlocksLeft() > 0) {
+		if (GC.getAmountOfBlocksLeft(gameController) > 0) { //TODO: getBlocksLeft
 			paletteP.paint(g);
 		}
-		g.setFont(new Font("Arial", Font.PLAIN, (int) (getHeight()/20)));
-		g.drawString("" + programAreaP.getBlocksLeft(),getWidth()/18, 17 * getHeight()/18);
+		g.setFont(new Font("Arial", Font.PLAIN, (int) (getHeight() / 20)));
+		g.drawString("" + GC.getAmountOfBlocksLeft(gameController), getWidth() / 18, 17 * getHeight() / 18);
+		g.setFont(new Font("Arial", Font.PLAIN, (int) (getHeight() / 40)));
+		g.drawString(errorMessage, getWidth() / 4, 17 * getHeight() / 18);
 		programAreaP.paint(g);
 
-		Block nextToExecute = gameController.getNextBlockToExecute();
+		Block nextToExecute = GC.getNextBlockToExecute(gameController);
 		if (nextToExecute != null) {
-			nextToExecute.getPresentationBlock().highLight(g);
+			BFP.highLight(BF.getPresentationBlock(nextToExecute), g);
 		}
 
-		drawWorld(g, gameController.getGameWorld());
+		drawWorld(g, GC.getGameWorld(gameController));
 	}
 
 	public void drawWorld(Graphics g, GameWorld gameWorld) {
 		// drawing grid assuming proportions of with are larger than the area
 		// TODO Calc in double then after change to int
 		int worldWidth = (int) (canvas.getWidth() * worldProportion);
-		Grid grid = gameWorld.getGrid();
-		int worldHeight = (int) (worldWidth / grid.getWidth() * grid.getHeight());
-
+		int worldHeight = (int) (worldWidth / GW.getGridHeight(gameWorld) * GW.getGridWidth(gameWorld));
 		int worldStartX = (canvas.getWidth() - worldWidth);
 		int worldStartY = (canvas.getHeight() - worldHeight) / 2;
-		int cellWidth = worldWidth / grid.getWidth();
-		int cellHeight = worldHeight / grid.getHeight();
+		int cellWidth = worldWidth / GW.getGridWidth(gameWorld);
+		int cellHeight = worldHeight / GW.getGridHeight(gameWorld);
 
 		// Vertical lines
-		for (int i = 0; i < grid.getWidth(); i++) {
+		for (int i = 0; i < GW.getGridWidth(gameWorld); i++) {
 			g.drawLine(worldStartX + cellWidth * i, worldStartY, worldStartX + cellWidth * i,
 					worldStartY + worldHeight);
 		}
 		// Horizontal lines
-		for (int i = 0; i < grid.getHeight() + 1; i++) {
+		for (int i = 0; i < GW.getGridHeight(gameWorld) + 1; i++) {
 			g.drawLine(worldStartX, worldStartY + cellHeight * i, worldStartX + worldWidth,
 					worldStartY + cellHeight * i);
 		}
@@ -154,40 +151,27 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 	}
 
 	void drawCells(Graphics g, GameWorld gameWorld, int cellWidth, int cellHeight, int worldStartX, int worldStartY) {
-		Grid grid = gameWorld.getGrid();
-		for (int x = 0; x < grid.getWidth(); x++) {
-			for (int y = 0; y < grid.getHeight(); y++) {
-				try {
-					if (grid.getCell(x, y) != null) {
-						Cell c = grid.getCell(x, y);
-						if (c instanceof Wall) {
-							g.setColor(Color.BLACK);
-							g.fillRect(worldStartX + cellWidth * x, worldStartY + cellHeight * y, cellWidth,
-									cellHeight);
-						} else if (c instanceof Goal) {
-							g.setColor(Color.GREEN);
-							g.fillRect(worldStartX + cellWidth * x, worldStartY + cellHeight * y, cellWidth,
-									cellHeight);
-						}
-					}
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+		for (int x = 0; x < GW.getGridWidth(gameWorld); x++) {
+			for (int y = 0; y < GW.getGridHeight(gameWorld); y++) {
+				if (GW.isWall(gameWorld, x, y)) {
+					g.setColor(Color.BLACK);
+					g.fillRect(worldStartX + cellWidth * x, worldStartY + cellHeight * y, cellWidth, cellHeight);
+				} else if (GW.isGoal(gameWorld, x, y)) {
+					g.setColor(Color.GREEN);
+					g.fillRect(worldStartX + cellWidth * x, worldStartY + cellHeight * y, cellWidth, cellHeight);
 				}
 			}
 		}
 
-		Vector robotPostition = gameWorld.getRobot().getLocation();
-		Direction robotDirection = gameWorld.getRobot().getDirection();
+	Vector robotPostition = GW.getRobotLocation(gameWorld);
+	Direction robotDirection = GW.getRobotDirection(gameWorld);
 
-		double circleRatio = 0.9;
-		double rectWidth = 0.2;
-		g.setColor(Color.RED);
-		g.fillOval(worldStartX + cellWidth * robotPostition.getX() + (int) (cellWidth * (1 - circleRatio)),
-				worldStartY + cellHeight * robotPostition.getY() + (int) (cellHeight * (1 - circleRatio)),
-				(int) (cellWidth * circleRatio), (int) (cellHeight * circleRatio));
-		g.setColor(Color.BLACK);
-		switch (robotDirection) {
+	double circleRatio = 0.9;
+	double rectWidth = 0.2;
+	g.setColor(Color.RED);
+	g.fillOval( worldStartX + cellWidth*robotPostition.getX() + (int) (cellWidth * (1-circleRatio)) ,worldStartY+cellHeight*robotPostition.getY()+(int)(cellHeight*(1-circleRatio)),(int)(cellWidth*circleRatio),(int)(cellHeight*circleRatio));
+	g.setColor(Color.BLACK);switch(robotDirection)
+	{
 		case RIGHT:
 			g.fillRect(worldStartX + cellWidth * robotPostition.getX() + cellWidth / 2,
 					worldStartY + cellHeight * robotPostition.getY() + (int) (cellHeight * (1 - rectWidth) / 2),
@@ -212,6 +196,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		errorMessage = "";
 		System.out.println(e.getX() + " " + e.getY());
 	}
 
@@ -229,24 +214,23 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		errorMessage = "";
 		Vector mousePos = new Vector(e.getX(), e.getY());
 
 		PresentationBlock<?> paletteBlockP = paletteP.GetClickedPaletteBlock(mousePos);
 		// Clicked block in palette
 		// Create functional copy of paletteBlock and add to programArea
-		if (paletteBlockP != null && programAreaP.getBlocksLeft() >= 0) {
-			programAreaP.decreaseBlocksLeft();
-			PresentationBlock<?> presentationCopy;
-			presentationCopy = paletteBlockP.getNewBlockOfThisType();
-			programAreaP.addBlock(presentationCopy);
+		if (paletteBlockP != null && GC.getAmountOfBlocksLeft(gameController) >= 0) {
+			PresentationBlock<?> presentationCopy = BFP.makeCopy(paletteBlockP);
+			GC.addBlockToProgramArea(gameController, presentationCopy);
 			selectedBlock = presentationCopy;
-			System.out.println("presentationCopy.getBlock == null: " + presentationCopy.getBlock() == null);
+			System.out.println("New Block made of type: " + BF.getName(BFP.getBlock(selectedBlock) ));
 		}
 
 		PresentationBlock<?> programBlockP = programAreaP.getBlockAtPosition(mousePos);
 		if (programBlockP != null) {
 			selectedBlock = programBlockP;
-			GA.disconnect(selectedBlock.getBlock());
+			GA.disconnect(BFP.getBlock(selectedBlock));
 		}
 
 		previousMousePos = mousePos;
@@ -262,26 +246,20 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 			// Check for snapping
 			// TODO: replace with new snapping code
 			boolean snapped = programAreaP.snapBlock(selectedBlock);
-			
-
 			if (!snapped) {
-				if (!gameController.isTopLevelBlock(selectedBlock.getBlock())) {
-					gameController.addTopLevelBlock(selectedBlock.getBlock());
+				if (!GC.isTopLevelBlock(gameController, BFP.getBlock(selectedBlock))) {
+					GC.addTopLevelBlock(gameController, BFP.getBlock(selectedBlock));
 				}
 			} else {
-				if (gameController.isTopLevelBlock(selectedBlock.getBlock())) {
-					gameController.removeTopLevelBlock(selectedBlock.getBlock());
-				}
+				if (GC.isTopLevelBlock(gameController, BFP.getBlock(selectedBlock))) {
+					GC.removeTopLevelBlock(gameController, BFP.getBlock(selectedBlock));
+				} 
 			}
 
 			// Delete if over palette
 			int paletteBorder = (int) (panelProportion * canvas.getWidth());
 			if (mousePos.getX() < paletteBorder) {
-				if (gameController.isTopLevelBlock(selectedBlock.getBlock())) {
-					gameController.removeTopLevelBlock(selectedBlock.getBlock());
-				}
-
-				selectedBlock.getBlock().removeFromProgramAreaPresentationRecursively(programAreaP);
+				GC.removeBlockFromProgramArea(gameController, selectedBlock);
 				// programAreaP.removeBlock(selectedBlock);
 
 				// TODO: recursively delete all connected blocks
@@ -303,8 +281,7 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 	public void mouseDragged(MouseEvent e) {
 		if (this.mouseDown && this.selectedBlock != null) {
 			Vector moveDifference = new Vector(e.getX() - previousMousePos.getX(), e.getY() - previousMousePos.getY());
-			// selectedBlock.setPositionByDifference(moveDifference);
-			selectedBlock.setPosition(selectedBlock.getPosition().add(moveDifference));
+			BFP.addToPosition(selectedBlock, moveDifference);
 			this.previousMousePos = new Vector(e.getX(), e.getY());
 			repaint();
 		}
@@ -315,24 +292,24 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 
 		switch (e.getKeyCode()) {
 		case 27: // Esc
-			gameController.stopExecution();
-			gameController.resetWorld();
+			GC.stopExecution(gameController);
+			GW.resetGameWorld(gameWorld);
 			break;
 
 		case 115: // F4
-			gameController.stopExecution();
+			GC.stopExecution(gameController);
 			break;
 
 		case 116: // F5
 			try {
-				gameController.execute();
+				GC.execute(gameController);
 			} catch (Exception e1) {
-				System.out.println("Execute in keyPressed failed");
+				errorMessage = e1.getMessage();
 			}
 			break;
 
 		case 117: // F6
-			gameController.setGameWorld(new GameWorld(gameWorldWidth, gameWorldHeight));
+			GC.setGameWorld(gameController, GW.makeRandomGameWorld(gameWorldWidth, gameWorldHeight));
 			break;
 
 		default:

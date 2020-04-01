@@ -1,31 +1,29 @@
 package domain.block;
 
 import domain.GameController;
-import domain.block.abstract_classes.ActionBlock;
-import domain.block.block_types.Block;
 
-public class TurnRight extends ActionBlock {
+class TurnRight extends ActionBlock {
 
-	public TurnRight() {
+	protected TurnRight() {
 		super();
 	}
 
 	@Override
-	public void performAction(GameController gameController) {
+	protected void performAction(GameController gameController) {
 
 		if (gameController == null) 
 			System.out.println("Turn Right");
 		else
-			gameController.getGameWorld().robotTurnRight();
+			IGW.robotTurnRight(IGC.getGameWorld(gameController));
 	}
 
 	@Override
-	public Block getNewBlockOfThisType() {
+	protected TurnRight getNewBlockOfThisType() {
 		return new TurnRight();
 	}
 
 	@Override
-	public String getName() {
+	protected String getName() {
 		// TODO Auto-generated method stub
 		return "Turn Right";
 	}

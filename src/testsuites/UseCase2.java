@@ -6,7 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import domain.GameController;
-import domain.block.block_types.Block;
+import domain.block.Block;
+import domain.block.ImplementationBlock;
 import domain.game_world.Direction;
 import domain.game_world.GameWorld;
 import domain.game_world.Grid;
@@ -14,7 +15,6 @@ import domain.game_world.Vector;
 import domain.game_world.cell.Cell;
 import domain.game_world.cell.Goal;
 import domain.game_world.cell.Wall;
-import facade.Implementation;
 /**
  * Run Program
  */
@@ -23,7 +23,7 @@ class UseCase2 {
 	// F5 = gameController.execute() (Block)
 	// highlighted = gameController.nextToExecute() (Block/ null if not started)
 	
-	static Implementation fi = new Implementation();
+	static ImplementationBlock fi = new ImplementationBlock();
 	static GameController gameController;
 	static GameWorld gameWorld;
 	static Grid testGrid;
