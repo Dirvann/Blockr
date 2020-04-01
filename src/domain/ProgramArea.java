@@ -163,6 +163,10 @@ public class ProgramArea {
 
 		return list;
 	}
+	
+	public void connect(Block firstBlock, Block secondBlock) {
+		BF.connect(firstBlock, secondBlock);
+	}
 
 	public int getBlocksLeft() {
 		return blocksLeft;

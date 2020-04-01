@@ -248,12 +248,10 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 		if (this.selectedBlock != null) {
 			// Check for snapping
 			// TODO: replace with new snapping code
-			PresentationBlock<?> blockToSnapTo = programAreaP.canSnapBlock(selectedBlock);
-
-			ERROR connect facade(firstblock = blocktosnapto, secondblock = selectedblock);
-			if (blockToSnapTo == null) {
-				if (!programArea.isTopLevelBlock(BFP.getBlock(selectedBlock))) { //TODO:hier
-					programArea.addTopLevelBlock(BFP.getBlock(selectedBlock)); //TODO:hier
+			boolean snapped = programAreaP.snapBlock(selectedBlock);
+			if (!snapped) {
+				if (!programArea.isTopLevelBlock(BFP.getBlock(selectedBlock))) {
+					programArea.addTopLevelBlock(BFP.getBlock(selectedBlock));
 				}
 			} else {
 				if (programArea.isTopLevelBlock(BFP.getBlock(selectedBlock))) { //TODO:hier
