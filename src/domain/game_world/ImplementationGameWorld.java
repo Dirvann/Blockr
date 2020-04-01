@@ -1,5 +1,6 @@
 package domain.game_world;
 
+import domain.Vector;
 import domain.game_world.cell.Cell;
 import domain.game_world.cell.Goal;
 import domain.game_world.cell.Wall;

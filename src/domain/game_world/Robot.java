@@ -1,4 +1,7 @@
 package domain.game_world;
+
+import domain.Vector;
+
 /**
  * A class of the Robot, containing the location and the direction of the robot.
  *

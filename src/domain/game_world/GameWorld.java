@@ -2,6 +2,7 @@ package domain.game_world;
 
 import java.util.Random;
 
+import domain.Vector;
 import domain.game_world.cell.*;
 
 // GameWorld contains a grid and the entities that move around on that grid

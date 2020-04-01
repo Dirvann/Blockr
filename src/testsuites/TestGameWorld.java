@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.Test;
 
+import domain.Vector;
 import domain.game_world.*;
 import domain.game_world.cell.*;
 

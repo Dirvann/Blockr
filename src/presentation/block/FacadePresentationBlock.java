@@ -2,12 +2,12 @@ package presentation.block;
 
 import java.awt.Graphics;
 
+import domain.Vector;
 import domain.block.ActionBlock;
 import domain.block.Block;
 import domain.block.ChainConditionBlock;
 import domain.block.SingleConditionBlock;
 import domain.block.SingleSurroundingBlock;
-import domain.game_world.Vector;
 
 public interface FacadePresentationBlock {
 	

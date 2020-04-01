@@ -1,4 +1,4 @@
-package domain.game_world;
+package domain;
 
 public final class Vector {
 

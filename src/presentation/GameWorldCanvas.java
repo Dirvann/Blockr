@@ -5,10 +5,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import domain.ImplementationGameController;
+import domain.Vector;
 import domain.game_world.Direction;
 import domain.game_world.GameWorld;
 import domain.game_world.ImplementationGameWorld;
-import domain.game_world.Vector;
 
 
 public class GameWorldCanvas extends Canvas {

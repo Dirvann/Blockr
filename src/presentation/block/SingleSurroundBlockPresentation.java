@@ -8,12 +8,12 @@ import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.List;
 
+import domain.Vector;
 import domain.block.Block;
 import domain.block.ConditionBlock;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
 import domain.block.SingleSurroundingBlock;
-import domain.game_world.Vector;
 
 public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSurroundingBlock> {
 	

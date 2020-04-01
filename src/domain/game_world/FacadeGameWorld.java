@@ -1,5 +1,6 @@
 package domain.game_world;
 
+import domain.Vector;
 import domain.game_world.cell.Cell;
 
 public interface FacadeGameWorld {

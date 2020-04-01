@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import domain.GameController;
 import domain.ImplementationGameController;
+import domain.Vector;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
 import domain.game_world.*;

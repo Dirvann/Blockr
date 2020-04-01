@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.game_world.Vector;
+import domain.Vector;
 import presentation.block.*;
 
 public class PalettePresentation {

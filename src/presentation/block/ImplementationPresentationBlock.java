@@ -2,8 +2,8 @@ package presentation.block;
 
 import java.awt.Graphics;
 
+import domain.Vector;
 import domain.block.*;
-import domain.game_world.Vector;
 
 public class ImplementationPresentationBlock implements FacadePresentationBlock{
 	private ImplementationBlock BF = new ImplementationBlock();

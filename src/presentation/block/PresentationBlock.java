@@ -5,9 +5,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.util.List;
 
+import domain.Vector;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
-import domain.game_world.Vector;
 import presentation.ProgramAreaPresentation;
 
 public abstract class PresentationBlock<T extends Block> {

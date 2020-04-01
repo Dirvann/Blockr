@@ -8,9 +8,9 @@ import java.awt.geom.Area;
 import java.util.Arrays;
 import java.util.List;
 
+import domain.Vector;
 import domain.block.ActionBlock;
 import domain.block.ImplementationBlock;
-import domain.game_world.Vector;
 
 public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
 	public ActionBlockPresentation(Vector pos, ActionBlock block) {

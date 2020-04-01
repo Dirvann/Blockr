@@ -5,7 +5,6 @@ import domain.game_world.Direction;
 import domain.game_world.GameWorld;
 import domain.game_world.Grid;
 import domain.game_world.ImplementationGameWorld;
-import domain.game_world.Vector;
 import domain.game_world.cell.Cell;
 
 public class GameController {
