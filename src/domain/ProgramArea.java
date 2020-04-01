@@ -19,7 +19,7 @@ public class ProgramArea {
 	/**
 	 * Creates a new ProgramArea
 	 */
-	public ProgramArea() {
+	protected ProgramArea() {
 		this.topLevelBlocks = new ArrayList<Block>();
 	}
 
@@ -27,7 +27,7 @@ public class ProgramArea {
 	 * 
 	 * @return number of top level blocks
 	 */
-	public int nbTopLevelBlocks() {
+	protected int nbTopLevelBlocks() {
 		return topLevelBlocks.size();
 	}
 
@@ -35,7 +35,7 @@ public class ProgramArea {
 	 * 
 	 * @return nbTopLevelBlocks() == 1 && top level block can be executed
 	 */
-	public boolean hasValidTopLevelBlock() {
+	protected boolean hasValidTopLevelBlock() {
 		if (nbTopLevelBlocks() == 1) {
 			Block topLevelBlock = topLevelBlocks.get(0);
 
@@ -49,7 +49,7 @@ public class ProgramArea {
 	 * 
 	 * @return nextToExecute != null
 	 */
-	public Boolean programInProgress() {
+	protected Boolean programInProgress() {
 		return nextToExecute != null;
 	}
 
@@ -57,7 +57,7 @@ public class ProgramArea {
 	 * 
 	 * @return true if program can start executing
 	 */
-	public Boolean canStartExecution() {
+	protected Boolean canStartExecution() {
 		return (!programInProgress() && hasValidTopLevelBlock());
 		// TODO: maybe check if program is valid
 	}
@@ -65,7 +65,7 @@ public class ProgramArea {
 	/**
 	 * @post nextToExecute != null
 	 */
-	public void startExecution() {
+	protected void startExecution() {
 		if (canStartExecution()) {
 			nextToExecute = topLevelBlocks.get(0);
 		}
@@ -76,25 +76,25 @@ public class ProgramArea {
 	 * @param gameController gameController to execute the next function in
 	 * @throws Exception when execute is not possible
 	 */
-	public void executeNextBlock(GameController gameController) throws Exception {
+	protected void executeNextBlock(GameController gameController) throws Exception {
 		nextToExecute = BF.execute(nextToExecute, gameController);
 	}
 
 	/**
 	 * @post nextToExecute == null
 	 */
-	public void stopExecution() {
+	protected void stopExecution() {
 		if (programInProgress()) {
 			nextToExecute = null;
 		}
 	}
 
-	public void addBlock(PresentationBlock<?> pBlock) {
+	protected void addBlock(PresentationBlock<?> pBlock) {
 		addTopLevelBlock(BFP.getBlock(pBlock));
 		blocksLeft -= BF.getAllNextBlocks(BFP.getBlock(pBlock)).size();
 	}
 
-	public void removeBlock(PresentationBlock<?> pBlock) {
+	protected void removeBlock(PresentationBlock<?> pBlock) {
 		Block block = BFP.getBlock(pBlock);
 		BF.disconnect(BFP.getBlock(pBlock));
 		blocksLeft += BF.getAllNextBlocks(block).size();
@@ -111,7 +111,7 @@ public class ProgramArea {
 	 * 
 	 * @param block, block to add to topLevelBlocks
 	 */
-	public void addTopLevelBlock(Block block) {
+	protected void addTopLevelBlock(Block block) {
 		topLevelBlocks.add(block);
 	}
 
@@ -120,7 +120,7 @@ public class ProgramArea {
 	 * @param block, block to remove from topLevelBlocks
 	 * @throws Exception block is not a top level block
 	 */
-	public void removeTopLevelBlock(Block block) {
+	protected void removeTopLevelBlock(Block block) {
 		if (topLevelBlocks.contains(block)) {
 			topLevelBlocks.remove(block);
 		}
@@ -131,7 +131,7 @@ public class ProgramArea {
 	 * @param block block to check
 	 * @return topLevelBlocks.contains(block)
 	 */
-	public boolean isTopLevelBlock(Block block) {
+	protected boolean isTopLevelBlock(Block block) {
 		return topLevelBlocks.contains(block);
 	}
 
@@ -139,7 +139,7 @@ public class ProgramArea {
 	 * 
 	 * @return nextToExecute
 	 */
-	public Block getNextBlockToExecute() {
+	protected Block getNextBlockToExecute() {
 		return this.nextToExecute;
 	}
 
@@ -147,7 +147,7 @@ public class ProgramArea {
 	 * 
 	 * @return topLevelBlocks
 	 */
-	public List<Block> getTopBlocks() {
+	protected List<Block> getTopBlocks() {
 		return this.topLevelBlocks;
 	}
 
@@ -164,23 +164,23 @@ public class ProgramArea {
 		return list;
 	}
 	
-	public void connect(Block firstBlock, Block secondBlock) {
+	protected void connect(Block firstBlock, Block secondBlock) {
 		BF.connect(firstBlock, secondBlock);
 	}
 
-	public int getBlocksLeft() {
+	protected int getBlocksLeft() {
 		return blocksLeft;
 	}
 
-	public void setBlocksLeft(int blocksLeft) {
+	protected void setBlocksLeft(int blocksLeft) {
 		this.blocksLeft = blocksLeft;
 	}
 
-	public void increaseBlocksLeft() {
+	protected void increaseBlocksLeft() {
 		blocksLeft += 1;
 	}
 
-	public void decreaseBlocksLeft() {
+	protected void decreaseBlocksLeft() {
 		blocksLeft -= 1;
 	}
 

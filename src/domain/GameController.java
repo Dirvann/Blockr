@@ -15,12 +15,12 @@ public class GameController {
 
 	ImplementationGameWorld gameWorldFunctions = new ImplementationGameWorld();
 
-	public GameController() {
+	protected GameController() {
 		this.programArea = new ProgramArea();
 		this.gameWorld = gameWorldFunctions.makeRandomGameWorld(10, 10);
 	}
 
-	public GameController(GameWorld gameWorld) {
+	protected GameController(GameWorld gameWorld) {
 		this.programArea = new ProgramArea();
 		this.gameWorld = gameWorld;
 	}	
@@ -45,7 +45,7 @@ public class GameController {
 //		this.gameWorld = gameWorldFunctions.makeGameWorld(grid, gameWorldFunctions.makeRobot(startPositionRobot,robotDirection));
 //	}
 
-	public void execute() throws Exception {
+	protected void execute() throws Exception {
 		if (programArea.programInProgress()) {
 			programArea.executeNextBlock(this);
 		} else {
@@ -53,23 +53,23 @@ public class GameController {
 		}
 	}
 
-	public void stopExecution() {
+	protected void stopExecution() {
 		programArea.stopExecution();
 	}
 
-	public Block getNextBlockToExecute() {
+	protected Block getNextBlockToExecute() {
 		return programArea.getNextBlockToExecute();
 	}
 
-	public void setGameWorld(GameWorld gameWorld) {
+	protected void setGameWorld(GameWorld gameWorld) {
 		this.gameWorld = gameWorld;
 	}
 
-	public GameWorld getGameWorld() {
+	protected GameWorld getGameWorld() {
 		return this.gameWorld;
 	}
 
-	public ProgramArea getProgramArea() {
+	protected ProgramArea getProgramArea() {
 		return this.programArea;
 	}
 

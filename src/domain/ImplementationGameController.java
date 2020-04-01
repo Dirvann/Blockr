@@ -2,6 +2,7 @@ package domain;
 
 import domain.block.Block;
 import domain.game_world.GameWorld;
+import presentation.block.PresentationBlock;
 
 public class ImplementationGameController implements FacadeGameController{
 
@@ -57,5 +58,27 @@ public class ImplementationGameController implements FacadeGameController{
 	@Override
 	public Block getNextBlockToExecute(GameController gameController) {
 		return gameController.getNextBlockToExecute();
+	}
+
+	@Override
+	public void addBlockToProgramArea(GameController gameController, PresentationBlock<?> pBlock) {
+		gameController.getProgramArea().addBlock(pBlock);
+		
+	}
+
+	@Override
+	public void removeBlockFromProgramArea(GameController gameController, PresentationBlock<?> pBlock) {
+		gameController.getProgramArea().removeBlock(pBlock);
+		
+	}
+
+	@Override
+	public Boolean isTopLevelBlock(GameController gameController, Block block) {
+		return gameController.getProgramArea().isTopLevelBlock(block);
+	}
+
+	@Override
+	public int getAmountOfBlocksLeft(GameController gameController) {
+		return gameController.getProgramArea().getBlocksLeft();
 	}
 }

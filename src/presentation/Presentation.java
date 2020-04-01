@@ -112,11 +112,11 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 		g.drawLine(canvas.getWidth() - (int) (worldProportion * canvas.getWidth()), 0,
 				canvas.getWidth() - (int) (worldProportion * canvas.getWidth()), canvas.getHeight());
 
-		if (programArea.getBlocksLeft() > 0) { //TODO: getBlocksLeft
+		if (GC.getAmountOfBlocksLeft(gameController) > 0) { //TODO: getBlocksLeft
 			paletteP.paint(g);
 		}
 		g.setFont(new Font("Arial", Font.PLAIN, (int) (getHeight() / 20)));
-		g.drawString("" + programArea.getBlocksLeft(), getWidth() / 18, 17 * getHeight() / 18);
+		g.drawString("" + GC.getAmountOfBlocksLeft(gameController), getWidth() / 18, 17 * getHeight() / 18);
 		g.setFont(new Font("Arial", Font.PLAIN, (int) (getHeight() / 40)));
 		g.drawString(errorMessage, getWidth() / 4, 17 * getHeight() / 18);
 		programAreaP.paint(g);
@@ -223,9 +223,9 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 		PresentationBlock<?> paletteBlockP = paletteP.GetClickedPaletteBlock(mousePos);
 		// Clicked block in palette
 		// Create functional copy of paletteBlock and add to programArea
-		if (paletteBlockP != null && programArea.getBlocksLeft() >= 0) {
+		if (paletteBlockP != null && GC.getAmountOfBlocksLeft(gameController) >= 0) {
 			PresentationBlock<?> presentationCopy = BFP.makeCopy(paletteBlockP);
-			programArea.addBlock(presentationCopy); //TODO: addBlock
+			GC.addBlockToProgramArea(gameController, presentationCopy);
 			selectedBlock = presentationCopy;
 			System.out.println("New Block made of type: " + BF.getName(BFP.getBlock(selectedBlock) ));
 		}
@@ -250,19 +250,19 @@ public class Presentation extends Canvas implements MouseListener, MouseMotionLi
 			// TODO: replace with new snapping code
 			boolean snapped = programAreaP.snapBlock(selectedBlock);
 			if (!snapped) {
-				if (!programArea.isTopLevelBlock(BFP.getBlock(selectedBlock))) {
-					programArea.addTopLevelBlock(BFP.getBlock(selectedBlock));
+				if (!GC.isTopLevelBlock(gameController, BFP.getBlock(selectedBlock))) {
+					GC.addTopLevelBlock(gameController, BFP.getBlock(selectedBlock));
 				}
 			} else {
-				if (programArea.isTopLevelBlock(BFP.getBlock(selectedBlock))) { //TODO:hier
-					programArea.removeTopLevelBlock(BFP.getBlock(selectedBlock)); //TODO:hier
+				if (GC.isTopLevelBlock(gameController, BFP.getBlock(selectedBlock))) {
+					GC.removeTopLevelBlock(gameController, BFP.getBlock(selectedBlock));
 				} 
 			}
 
 			// Delete if over palette
 			int paletteBorder = (int) (panelProportion * canvas.getWidth());
 			if (mousePos.getX() < paletteBorder) {
-				programArea.removeBlock(selectedBlock); //TODO: removeBlock
+				GC.removeBlockFromProgramArea(gameController, selectedBlock);
 				// programAreaP.removeBlock(selectedBlock);
 
 				// TODO: recursively delete all connected blocks
