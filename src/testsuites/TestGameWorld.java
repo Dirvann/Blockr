@@ -17,11 +17,7 @@ public class TestGameWorld {
 	static Vector[] locations = {new Vector(1,1), new Vector(1,0), new Vector(2,2) };
 	static GameWorld gameWorld;
 	static Robot robot;
-//robot draaien
-//robot bewegen
-//robot out of bounds
-//robot op goal
-//robot niet op goal
+	static ImplementationGameWorld GW = new ImplementationGameWorld();
 	/**
 	 * [[Robot , Wall , ____ ],
 	 *  [ ____ , Goal , ____ ],
@@ -29,101 +25,62 @@ public class TestGameWorld {
 	 */
 	public static void makeGameWorld() {
 		try {
-			testGrid = new Grid(3,3,locations,cells);
-			gameWorld = new GameWorld(testGrid,new Vector(0,0));
-			robot = gameWorld.getRobot();
+			testGrid = GW.makeGrid(3, 3, locations, cells);
+			gameWorld = GW.makeGameWorld(testGrid, new Vector(0,0));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
 		}
-		
-	}
-	@Test
-	public void gridFunctions() {
-		Wall wall1 = new Wall();
-		Vector v1 = new Vector(2,2);
-		Wall wall2 = new Wall();
-		Vector v2  = new Vector(2,3);
-		EmptyCell empty1 = new EmptyCell();
-		
-		Grid grid1 = new Grid();
-		try {
-		//CREATE GRID
-		grid1.setCells(new Vector[]{v1,v2},new Cell[] {wall1,wall2});
-		assertEquals(grid1.getCell(v1),wall1);
-		assertEquals(grid1.getCell(v2),wall2);
-		//EDIT GRID
-		grid1.setCell(v1, empty1);
-		assertEquals(grid1.getCell(v1),empty1);
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail();
-		}
-		//OUT OF BOUND EXCEPTION
-		try {
-			grid1.setCell(new Vector(10,10),new Wall());
-			fail();
-		} catch (Exception e) {
-			;
-		}
-		
 	}
 	@Test
 	public void rotateRobot() {
 		makeGameWorld();
-		assertEquals(robot.getDirection(),Direction.UP);
-		gameWorld.robotTurnRight();
-		assertEquals(robot.getDirection(),Direction.RIGHT);
-		gameWorld.robotTurnRight();
-		assertEquals(robot.getDirection(),Direction.DOWN);
-		
-		try {
-			assertEquals(robot.getPositionInFront(),new Vector(0,1));
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail();
-		}
-		
-		gameWorld.robotTurnRight();
-		assertEquals(robot.getDirection(),Direction.LEFT);
-
+		assertEquals(Direction.UP,GW.getRobotDirection(gameWorld));
+		GW.robotTurnRight(gameWorld);
+		assertEquals(Direction.RIGHT,GW.getRobotDirection(gameWorld));
+		GW.robotTurnRight(gameWorld);
+		assertEquals(Direction.DOWN,GW.getRobotDirection(gameWorld));
+		GW.robotTurnRight(gameWorld);;
+		assertEquals(Direction.LEFT,GW.getRobotDirection(gameWorld));
+		GW.robotTurnLeft(gameWorld);
+		assertEquals(Direction.DOWN,GW.getRobotDirection(gameWorld));
 	}
 	
 	@Test
 	public void robotInFrontOfWall() {
 		makeGameWorld();
-		assertFalse(gameWorld.robotWallInFront());
-		gameWorld.robotTurnRight();
-		assertTrue(gameWorld.robotWallInFront());
+		assertFalse(GW.robotWallInFront(gameWorld));
+		GW.robotTurnRight(gameWorld);
+		assertTrue(GW.robotWallInFront(gameWorld));
 	}
 	
 	@Test
 	public void robotOnGoal() {
 		makeGameWorld();
-		assertFalse(gameWorld.robotOnGoal());
-		robot.setLocation(new Vector(1,1));
-		assertTrue(gameWorld.robotOnGoal());
+		assertFalse(GW.robotOnGoal(gameWorld));
+		gameWorld = GW.makeGameWorld(testGrid, new Vector(1,1));
+		assertTrue(GW.robotOnGoal(gameWorld));
 	}
 	
 	@Test
 	public void moveRobot() {
 		makeGameWorld();
-		gameWorld.robotTurnRight();
-		gameWorld.robotTurnRight();
-		gameWorld.robotStepForwards();
-		assertEquals(robot.getLocation(),new Vector(0,1));
-		gameWorld.robotStepForwards();
-		assertEquals(robot.getLocation(),new Vector(0,2));
-		gameWorld.robotTurnLeft();
-		gameWorld.robotStepForwards();
-		assertEquals(robot.getLocation(),new Vector(1,2));
-		gameWorld.robotStepForwards();
-		assertEquals(robot.getLocation(),new Vector(1,2));
-		gameWorld.robotStepForwards();
-		assertEquals(robot.getLocation(),new Vector(1,2));
-		gameWorld.robotTurnLeft();
-		gameWorld.robotStepForwards();
-		assertEquals(robot.getLocation(),new Vector(1,1));
-		assertTrue(gameWorld.robotOnGoal());
+		GW.robotTurnRight(gameWorld);
+		GW.robotTurnRight(gameWorld);
+		GW.robotStepForwards(gameWorld);
+		assertEquals(GW.getRobotLocation(gameWorld),new Vector(0,1));
+		GW.robotStepForwards(gameWorld);
+		assertEquals(GW.getRobotLocation(gameWorld),new Vector(0,2));
+		GW.robotTurnLeft(gameWorld);
+		GW.robotStepForwards(gameWorld);
+		assertEquals(GW.getRobotLocation(gameWorld),new Vector(1,2));
+		GW.robotStepForwards(gameWorld);
+		assertEquals(GW.getRobotLocation(gameWorld),new Vector(1,2));
+		GW.robotStepForwards(gameWorld);
+		assertEquals(GW.getRobotLocation(gameWorld),new Vector(1,2));
+		GW.robotTurnLeft(gameWorld);
+		GW.robotStepForwards(gameWorld);
+		assertEquals(GW.getRobotLocation(gameWorld),new Vector(1,1));
+		assertTrue(GW.robotOnGoal(gameWorld));
 	}
 }

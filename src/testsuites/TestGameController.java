@@ -9,7 +9,10 @@ import domain.GameController;
 import domain.ImplementationGameController;
 import domain.Vector;
 import domain.block.Block;
+import domain.block.ConditionBlock;
 import domain.block.ImplementationBlock;
+import domain.block.SequenceBlock;
+import domain.block.SurroundingBlock;
 import domain.game_world.*;
 import domain.game_world.cell.Cell;
 import domain.game_world.cell.Goal;
@@ -95,14 +98,14 @@ class TestGameController {
 			IGC.execute(gc);
 			assertEquals(new Vector(0,1),robotLocation(gc));
 			// end of grid - robot moves one left
-			IGW.resetGameWorld(IGC.getGameWorld(gc)); //TODO: catch exception?
+			//TODO: catch exception?
 			IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.DOWN)));
 			IGC.addTopLevelBlock(gc,forward);
 			IGC.execute(gc);
 			IGC.execute(gc);
 			assertEquals(new Vector(0,0),robotLocation(gc));
 			// against wall - robot moves one right
-			IGW.resetGameWorld(IGC.getGameWorld(gc)); //TODO: catch exception?
+			//TODO: catch exception?
 			IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.RIGHT)));
 			IGC.addTopLevelBlock(gc, forward);
 			IGC.execute(gc);
@@ -188,8 +191,8 @@ class TestGameController {
 	void topLevelBlockIsCondition() {
 		setup();
 		try {
-			IGC.addTopLevelBlock(gc,wallInFront); //drag in programArea
-			IGC.execute(gc); // Run key
+			IGC.addTopLevelBlock(gc,wallInFront);
+			IGC.execute(gc);
 			//TODO: catch exception
 			fail();
 			IGW.resetGameWorld(IGC.getGameWorld(gc));
@@ -208,17 +211,198 @@ class TestGameController {
 	void withoutCondition() {
 		setup();
 		try {
-			IGC.addTopLevelBlock(gc,ifB); //drag in programArea
-			IGC.execute(gc); // Run key
-			//TODO: catch exception
-			fail();
-			//TODO: met er iets in
+			// IF () {}
+			IGC.addTopLevelBlock(gc,ifB);
+			try { //TODO: If with no condition block, it throws when it executes the if, not at the start
+				IGC.execute(gc);
+				fail();
+			} catch(Exception e) {;}
+			
+			// IF () {forward}
+			IB.addBodyBlock((SurroundingBlock) ifB, (SequenceBlock) forward);
+			try { //TODO: same as above
+				IGC.execute(gc);
+				fail();
+			} catch(Exception e) {;}
+			
+			// IF (not) {forward}
+			IB.setConditionBlock((SurroundingBlock) ifB,(ConditionBlock) not);
+			try { //TODO: same as above, but with not
+				IGC.execute(gc);
+				fail();
+			} catch(Exception e) {;}
+			IGC.removeTopLevelBlock(gc, ifB);
+			
+			// WHILE () {}
 			IGW.resetGameWorld(IGC.getGameWorld(gc));
 			IGC.addTopLevelBlock(gc, whileB);
-			IGC.execute(gc);
-			//TODO: catch exception
+			try { //TODO: While with no condition block, it throws when it executes the if, not at the start
+				IGC.execute(gc);
+				fail();
+			} catch(Exception e) {;}
+			
+			// WHILE () {forward}
+			IB.addBodyBlock((SurroundingBlock) whileB,(SequenceBlock) forward);
+			try { //TODO: same as above
+				IGC.execute(gc);
+				fail();
+			} catch(Exception e) {;}
+			
+			// WHILE (not) {forward}
+			IB.setConditionBlock((SurroundingBlock) whileB,(ConditionBlock) not);
+			try { //TODO: same as above, but with not
+				IGC.execute(gc);
+				fail();
+			} catch(Exception e) {;}
+		} catch (Exception e) {
 			fail();
-			//TODO: met er iets in
+		}
+	}
+
+	@Test
+	void addWrongType() {
+		setup();
+		try {
+			IGC.addTopLevelBlock(gc,ifB); 
+			IB.addBodyBlock((SurroundingBlock) ifB,(SequenceBlock) forward2);
+			try {
+				IB.addBodyBlock((SurroundingBlock) ifB,(SequenceBlock) wallInFront);
+				fail();
+			} catch(Exception e) {;}
+			try { //TODO: this works while it should not
+				IB.connect(ifB,not);
+				fail();
+			} catch(Exception e) {;}
+			try { //TODO: this works while it should not
+				IB.connect(not,forward);
+				fail(); 
+			} catch(Exception e) {;}
+			try {
+				IB.setConditionBlock((SurroundingBlock) ifB,(ConditionBlock) left);
+				fail();
+			} catch(Exception e) {;}			
+			IB.connect(not, wallInFront);
+			IB.setConditionBlock((SurroundingBlock) ifB,(ConditionBlock) not);
+			IGC.execute(gc);
+			IGC.execute(gc);
+			IGC.execute(gc);
+			assertEquals(new Vector(0,1),robotLocation(gc));
+		} catch (Exception e) {
+			fail();
+		}
+	}
+	
+	// IF BLOCK
+	
+	@Test
+	void ifBlock() {
+		setup();
+		try {
+			// IF ( WallInFront) { F } 
+			IGC.addTopLevelBlock(gc,ifB); 
+			IB.addBodyBlock((SurroundingBlock) ifB,(SequenceBlock) forward);
+			IB.setConditionBlock((SurroundingBlock) ifB, (ConditionBlock) wallInFront);
+			IGC.execute(gc);
+			IGC.execute(gc);
+			IGC.execute(gc);
+			assertEquals(new Vector(0,0),robotLocation(gc));
+			// run twice
+			IGC.execute(gc);
+			IGC.execute(gc);
+			IGC.execute(gc);
+			assertEquals(new Vector(0,0),robotLocation(gc));
+			// IF ( Not / WallInFront) { F }
+			IGW.resetGameWorld(IGC.getGameWorld(gc));
+			IB.disconnect(wallInFront);
+			IB.connect(not,wallInFront);
+			IB.setConditionBlock((SurroundingBlock) ifB,(ConditionBlock) not);
+			IGC.execute(gc);
+			IGC.execute(gc);
+			IGC.execute(gc);
+			assertEquals(new Vector(0,1),robotLocation(gc));
+			//  F2 / IF ( Not / WallInFront ) { Left } / F
+			IGW.resetGameWorld(IGC.getGameWorld(gc));
+			IGC.addTopLevelBlock(gc, forward2);
+			IGC.removeTopLevelBlock(gc,ifB);
+			IB.connect(forward2, ifB);
+			IB.disconnect(forward);
+			IB.connect(ifB, forward);
+			IB.addBodyBlock((SurroundingBlock) ifB, (SequenceBlock) left);
+			IGC.execute(gc); // run
+			IGC.execute(gc); // forward (0,1)
+			assertEquals(new Vector(0,1),robotLocation(gc));
+			IGC.execute(gc); // if
+			IGC.execute(gc); // left
+			IGC.execute(gc); // forward (1,1)
+			assertEquals(new Vector(1,1),robotLocation(gc));
+			assertEquals(Direction.RIGHT,robotDirection(gc));
+
+		} catch (Exception e) {
+			fail();
+		}
+	}
+	
+	@Test
+	void whileBlock() {
+		setup();
+		try {
+			// WHILE ( WallInFront) { F } 
+			IGC.addTopLevelBlock(gc,whileB); 
+			IB.addBodyBlock((SurroundingBlock) whileB,(SequenceBlock) forward);
+			IB.setConditionBlock((SurroundingBlock) whileB, (ConditionBlock) wallInFront);
+			IGC.execute(gc);
+			IGC.execute(gc);
+			IGC.execute(gc);
+			assertEquals(new Vector(0,0),robotLocation(gc));
+			// run twice
+			IGC.execute(gc);
+			IGC.execute(gc);
+			IGC.execute(gc);
+			assertEquals(new Vector(0,0),robotLocation(gc));
+			//System.out.println(IGC.getCopyOfAllTopLevelBlocks(gc).size()); <== TODO: deze functie werkt volgens mij niet zoals het hoort
+			
+			// WHILE ( Not / WallInFront) { F }
+			IGW.resetGameWorld(IGC.getGameWorld(gc));
+			IB.disconnect(wallInFront);
+			IB.connect(not,wallInFront);
+			IB.setConditionBlock((SurroundingBlock) whileB,(ConditionBlock) not);
+			IGC.execute(gc);
+			IGC.execute(gc);
+			IGC.execute(gc);
+			assertEquals(new Vector(0,1),robotLocation(gc));
+			IGC.execute(gc);
+			IGC.execute(gc);
+			assertEquals(new Vector(0,2),robotLocation(gc));
+			//TODO: voortgaan tot tegen einde vd wereld endan exception catchen
+
+			//  F2 / WHILE ( Not / WallInFront ) { Right } / Left //TODO: F2 wordt niet uitgevoerd, direct de while
+			IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,2), Direction.RIGHT)));
+			IGC.addTopLevelBlock(gc, forward2);
+			IGC.removeTopLevelBlock(gc,whileB);
+			IB.connect(forward2, whileB);
+			IB.disconnect(forward);
+			IB.connect(whileB, left);
+			IB.addBodyBlock((SurroundingBlock) whileB, (SequenceBlock) right);
+			System.out.println(robotDirection(gc));
+
+			IGC.execute(gc); // run
+			System.out.println(robotLocation(gc).getX() + "," + robotLocation(gc).getY());
+			System.out.println(robotDirection(gc));
+			IGC.execute(gc); // forward (1,1)
+			System.out.println(robotLocation(gc).getX() + "," + robotLocation(gc).getY());
+			System.out.println(robotDirection(gc));
+
+			IGC.execute(gc); // while >
+			System.out.println(robotDirection(gc));
+			IGC.execute(gc); // Right 
+			IGC.execute(gc); // while v
+			IGC.execute(gc); // Right 
+			IGC.execute(gc); // while <
+			IGC.execute(gc); // Right 
+			IGC.execute(gc); // while ^ (sees wall)
+			IGC.execute(gc); // left
+			assertEquals(new Vector(1,1),robotLocation(gc));
+			assertEquals(Direction.LEFT,robotDirection(gc));
 			
 		} catch (Exception e) {
 			fail();
