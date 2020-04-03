@@ -4,6 +4,7 @@ import java.util.Random;
 
 import domain.Vector;
 import domain.game_world.cell.*;
+import exceptions.domainExceptions.OutOfBoundsException;
 
 /**
  * A class of the grid, containing the cells for the gameworld to use.
@@ -67,9 +68,7 @@ public class Grid {
 		this(5, 5);
 		try {
 			setCell(new Vector(4, 4), new Goal());
-		} catch (Exception e) {
-			System.out.println("Out of bounds thrown at placing of goal block in default grid.");
-			System.out.println("This should never happen so something is very wrong.");
+		} catch (OutOfBoundsException e) {
 			e.printStackTrace();
 		}
 	}
@@ -80,10 +79,10 @@ public class Grid {
 		
 		for (int y = 0; y < result.getHeight(); y++) {
 			for (int x = 0; x < result.getWidth(); x++) {
-				if (rand.nextInt(100) < 30) {
+				if (rand.nextInt(100) < 25) {
 					try {
 						result.setCell(new Vector(x, y), new Wall());
-					} catch (Exception e) {
+					} catch (OutOfBoundsException e) {
 						System.out.println("This exception should not happen. see randomGrid");
 						e.printStackTrace();
 					}
@@ -91,12 +90,14 @@ public class Grid {
 			}
 		}
 		
-		int goalX = rand.nextInt(width);
-		int goalY = rand.nextInt(height);
+		result.setEdgesToWall();
+		
+		int goalX = 1 + rand.nextInt(width - 2);
+		int goalY = 1 + rand.nextInt(height - 2);
 		
 		try {
 			result.setCell(new Vector(goalX, goalY), new Goal());
-		} catch (Exception e) {
+		} catch (OutOfBoundsException e) {
 			System.out.println("This exception also should not happen. See randomGrid");
 			e.printStackTrace();
 		}
@@ -125,11 +126,11 @@ public class Grid {
 	 * @throws Exception
 	 * 
 	 */
-	protected void setCell(Vector location, Cell cell) throws Exception {
+	protected void setCell(Vector location, Cell cell) throws OutOfBoundsException {
 		if (isInBounds(location)) {
 			grid[location.getY()][location.getX()] = cell;
 		} else {
-			throw new Exception();
+			throw new OutOfBoundsException();
 		}
 	}
 	/**
@@ -158,7 +159,7 @@ public class Grid {
 	 * @return the cell at given location
 	 * @throws Exception
 	 */
-	protected Cell getCell(Vector location) throws Exception {
+	protected Cell getCell(Vector location) throws OutOfBoundsException {
 		return getCell(location.getX(), location.getY());
 	}
 	/**
@@ -169,12 +170,12 @@ public class Grid {
 	 * @return the cell at given x,y coordinates
 	 * @throws Exception
 	 */
-	protected Cell getCell(int x, int y) throws Exception {
+	protected Cell getCell(int x, int y) throws OutOfBoundsException {
 		// TODO create custom exception
 		if (isInBounds(x, y)) {
 			return grid[y][x];
 		} else {
-			throw new Exception("Out of Bounds");
+			throw new OutOfBoundsException();
 		}
 	}
 	/**
@@ -205,4 +206,26 @@ public class Grid {
 		return true;
 	}
 	
+	public void setEdgesToWall() {
+		try {
+			// Set top and bottom horizontal edges
+			for (int i = 0; i < this.getWidth(); i++) {
+				// Top row
+				this.setCell(new Vector(i, 0), new Wall());
+				// Bottom row
+				this.setCell(new Vector(i, this.getHeight() -1), new Wall());
+			}
+			
+			// Set left and right vertical edges
+			for (int i = 0; i < this.getHeight(); i++) {
+				// Left column
+				this.setCell(new Vector(0, i), new Wall());
+				// Right column
+				this.setCell(new Vector(this.getWidth() -1, i), new Wall());
+			}
+			
+		} catch (OutOfBoundsException e) {
+			e.printStackTrace();
+		}
+	}
 }

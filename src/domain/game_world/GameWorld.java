@@ -4,6 +4,9 @@ import java.util.Random;
 
 import domain.Vector;
 import domain.game_world.cell.*;
+import exceptions.domainExceptions.OutOfBoundsException;
+import exceptions.domainExceptions.robotExceptions.RobotEnteringWallException;
+import exceptions.domainExceptions.robotExceptions.RobotMovingOffGridException;
 
 // GameWorld contains a grid and the entities that move around on that grid
 // Currently only a single Robot moves around
@@ -107,7 +110,7 @@ public class GameWorld {
 		try {
 			Vector positionInFront = getRobot().getPositionInFront();
 			return getGrid().getCell(positionInFront) instanceof Wall;
-		} catch (Exception e) {
+		} catch (OutOfBoundsException e) {
 			return false;
 		}
 		
@@ -120,27 +123,30 @@ public class GameWorld {
 	 */
 	protected boolean robotOnGoal() {
 		try {
-			Vector currentPosition =getRobot().getLocation();
+			Vector currentPosition = getRobot().getLocation();
 			return getGrid().getCell(currentPosition) instanceof Goal;
 			
-		}catch (Exception e) {
+		}catch (OutOfBoundsException e) {
 			return false;
 		}
 	}
 	/**
 	 * Set the location to the robot to the cell in front of the robot,
 	 * if this is allowed (no walls or end of grid).
+	 * @throws RobotEnteringWallException 
+	 * @throws RobotMovingOffGridException 
 	 */
-	protected void robotStepForwards() {
+	protected void robotStepForwards() throws RobotEnteringWallException, RobotMovingOffGridException {
 		try {
 			Vector positionInFront = getRobot().getPositionInFront();
 			if (getGrid().getCell(positionInFront) instanceof RobotCanEnter) {
 				getRobot().stepForwards();
+			} else {
+				throw new RobotEnteringWallException();
 			}
-		} catch (Exception e) {
-			// Exception thrown because getCell requested cell out of bounds
-			// Robot doesn't move
-		}
+		} catch (OutOfBoundsException e) {
+			throw new RobotMovingOffGridException();
+		} 
 		
 	}
 	/**
@@ -167,14 +173,14 @@ public class GameWorld {
 		int attemptY = rand.nextInt(grid.getHeight());
 
 		try {
-			if (grid.getCell(new Vector(attemptX, attemptY)) instanceof RobotCanEnter) {
+			if (grid.getCell(new Vector(attemptX, attemptY)) instanceof RobotCanEnter || grid.getCell(new Vector(attemptX, attemptY)) instanceof Goal) {
 				return new Vector(attemptX, attemptY);
 			} else {
 				return getRandomRobotLocation();
 			}
-		} catch (Exception e) {
-			System.out.println("This exception should not happen. See GameWorld.getRandomRobotLocation");
-		}
+		} catch (OutOfBoundsException e) {
+			e.printStackTrace();
+		} 
 		return new Vector(0, 0);
 	}
 	

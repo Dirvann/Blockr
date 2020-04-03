@@ -90,7 +90,7 @@ public class Robot {
 	 * @throws Exception
 	 * 		   If the given location is not in bounds.
 	 */
-	protected Vector getPositionInFront() throws Exception {
+	protected Vector getPositionInFront() {
 		switch (this.direction) {
 			case UP:
 				return new Vector(location.getX(),location.getY()-1);
@@ -101,8 +101,9 @@ public class Robot {
 			case RIGHT:
 				return new Vector(location.getX()+1,location.getY());
 			default:
-				throw new Exception();
+				return new Vector(location.getX(),location.getY()-1);
 		}
+
 	}
 	
 	// Actions

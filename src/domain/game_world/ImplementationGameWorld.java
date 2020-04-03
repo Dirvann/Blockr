@@ -4,6 +4,8 @@ import domain.Vector;
 import domain.game_world.cell.Cell;
 import domain.game_world.cell.Goal;
 import domain.game_world.cell.Wall;
+import exceptions.domainExceptions.robotExceptions.RobotEnteringWallException;
+import exceptions.domainExceptions.robotExceptions.RobotMovingOffGridException;
 
 public class ImplementationGameWorld implements FacadeGameWorld{
 
@@ -46,7 +48,11 @@ public class ImplementationGameWorld implements FacadeGameWorld{
 
 	@Override
 	public void robotStepForwards(GameWorld world) {
-		world.robotStepForwards();
+		try {
+			world.robotStepForwards();
+		} catch (RobotEnteringWallException | RobotMovingOffGridException e) {
+			// TODO handle thrown exceptions
+		}
 	}
 
 	@Override
