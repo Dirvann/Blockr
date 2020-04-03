@@ -4,6 +4,7 @@ import java.util.Random;
 
 import domain.Vector;
 import domain.game_world.cell.*;
+import exceptions.domainExceptions.OutOfBoundsException;
 
 // GameWorld contains a grid and the entities that move around on that grid
 // Currently only a single Robot moves around
@@ -107,7 +108,7 @@ public class GameWorld {
 		try {
 			Vector positionInFront = getRobot().getPositionInFront();
 			return getGrid().getCell(positionInFront) instanceof Wall;
-		} catch (Exception e) {
+		} catch (OutOfBoundsException e) {
 			return false;
 		}
 		
@@ -120,10 +121,10 @@ public class GameWorld {
 	 */
 	protected boolean robotOnGoal() {
 		try {
-			Vector currentPosition =getRobot().getLocation();
+			Vector currentPosition = getRobot().getLocation();
 			return getGrid().getCell(currentPosition) instanceof Goal;
 			
-		}catch (Exception e) {
+		}catch (OutOfBoundsException e) {
 			return false;
 		}
 	}
@@ -136,11 +137,12 @@ public class GameWorld {
 			Vector positionInFront = getRobot().getPositionInFront();
 			if (getGrid().getCell(positionInFront) instanceof RobotCanEnter) {
 				getRobot().stepForwards();
+			} else {
+				// Robot trying to enter a wall
 			}
-		} catch (Exception e) {
-			// Exception thrown because getCell requested cell out of bounds
-			// Robot doesn't move
-		}
+		} catch (OutOfBoundsException e) {
+			// Robot trying to move off the grid
+		} 
 		
 	}
 	/**
@@ -172,9 +174,9 @@ public class GameWorld {
 			} else {
 				return getRandomRobotLocation();
 			}
-		} catch (Exception e) {
-			System.out.println("This exception should not happen. See GameWorld.getRandomRobotLocation");
-		}
+		} catch (OutOfBoundsException e) {
+			e.printStackTrace();
+		} 
 		return new Vector(0, 0);
 	}
 	
