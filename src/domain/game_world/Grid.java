@@ -80,7 +80,7 @@ public class Grid {
 		
 		for (int y = 0; y < result.getHeight(); y++) {
 			for (int x = 0; x < result.getWidth(); x++) {
-				if (rand.nextInt(100) < 30) {
+				if (rand.nextInt(100) < 25) {
 					try {
 						result.setCell(new Vector(x, y), new Wall());
 					} catch (Exception e) {
@@ -91,8 +91,10 @@ public class Grid {
 			}
 		}
 		
-		int goalX = rand.nextInt(width);
-		int goalY = rand.nextInt(height);
+		result.setEdgesToWall();
+		
+		int goalX = 1 + rand.nextInt(width - 2);
+		int goalY = 1 + rand.nextInt(height - 2);
 		
 		try {
 			result.setCell(new Vector(goalX, goalY), new Goal());
@@ -205,4 +207,27 @@ public class Grid {
 		return true;
 	}
 	
+	public void setEdgesToWall() {
+		try {
+			// Set top and bottom horizontal edges
+			for (int i = 0; i < this.getWidth(); i++) {
+				// Top row
+				this.setCell(new Vector(i, 0), new Wall());
+				// Bottom row
+				this.setCell(new Vector(i, this.getHeight() -1), new Wall());
+			}
+			
+			// Set left and right vertical edges
+			for (int i = 0; i < this.getHeight(); i++) {
+				// Left column
+				this.setCell(new Vector(0, i), new Wall());
+				// Right column
+				this.setCell(new Vector(this.getWidth() -1, i), new Wall());
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

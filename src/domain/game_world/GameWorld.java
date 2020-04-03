@@ -167,7 +167,7 @@ public class GameWorld {
 		int attemptY = rand.nextInt(grid.getHeight());
 
 		try {
-			if (grid.getCell(new Vector(attemptX, attemptY)) instanceof RobotCanEnter) {
+			if (grid.getCell(new Vector(attemptX, attemptY)) instanceof RobotCanEnter || grid.getCell(new Vector(attemptX, attemptY)) instanceof Goal) {
 				return new Vector(attemptX, attemptY);
 			} else {
 				return getRandomRobotLocation();
