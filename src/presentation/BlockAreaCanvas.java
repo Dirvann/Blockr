@@ -87,6 +87,10 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		}
 	}
 
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+		repaint();
+	}
 	
 	public void handleMousePressed(int x, int y) {
 		Vector mousePos = new Vector(x, y);
@@ -174,6 +178,8 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 				GC.execute(gameController);
 				blockrPanel.redrawGameWorld();
 			} catch (Exception e1) {
+				System.out.println("@@@@@");
+				setErrorMessage(e1.toString());
 				System.out.println("Execute in keyPressed failed");
 			}
 			break;

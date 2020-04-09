@@ -7,7 +7,7 @@ class MoveForward extends ActionBlock {
 	}
 
 	@Override
-	protected void performAction(GameController gameController) {
+	protected void performAction(GameController gameController) throws Exception {
 		if (gameController == null) 
 			System.out.println("Move Forward");
 		else

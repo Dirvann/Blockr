@@ -117,7 +117,7 @@ public class Robot {
 			Vector positionInFront = getPositionInFront();
 			setLocation(positionInFront);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("qsjdfmlkqsjdflkj");
 		}
 		
 	}
