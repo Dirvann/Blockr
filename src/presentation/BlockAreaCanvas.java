@@ -178,8 +178,12 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 				GC.execute(gameController);
 				blockrPanel.redrawGameWorld();
 			} catch (Exception e1) {
-				System.out.println("@@@@@");
-				setErrorMessage(e1.toString());
+				if (e1.getMessage() == null) {
+					setErrorMessage("null returned");
+				}
+				else {
+					setErrorMessage(e1.getMessage());
+				}
 				System.out.println("Execute in keyPressed failed");
 			}
 			break;
