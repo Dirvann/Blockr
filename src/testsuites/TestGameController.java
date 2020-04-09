@@ -17,6 +17,8 @@ import domain.game_world.*;
 import domain.game_world.cell.Cell;
 import domain.game_world.cell.Goal;
 import domain.game_world.cell.Wall;
+import exceptions.domainExceptions.robotExceptions.RobotEnteringWallException;
+import exceptions.domainExceptions.robotExceptions.RobotMovingOffGridException;
 
 class TestGameController {
 	static GameController gc;
@@ -117,17 +119,26 @@ class TestGameController {
 	}
 	
 	@Test
-	void walkAgainstWall() {
+	void walkAgainstWallOrOffGrid() {
 		setup();
+		// walk against wall
 		try {
 		IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.RIGHT)));
 		IGC.addTopLevelBlock(gc,forward);
 		IGC.execute(gc);
 		IGC.execute(gc);
-		IGC.execute(gc);
-		IGC.execute(gc);
+		fail();
 		} catch(Exception e) {
-			fail();
+			assertTrue(e instanceof RobotEnteringWallException);
+		}
+		// walk off grid
+		try {
+		IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.UP)));
+		IGC.execute(gc);
+		IGC.execute(gc);
+		fail();
+		} catch(Exception e) {
+			assertTrue(e instanceof RobotMovingOffGridException);
 		}
 	}
 	
