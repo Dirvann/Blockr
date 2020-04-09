@@ -26,7 +26,13 @@ public class GameController {
 
 	protected void execute() throws Exception {
 		if (programArea.programInProgress()) {
-			programArea.executeNextBlock(this);
+			try {
+				programArea.executeNextBlock(this);
+			} catch (Exception e) {
+				programArea.stopExecution();
+				gameWorldFunctions.resetGameWorld(gameWorld);
+				throw e;
+			}
 		} else {
 			programArea.startExecution();
 		}

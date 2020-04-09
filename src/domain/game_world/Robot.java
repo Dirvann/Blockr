@@ -101,7 +101,7 @@ public class Robot {
 			case RIGHT:
 				return new Vector(location.getX()+1,location.getY());
 			default:
-				return new Vector(location.getX(),location.getY()-1);
+				return null;
 		}
 
 	}
@@ -113,12 +113,8 @@ public class Robot {
 	 * then the location is set to the current location.
 	 */
 	protected void stepForwards() {
-		try {
-			Vector positionInFront = getPositionInFront();
-			setLocation(positionInFront);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		Vector positionInFront = getPositionInFront();
+		setLocation(positionInFront);
 		
 	}
 	/**

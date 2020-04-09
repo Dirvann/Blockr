@@ -14,7 +14,7 @@ public interface FacadeGameWorld {
 	public Robot makeRobot(Vector location,Direction direction);
 	public boolean robotWallInFront(GameWorld world);
 	public boolean robotOnGoal(GameWorld world);
-	public void robotStepForwards(GameWorld world);
+	public void robotStepForwards(GameWorld world) throws Exception;
 	public void robotTurnLeft(GameWorld world);
 	public void robotTurnRight(GameWorld world);
 	

@@ -4,7 +4,7 @@ import domain.GameController;
 
 public abstract class ActionBlock extends SequenceBlock{
 	
-	abstract protected void performAction(GameController gameController);
+	abstract protected void performAction(GameController gameController) throws Exception;
 	
 	protected ActionBlock() {
 	}
