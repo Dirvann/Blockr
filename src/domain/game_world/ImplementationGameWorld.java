@@ -47,11 +47,11 @@ public class ImplementationGameWorld implements FacadeGameWorld{
 	}
 
 	@Override
-	public void robotStepForwards(GameWorld world) {
+	public void robotStepForwards(GameWorld world) throws Exception {
 		try {
 			world.robotStepForwards();
 		} catch (RobotEnteringWallException | RobotMovingOffGridException e) {
-			// TODO handle thrown exceptions
+			throw new Exception();
 		}
 	}
 

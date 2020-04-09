@@ -117,6 +117,21 @@ class TestGameController {
 	}
 	
 	@Test
+	void walkAgainstWall() {
+		setup();
+		try {
+		IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.RIGHT)));
+		IGC.addTopLevelBlock(gc,forward);
+		IGC.execute(gc);
+		IGC.execute(gc);
+		IGC.execute(gc);
+		IGC.execute(gc);
+		} catch(Exception e) {
+			fail();
+		}
+	}
+	
+	@Test
 	void connectActionBlocks() {
 		setup();
 		try {
