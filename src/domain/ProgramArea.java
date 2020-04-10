@@ -5,6 +5,8 @@ import java.util.List;
 
 import domain.block.Block;
 import domain.block.ImplementationBlock;
+import exceptions.domainExceptions.CantRunConditionException;
+import exceptions.domainExceptions.NotOneStartingBlockException;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 
@@ -34,14 +36,19 @@ public class ProgramArea {
 	/**
 	 * 
 	 * @return nbTopLevelBlocks() == 1 && top level block can be executed
+	 * @throws NotOneStartingBlockException 
+	 * @throws CantRunConditionException 
 	 */
-	protected boolean hasValidTopLevelBlock() {
+	protected boolean hasValidTopLevelBlock() throws NotOneStartingBlockException, CantRunConditionException {
 		if (nbTopLevelBlocks() == 1) {
 			Block topLevelBlock = topLevelBlocks.get(0);
-
-			return BF.isValidStartingBlock(topLevelBlock);
+			if (BF.isValidStartingBlock(topLevelBlock)) {
+				return true;
+			}
+			else {
+				throw new CantRunConditionException();}
 		} else {
-			return false;
+			throw new NotOneStartingBlockException();
 		}
 	}
 
@@ -56,16 +63,18 @@ public class ProgramArea {
 	/**
 	 * 
 	 * @return true if program can start executing
+	 * @throws Exception 
 	 */
-	protected Boolean canStartExecution() {
+	protected Boolean canStartExecution() throws Exception {
 		return (!programInProgress() && hasValidTopLevelBlock());
 		// TODO: maybe check if program is valid
 	}
 
 	/**
+	 * @throws Exception 
 	 * @post nextToExecute != null
 	 */
-	protected void startExecution() {
+	protected void startExecution() throws Exception {
 		if (canStartExecution()) {
 			nextToExecute = topLevelBlocks.get(0);
 		}
