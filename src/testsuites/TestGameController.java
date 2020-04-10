@@ -74,15 +74,12 @@ class TestGameController {
 			assertEquals(Direction.RIGHT,robotDirection(gc));
 			IGC.execute(gc);
 			IGC.execute(gc);
-			assertEquals(Direction.UP,robotDirection(gc));
-			IGC.execute(gc);
-			IGC.execute(gc);
-			assertEquals(Direction.LEFT,robotDirection(gc));
+			assertEquals(Direction.RIGHT,robotDirection(gc));
 			IGC.removeTopLevelBlock(gc,left);
 			IGC.addTopLevelBlock(gc,right);
 			IGC.execute(gc);
 			IGC.execute(gc);
-			assertEquals(Direction.UP,robotDirection(gc));
+			assertEquals(Direction.LEFT,robotDirection(gc));
 		} catch (Exception e) {
 			fail();
 		}
@@ -186,15 +183,16 @@ class TestGameController {
 			assertEquals(new Vector(0,1),robotLocation(gc)); 
 			assertEquals(Direction.DOWN,robotDirection(gc));
 			//FW2/TL
+			IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.DOWN)));
 			IGC.addTopLevelBlock(gc,forward2);
 			IGC.removeTopLevelBlock(gc,right);
 			IGC.execute(gc);
 			IGC.execute(gc);
 			IGC.execute(gc);
-			assertEquals(new Vector(0,2),robotLocation(gc)); 
+			assertEquals(new Vector(0,1),robotLocation(gc)); 
 			assertEquals(Direction.RIGHT,robotDirection(gc));
 			//TR/FW2/TL/FW
-			IGW.resetGameWorld(IGC.getGameWorld(gc));
+			IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.RIGHT)));
 			IGC.removeTopLevelBlock(gc,forward2);
 			IGC.addTopLevelBlock(gc,right);
 			IB.connect(right,forward2);
@@ -208,6 +206,19 @@ class TestGameController {
 			
 		} catch (Exception e) {
 			fail();
+		}
+	}
+	
+	@Test
+	void twoBlocksOnTopLevel() {
+		setup();
+		try {
+			IGC.addTopLevelBlock(gc,right);
+			IGC.addTopLevelBlock(gc,left);
+			IGC.execute(gc);
+			fail();
+		} catch (Exception e) {
+			assertEquals(Direction.DOWN,robotDirection(gc));
 		}
 	}
 	
@@ -402,24 +413,20 @@ class TestGameController {
 			//TODO: voortgaan tot tegen einde vd wereld endan exception catchen
 
 			//  F2 / WHILE ( Not / WallInFront ) { Right } / Left //TODO: F2 wordt niet uitgevoerd, direct de while
-			IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,2), Direction.RIGHT)));
+			IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,1), Direction.RIGHT)));
 			IGC.addTopLevelBlock(gc, forward2);
 			IGC.removeTopLevelBlock(gc,whileB);
 			IB.connect(forward2, whileB);
 			IB.disconnect(forward);
 			IB.connect(whileB, left);
 			IB.addBodyBlock((SurroundingBlock) whileB, (SequenceBlock) right);
-			System.out.println(robotDirection(gc));
+
+			// Dit gebeurt bij de presentation als je iets vastpakt, zonder dit is de while block nogsteeds degenen die uitgevoerd wordt
+			IGC.stopExecution(gc);
 
 			IGC.execute(gc); // run
-			System.out.println(robotLocation(gc).getX() + "," + robotLocation(gc).getY());
-			System.out.println(robotDirection(gc));
 			IGC.execute(gc); // forward (1,1)
-			System.out.println(robotLocation(gc).getX() + "," + robotLocation(gc).getY());
-			System.out.println(robotDirection(gc));
-
 			IGC.execute(gc); // while >
-			System.out.println(robotDirection(gc));
 			IGC.execute(gc); // Right 
 			IGC.execute(gc); // while v
 			IGC.execute(gc); // Right 

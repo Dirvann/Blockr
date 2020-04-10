@@ -34,6 +34,8 @@ public class GameController {
 				throw e;
 			}
 		} else {
+			//after each try reset to original state
+			gameWorldFunctions.resetGameWorld(gameWorld);
 			programArea.startExecution();
 		}
 	}

@@ -65,22 +65,28 @@ public class TestGameWorld {
 	@Test
 	public void moveRobot() {
 		makeGameWorld();
-		GW.robotTurnRight(gameWorld);
-		GW.robotTurnRight(gameWorld);
-		GW.robotStepForwards(gameWorld);
-		assertEquals(GW.getRobotLocation(gameWorld),new Vector(0,1));
-		GW.robotStepForwards(gameWorld);
-		assertEquals(GW.getRobotLocation(gameWorld),new Vector(0,2));
-		GW.robotTurnLeft(gameWorld);
-		GW.robotStepForwards(gameWorld);
-		assertEquals(GW.getRobotLocation(gameWorld),new Vector(1,2));
-		GW.robotStepForwards(gameWorld);
-		assertEquals(GW.getRobotLocation(gameWorld),new Vector(1,2));
-		GW.robotStepForwards(gameWorld);
-		assertEquals(GW.getRobotLocation(gameWorld),new Vector(1,2));
-		GW.robotTurnLeft(gameWorld);
-		GW.robotStepForwards(gameWorld);
-		assertEquals(GW.getRobotLocation(gameWorld),new Vector(1,1));
-		assertTrue(GW.robotOnGoal(gameWorld));
+		try {
+			GW.robotTurnRight(gameWorld);
+			GW.robotTurnRight(gameWorld);
+			GW.robotStepForwards(gameWorld);
+			assertEquals(GW.getRobotLocation(gameWorld),new Vector(0,1));
+			GW.robotStepForwards(gameWorld);
+			assertEquals(GW.getRobotLocation(gameWorld),new Vector(0,2));
+			GW.robotTurnLeft(gameWorld);
+			GW.robotStepForwards(gameWorld);
+			assertEquals(GW.getRobotLocation(gameWorld),new Vector(1,2));
+			try {
+				GW.robotStepForwards(gameWorld);
+				fail();
+			}catch (Exception e) {
+				assertEquals(GW.getRobotLocation(gameWorld),new Vector(1,2));
+			}
+			GW.robotTurnLeft(gameWorld);
+			GW.robotStepForwards(gameWorld);
+			assertEquals(GW.getRobotLocation(gameWorld),new Vector(1,1));
+			assertTrue(GW.robotOnGoal(gameWorld));
+		}catch (Exception e){
+			fail();
+		}
 	}
 }

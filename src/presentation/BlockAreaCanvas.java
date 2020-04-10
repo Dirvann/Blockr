@@ -40,7 +40,8 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	
 	private PresentationBlock<?> selectedBlock = null;
 	
-	String errorMessage = "The error message will appear here!";
+	private final String defaultMessage = "The error message will appear here!";
+	String errorMessage = defaultMessage;
 
 	Vector previousMousePos = null;
 	boolean mouseDown = false;
@@ -103,12 +104,14 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 			GC.addBlockToProgramArea(blockrPanel.getGameController(), presentationCopy);
 			selectedBlock = presentationCopy;
 			System.out.println("New Block made of type: " + BF.getName(BFP.getBlock(selectedBlock) ));
+			GC.stopExecution(blockrPanel.getGameController());
 		}
 
 		PresentationBlock<?> programBlockP = programAreaP.getBlockAtPosition(mousePos);
 		if (programBlockP != null) {
 			selectedBlock = programBlockP;
 			BF.disconnect(BFP.getBlock(selectedBlock));
+			GC.stopExecution(blockrPanel.getGameController());
 		}
 
 		previousMousePos = mousePos;
@@ -175,7 +178,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 
 		case 116: // F5
 			try {
-				setErrorMessage("The error message will appear here!");
+				setErrorMessage(defaultMessage);
 				GC.execute(gameController);
 				blockrPanel.redrawGameWorld();
 			} catch (Exception e1) {
@@ -194,6 +197,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 			int width = blockrPanel.getPreferredGameWorldWidth();
 			int height = blockrPanel.getPreferredGameWorldHeight();
 			GC.setGameWorld(gameController, GW.makeRandomGameWorld(width, height));
+			GC.stopExecution(gameController);
 			blockrPanel.redrawGameWorld();
 			break;
 
