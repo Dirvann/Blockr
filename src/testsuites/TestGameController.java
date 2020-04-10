@@ -17,6 +17,9 @@ import domain.game_world.*;
 import domain.game_world.cell.Cell;
 import domain.game_world.cell.Goal;
 import domain.game_world.cell.Wall;
+import exceptions.domainExceptions.CantRunConditionException;
+import exceptions.domainExceptions.NoConditionBlockException;
+import exceptions.domainExceptions.NotOneStartingBlockException;
 import exceptions.domainExceptions.robotExceptions.RobotEnteringWallException;
 import exceptions.domainExceptions.robotExceptions.RobotMovingOffGridException;
 
@@ -89,28 +92,25 @@ class TestGameController {
 	void forwardBlockExecute() {
 		setup();
 		try {
-			// normal move - robot moves one down
+			// robot moves one down
 			assertEquals(new Vector(0,0),robotLocation(gc));
 			assertEquals(Direction.DOWN,robotDirection(gc));
 			IGC.addTopLevelBlock(gc,forward);
 			IGC.execute(gc);
 			IGC.execute(gc);
 			assertEquals(new Vector(0,1),robotLocation(gc));
-			// end of grid - robot moves one left
-			//TODO: catch exception?
+			// robot moves one down
 			IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.DOWN)));
-			IGC.addTopLevelBlock(gc,forward);
 			IGC.execute(gc);
 			IGC.execute(gc);
-			assertEquals(new Vector(0,0),robotLocation(gc));
-			// against wall - robot moves one right
-			//TODO: catch exception?
-			IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.RIGHT)));
-			IGC.addTopLevelBlock(gc, forward);
+			assertEquals(new Vector(0,1),robotLocation(gc));
+			// robot moves one right
+			IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(1,1), Direction.RIGHT)));
 			IGC.execute(gc);
 			IGC.execute(gc);
-			assertEquals(new Vector(0,0),robotLocation(gc));
+			assertEquals(new Vector(2,1),robotLocation(gc));
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			fail();
 		}
 	}
@@ -218,6 +218,7 @@ class TestGameController {
 			IGC.execute(gc);
 			fail();
 		} catch (Exception e) {
+			assertTrue(e instanceof NotOneStartingBlockException);
 			assertEquals(Direction.DOWN,robotDirection(gc));
 		}
 	}
@@ -227,18 +228,12 @@ class TestGameController {
 	@Test
 	void topLevelBlockIsCondition() {
 		setup();
+		IGC.addTopLevelBlock(gc,wallInFront);
 		try {
-			IGC.addTopLevelBlock(gc,wallInFront);
-			IGC.execute(gc);
-			//TODO: catch exception
-			fail();
-			IGW.resetGameWorld(IGC.getGameWorld(gc));
-			IGC.addTopLevelBlock(gc, not);
-			IGC.execute(gc);
-			//TODO: catch exception
-			fail();
+		IGC.execute(gc);
+		fail();
 		} catch (Exception e) {
-			fail();
+			assertTrue(e instanceof CantRunConditionException);
 		}
 	}
 	
@@ -306,14 +301,12 @@ class TestGameController {
 				IB.addBodyBlock((SurroundingBlock) ifB,(SequenceBlock) wallInFront);
 				fail();
 			} catch(Exception e) {;}
-			try { //TODO: this works while it should not
-				IB.connect(ifB,not);
-				fail();
-			} catch(Exception e) {;}
-			try { //TODO: this works while it should not
-				IB.connect(not,forward);
-				fail(); 
-			} catch(Exception e) {;}
+			Boolean connected = IB.connect(ifB,not);
+			assertFalse(connected);
+			assertEquals(null,IB.getNextBlock(ifB));
+			connected = IB.connect(not,forward);
+			assertFalse(connected);
+			assertEquals(null,IB.getNextBlock(not));
 			try {
 				IB.setConditionBlock((SurroundingBlock) ifB,(ConditionBlock) left);
 				fail();
