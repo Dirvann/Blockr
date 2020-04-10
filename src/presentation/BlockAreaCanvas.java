@@ -93,6 +93,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	}
 	
 	public void handleMousePressed(int x, int y) {
+		this.errorMessage = "";
 		Vector mousePos = new Vector(x, y);
 
 		PresentationBlock<?> paletteBlockP = paletteP.GetClickedPaletteBlock(mousePos);
@@ -160,6 +161,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	}
 	
 	public void handleKeyPressed(int keyCode) {
+		this.errorMessage = "";
 		GameController gameController = blockrPanel.getGameController();
 		
 		switch (keyCode) {
@@ -175,7 +177,6 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 
 		case 116: // F5
 			try {
-				setErrorMessage("The error message will appear here!");
 				GC.execute(gameController);
 				blockrPanel.redrawGameWorld();
 			} catch (Exception e1) {
