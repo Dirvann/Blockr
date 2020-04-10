@@ -68,8 +68,10 @@ public class ImplementationBlock implements FacadeBlock{
 
 	@Override
 	public boolean isValidStartingBlock(Block block) {
-		// TODO Auto-generated method stub
-		return true;
+		if (block instanceof SequenceBlock) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override

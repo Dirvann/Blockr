@@ -36,7 +36,7 @@ public class GameController {
 		} else {
 			//after each try reset to original state
 			gameWorldFunctions.resetGameWorld(gameWorld);
-			programArea.startExecution();
+			programArea.startExecution(); // this also throws exceptions
 		}
 	}
 
