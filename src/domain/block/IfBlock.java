@@ -1,6 +1,7 @@
 package domain.block;
 
 import domain.GameController;
+import exceptions.domainExceptions.NoConditionBlockException;
 
 class IfBlock extends SingleSurroundingBlock {
 	
@@ -10,10 +11,9 @@ class IfBlock extends SingleSurroundingBlock {
 		super();
 	}
 
-
 	protected Block execute(GameController gameController) throws Exception {
 		if (getConditionBlock() == null || !getConditionBlock().isValidCondition()) {
-			throw new Exception("If-Block does not have a complete condition");
+			throw new NoConditionBlockException();
 		}
 		if (this.getBodyBlock() != null) {
 			if (getConditionBlock().evaluate(gameController)) {

@@ -1,6 +1,8 @@
 package domain.block;
 
 import domain.GameController;
+import exceptions.domainExceptions.InfiniteLoopWhileException;
+import exceptions.domainExceptions.NoConditionBlockException;
 
 class WhileBlock extends SingleSurroundingBlock {
 	
@@ -11,10 +13,10 @@ class WhileBlock extends SingleSurroundingBlock {
 
 	protected Block execute(GameController gameController) throws Exception {
 		if (getConditionBlock() == null || !getConditionBlock().isValidCondition()) {
-			throw new Exception("While-Block does not have a complete condition");
+			throw new NoConditionBlockException();
 		}
 		if (getConditionBlock().evaluate(gameController)) {
-			if (this.getBodyBlock() == null) throw new Exception("infinite loop in while");
+			if (this.getBodyBlock() == null) throw new InfiniteLoopWhileException();
 			return this.getBodyBlock();
 		}
 		return this.getNextBlock();
