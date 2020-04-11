@@ -38,39 +38,10 @@ public class ProgramArea {
 
 	/**
 	 * 
-	 * @return nbTopLevelBlocks() == 1 && top level block can be executed
-	 * @throws NotOneStartingBlockException 
-	 * @throws CantRunConditionException 
-	 */
-	protected boolean hasValidTopLevelBlock() throws NotOneStartingBlockException, CantRunConditionException {
-		if (nbTopLevelBlocks() == 1) {
-			Block topLevelBlock = topLevelBlocks.get(0);
-			if (BF.isValidStartingBlock(topLevelBlock)) {
-				return true;
-			}
-			else {
-				throw new CantRunConditionException();}
-		} else {
-			throw new NotOneStartingBlockException();
-		}
-	}
-
-	/**
-	 * 
 	 * @return nextToExecute != null
 	 */
 	protected Boolean programInProgress() {
 		return nextToExecute != null;
-	}
-
-	/**
-	 * 
-	 * @return true if program can start executing
-	 * @throws Exception 
-	 */
-	protected Boolean canStartExecution() throws Exception {
-		return (!programInProgress() && hasValidTopLevelBlock());
-		// TODO: maybe check if program is valid
 	}
 
 	/**
