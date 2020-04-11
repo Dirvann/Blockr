@@ -20,4 +20,9 @@ public abstract class SingleConditionBlock extends ConditionBlock {
 	protected boolean setNextBlock(Block block) {
 		return false;
 	}
+	
+	@Override
+	protected boolean hasValidExecutionColumn() {
+		return this.isValidCondition();
+	}
 }

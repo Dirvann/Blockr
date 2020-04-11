@@ -40,6 +40,12 @@ public abstract class Block {
 
 	/**
 	 * 
+	 * @return true if this block and entire column of blocks following this block can be executed.
+	 */
+	protected abstract boolean hasValidExecutionColumn();
+	
+	/**
+	 * 
 	 * @return A new block of the same type without any connections.
 	 */
 	protected abstract Block getNewBlockOfThisType();

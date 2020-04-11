@@ -76,5 +76,10 @@ public abstract class ChainConditionBlock extends ConditionBlock {
 			this.next = null;
 		}
 	}
+	
+	@Override
+	protected boolean hasValidExecutionColumn() {
+		return this.isValidCondition();
+	}
 
 }
