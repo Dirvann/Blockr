@@ -77,10 +77,7 @@ public class ImplementationBlock implements FacadeBlock{
 
 	@Override
 	public boolean isValidStartingBlock(Block block) {
-		if (block instanceof SequenceBlock) {
-			return true;
-		}
-		return false;
+		return block.hasValidExecutionColumn();
 	}
 
 	@Override

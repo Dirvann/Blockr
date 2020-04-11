@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.block.Block;
+import domain.block.ConditionBlock;
 import domain.block.ImplementationBlock;
+import domain.block.SequenceBlock;
+import exceptions.domainExceptions.BlockColumnNotExecutableException;
 import exceptions.domainExceptions.CantRunConditionException;
 import exceptions.domainExceptions.NotOneStartingBlockException;
 import presentation.block.ImplementationPresentationBlock;
@@ -75,7 +78,26 @@ public class ProgramArea {
 	 * @post nextToExecute != null
 	 */
 	protected void startExecution() throws Exception {
-		if (canStartExecution()) {
+		// programInProgress() should in theory never return true, but it's there to make sure;
+		if (programInProgress()) {
+			return;
+		}
+		
+		if (this.nbTopLevelBlocks() != 1) {
+			throw new NotOneStartingBlockException();
+		}
+		
+		Block topLevelBlock = topLevelBlocks.get(0);
+		
+		if (!(topLevelBlock instanceof SequenceBlock)) {
+			throw new CantRunConditionException();
+		}
+		
+		if (!BF.isValidStartingBlock(topLevelBlock)) {
+			throw new BlockColumnNotExecutableException();
+		}
+		
+		else {
 			nextToExecute = topLevelBlocks.get(0);
 		}
 	}
