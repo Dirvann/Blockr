@@ -83,6 +83,8 @@ public class ProgramArea {
 	protected void startExecution() throws Exception {
 		if (canStartExecution()) {
 			nextToExecute = topLevelBlocks.get(0);
+			currentExe = null;
+			exeCmd = null;
 		}
 	}
 
@@ -93,12 +95,14 @@ public class ProgramArea {
 	 */
 	protected ExecutionCommand executeNextBlock(GameController gameController) throws Exception {
 		//undo redo info collect
+		this.exeCmd = null;
 		Block previousExe = currentExe;
 		currentExe = nextToExecute;
 		//execute() will also make an empty ExecutionCommand in programArea.
 		nextToExecute = BF.execute(nextToExecute, gameController);
 		
 		//fill ExecutionCommand with needed info and return command.
+		if (exeCmd == null) return null;
 		this.exeCmd.setPrevious(previousExe);
 		this.exeCmd.setCurrent(currentExe);
 		this.exeCmd.setNext(nextToExecute);

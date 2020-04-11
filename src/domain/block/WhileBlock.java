@@ -18,6 +18,7 @@ class WhileBlock extends SingleSurroundingBlock {
 		}
 		if (getConditionBlock().evaluate(gameController)) {
 			if (this.getBodyBlock() == null) throw new InfiniteLoopWhileException();
+			IGC.setExecutionCommand(new ExecutionCommand(null, null, null, gameController), gameController);
 			return this.getBodyBlock();
 		}
 		IGC.setExecutionCommand(new ExecutionCommand(null, null, null, gameController), gameController);

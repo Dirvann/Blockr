@@ -212,7 +212,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 
 		case KeyEvent.VK_F5: // F5
 			try {
-				setErrorMessage("The error message will appear here!");
+				setErrorMessage("");
 				exe.addExecutionStep(GC.execute(gameController));
 				blockrPanel.redrawGameWorld();
 			} catch (Exception e1) {
@@ -241,7 +241,8 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		//redo ctrl + shift + z
 		if (key.getKeyCode() == KeyEvent.VK_Z && key.isControlDown() && key.isShiftDown()) {
 			if (GC.isExecuting(blockrPanel.getGameController())) {
-				exe.redo();;
+				exe.redo();
+				blockrPanel.redrawGameWorld();
 			}
 			else {
 				this.cmd.redo();
@@ -251,6 +252,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		else if (key.getKeyCode() == KeyEvent.VK_Z && key.isControlDown() && !key.isShiftDown()){
 			if (GC.isExecuting(blockrPanel.getGameController())) {
 				exe.undo();
+				blockrPanel.redrawGameWorld();
 			}
 			else {
 				this.cmd.undo();
@@ -263,6 +265,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	private void stopExecution() {
 		GC.stopExecution(blockrPanel.getGameController());
 		this.exe = new ExecutionProcessor();
+		GW.resetGameWorld(GC.getGameWorld(blockrPanel.getGameController()));
 		
 	}
 	@Override

@@ -20,6 +20,7 @@ class IfBlock extends SingleSurroundingBlock {
 		}
 		if (this.getBodyBlock() != null) {
 			if (getConditionBlock().evaluate(gameController)) {
+				GCF.setExecutionCommand(new ExecutionCommand(null, null, null, gameController), gameController);
 				return this.getBodyBlock();
 			}
 		}
