@@ -31,20 +31,16 @@ public class CommandProcessor {
 		//first execution happens in program itself, this is because dragging needs 3 commands (disconnect, drag and connect for example)
 		//command.execute();
 	}
-
 	/**
 	 * 
-	 * @param firstBlock
-	 * @param secondBlock
-	 * @param lastOfSecondBlock
+	 * @param oldPos
+	 * @param newPos
+	 * @param block
+	 * @param preCommand
+	 * @param postCommand
 	 */
 	public void dragCommand(Vector oldPos, Vector newPos, PresentationBlock<?> block, Command preCommand, Command postCommand) {
 		
 		executed(new DraggingCommand(oldPos, newPos, block, preCommand, postCommand));
-	}
-	
-
-	void positionClicked(int position) {
-		cursor = position;
 	}
 }
