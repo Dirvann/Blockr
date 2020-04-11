@@ -2,6 +2,8 @@ package presentation.block;
 
 import java.awt.Graphics;
 
+import command.Command;
+import domain.GameController;
 import domain.Vector;
 import domain.block.*;
 
@@ -85,8 +87,8 @@ public class ImplementationPresentationBlock implements FacadePresentationBlock{
 	}
 
 	@Override
-	public boolean canSnap(PresentationBlock<?> firstBlock, PresentationBlock<?> secondBlock) {
-		return firstBlock.canSnap(secondBlock);
+	public Command canSnap(PresentationBlock<?> firstBlock, PresentationBlock<?> secondBlock, GameController GC) {
+		return firstBlock.canSnap(secondBlock, GC);
 	}
 
 	@Override

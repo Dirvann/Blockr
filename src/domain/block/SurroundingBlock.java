@@ -41,8 +41,10 @@ public abstract class SurroundingBlock extends SequenceBlock {
 	 * to the first block to null.
 	 */
 	protected void removeBodyBlock() {
-		this.bodyBlock.setSurroundingBlock(null);
-		this.bodyBlock = null;
+		if (this.bodyBlock != null) {
+			this.bodyBlock.setSurroundingBlock(null);
+			this.bodyBlock = null;
+		}
 	}
 
 	/**

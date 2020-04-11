@@ -57,13 +57,22 @@ public class ImplementationBlock implements FacadeBlock{
 
 	@Override
 	public void addBodyBlock(SurroundingBlock surroundingBlock, SequenceBlock block) {
-		surroundingBlock.setBodyBlock(block);
+		if (block != null) {
+			surroundingBlock.setBodyBlock(block);
+		}
+		else {
+			surroundingBlock.removeBodyBlock();
+		}
 	}
 
 	@Override
 	public void setConditionBlock(SurroundingBlock surroundingBlock, ConditionBlock conditionBlock) {
-		surroundingBlock.setConditionBlock(conditionBlock);
-		
+		if (conditionBlock == null) {
+			surroundingBlock.removeConditionBlock();
+		}
+		else {
+			surroundingBlock.setConditionBlock(conditionBlock);
+		}
 	}
 
 	@Override
@@ -127,6 +136,11 @@ public class ImplementationBlock implements FacadeBlock{
 	@Override
 	public SurroundingBlock getSurroundingBlock(Block block) {
 		return block.getSurroundingBlock();
+	}
+
+	@Override
+	public Block getLastBlock(Block block) {
+		return block.getLastBlock();
 	}
 
 

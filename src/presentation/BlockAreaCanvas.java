@@ -10,12 +10,16 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import command.Command;
+import command.DeleteBlock;
+import command.MakeBlock;
+import command.disconnectCommand;
+import domain.CommandProcessor;
 import domain.GameController;
 import domain.ImplementationGameController;
 import domain.Vector;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
-import domain.game_world.GameWorld;
 import domain.game_world.ImplementationGameWorld;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
@@ -45,6 +49,13 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 
 	Vector previousMousePos = null;
 	boolean mouseDown = false;
+	
+	//these are needed for redo and undo dragging commands
+	private CommandProcessor cmd = new CommandProcessor();
+	private Command preCommand = null;
+	private Command postCommand = null;
+	private Vector newPos = null;
+	private Vector oldPos = null;
 	
 	
 	public BlockAreaCanvas(BlockrPanel blockrPanel) {
@@ -94,6 +105,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	}
 	
 	public void handleMousePressed(int x, int y) {
+		this.errorMessage = "";
 		Vector mousePos = new Vector(x, y);
 
 		PresentationBlock<?> paletteBlockP = paletteP.GetClickedPaletteBlock(mousePos);
@@ -103,15 +115,28 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 			PresentationBlock<?> presentationCopy = BFP.makeCopy(paletteBlockP);
 			GC.addBlockToProgramArea(blockrPanel.getGameController(), presentationCopy);
 			selectedBlock = presentationCopy;
+			
+			//redo undo info collecting about current situation
+			this.preCommand = new MakeBlock(blockrPanel.getGameController(), presentationCopy);
+			this.oldPos = BFP.getPosition(presentationCopy);
+			 
 			System.out.println("New Block made of type: " + BF.getName(BFP.getBlock(selectedBlock) ));
 			GC.stopExecution(blockrPanel.getGameController());
 		}
-
-		PresentationBlock<?> programBlockP = programAreaP.getBlockAtPosition(mousePos);
-		if (programBlockP != null) {
-			selectedBlock = programBlockP;
-			BF.disconnect(BFP.getBlock(selectedBlock));
+		else {
+			PresentationBlock<?> programBlockP = programAreaP.getBlockAtPosition(mousePos);
+			if (programBlockP != null) {
+				selectedBlock = programBlockP;
+				
+				//info collecting redo undo
+				if (BF.getPreviousBlock(BFP.getBlock(programBlockP)) != null)
+					this.preCommand = new disconnectCommand(BF.getPreviousBlock(BFP.getBlock(programBlockP)), BFP.getBlock(programBlockP), blockrPanel.getGameController());
+				this.oldPos = BFP.getPosition(programBlockP);
+						
+						
+				GC.disconnect(BFP.getBlock(selectedBlock), blockrPanel.getGameController());
 			GC.stopExecution(blockrPanel.getGameController());
+			}
 		}
 
 		previousMousePos = mousePos;
@@ -133,52 +158,59 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		Vector mousePos = new Vector(x, y);
 
 		if (this.selectedBlock != null) {
+			//undo redo info collect
+			this.newPos = BFP.getPosition(selectedBlock);
+			
 			// Check for snapping
-			// TODO: replace with new snapping code
-			boolean snapped = programAreaP.snapBlock(selectedBlock);
-			if (!snapped) {
-				if (!GC.isTopLevelBlock(blockrPanel.getGameController(), BFP.getBlock(selectedBlock))) {
-					GC.addTopLevelBlock(blockrPanel.getGameController(), BFP.getBlock(selectedBlock));
-				}
-			} else {
-				if (GC.isTopLevelBlock(blockrPanel.getGameController(), BFP.getBlock(selectedBlock))) {
-					GC.removeTopLevelBlock(blockrPanel.getGameController(), BFP.getBlock(selectedBlock));
-				} 
+			
+			//makes the command for snapping (undo/redo). null if not snapped
+			this.postCommand = programAreaP.snapBlock(selectedBlock);
+			if (postCommand != null) {
+				GC.removeTopLevelBlock(blockrPanel.getGameController(), BFP.getBlock(selectedBlock));
 			}
 
 			// Delete if over palette
 			int paletteBorder = (int) (panelProportion * this.getWidth());
 			if (mousePos.getX() < paletteBorder) {
+				this.postCommand = new DeleteBlock(blockrPanel.getGameController(), selectedBlock);
 				GC.removeBlockFromProgramArea(blockrPanel.getGameController(), selectedBlock);
-				// programAreaP.removeBlock(selectedBlock);
-
-				// TODO: recursively delete all connected blocks
 			}
 
-		}
 
+			this.cmd.dragCommand(oldPos, newPos, selectedBlock, preCommand, postCommand);
+
+		}
+		
+		//resetting undo redo info, command construction is finished
+		oldPos = null;
+		newPos = null;
+		preCommand = null;
+		postCommand = null;
+		
 		this.mouseDown = false;
 		this.selectedBlock = null;
 		repaint();
 	}
 	
-	public void handleKeyPressed(int keyCode) {
+	public void handleKeyPressed(KeyEvent key) {
+		int keyCode = key.getKeyCode();
+		this.errorMessage = "";
 		GameController gameController = blockrPanel.getGameController();
 		
 		switch (keyCode) {
-		case 27: // Esc
+		case KeyEvent.VK_ESCAPE: // Esc
 			GC.stopExecution(gameController);
 			GW.resetGameWorld(GC.getGameWorld(gameController));
 			blockrPanel.redrawGameWorld();
 			break;
 
-		case 115: // F4
+		case KeyEvent.VK_F4: // F4
 			GC.stopExecution(gameController);
 			break;
 
-		case 116: // F5
+		case KeyEvent.VK_F5: // F5
 			try {
-				setErrorMessage(defaultMessage);
+				setErrorMessage("The error message will appear here!");
 				GC.execute(gameController);
 				blockrPanel.redrawGameWorld();
 			} catch (Exception e1) {
@@ -192,7 +224,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 			}
 			break;
 
-		case 117: // F6
+		case KeyEvent.VK_F6: // F6
 			System.out.println("Changed gameWorld");
 			int width = blockrPanel.getPreferredGameWorldWidth();
 			int height = blockrPanel.getPreferredGameWorldHeight();
@@ -203,6 +235,14 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 
 		default:
 			break;
+		}
+		//redo ctrl + shift + z
+		if (key.getKeyCode() == KeyEvent.VK_Z && key.isControlDown() && key.isShiftDown()) {
+			this.cmd.redo();
+		}
+		// undo ctrl + z
+		else if (key.getKeyCode() == KeyEvent.VK_Z && key.isControlDown() && !key.isShiftDown()){
+			this.cmd.undo();
 		}
 		repaint();
 	}
@@ -256,7 +296,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		handleKeyPressed(e.getKeyCode());
+		handleKeyPressed(e);
 		
 	}
 

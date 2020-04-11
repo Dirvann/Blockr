@@ -3,6 +3,9 @@ package domain;
 import java.util.List;
 
 import domain.block.Block;
+import domain.block.ConditionBlock;
+import domain.block.SequenceBlock;
+import domain.block.SurroundingBlock;
 import domain.game_world.GameWorld;
 import presentation.block.PresentationBlock;
 
@@ -28,4 +31,10 @@ public interface FacadeGameController {
 	public Block getNextBlockToExecute(GameController gameController);
 	
 	public int getAmountOfBlocksLeft(GameController gameController);
+	
+	//functions for connecting and disconnecting blocks
+	public void disconnect(Block block, GameController gamecontroller);
+	public boolean connect(Block firstBlock, Block secondBlock, GameController GC);
+	public void setBody(SurroundingBlock surroundingBlock, SequenceBlock block, GameController GC);
+	public void setCondition(SurroundingBlock surroundingBlock, ConditionBlock condition, GameController GC);
 }

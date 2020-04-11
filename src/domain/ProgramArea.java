@@ -110,9 +110,9 @@ public class ProgramArea {
 
 		try {
 			removeTopLevelBlock(block);
-			System.out.println("a top-level block is removed");
+			System.out.println("a block is correctly removed");
 		} catch (Exception e) {
-			System.out.println("a non top-level block is removed");
+			System.out.println("Something is not right, a bug may happen soon.");
 		}
 	}
 
@@ -121,7 +121,11 @@ public class ProgramArea {
 	 * @param block, block to add to topLevelBlocks
 	 */
 	protected void addTopLevelBlock(Block block) {
-		topLevelBlocks.add(block);
+		try {
+			if (!topLevelBlocks.contains(block))
+				topLevelBlocks.add(block);
+		}
+		catch (Exception e) {};
 	}
 
 	/**

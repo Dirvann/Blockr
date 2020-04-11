@@ -2,6 +2,8 @@ package presentation.block;
 
 import java.awt.Graphics;
 
+import command.Command;
+import domain.GameController;
 import domain.Vector;
 import domain.block.ActionBlock;
 import domain.block.Block;
@@ -70,7 +72,7 @@ public interface FacadePresentationBlock {
 		
 		public PresentationBlock<?> makeCopy(PresentationBlock<?> block);
 
-		public boolean canSnap(PresentationBlock<?> firstBlock, PresentationBlock<?> secondBlock);
+		public Command canSnap(PresentationBlock<?> firstBlock, PresentationBlock<?> secondBlock, GameController GC);
 		
 		public void setPosition(PresentationBlock<?> block, Vector position);
 		
