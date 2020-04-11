@@ -2,6 +2,7 @@ package domain;
 
 import java.util.List;
 
+import command.ExecutionCommand;
 import domain.block.Block;
 import domain.block.ConditionBlock;
 import domain.block.SequenceBlock;
@@ -26,7 +27,8 @@ public interface FacadeGameController {
 	public List<Block> getCopyOfAllTopLevelBlocks(GameController gameController);
 	public Boolean isTopLevelBlock(GameController gameController, Block block);
 
-	public void execute(GameController gameController) throws Exception;
+	public ExecutionCommand execute(GameController gameController) throws Exception;
+	public Boolean isExecuting(GameController GC);
 	public void stopExecution(GameController gameController);
 	public Block getNextBlockToExecute(GameController gameController);
 	
@@ -37,4 +39,11 @@ public interface FacadeGameController {
 	public boolean connect(Block firstBlock, Block secondBlock, GameController GC);
 	public void setBody(SurroundingBlock surroundingBlock, SequenceBlock block, GameController GC);
 	public void setCondition(SurroundingBlock surroundingBlock, ConditionBlock condition, GameController GC);
+	
+	//execution info for undo redo and manipulation of execution
+	public Block getNextToExecute(GameController GC);
+	public void setNextToExecute(GameController GC, Block block);
+	public ExecutionCommand getExecutionCommand(GameController GC);
+	public void setExecutionCommand(ExecutionCommand exeCmd, GameController GC);
+	public void setNewExecution(Block currentlyExecuted, Block nextToExecute, GameController GC);
 }

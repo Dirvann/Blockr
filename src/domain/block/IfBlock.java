@@ -1,6 +1,8 @@
 package domain.block;
 
+import command.ExecutionCommand;
 import domain.GameController;
+import domain.ImplementationGameController;
 import exceptions.domainExceptions.NoConditionBlockException;
 
 class IfBlock extends SingleSurroundingBlock {
@@ -12,11 +14,13 @@ class IfBlock extends SingleSurroundingBlock {
 	}
 
 	protected Block execute(GameController gameController) throws Exception {
+		ImplementationGameController GCF = new ImplementationGameController();
 		if (getConditionBlock() == null || !getConditionBlock().isValidCondition()) {
 			throw new NoConditionBlockException();
 		}
 		if (this.getBodyBlock() != null) {
 			if (getConditionBlock().evaluate(gameController)) {
+				GCF.setExecutionCommand(new ExecutionCommand(null, null, null, gameController), gameController);
 				return this.getBodyBlock();
 			}
 		}
@@ -26,6 +30,7 @@ class IfBlock extends SingleSurroundingBlock {
 			}
 			return this.getSurroundingBlock().getNextAfterLoop();
 		}
+		GCF.setExecutionCommand(new ExecutionCommand(null, null, null, gameController), gameController);
 		return this.getNextBlock();
 	}
 

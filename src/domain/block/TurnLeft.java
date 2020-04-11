@@ -1,5 +1,6 @@
 package domain.block;
 
+import command.turnLeftCommand;
 import domain.GameController;
 
 class TurnLeft extends ActionBlock {
@@ -11,10 +12,13 @@ class TurnLeft extends ActionBlock {
 	@Override
 	protected void performAction(GameController gameController) {
 
+		
 		if (gameController == null) 
 			System.out.println("Turn Left");
-		else
+		else {
 			IGW.robotTurnLeft(IGC.getGameWorld(gameController));
+			IGC.setExecutionCommand(new turnLeftCommand(null, null, null, gameController), gameController);
+		}
 	}
 
 	@Override
