@@ -3,11 +3,18 @@ package domain;
 import java.util.List;
 
 import domain.block.Block;
+import domain.block.ConditionBlock;
+import domain.block.ImplementationBlock;
+import domain.block.SequenceBlock;
+import domain.block.SurroundingBlock;
 import domain.game_world.GameWorld;
 import presentation.block.PresentationBlock;
 
 public class ImplementationGameController implements FacadeGameController{
 
+
+	ImplementationBlock BF = new ImplementationBlock();
+	
 	public ImplementationGameController() {};
 
 	@Override
@@ -88,4 +95,38 @@ public class ImplementationGameController implements FacadeGameController{
 	public List<Block> getCopyOfAllTopLevelBlocks(GameController gameController) {
 		return gameController.getProgramArea().getAllBlocks();		
 	}
+
+	@Override
+	public void disconnect(Block block, GameController gamecontroller) {
+		if (block != null) {
+			gamecontroller.getProgramArea().addTopLevelBlock(block);
+			BF.disconnect(block);
+		}
+		
+	}
+
+	@Override
+	public boolean connect(Block firstBlock, Block secondBlock, GameController GC) {
+		if(BF.connect(firstBlock, secondBlock)) {
+			GC.getProgramArea().removeTopLevelBlock(secondBlock);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void setBody(SurroundingBlock surroundingBlock, SequenceBlock block, GameController GC) {
+		BF.addBodyBlock(surroundingBlock, block);
+		GC.getProgramArea().removeTopLevelBlock(block);
+		
+	}
+
+	@Override
+	public void setCondition(SurroundingBlock surroundingBlock, ConditionBlock condition, GameController GC) {
+		BF.setConditionBlock(surroundingBlock, condition);
+		GC.getProgramArea().removeTopLevelBlock(condition);
+		
+	}
+
+
 }

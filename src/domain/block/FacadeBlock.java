@@ -117,6 +117,13 @@ public interface FacadeBlock {
 	 *         conditionBlocks or on the upper side of sequenceBlocks).
 	 */
 	public Block getPreviousBlock(Block block);
+	
+	/**
+	 * 
+	 * @param block
+	 * @return the last block of the group of blocks where block is a part of.
+	 */
+	public Block getLastBlock(Block block);
 
 	/**
 	 * 

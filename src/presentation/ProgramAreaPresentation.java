@@ -3,6 +3,7 @@ package presentation;
 import java.awt.Graphics;
 import java.util.List;
 
+import command.Command;
 import domain.GameController;
 import domain.ImplementationGameController;
 import domain.Vector;
@@ -41,15 +42,16 @@ public class ProgramAreaPresentation {
 		return null;
 	}
 	
-	public boolean snapBlock(PresentationBlock<?> block){
-		
+	public Command snapBlock(PresentationBlock<?> block){
+		Command cmd = null;
 		for (Block blockListElement:  GC.getCopyOfAllTopLevelBlocks(gameController)) {
 			PresentationBlock<?> pBlock = BF.getPresentationBlock(blockListElement);
-			if (BFP.canSnap(pBlock, block)) {
-				return true;
+			cmd = BFP.canSnap(pBlock, block, this.gameController);
+			if (cmd != null) {
+				return cmd;
 			}
 		}
-		return false;
+		return cmd;
 	}
 	
 

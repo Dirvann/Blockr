@@ -8,6 +8,11 @@ import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.List;
 
+import command.Command;
+import command.ConnectCommand;
+import command.addToBodyCommand;
+import command.setConditionCommand;
+import domain.GameController;
 import domain.Vector;
 import domain.block.Block;
 import domain.block.ConditionBlock;
@@ -146,23 +151,28 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 	}
 
 	@Override
-	public boolean canSnap(PresentationBlock<?> b) {
+	public Command canSnap(PresentationBlock<?> b, GameController GC) {
+		
+		Block next = BF.getNextBlock(getBlock());
+		ConditionBlock condition = BF.getConditionBlock(getBlock());
+		SequenceBlock body = BF.getBodyBlock(getBlock());
+		
 		if (b.getBlock() instanceof ConditionBlock
 				&& b.getGivingSnapPoint().distanceTo(getConditionSnapPoint()) <= getSnapDistance()) {
 			BF.setConditionBlock(getBlock(), (ConditionBlock) b.getBlock());
-			return true;
+			return new setConditionCommand(getBlock(), (ConditionBlock) b.getBlock(), condition, GC);
 		}
 		if (b.getBlock() instanceof SequenceBlock) {
 			if (b.getGivingSnapPoint().distanceTo(getBodySnapPoint()) <= getSnapDistance()) {
 				BF.addBodyBlock(getBlock(), (SequenceBlock) b.getBlock());
-				return true;
+				return new addToBodyCommand(getBlock(), (SequenceBlock) b.getBlock(), body, GC);
 			}
 			if (b.getGivingSnapPoint().distanceTo(getSequenceSnapPoint()) <= getSnapDistance()) {
 				BF.connect(getBlock(), b.getBlock());
-				return true;
+				return new ConnectCommand(getBlock(), b.getBlock(), next, GC);
 			}
 		}
-		return false;
+		return null;
 	}
 
 	@Override

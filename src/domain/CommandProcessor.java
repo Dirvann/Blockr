@@ -14,17 +14,17 @@ public class CommandProcessor {
 	ArrayList<Command> undoStack = new ArrayList<>();
 	int nbCommandsUndone;
 
-	void undo() {
+	public void undo() {
 		if (undoStack.size() > nbCommandsUndone)
 			undoStack.get(undoStack.size() - ++nbCommandsUndone).undo();
 	}
 
-	void redo() {
+	public void redo() {
 		if (nbCommandsUndone > 0)
 			undoStack.get(undoStack.size() - nbCommandsUndone--).execute();
 	}
 
-	void execute(Command command) {
+	void executed(Command command) {
 		for (; nbCommandsUndone > 0; nbCommandsUndone--)
 			undoStack.remove(undoStack.size() - 1);
 		undoStack.add(command);
@@ -38,9 +38,9 @@ public class CommandProcessor {
 	 * @param secondBlock
 	 * @param lastOfSecondBlock
 	 */
-	void dragCommand(Vector oldPos, Vector newPos, PresentationBlock<?> block, Command preCommand, Command postCommand) {
+	public void dragCommand(Vector oldPos, Vector newPos, PresentationBlock<?> block, Command preCommand, Command postCommand) {
 		
-		execute(new DraggingCommand(oldPos, newPos, block, preCommand, postCommand));
+		executed(new DraggingCommand(oldPos, newPos, block, preCommand, postCommand));
 	}
 	
 

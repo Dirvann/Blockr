@@ -36,12 +36,12 @@ public class DraggingCommand implements Command{
 
 	@Override
 	public void undo() {
-		if (preCommand != null) {
-			preCommand.undo();
-		}
-		BPF.setPosition(block, oldPos);
 		if (postCommand != null) {
 			postCommand.undo();
+		}
+		BPF.setPosition(block, oldPos);
+		if (preCommand != null) {
+			preCommand.undo();
 		}
 		
 	}

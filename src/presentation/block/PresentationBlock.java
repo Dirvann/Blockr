@@ -5,6 +5,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.util.List;
 
+import command.Command;
+import command.ConnectCommand;
+import domain.GameController;
 import domain.Vector;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
@@ -181,14 +184,17 @@ public abstract class PresentationBlock<T extends Block> {
 	 * @return true if b can connect to this block, false if not.
 	 * @Post b is connected to this if possible.
 	 */
-	protected boolean canSnap(PresentationBlock<?> b) {
+	protected Command canSnap(PresentationBlock<?> b, GameController GC) {
 		List<Vector> receivers = getReceivingSnapPoints();
-		if (receivers.size() == 0) return false;
+		if (receivers.size() == 0) return null;
+		//redo undo info collect
+		Block next = blockFunctions.getNextBlock(getBlock());
+		
 		if (b.getGivingSnapPoint().distanceTo(getReceivingSnapPoints().get(0)) <= getSnapDistance()
 				&& blockFunctions.connect(getBlock(), b.getBlock())) {
-			return true;
+			return new ConnectCommand(getBlock(), b.getBlock(), next, GC);
 		}
-		return false;
+		return null;
 	}
 	
 	abstract protected PresentationBlock<T> makeCopyWithoutConnections(); 
