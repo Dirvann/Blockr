@@ -76,5 +76,6 @@ public abstract class ChainConditionBlock extends ConditionBlock {
 			this.next = null;
 		}
 	}
+	
 
 }

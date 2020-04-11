@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.block.Block;
+import domain.block.ConditionBlock;
 import domain.block.ImplementationBlock;
+import domain.block.SequenceBlock;
+import exceptions.domainExceptions.BlockColumnNotExecutableException;
 import exceptions.domainExceptions.CantRunConditionException;
 import exceptions.domainExceptions.NotOneStartingBlockException;
 import presentation.block.ImplementationPresentationBlock;
@@ -35,25 +38,6 @@ public class ProgramArea {
 
 	/**
 	 * 
-	 * @return nbTopLevelBlocks() == 1 && top level block can be executed
-	 * @throws NotOneStartingBlockException 
-	 * @throws CantRunConditionException 
-	 */
-	protected boolean hasValidTopLevelBlock() throws NotOneStartingBlockException, CantRunConditionException {
-		if (nbTopLevelBlocks() == 1) {
-			Block topLevelBlock = topLevelBlocks.get(0);
-			if (BF.isValidStartingBlock(topLevelBlock)) {
-				return true;
-			}
-			else {
-				throw new CantRunConditionException();}
-		} else {
-			throw new NotOneStartingBlockException();
-		}
-	}
-
-	/**
-	 * 
 	 * @return nextToExecute != null
 	 */
 	protected Boolean programInProgress() {
@@ -61,21 +45,30 @@ public class ProgramArea {
 	}
 
 	/**
-	 * 
-	 * @return true if program can start executing
-	 * @throws Exception 
-	 */
-	protected Boolean canStartExecution() throws Exception {
-		return (!programInProgress() && hasValidTopLevelBlock());
-		// TODO: maybe check if program is valid
-	}
-
-	/**
 	 * @throws Exception 
 	 * @post nextToExecute != null
 	 */
 	protected void startExecution() throws Exception {
-		if (canStartExecution()) {
+		// programInProgress() should in theory never return true, but it's there to make sure;
+		if (programInProgress()) {
+			return;
+		}
+		
+		if (this.nbTopLevelBlocks() != 1) {
+			throw new NotOneStartingBlockException();
+		}
+		
+		Block topLevelBlock = topLevelBlocks.get(0);
+		
+		if (!(topLevelBlock instanceof SequenceBlock)) {
+			throw new CantRunConditionException();
+		}
+		
+		if (!BF.isValidStartingBlock(topLevelBlock)) {
+			throw new BlockColumnNotExecutableException();
+		}
+		
+		else {
 			nextToExecute = topLevelBlocks.get(0);
 		}
 	}

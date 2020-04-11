@@ -88,6 +88,22 @@ public abstract class SurroundingBlock extends SequenceBlock {
 			return this.condition.isValidCondition();
 		}
 	}
+	
+	@Override
+	protected boolean hasValidExecutionColumn() {
+		// First check if this block has a valid condition
+		boolean result = this.hasValidCondition();
+		// If this block has a bodyBlock, check if it can be executed
+		if (this.bodyBlock != null) {
+			result = result && this.bodyBlock.hasValidExecutionColumn();
+		}
+		// If this block has a following block, check if it can be executed
+		if (this.getNextBlock() != null) {
+			result = result && this.getNextBlock().hasValidExecutionColumn();
+		}
+		
+		return result;
+	}
 
 	/**
 	 * 

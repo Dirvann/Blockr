@@ -22,4 +22,13 @@ public abstract class ActionBlock extends SequenceBlock{
 		}
 		return this.getNextBlock();
 	}
+	
+	@Override
+	protected boolean hasValidExecutionColumn() {
+		if (this.getNextBlock() != null) {
+			return this.getNextBlock().hasValidExecutionColumn();
+		} else {
+			return true;
+		}
+	}
 }
