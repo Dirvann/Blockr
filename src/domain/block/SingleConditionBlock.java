@@ -21,8 +21,4 @@ public abstract class SingleConditionBlock extends ConditionBlock {
 		return false;
 	}
 	
-	@Override
-	protected boolean hasValidExecutionColumn() {
-		return this.isValidCondition();
-	}
 }

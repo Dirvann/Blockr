@@ -42,4 +42,10 @@ public abstract class ConditionBlock extends Block {
 		return null;
 	}
 	
+	@Override
+	protected boolean hasValidExecutionColumn() {
+		// ConditionBlocks can't be executed
+		return false;
+	}
+	
 }
