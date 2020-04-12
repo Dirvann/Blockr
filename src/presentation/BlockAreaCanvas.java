@@ -12,6 +12,7 @@ import java.awt.event.MouseMotionListener;
 
 import command.Command;
 import command.DeleteBlock;
+import command.ExecutionCommand;
 import command.MakeBlock;
 import command.disconnectCommand;
 import domain.CommandProcessor;
@@ -213,8 +214,16 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		case KeyEvent.VK_F5: // F5
 			try {
 				setErrorMessage("");
-				exe.addExecutionStep(GC.execute(gameController));
+				ExecutionCommand exeCmd = GC.execute(gameController);
+				exe.addExecutionStep(exeCmd);
 				blockrPanel.redrawGameWorld();
+				if (GW.robotOnGoal(GC.getGameWorld(blockrPanel.getGameController()))){
+					setErrorMessage("congratiolations!! You have beaten this level! \n Press F6 to start a new one. ");
+				}
+				if (!GC.isExecuting(gameController)) {
+					this.stopExecution();
+				}
+				
 			} catch (Exception e1) {
 				if (e1.getMessage() == null) {
 					setErrorMessage("null returned");
