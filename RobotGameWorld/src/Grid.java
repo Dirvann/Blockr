@@ -1,9 +1,13 @@
-package domain.game_world;
+
 
 import java.util.Random;
 
+import cell.Cell;
+import cell.EmptyCell;
+import cell.Goal;
+import cell.Wall;
 import domain.Vector;
-import domain.game_world.cell.*;
+import cell.*;
 import exceptions.domainExceptions.OutOfBoundsException;
 
 /**

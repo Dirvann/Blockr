@@ -1,9 +1,12 @@
-package domain.game_world;
+
 
 import java.util.Random;
 
+import cell.Goal;
+import cell.RobotCanEnter;
+import cell.Wall;
 import domain.Vector;
-import domain.game_world.cell.*;
+import cell.*;
 import exceptions.domainExceptions.OutOfBoundsException;
 import exceptions.domainExceptions.robotExceptions.RobotEnteringWallException;
 import exceptions.domainExceptions.robotExceptions.RobotMovingOffGridException;

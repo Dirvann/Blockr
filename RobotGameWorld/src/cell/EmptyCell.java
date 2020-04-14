@@ -1,4 +1,4 @@
-package domain.game_world.cell;
+package cell;
 
 public class EmptyCell extends Cell implements RobotCanEnter {
 

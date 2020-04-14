@@ -1,13 +1,13 @@
-package domain.game_world;
 
+
+import cell.Cell;
+import cell.Goal;
+import cell.Wall;
 import domain.Vector;
-import domain.game_world.cell.Cell;
-import domain.game_world.cell.Goal;
-import domain.game_world.cell.Wall;
 import exceptions.domainExceptions.robotExceptions.RobotEnteringWallException;
 import exceptions.domainExceptions.robotExceptions.RobotMovingOffGridException;
 
-public class ImplementationGameWorld implements FacadeGameWorld{
+public class ImplementationGameWorld implements FacadeGameWorld<GameWorld, Robot, Vector, Direction, Cell, Grid>{
 
 	public ImplementationGameWorld() {};
 	
