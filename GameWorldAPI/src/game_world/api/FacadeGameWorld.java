@@ -1,6 +1,6 @@
 package game_world.api;
 
-public interface FacadeGameWorld<GameWorld, Vector, Grid, Robot, Direction, Cell> {
+public interface FacadeGameWorld<GameWorld, Vector, Grid, Robot, Direction, Cell, Graphics> {
 	
 	public GameWorld makeGameWorld(Grid grid, Robot robot);
 	public GameWorld makeStandardEmptyGameWorld();
@@ -25,6 +25,8 @@ public interface FacadeGameWorld<GameWorld, Vector, Grid, Robot, Direction, Cell
 	public boolean isGoal(GameWorld world, Integer x, Integer y);
 	public Vector getRobotLocation(GameWorld world);
 	public Direction getRobotDirection(GameWorld world);
+	
+	public void drawGameWorld(Graphics g, GameWorld gameWorld, int width);
 	
 	
 	
