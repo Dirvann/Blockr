@@ -1,11 +1,9 @@
 package domain;
 
+import command.ExecutionCommand;
 import domain.block.Block;
-import domain.game_world.Direction;
 import domain.game_world.GameWorld;
-import domain.game_world.Grid;
 import domain.game_world.ImplementationGameWorld;
-import domain.game_world.cell.Cell;
 
 public class GameController {
 
@@ -24,7 +22,7 @@ public class GameController {
 		this.gameWorld = gameWorld;
 	}	
 
-	protected void execute() throws Exception {
+	protected ExecutionCommand execute() throws Exception {
 		if (programArea.programInProgress()) {
 			try {
 				programArea.executeNextBlock(this);
@@ -38,6 +36,7 @@ public class GameController {
 			gameWorldFunctions.resetGameWorld(gameWorld);
 			programArea.startExecution(); // this also throws exceptions
 		}
+		return programArea.exeCmd;
 	}
 
 	protected void stopExecution() {

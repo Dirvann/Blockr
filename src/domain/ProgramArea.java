@@ -3,6 +3,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import command.ExecutionCommand;
 import domain.block.Block;
 import domain.block.ConditionBlock;
 import domain.block.ImplementationBlock;
@@ -17,10 +18,15 @@ public class ProgramArea {
 
 	private int blocksLeft = 15;
 	private List<Block> topLevelBlocks;
-	private Block nextToExecute = null;
+	
+	protected Block nextToExecute = null;
+	//undo redo info
+	protected Block currentExe = null;
+	
 	private ImplementationPresentationBlock BFP = new ImplementationPresentationBlock();
 	private ImplementationBlock BF = new ImplementationBlock();
-
+	
+	protected ExecutionCommand exeCmd = null;
 	/**
 	 * Creates a new ProgramArea
 	 */
@@ -70,6 +76,8 @@ public class ProgramArea {
 		
 		else {
 			nextToExecute = topLevelBlocks.get(0);
+			currentExe = null;
+			exeCmd = null;
 		}
 	}
 
@@ -78,8 +86,20 @@ public class ProgramArea {
 	 * @param gameController gameController to execute the next function in
 	 * @throws Exception when execute is not possible
 	 */
-	protected void executeNextBlock(GameController gameController) throws Exception {
+	protected ExecutionCommand executeNextBlock(GameController gameController) throws Exception {
+		//undo redo info collect
+		this.exeCmd = null;
+		Block previousExe = currentExe;
+		currentExe = nextToExecute;
+		//execute() will also make an empty ExecutionCommand in programArea.
 		nextToExecute = BF.execute(nextToExecute, gameController);
+		
+		//fill ExecutionCommand with needed info and return command.
+		if (exeCmd == null) return null;
+		this.exeCmd.setPrevious(previousExe);
+		this.exeCmd.setCurrent(currentExe);
+		this.exeCmd.setNext(nextToExecute);
+		return exeCmd;
 	}
 
 	/**
@@ -188,6 +208,14 @@ public class ProgramArea {
 
 	protected void decreaseBlocksLeft() {
 		blocksLeft -= 1;
+	}
+
+	protected ExecutionCommand getExecutionCommand() {
+		return exeCmd;
+	}
+
+	protected void setExecutionCommand(ExecutionCommand exeCmd) {
+		this.exeCmd = exeCmd;
 	}
 
 }

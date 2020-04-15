@@ -12,9 +12,11 @@ import java.awt.event.MouseMotionListener;
 
 import command.Command;
 import command.DeleteBlock;
+import command.ExecutionCommand;
 import command.MakeBlock;
 import command.disconnectCommand;
 import domain.CommandProcessor;
+import domain.ExecutionProcessor;
 import domain.GameController;
 import domain.ImplementationGameController;
 import domain.Vector;
@@ -51,6 +53,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	boolean mouseDown = false;
 	
 	//these are needed for redo and undo dragging commands
+	private ExecutionProcessor exe = new ExecutionProcessor();
 	private CommandProcessor cmd = new CommandProcessor();
 	private Command preCommand = null;
 	private Command postCommand = null;
@@ -121,7 +124,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 			this.oldPos = BFP.getPosition(presentationCopy);
 			 
 			System.out.println("New Block made of type: " + BF.getName(BFP.getBlock(selectedBlock) ));
-			GC.stopExecution(blockrPanel.getGameController());
+			this.stopExecution();
 		}
 		else {
 			PresentationBlock<?> programBlockP = programAreaP.getBlockAtPosition(mousePos);
@@ -135,7 +138,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 						
 						
 				GC.disconnect(BFP.getBlock(selectedBlock), blockrPanel.getGameController());
-			GC.stopExecution(blockrPanel.getGameController());
+			this.stopExecution();
 			}
 		}
 
@@ -199,20 +202,28 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		
 		switch (keyCode) {
 		case KeyEvent.VK_ESCAPE: // Esc
-			GC.stopExecution(gameController);
+			this.stopExecution();
 			GW.resetGameWorld(GC.getGameWorld(gameController));
 			blockrPanel.redrawGameWorld();
 			break;
 
 		case KeyEvent.VK_F4: // F4
-			GC.stopExecution(gameController);
+			this.stopExecution();
 			break;
 
 		case KeyEvent.VK_F5: // F5
 			try {
-				setErrorMessage("The error message will appear here!");
-				GC.execute(gameController);
+				setErrorMessage("");
+				ExecutionCommand exeCmd = GC.execute(gameController);
+				exe.addExecutionStep(exeCmd);
 				blockrPanel.redrawGameWorld();
+				if (GW.robotOnGoal(GC.getGameWorld(blockrPanel.getGameController()))){
+					setErrorMessage("congratiolations!! You have beaten this level! \n Press F6 to start a new one. ");
+				}
+				if (!GC.isExecuting(gameController)) {
+					this.stopExecution();
+				}
+				
 			} catch (Exception e1) {
 				if (e1.getMessage() == null) {
 					setErrorMessage("null returned");
@@ -229,7 +240,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 			int width = blockrPanel.getPreferredGameWorldWidth();
 			int height = blockrPanel.getPreferredGameWorldHeight();
 			GC.setGameWorld(gameController, GW.makeRandomGameWorld(width, height));
-			GC.stopExecution(gameController);
+			this.stopExecution();
 			blockrPanel.redrawGameWorld();
 			break;
 
@@ -238,17 +249,34 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		}
 		//redo ctrl + shift + z
 		if (key.getKeyCode() == KeyEvent.VK_Z && key.isControlDown() && key.isShiftDown()) {
-			this.cmd.redo();
+			if (GC.isExecuting(blockrPanel.getGameController())) {
+				exe.redo();
+				blockrPanel.redrawGameWorld();
+			}
+			else {
+				this.cmd.redo();
+			}
 		}
 		// undo ctrl + z
 		else if (key.getKeyCode() == KeyEvent.VK_Z && key.isControlDown() && !key.isShiftDown()){
-			this.cmd.undo();
+			if (GC.isExecuting(blockrPanel.getGameController())) {
+				exe.undo();
+				blockrPanel.redrawGameWorld();
+			}
+			else {
+				this.cmd.undo();
+			}
 		}
 		repaint();
 	}
 
 	
-	
+	private void stopExecution() {
+		GC.stopExecution(blockrPanel.getGameController());
+		this.exe = new ExecutionProcessor();
+		GW.resetGameWorld(GC.getGameWorld(blockrPanel.getGameController()));
+		
+	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		

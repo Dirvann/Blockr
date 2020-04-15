@@ -2,6 +2,7 @@ package domain;
 
 import java.util.List;
 
+import command.ExecutionCommand;
 import domain.block.Block;
 import domain.block.ConditionBlock;
 import domain.block.ImplementationBlock;
@@ -55,8 +56,8 @@ public class ImplementationGameController implements FacadeGameController{
 	}
 
 	@Override
-	public void execute(GameController gameController) throws Exception {
-		gameController.execute();
+	public ExecutionCommand execute(GameController gameController) throws Exception {
+		return gameController.execute();
 	}
 
 	@Override
@@ -125,6 +126,42 @@ public class ImplementationGameController implements FacadeGameController{
 	public void setCondition(SurroundingBlock surroundingBlock, ConditionBlock condition, GameController GC) {
 		BF.setConditionBlock(surroundingBlock, condition);
 		GC.getProgramArea().removeTopLevelBlock(condition);
+		
+	}
+
+	@Override
+	public Block getNextToExecute(GameController GC) {
+		return GC.getNextBlockToExecute();
+	}
+
+	@Override
+	public void setNextToExecute(GameController GC, Block block) {
+		GC.getProgramArea().nextToExecute = block;
+		
+	}
+
+	@Override
+	public ExecutionCommand getExecutionCommand(GameController GC) {
+		return GC.getProgramArea().getExecutionCommand();
+	}
+
+	@Override
+	public void setExecutionCommand(ExecutionCommand exeCmd, GameController GC) {
+		GC.getProgramArea().setExecutionCommand(exeCmd);
+		
+	}
+
+	@Override
+	public Boolean isExecuting(GameController GC) {
+		// TODO Auto-generated method stub
+		return GC.getProgramArea().programInProgress();
+	}
+
+	@Override
+	public void setNewExecution(Block currentlyExecuted, Block nextToExecute,
+			GameController GC) {
+		GC.getProgramArea().currentExe = currentlyExecuted;
+		GC.getProgramArea().nextToExecute = nextToExecute;
 		
 	}
 
