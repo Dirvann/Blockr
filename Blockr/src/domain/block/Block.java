@@ -3,8 +3,7 @@ package domain.block;
 import java.util.ArrayList;
 import java.util.List;
 
-import ImplementationGameWorld;
-import Grid;
+import gameworld.ImplementationGameWorld;
 import domain.GameController;
 import domain.ImplementationGameController;
 import presentation.block.PresentationBlock;
