@@ -7,7 +7,7 @@ import domain.block.ConditionBlock;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
-import domain.game_world.GameWorld;
+import gameworld.GameWorld;
 import presentation.block.PresentationBlock;
 
 public class ImplementationGameController implements FacadeGameController{
@@ -127,6 +127,7 @@ public class ImplementationGameController implements FacadeGameController{
 		GC.getProgramArea().removeTopLevelBlock(condition);
 		
 	}
+
 
 
 }

@@ -20,7 +20,7 @@ import domain.ImplementationGameController;
 import domain.Vector;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
-import domain.game_world.ImplementationGameWorld;
+import gameworld.ImplementationGameWorld;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 

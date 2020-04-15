@@ -1,3 +1,5 @@
+package gameworld;
+
 
 
 public enum Direction{

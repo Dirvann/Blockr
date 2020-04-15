@@ -6,7 +6,7 @@ import domain.block.Block;
 import domain.block.ConditionBlock;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
-import domain.game_world.GameWorld;
+import gameworld.GameWorld;
 import presentation.block.PresentationBlock;
 
 public interface FacadeGameController {

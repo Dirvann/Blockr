@@ -3,9 +3,10 @@ package domain.block;
 import java.util.ArrayList;
 import java.util.List;
 
+import ImplementationGameWorld;
+import Grid;
 import domain.GameController;
 import domain.ImplementationGameController;
-import domain.game_world.ImplementationGameWorld;
 import presentation.block.PresentationBlock;
 
 public abstract class Block {

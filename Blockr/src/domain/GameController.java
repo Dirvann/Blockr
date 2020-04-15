@@ -1,12 +1,8 @@
 package domain;
 
 import domain.block.Block;
-import domain.game_world.Direction;
-import domain.game_world.GameWorld;
-import domain.game_world.Grid;
-import domain.game_world.ImplementationGameWorld;
-import domain.game_world.cell.Cell;
-
+import gameworld.GameWorld;
+import gameworld.ImplementationGameWorld;
 public class GameController {
 
 	private ProgramArea programArea;

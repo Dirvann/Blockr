@@ -5,7 +5,7 @@ import java.awt.Panel;
 
 import domain.GameController;
 import domain.ImplementationGameController;
-import domain.game_world.ImplementationGameWorld;
+import gameworld.ImplementationGameWorld;
 
 
 public class BlockrPanel extends Panel {

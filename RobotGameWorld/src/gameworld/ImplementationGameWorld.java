@@ -1,5 +1,8 @@
+package gameworld;
 
 
+
+import gameworld.api.FacadeGameWorld;
 import cell.Cell;
 import cell.Goal;
 import cell.Wall;
@@ -14,11 +17,6 @@ public class ImplementationGameWorld implements FacadeGameWorld<GameWorld, Robot
 	@Override
 	public GameWorld makeGameWorld(Grid grid, Robot robot) {
 		return new GameWorld(grid,robot);
-	}
-	
-	@Override
-	public GameWorld makeGameWorld(Grid grid, Vector startPosition) {
-		return new GameWorld(grid,startPosition);
 	}
 
 	@Override

@@ -1,8 +1,7 @@
+package gameworld.api;
 public interface FacadeGameWorld<GameWorld, Robot, Vector, Direction, Cell, Grid> {
 	
 	public GameWorld makeGameWorld(Grid grid, Robot robot);
-	// TODO this function overrides the above function
-	public GameWorld makeGameWorld(Grid grid, Vector startPosition);
 	public GameWorld makeStandardEmptyGameWorld();
 	public GameWorld makeRandomGameWorld(int width,int height);
 	public void resetGameWorld(GameWorld world);
