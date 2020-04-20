@@ -6,10 +6,10 @@ import exceptions.domainExceptions.OutOfBoundsException;
 import game_world.cell.*;
 
 /**
- * A class of the grid, containing the cells for the gameworld to use.
+ * A class of the Grid, containing the cells for the gameworld to use.
  * Each grid has a width, height and a matrix of cells.
  * 
- * @invar The location of each cell is inside the gird [height][width]
+ * @invar The location of each cell is inside the Gird [height][width]
  *
  */
 public class Grid {
@@ -18,14 +18,19 @@ public class Grid {
 	private int width;
 	private int height;
 	/**
-	 * Initialize a new grid with given width and height, all cells are empty.
+	 * Initialize a new Grid with given width and height, all cells are empty.
 	 * 
 	 * @param height
+	 * 		  The height for this new Grid.
 	 * @param width
-	 * @param grid
-	 * @post The height of this new Grid is equal to the given height.
-	 * @post The width of this new Grid is equal to the given width.
-	 * @post The grid is filled with empty cells.
+	 * 		  The width for this new Grid.
+	 * @post  The height of this new Grid is equal to the given height.
+	 * 		  | new.getHeight() = height
+	 * @post  The width of this new Grid is equal to the given width.
+	 * 		  | new.getWidth() = width
+	 * @post  The grid is filled with empty cells.
+	 * 		  | if (isInBounds(vector))
+	 * 		  |   then getCell(vector) instanceof Emptycell
 	 */
 	protected Grid(int width, int height) {
 		this.width = width;
@@ -39,17 +44,25 @@ public class Grid {
 		}
 	}
 	/**
-	 * Initialize a new grid with given width and height. 
-	 * set given cells in grid at given locations all other cells are empty.
+	 * Initialize a new Grid with given width and height. 
+	 * set given cells in Grid at given locations all other cells are empty.
 	 * 
 	 * @param height
+	 * 		  The height for this new Grid.
 	 * @param width
+	 * 		  The width for this new Grid.
 	 * @param locations
+	 * 		  The list of locations associated with the given cells.
 	 * @param cells
-	 * @post The height of this new Grid is equal to the given height.
-	 * @post The width of this new Grid is equal to the given width.
-	 * @post The given cells are set in the grid at the corresponding locations
-	 * 		 all the other cells are empty.
+	 * 		  The list of cells with associated locations.
+	 * @post  The height of this new Grid is equal to the given height.
+	 * 		  | new.getHeight() = height
+	 * @post  The width of this new Grid is equal to the given width.
+	 * 		  | new.getWidth() = width
+	 * @post  The given cells are set in the grid at the corresponding locations
+	 * 		  all the other cells are empty.
+	 * 		  | if (isInBounds(vector) && !locations.contains(vector))
+	 * 		  |   then getCell(vector) instanceof Emptycell 
 	 * @throws Exception
 	 */
 	protected Grid(int height, int width,Vector[] locations, Cell[] cells) throws Exception {
@@ -58,10 +71,17 @@ public class Grid {
 	}
 	
 	/**
-	 * Create a default empty 5x5 grid with the goal at (4,4).
+	 * Create a default empty 5x5 Grid with the goal at (4,4).
 	 * 
-	 * @post The goal is located at grid[4][4]
+	 * @post The height of this new Grid is equal to 5.
+	 * 	     | new.getHeight() = 5
+	 * @post The width of this new Grid is equal to 5.
+	 * 		 | new.getWidth() = 5
+	 * @post The goal is located at grid[4][4].
+	 * 		 | getCell(4,4) instanceof Goal
 	 * @post All cells except the goal cell are empty
+	 * 		 | if (isInBounds(vector) && !(getCell(vector) instanceof Goal))
+	 * 		 |   then getCell(vector) instanceof Emptycell
 	 */
 	protected Grid() {
 		this(5, 5);
@@ -71,7 +91,28 @@ public class Grid {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Return a new Grid with given width and height.
+	 * Some cells are empty or a wall. One cell in the grid is a Goal.
+	 * 
+	 * @param height
+	 * 		  The height for this new Grid.
+	 * @param width
+	 * 		  The width for this new Grid.
+	 * @post  The height of this new Grid is equal to the given height.
+	 * 		  | new.getHeight() = height
+	 * @post  The width of this new Grid is equal to the given width.
+	 * 		  | new.getWidth() = width
+	 * @post  There are no cells outside of the width and height.
+	 * 		  | if (isInBounds(vector))
+	 * 		  |   then getCell(vector) instanceof Cell 
+	 * @post  The border cells of new grid are Walls.
+	 * 		  | getCell(0,y) instance of Wall 
+	 * 		  | getCell(x,0) instance of Wall
+	 * 		  | getCell(getWidth-1,y) instance of Wall
+	 * 		  | getCell(x,getHeight-1) instance of Wall
+	 * @return a new Grid with random cells
+	 */
 	static protected Grid randomGrid(int width, int height) {
 		Grid result = new Grid(width, height);
 		Random rand = new Random();
@@ -105,13 +146,17 @@ public class Grid {
 	}
 	
 	/**
-	 * @return width of the grid.
+	 * The width of the Grid.
+	 * 
+	 * @return width of the Grid.
 	 */
 	protected int getWidth() {
 		return width;
 	}
 	/**
-	 * @return height of the grid
+	 * The height of the Grid.
+	 * 
+	 * @return height of the Grid.
 	 */
 	protected int getHeight() {
 		return height;
@@ -120,10 +165,13 @@ public class Grid {
 	 * Set the given cell at a given location.
 	 * 
 	 * @param location
+	 * 		  The location in the Grid where the cell should be set.
 	 * @param cell
-	 * @post The given cell is set in the grid at the corresponding location.
+	 * 		  The cell to be placed in a given location.
+	 * @post  The given cell is set in the Grid at the corresponding location.
+	 * 		  | new.getCell(location) = cell
 	 * @throws Exception
-	 * 
+	 * 		   The given location is out of the Grid.
 	 */
 	protected void setCell(Vector location, Cell cell) throws OutOfBoundsException {
 		if (isInBounds(location)) {
@@ -136,10 +184,13 @@ public class Grid {
 	 * Set the given cells at given locations.
 	 * 
 	 * @param locations
+	 * 		  The list of locations in the Grid where the associated cells should be set.
 	 * @param cells
-	 * @post The given cells are set in the grid at the corresponding locations.
+	 * 		  The cells to be placed at the associated locations.
+	 * @post The given cells are set in the Grid at the corresponding locations.
+	 * 		 | new.getCell(location[x]) = cell[x]
 	 * @throws Exception
-	 * 
+	 * 		   One of the given locations is out of the Grid.
 	 */
 	protected void setCells(Vector[] locations,Cell[] cells) throws Exception {
 		if(locations.length != cells.length) {

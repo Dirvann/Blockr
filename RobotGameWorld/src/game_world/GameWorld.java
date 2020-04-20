@@ -175,7 +175,7 @@ public class GameWorld {
 		getRobot().turnRight();
 	}
 	/**
-	 * Return a random location where the robot can stand thats not the goal location.
+	 * A random location where the robot can stand thats not the goal location.
 	 * 
 	 * @return a random location where the robot can stand thats not the goal location.
 	 * 		  | result == getRobot().getLocation() instanceof RobotCanEnter
@@ -199,7 +199,7 @@ public class GameWorld {
 		return new Vector(0, 0);
 	}
 	/**
-	 * Return a random direction.
+	 * A random direction.
 	 * 
 	 * @return a random direction.
 	 * 
