@@ -7,9 +7,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.Test;
 
-import domain.game_world.*;
-import domain.game_world.cell.*;
+import game_world.Direction;
+import game_world.GameWorld;
+import game_world.Grid;
+import game_world.ImplementationGameWorld;
+import game_world.Robot;
 import game_world.Vector;
+import game_world.cell.Cell;
+import game_world.cell.Goal;
+import game_world.cell.Wall;
 
 public class TestGameWorld {
 	static Grid testGrid;
@@ -26,7 +32,7 @@ public class TestGameWorld {
 	public static void makeGameWorld() {
 		try {
 			testGrid = GW.makeGrid(3, 3, locations, cells);
-			gameWorld = GW.makeGameWorld(testGrid, new Vector(0,0));
+			gameWorld = GW.makeGameWorld(testGrid, GW.makeRobot(new Vector(0,0),Direction.UP));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -58,7 +64,7 @@ public class TestGameWorld {
 	public void robotOnGoal() {
 		makeGameWorld();
 		assertFalse(GW.robotOnGoal(gameWorld));
-		gameWorld = GW.makeGameWorld(testGrid, new Vector(1,1));
+		gameWorld = GW.makeGameWorld(testGrid, GW.makeRobot(new Vector(1,1),Direction.UP));
 		assertTrue(GW.robotOnGoal(gameWorld));
 	}
 	

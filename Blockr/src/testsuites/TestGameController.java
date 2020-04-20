@@ -12,16 +12,16 @@ import domain.block.ConditionBlock;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
-import domain.game_world.*;
-import domain.game_world.cell.Cell;
-import domain.game_world.cell.Goal;
-import domain.game_world.cell.Wall;
 import exceptions.domainExceptions.CantRunConditionException;
-import exceptions.domainExceptions.NoConditionBlockException;
 import exceptions.domainExceptions.NotOneStartingBlockException;
 import exceptions.domainExceptions.robotExceptions.RobotEnteringWallException;
 import exceptions.domainExceptions.robotExceptions.RobotMovingOffGridException;
+import game_world.Direction;
+import game_world.ImplementationGameWorld;
 import game_world.Vector;
+import game_world.cell.Cell;
+import game_world.cell.Goal;
+import game_world.cell.Wall;
 
 class TestGameController {
 	static GameController gc;
@@ -45,8 +45,7 @@ class TestGameController {
 			whileB = IB.makeWhileBlock();
 			gc = IGC.makeGameController(IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.DOWN)));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Testclass failed in setup phase.");
 		}
 	}
 	
@@ -245,21 +244,21 @@ class TestGameController {
 		try {
 			// IF () {}
 			IGC.addTopLevelBlock(gc,ifB);
-			try { //TODO: If with no condition block, it throws when it executes the if, not at the start
+			try {
 				IGC.execute(gc);
 				fail();
 			} catch(Exception e) {;}
 			
 			// IF () {forward}
 			IB.addBodyBlock((SurroundingBlock) ifB, (SequenceBlock) forward);
-			try { //TODO: same as above
+			try {
 				IGC.execute(gc);
 				fail();
 			} catch(Exception e) {;}
 			
 			// IF (not) {forward}
 			IB.setConditionBlock((SurroundingBlock) ifB,(ConditionBlock) not);
-			try { //TODO: same as above, but with not
+			try {
 				IGC.execute(gc);
 				fail();
 			} catch(Exception e) {;}
@@ -268,21 +267,21 @@ class TestGameController {
 			// WHILE () {}
 			IGW.resetGameWorld(IGC.getGameWorld(gc));
 			IGC.addTopLevelBlock(gc, whileB);
-			try { //TODO: While with no condition block, it throws when it executes the if, not at the start
+			try {
 				IGC.execute(gc);
 				fail();
 			} catch(Exception e) {;}
 			
 			// WHILE () {forward}
 			IB.addBodyBlock((SurroundingBlock) whileB,(SequenceBlock) forward);
-			try { //TODO: same as above
+			try {
 				IGC.execute(gc);
 				fail();
 			} catch(Exception e) {;}
 			
 			// WHILE (not) {forward}
 			IB.setConditionBlock((SurroundingBlock) whileB,(ConditionBlock) not);
-			try { //TODO: same as above, but with not
+			try {
 				IGC.execute(gc);
 				fail();
 			} catch(Exception e) {;}
@@ -389,7 +388,6 @@ class TestGameController {
 			IGC.execute(gc);
 			IGC.execute(gc);
 			assertEquals(new Vector(0,0),robotLocation(gc));
-			//System.out.println(IGC.getCopyOfAllTopLevelBlocks(gc).size()); <== TODO: deze functie werkt volgens mij niet zoals het hoort
 			
 			// WHILE ( Not / WallInFront) { F }
 			IGW.resetGameWorld(IGC.getGameWorld(gc));
@@ -403,9 +401,16 @@ class TestGameController {
 			IGC.execute(gc);
 			IGC.execute(gc);
 			assertEquals(new Vector(0,2),robotLocation(gc));
-			//TODO: voortgaan tot tegen einde vd wereld endan exception catchen
-
-			//  F2 / WHILE ( Not / WallInFront ) { Right } / Left //TODO: F2 wordt niet uitgevoerd, direct de while
+			try {
+				IGC.execute(gc);
+				IGC.execute(gc);
+				fail();
+			}catch(Exception e) {
+				// catches exception when going against wall
+				assertTrue(e instanceof RobotMovingOffGridException);
+			}
+			
+			//  F2 / WHILE ( Not / WallInFront ) { Right } / Left
 			IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,1), Direction.RIGHT)));
 			IGC.addTopLevelBlock(gc, forward2);
 			IGC.removeTopLevelBlock(gc,whileB);
@@ -413,10 +418,8 @@ class TestGameController {
 			IB.disconnect(forward);
 			IB.connect(whileB, left);
 			IB.addBodyBlock((SurroundingBlock) whileB, (SequenceBlock) right);
-
-			// Dit gebeurt bij de presentation als je iets vastpakt, zonder dit is de while block nogsteeds degenen die uitgevoerd wordt
+			// this needs to happen, because in the program, you have to grab something, this performs the stopExecution function
 			IGC.stopExecution(gc);
-
 			IGC.execute(gc); // run
 			IGC.execute(gc); // forward (1,1)
 			IGC.execute(gc); // while >
