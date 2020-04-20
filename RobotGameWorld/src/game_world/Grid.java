@@ -107,10 +107,10 @@ public class Grid {
 	 * 		  | if (isInBounds(vector))
 	 * 		  |   then getCell(vector) instanceof Cell 
 	 * @post  The border cells of new grid are Walls.
-	 * 		  | getCell(0,y) instance of Wall 
-	 * 		  | getCell(x,0) instance of Wall
-	 * 		  | getCell(getWidth-1,y) instance of Wall
-	 * 		  | getCell(x,getHeight-1) instance of Wall
+	 * 		  | getCell(0,_) instance of Wall 
+	 * 		  | getCell(_,0) instance of Wall
+	 * 		  | getCell(getWidth-1,_) instance of Wall
+	 * 		  | getCell(_,getHeight-1) instance of Wall
 	 * @return a new Grid with random cells
 	 */
 	static protected Grid randomGrid(int width, int height) {
@@ -187,8 +187,8 @@ public class Grid {
 	 * 		  The list of locations in the Grid where the associated cells should be set.
 	 * @param cells
 	 * 		  The cells to be placed at the associated locations.
-	 * @post The given cells are set in the Grid at the corresponding locations.
-	 * 		 | new.getCell(location[x]) = cell[x]
+	 * @post  The given cells are set in the Grid at the corresponding locations.
+	 * 		  | new.getCell(location[x]) = cell[x]
 	 * @throws Exception
 	 * 		   One of the given locations is out of the Grid.
 	 */
@@ -203,25 +203,31 @@ public class Grid {
 		
 	}
 	/**
-	 * Get the cell at given location.
+	 * The cell at given location.
 	 * 
-	 * @param location
+	 * @param  location
+	 * 		   The location of the requested cell.
 	 * @return the cell at given location
+	 * 		   | result = getCell(location.getX(),location.getY())
 	 * @throws Exception
+	 * 		   The given vector lies out of the Grid.
 	 */
 	protected Cell getCell(Vector location) throws OutOfBoundsException {
 		return getCell(location.getX(), location.getY());
 	}
 	/**
-	 * Get cell at given x,y coordinates.
+	 * The cell at given x,y coordinates.
 	 * 
 	 * @param x
+	 * 		  The x coordinate of the vector.
 	 * @param y
+	 * 		  The y coordinate of the vector.
 	 * @return the cell at given x,y coordinates
+	 * 		   | result = getCell(x,y)
 	 * @throws Exception
+	 * 		   The given x and y values don't lie inside of the Grid.
 	 */
 	protected Cell getCell(int x, int y) throws OutOfBoundsException {
-		// TODO create custom exception
 		if (isInBounds(x, y)) {
 			return grid[y][x];
 		} else {
@@ -231,8 +237,10 @@ public class Grid {
 	/**
 	 * Checks if the given location is in the boundaries of the grid.
 	 * 
-	 * @param location
+	 * @param  location
+	 * 		   The given location to check.
 	 * @return true if the location isInBounds()
+	 * 		   | result = isInBounds(location.getX(), location.getY())
 	 */
 	protected boolean isInBounds(Vector location) {
 		return isInBounds(location.getX(), location.getY());
@@ -241,10 +249,13 @@ public class Grid {
 	 * Check if the given x,y coordinates are in boundaries of the grid.
 	 * 
 	 * @param x
+	 * 		  The given x coordinate to check.
 	 * @param y
+	 * 		  The given y coordinate to check.
 	 * @return false if x is lower than 0 or bigger then or equal to width of the grid.
 	 * 		   false if y is lower than 0 or bigger then or equal to height of the grid.
 	 * 		   otherwise return true.
+	 *		   | result = !((x < 0 || x >= getWidth()) && (y < 0 || y >= getHeight()))
 	 */
 	protected boolean isInBounds(int x, int y) {
 		if (x < 0 || x >= getWidth()) {
@@ -255,7 +266,15 @@ public class Grid {
 		}
 		return true;
 	}
-	
+	/**
+	 * Set all cells at the border of the Grid to Walls.
+	 * 
+	 * @post  The border cells of the Grid are Walls.
+	 * 		  | getCell(0,_) instance of Wall 
+	 * 		  | getCell(_,0) instance of Wall
+	 * 		  | getCell(getWidth-1,_) instance of Wall
+	 * 		  | getCell(_,getHeight-1) instance of Wall
+	 */
 	public void setEdgesToWall() {
 		try {
 			// Set top and bottom horizontal edges
