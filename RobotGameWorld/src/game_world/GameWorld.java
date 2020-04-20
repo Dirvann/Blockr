@@ -9,6 +9,7 @@ import game_world.cell.*;
 
 // GameWorld contains a grid and the entities that move around on that grid
 // Currently only a single Robot moves around
+
 /**
  * A class of gameWorlds, containing the grid, robot and startRobot.
  * The startrobot is used to reset the game world.
@@ -21,44 +22,46 @@ public class GameWorld {
 	private Robot startRobot;
 	
 	/**
-	 * Initialize a new gameworld with a given grid and height. 
+	 * Initialize a new gameworld with a given grid. 
 	 * Also sets the startRobot and robot to the given robot.
 	 * 
 	 * @param grid
+	 * 		  The grid for this new gameworld.
 	 * @param robot
+	 * 		  The robot for this new gameworld.
+	 * @post  The grid of this new gameworld is equal to the given grid.
+	 * 		  |new.getGrid() = grid
+	 * @post  The robot of this new gameworld is equal to the given robot.
+	 * 		  |new.getRobot() = robot
 	 */
 	protected GameWorld(Grid grid, Robot robot) {
 		this.setGrid(grid);
 		this.startRobot = new Robot(robot.getLocation(),robot.getDirection()); //make copy
 		this.setRobot(robot);
 	}
-	
 	/**
-	 * Initialize a new gameworld with a given grid and height. 
-	 * Also sets the startRobot and robot to the givenstartposition.
+	 * Initialize an empty game world with the standard grid and the robot at position (0,0) and the goal at (4,4).
 	 * 
-	 * @param grid
-	 * @param startPosition
-	 */
-	protected GameWorld(Grid grid, Vector startPosition) {
-		this.setGrid(grid);
-		this.startRobot = new Robot(startPosition);
-		this.setRobot(new Robot(startPosition));
-	}
-
-	// Default 5x5 empty GameWorld with Robot at (0,0) and goal at (4, 4);
-	/**
-	 * Initialize an empty game world with the standard grid and the robot at (0,0).
+	 * @post  The grid of this new gameworld is a 5x5 grid filled with empty cells.
+	 * 		  |new.getGrid() = new Grid()
+	 * @post  The robot of this new gameworld is equal to the given robot.
+	 * 		  |new.getRobot() = new Robot(new Vector(0, 0))
 	 */
 	protected GameWorld() {
-		this(new Grid(), new Vector(0, 0));
+		this(new Grid(), new Robot(new Vector(0, 0)));
 	}
-	
-	// Create random GameWorld with given width and height;
 	/**
 	 * Initialize a gameworld with the given width and height.
+	 * The robot's location and the grid are made randomly.
+	 * 
 	 * @param width
+	 * 		  The width for the grid of this new gameworld.
 	 * @param height
+	 * 		  The height for the grid of this new gameworld.
+	 * @post  The grid of this new gameworld is equal to a random grid with the given width and height.
+	 * 		  |new.getGrid() = Grid.randomGrid(width, height)
+	 * @post  The robot of this new gameworld is placed at a random possible location.
+	 * 		  |new.getRobot() = new Robot(randomRobotLocation, getRandomRobotDirection())
 	 */
 	protected GameWorld(int width, int height) {
 		this.setGrid(Grid.randomGrid(width, height));
@@ -67,7 +70,9 @@ public class GameWorld {
 		this.setRobot(new Robot(startRobot));
 	}
 	/**
-	 * @return grid of the gameworld.
+	 * The grid of the gameworld.
+	 * 
+	 * @return the grid of this gameworld.
 	 */
 	protected Grid getGrid() {
 		return grid;
@@ -76,34 +81,36 @@ public class GameWorld {
 	 * Set grid of the current gameworld.
 	 * 
 	 * @param grid
+	 * 		  The grid for this new gameworld.
+	 * @post  The grid of this gameworld is equal to the given grid.
+	 * 		  |new.getGrid() = grid
 	 */
 	protected void setGrid(Grid grid) {
 		this.grid = grid;
 	}
 	/**
-	 * @return robot of the given gameworld
+	 * The robot of the gameworld.
+	 * 
+	 * @return the robot of this gameworld
 	 */
 	protected Robot getRobot() {
 		return robot;
 	}
-
 	/**
 	 * Set robot of the current gameworld.
 	 * 
 	 * @param robot
+	 * 		  The robot for this gameworld.
+	 * @post  The robot of this gameworld is equal to the given robot.
+	 * 		  |new.getRobot() = robot
 	 */
 	protected void setRobot(Robot robot) {
 		this.robot = robot;
 	}
-	
-	
-	// Robot commands
-	
-	// True if the cell in front of the robot is a Wall
 	/**
-	 * Returns true if the cell in front is a wall.
+	 * Returns true if the cell in front of the robot is a wall.
 	 * 
-	 * @return true if cell in front of the robot is a wall.
+	 * @return true if the cell in front of the robot is a wall.
 	 */
 	protected boolean robotWallInFront() {
 		try {
@@ -114,11 +121,11 @@ public class GameWorld {
 		}
 		
 	}
-	// True if the robots location is equal to the goal location
 	/**
 	 * Returns true if the robot is located on the same position as the goal.
 	 * 
 	 * @return true if the robot is on the same location as the goal.
+	 *       | result == getGrid().getCell(getRobot().getLocation()) instanceof Goal
 	 */
 	protected boolean robotOnGoal() {
 		try {
@@ -132,8 +139,11 @@ public class GameWorld {
 	/**
 	 * Set the location to the robot to the cell in front of the robot,
 	 * if this is allowed (no walls or end of grid).
+	 * 
 	 * @throws RobotEnteringWallException 
+	 * 		   The robot can't move into a wall.
 	 * @throws RobotMovingOffGridException 
+	 * 		   The robot can't move off the grid.
 	 */
 	protected void robotStepForwards() throws RobotEnteringWallException, RobotMovingOffGridException {
 		try {
@@ -150,20 +160,26 @@ public class GameWorld {
 	}
 	/**
 	 * Set the direction of the robot to left.
+	 * 
+	 * @post  The robot of this gameworld is looking to the left of the previous direction.
 	 */
 	protected void robotTurnLeft() {
 		getRobot().turnLeft();
 	}
 	/**
 	 * Set the direction of robot to right.
+	 * 
+	 * @post  The robot of this gameworld is looking to the right of the previous direction.
 	 */
 	protected void robotTurnRight() {
 		getRobot().turnRight();
 	}
 	/**
-	 * Return a random location where the robot can stand.
+	 * Return a random location where the robot can stand thats not the goal location.
 	 * 
-	 * @return a random location where the robot can stand.
+	 * @return a random location where the robot can stand thats not the goal location.
+	 * 		  | result == getRobot().getLocation() instanceof RobotCanEnter
+	 * 		  | result != getRobot().getLocation() instanceof Goal
 	 */
 	private Vector getRandomRobotLocation() {
 		Random rand = new Random();
@@ -182,7 +198,12 @@ public class GameWorld {
 		} 
 		return new Vector(0, 0);
 	}
-	
+	/**
+	 * Return a random direction.
+	 * 
+	 * @return a random direction.
+	 * 
+	 */
 	private Direction getRandomRobotDirection() {
 		Random rand = new Random();
 		
@@ -205,7 +226,12 @@ public class GameWorld {
 		return dir;
 	}
 	
-	
+	/**
+	 * Set the robots location to the original location when the world was created.
+	 * 
+	 * @post The robot is location is set to it's original location.
+	 * 		 |new.getRobot().getLocation() = startRobot
+	 */
 	protected void resetGameWorld() {
 		this.setRobot(new Robot(startRobot));
 	}
