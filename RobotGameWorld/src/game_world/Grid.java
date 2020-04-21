@@ -7,7 +7,7 @@ import game_world.cell.*;
 
 /**
  * A class of the Grid, containing the cells for the gameworld to use.
- * Each grid has a width, height and a matrix of cells.
+ * Each Grid has a width, height and a matrix of cells.
  * 
  * @invar The location of each cell is inside the Gird [height][width]
  *
@@ -28,7 +28,7 @@ public class Grid {
 	 * 		  | new.getHeight() = height
 	 * @post  The width of this new Grid is equal to the given width.
 	 * 		  | new.getWidth() = width
-	 * @post  The grid is filled with empty cells.
+	 * @post  The Grid is filled with empty cells.
 	 * 		  | if (isInBounds(vector))
 	 * 		  |   then getCell(vector) instanceof Emptycell
 	 */
@@ -59,7 +59,7 @@ public class Grid {
 	 * 		  | new.getHeight() = height
 	 * @post  The width of this new Grid is equal to the given width.
 	 * 		  | new.getWidth() = width
-	 * @post  The given cells are set in the grid at the corresponding locations
+	 * @post  The given cells are set in the Grid at the corresponding locations
 	 * 		  all the other cells are empty.
 	 * 		  | if (isInBounds(vector) && !locations.contains(vector))
 	 * 		  |   then getCell(vector) instanceof Emptycell 
@@ -77,7 +77,7 @@ public class Grid {
 	 * 	     | new.getHeight() = 5
 	 * @post The width of this new Grid is equal to 5.
 	 * 		 | new.getWidth() = 5
-	 * @post The goal is located at grid[4][4].
+	 * @post The goal is located at Grid[4][4].
 	 * 		 | getCell(4,4) instanceof Goal
 	 * @post All cells except the goal cell are empty
 	 * 		 | if (isInBounds(vector) && !(getCell(vector) instanceof Goal))
@@ -93,7 +93,7 @@ public class Grid {
 	}
 	/**
 	 * Return a new Grid with given width and height.
-	 * Some cells are empty or a wall. One cell in the grid is a Goal.
+	 * Some cells are empty or a wall. One cell in the Grid is a Goal.
 	 * 
 	 * @param height
 	 * 		  The height for this new Grid.
@@ -106,7 +106,7 @@ public class Grid {
 	 * @post  There are no cells outside of the width and height.
 	 * 		  | if (isInBounds(vector))
 	 * 		  |   then getCell(vector) instanceof Cell 
-	 * @post  The border cells of new grid are Walls.
+	 * @post  The border cells of new Grid are Walls.
 	 * 		  | getCell(0,_) instance of Wall 
 	 * 		  | getCell(_,0) instance of Wall
 	 * 		  | getCell(getWidth-1,_) instance of Wall
@@ -235,7 +235,7 @@ public class Grid {
 		}
 	}
 	/**
-	 * Checks if the given location is in the boundaries of the grid.
+	 * Checks if the given location is in the boundaries of the Grid.
 	 * 
 	 * @param  location
 	 * 		   The given location to check.
@@ -246,14 +246,14 @@ public class Grid {
 		return isInBounds(location.getX(), location.getY());
 	}
 	/**
-	 * Check if the given x,y coordinates are in boundaries of the grid.
+	 * Check if the given x,y coordinates are in boundaries of the Grid.
 	 * 
 	 * @param x
 	 * 		  The given x coordinate to check.
 	 * @param y
 	 * 		  The given y coordinate to check.
-	 * @return false if x is lower than 0 or bigger then or equal to width of the grid.
-	 * 		   false if y is lower than 0 or bigger then or equal to height of the grid.
+	 * @return false if x is lower than 0 or bigger then or equal to width of the Grid.
+	 * 		   false if y is lower than 0 or bigger then or equal to height of the Grid.
 	 * 		   otherwise return true.
 	 *		   | result = !((x < 0 || x >= getWidth()) && (y < 0 || y >= getHeight()))
 	 */

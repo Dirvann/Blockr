@@ -22,16 +22,16 @@ public class GameWorld {
 	private Robot startRobot;
 	
 	/**
-	 * Initialize a new gameworld with a given grid. 
+	 * Initialize a new Gameworld with a given grid. 
 	 * Also sets the startRobot and robot to the given robot.
 	 * 
 	 * @param grid
-	 * 		  The grid for this new gameworld.
+	 * 		  The grid for this new Gameworld.
 	 * @param robot
-	 * 		  The robot for this new gameworld.
-	 * @post  The grid of this new gameworld is equal to the given grid.
+	 * 		  The robot for this new Gameworld.
+	 * @post  The grid of this new Gameworld is equal to the given grid.
 	 * 		  |new.getGrid() = grid
-	 * @post  The robot of this new gameworld is equal to the given robot.
+	 * @post  The robot of this new Gameworld is equal to the given robot.
 	 * 		  |new.getRobot() = robot
 	 */
 	protected GameWorld(Grid grid, Robot robot) {
@@ -42,25 +42,25 @@ public class GameWorld {
 	/**
 	 * Initialize an empty game world with the standard grid and the robot at position (0,0) and the goal at (4,4).
 	 * 
-	 * @post  The grid of this new gameworld is a 5x5 grid filled with empty cells.
+	 * @post  The grid of this new Gameworld is a 5x5 grid filled with empty cells.
 	 * 		  |new.getGrid() = new Grid()
-	 * @post  The robot of this new gameworld is equal to the given robot.
+	 * @post  The robot of this new Gameworld is equal to the given robot.
 	 * 		  |new.getRobot() = new Robot(new Vector(0, 0))
 	 */
 	protected GameWorld() {
 		this(new Grid(), new Robot(new Vector(0, 0)));
 	}
 	/**
-	 * Initialize a gameworld with the given width and height.
+	 * Initialize a Gameworld with the given width and height.
 	 * The robot's location and the grid are made randomly.
 	 * 
 	 * @param width
-	 * 		  The width for the grid of this new gameworld.
+	 * 		  The width for the grid of this new Gameworld.
 	 * @param height
-	 * 		  The height for the grid of this new gameworld.
-	 * @post  The grid of this new gameworld is equal to a random grid with the given width and height.
+	 * 		  The height for the grid of this new Gameworld.
+	 * @post  The grid of this new Gameworld is equal to a random grid with the given width and height.
 	 * 		  |new.getGrid() = Grid.randomGrid(width, height)
-	 * @post  The robot of this new gameworld is placed at a random possible location.
+	 * @post  The robot of this new Gameworld is placed at a random possible location.
 	 * 		  |new.getRobot() = new Robot(randomRobotLocation, getRandomRobotDirection())
 	 */
 	protected GameWorld(int width, int height) {
@@ -70,38 +70,38 @@ public class GameWorld {
 		this.setRobot(new Robot(startRobot));
 	}
 	/**
-	 * The grid of the gameworld.
+	 * The grid of the Gameworld.
 	 * 
-	 * @return the grid of this gameworld.
+	 * @return the grid of this Gameworld.
 	 */
 	protected Grid getGrid() {
 		return grid;
 	}
 	/**
-	 * Set grid of the current gameworld.
+	 * Set grid of the current Gameworld.
 	 * 
 	 * @param grid
-	 * 		  The grid for this new gameworld.
-	 * @post  The grid of this gameworld is equal to the given grid.
+	 * 		  The grid for this Gameworld.
+	 * @post  The grid of this Gameworld is equal to the given grid.
 	 * 		  |new.getGrid() = grid
 	 */
 	protected void setGrid(Grid grid) {
 		this.grid = grid;
 	}
 	/**
-	 * The robot of the gameworld.
+	 * The robot of the Gameworld.
 	 * 
-	 * @return the robot of this gameworld
+	 * @return the robot of this Gameworld
 	 */
 	protected Robot getRobot() {
 		return robot;
 	}
 	/**
-	 * Set robot of the current gameworld.
+	 * Set robot of the current Gameworld.
 	 * 
 	 * @param robot
-	 * 		  The robot for this gameworld.
-	 * @post  The robot of this gameworld is equal to the given robot.
+	 * 		  The robot for this Gameworld.
+	 * @post  The robot of this Gameworld is equal to the given robot.
 	 * 		  |new.getRobot() = robot
 	 */
 	protected void setRobot(Robot robot) {
@@ -161,7 +161,7 @@ public class GameWorld {
 	/**
 	 * Set the direction of the robot to left.
 	 * 
-	 * @post  The robot of this gameworld is looking to the left of the previous direction.
+	 * @post  The robot of this Gameworld is looking to the left of the previous direction.
 	 */
 	protected void robotTurnLeft() {
 		getRobot().turnLeft();
@@ -169,7 +169,7 @@ public class GameWorld {
 	/**
 	 * Set the direction of robot to right.
 	 * 
-	 * @post  The robot of this gameworld is looking to the right of the previous direction.
+	 * @post  The robot of this Gameworld is looking to the right of the previous direction.
 	 */
 	protected void robotTurnRight() {
 		getRobot().turnRight();
@@ -202,7 +202,6 @@ public class GameWorld {
 	 * A random direction.
 	 * 
 	 * @return a random direction.
-	 * 
 	 */
 	private Direction getRandomRobotDirection() {
 		Random rand = new Random();

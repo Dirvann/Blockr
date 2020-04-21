@@ -1,7 +1,7 @@
 package game_world;
 
 /**
- * A class of the Robot, containing the location and the direction of the robot.
+ * A class of the Robot, containing the location and the direction of the Robot.
  *
  */
 public class Robot {
@@ -9,84 +9,109 @@ public class Robot {
 	private Vector location;
 	private Direction direction;
 	/**
-	 * Initialize a new robot on the given location and let him look in the given direction
+	 * Initialize a new Robot on the given location and let him look in the given direction
 	 * 
 	 * @param location
+	 * 		  The location of the Robot.
 	 * @param direction
+	 *		  The direction of the Robot.
+	 * @post  The location of this new Robot is equal to the given location.
+	 * 		  |new.getLocation() = location
+	 * @post  The direction of this new Robot is equal to the given direction.
+	 * 		  |new.getDirection() = direction
 	 */
 	protected Robot(Vector location, Direction direction) {
 		this.setLocation(location);
 		this.setDirection(direction);
 	}
 	/**
-	 * Initialize a new robot on the given location and let him look up.
+	 * Initialize a new Robot on the given location and let him look up.
 	 * 
 	 * @param location
-	 * @param direction
+	 * 		  The location of the Robot.
+	 * @post  The location of this new Robot is equal to the given location.
+	 * 		  |new.getLocation() = location
+	 * @post  The direction of this new Robot is UP.
+	 * 		  |new.getDirection() = Direction.UP
 	 */
 	protected Robot(Vector location) {
 		this(location, Direction.UP);
 	}
 	/**
-	 * Initialize a new robot on the same place as the given robot
+	 * Initialize a new Robot on the same place as the given Robot
 	 * and let him look in the same direction.
 	 * 
-	 * @param location
-	 * @param direction
+	 * @param other
+	 * 		  The given Robot with the location and direction for this Robot.
+	 * @post  The location of this new Robot is the same as the given Robot.
+	 * 		  |new.getLocation() = other.getLocation()
+	 * @post  The direction of this new Robot is the same as the given direction.
+	 * 		  |new.getDirection() = other.getDirection()
 	 */
 	protected Robot(Robot other) {
 		this(other.getLocation(), other.getDirection());
 	}
 	/**
-	 * Initialize the robot with a given x and y coordinate looking up.
+	 * Initialize the Robot with a given x and y coordinate looking up.
 	 * 
 	 * @param x
+	 * 		  The x coordinate of the location of this Robot.
 	 * @param y
+	 * 		  The y coordinate of the location of this Robot.
+	 * @post  The x coordinate of this new Robot is equal to the given x coordinate.
+	 * 		  |new.getLocation().getX() = x
+	 * @post  The y coordinate of this new Robot is equal to the given y coordinate.
+	 * 		  |new.getLocation().getY() = y
+	 * @post  The direction of this new Robot is UP.
+	 * 		  |new.getDirection() = Direction.UP
 	 */
 	protected Robot(int x, int y) {
 		this(new Vector(x, y));
 	}
 	
 	/**
-	 * Return the location of the robot.
+	 * The location of the Robot.
 	 * 
-	 * @return location of the robot.
+	 * @return the location of the Robot.
 	 */
 	protected Vector getLocation() {
 		return location;
 	}
 	/**
-	 * Set the location of the robot to the given location.
+	 * Set the location of the Robot to the given location.
 	 * 
 	 * @param location
+	 * 		  The location for this Robot.
+	 * @post  The location of this Robot is equal to the given location.
+	 * 		  |new.getLocation() = location
 	 */
 	protected void setLocation(Vector location) {
 		this.location = location;
 	}
 	/**
-	 * Return the direction of the robot.
+	 * Return the direction of the Robot.
 	 * 
-	 * @return direction of the robot.
+	 * @return direction of the Robot.
 	 */
 	protected Direction getDirection() {
 		return direction;
 	}
 	/**
-	 * Set the direction of the robot to the given location.
+	 * Set the direction of the Robot to the given location.
 	 * 
 	 * @param direction
+	 * 		  The direction for this Robot.
+	 * @post  The direction of the Robot is equal to the given direcion.
+	 * 		  |new.getDirection() = direction
 	 */
 	protected void setDirection(Direction direction) {
 		this.direction = direction;
 	}
 	
-	//given position may be out of bound!!
 	/**
-	 * Returns the location of cell in front of the robot.
+	 * Returns the location of cell in front of the Robot.
 	 * 
-	 * @return location of the cell in front of the robot.
-	 * @throws Exception
-	 * 		   If the given location is not in bounds.
+	 * @return location of the cell in front of the Robot.
 	 */
 	protected Vector getPositionInFront() {
 		switch (this.direction) {
@@ -104,11 +129,11 @@ public class Robot {
 
 	}
 	
-	// Actions
 	/**
-	 * Sets the location of the robot to the location in front of the robot,
-	 * if the location in front of the robot is a wall or not inside of the gird,
-	 * then the location is set to the current location.
+	 * Sets the location of the Robot to the location in front of the Robot.
+	 * 
+	 * @post The location of the Robot is the location in front of the previous location.
+	 * 		 | new.getLocation = getPositionInFront()
 	 */
 	protected void stepForwards() {
 		Vector positionInFront = getPositionInFront();
@@ -116,7 +141,9 @@ public class Robot {
 		
 	}
 	/**
-	 * Set the direction of the robot to the direction to the left of the current direction.
+	 * Set the direction of the Robot to the direction to the left of the current direction.
+	 * 
+	 * @post The direction of the Robot is the direction to the left of the previous direction.
 	 */
 	protected void turnLeft() {
 		switch (getDirection()) {
@@ -141,7 +168,9 @@ public class Robot {
 		}
 	}
 	/**
-	 * Set the direction of the robot to the direction to the right of the current direction.
+	 * Set the direction of the Robot to the direction to the right of the current direction.
+	 * 
+	 * @post The direction of the Robot is the direction to the left of the previous direction.
 	 */
 	protected void turnRight() {
 		switch (getDirection()) {
