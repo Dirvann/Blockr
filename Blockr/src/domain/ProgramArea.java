@@ -11,6 +11,7 @@ import domain.block.SequenceBlock;
 import exceptions.domainExceptions.BlockColumnNotExecutableException;
 import exceptions.domainExceptions.CantRunConditionException;
 import exceptions.domainExceptions.NotOneStartingBlockException;
+import game_world.ImplementationGameWorld;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 
@@ -86,13 +87,13 @@ public class ProgramArea {
 	 * @param gameController gameController to execute the next function in
 	 * @throws Exception when execute is not possible
 	 */
-	protected ExecutionCommand executeNextBlock(GameController gameController) throws Exception {
+	protected ExecutionCommand executeNextBlock(ImplementationGameWorld iGameWorld) throws Exception {
 		//undo redo info collect
 		this.exeCmd = null;
 		Block previousExe = currentExe;
 		currentExe = nextToExecute;
 		//execute() will also make an empty ExecutionCommand in programArea.
-		nextToExecute = BF.execute(nextToExecute, gameController);
+		nextToExecute = BF.execute(nextToExecute, iGameWorld);
 		
 		//fill ExecutionCommand with needed info and return command.
 		if (exeCmd == null) return null;

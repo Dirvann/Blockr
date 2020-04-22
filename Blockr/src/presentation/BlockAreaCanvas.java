@@ -39,7 +39,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	
 	private ImplementationBlock BF = new ImplementationBlock();
 	private ImplementationPresentationBlock BFP = new ImplementationPresentationBlock();
-	private ImplementationGameWorld GW = new ImplementationGameWorld();
+	private ImplementationGameWorld iGameWorld;
 	private ImplementationGameController GC = new ImplementationGameController(); 
 	
 	private BlockrPanel blockrPanel;
@@ -61,9 +61,10 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	private Vector oldPos = null;
 	
 	
-	public BlockAreaCanvas(BlockrPanel blockrPanel) {
+	public BlockAreaCanvas(BlockrPanel blockrPanel, ImplementationGameWorld iGameWorld) {
 		paletteP = new PalettePresentation();
 		programAreaP = new ProgramAreaPresentation(blockrPanel.getGameController());
+		this.iGameWorld = iGameWorld;
 		
 		this.blockrPanel = blockrPanel;
 		addMouseListener(this);
@@ -203,7 +204,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		switch (keyCode) {
 		case KeyEvent.VK_ESCAPE: // Esc
 			this.stopExecution();
-			GW.resetGameWorld(GC.getGameWorld(gameController));
+			iGameWorld.loadSnapshot(BlockrPanel.originalSnapshotName);
 			blockrPanel.redrawGameWorld();
 			break;
 
@@ -217,9 +218,10 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 				ExecutionCommand exeCmd = GC.execute(gameController);
 				exe.addExecutionStep(exeCmd);
 				blockrPanel.redrawGameWorld();
-				if (GW.robotOnGoal(GC.getGameWorld(blockrPanel.getGameController()))){
+				// TODO robot on goal with new implementation how?
+				/*if (iGameWorld.robotOnGoal(GC.getGameWorldImplementation(blockrPanel.getGameController()))){
 					setErrorMessage("congratiolations!! You have beaten this level! \n Press F6 to start a new one. ");
-				}
+				}*/
 				//if (!GC.isExecuting(gameController)) {
 					//this.stopExecution();
 				//}
@@ -239,7 +241,10 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 			System.out.println("Changed gameWorld");
 			int width = blockrPanel.getPreferredGameWorldWidth();
 			int height = blockrPanel.getPreferredGameWorldHeight();
-			GC.setGameWorld(gameController, GW.makeRandomGameWorld(width, height));
+			// TODO create new gameworld
+			iGameWorld.makeNewGameWorld();
+			iGameWorld.makeSnapshot(BlockrPanel.originalSnapshotName);
+			GC.setGameWorldImplementation(gameController, iGameWorld);
 			this.stopExecution();
 			blockrPanel.redrawGameWorld();
 			break;
@@ -274,7 +279,9 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	private void stopExecution() {
 		GC.stopExecution(blockrPanel.getGameController());
 		this.exe = new ExecutionProcessor();
-		GW.resetGameWorld(GC.getGameWorld(blockrPanel.getGameController()));
+		
+		// TODO reset gameworld to original state snapshot
+		iGameWorld.loadSnapshot("originalState");
 		
 	}
 	@Override

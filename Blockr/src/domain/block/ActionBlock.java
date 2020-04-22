@@ -1,8 +1,16 @@
 package domain.block;
 
+import command.turnRightCommand;
 import domain.GameController;
+import game_world.ImplementationGameWorld;
 
-public abstract class ActionBlock extends SequenceBlock{
+public class ActionBlock extends SequenceBlock{
+	
+	String name;
+	
+	protected ActionBlock(String name) {
+		this.name = name;
+	}
 	
 	/**
 	 * 
@@ -10,14 +18,21 @@ public abstract class ActionBlock extends SequenceBlock{
 	 * @throws Exception If action is not possible.
 	 * @post The action of the block will be performed
 	 */
-	abstract protected void performAction(GameController gameController) throws Exception;
-	
-	protected ActionBlock() {
+	protected void performAction(ImplementationGameWorld iGameWorld) throws Exception {
+		
+		
+		if (iGameWorld == null) 
+			System.out.println(this.name);
+		else {
+			iGameWorld.executeAction(getName());
+			//TODO implement undo
+			//IGC.setExecutionCommand(new turnRightCommand(null, null, null, gameController), gameController);
+		}
 	}
 	
 	@Override
-	protected Block execute(GameController gameController) throws Exception {
-		performAction(gameController);
+	protected Block execute(ImplementationGameWorld iGameWorld) throws Exception {
+		performAction(iGameWorld);
 		
 		if (this.getNextBlock() == null) {
 			if (this.getSurroundingBlock() == null) {
@@ -36,5 +51,16 @@ public abstract class ActionBlock extends SequenceBlock{
 		} else {
 			return true;
 		}
+	}
+
+	@Override
+	protected Block getNewBlockOfThisType() {
+		// TODO Auto-generated method stub
+		return new ActionBlock(this.getName());
+	}
+
+	@Override
+	protected String getName() {
+		return this.name;
 	}
 }
