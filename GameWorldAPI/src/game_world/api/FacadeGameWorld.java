@@ -1,8 +1,25 @@
 package game_world.api;
 
+import java.util.List;
+
 public interface FacadeGameWorld<GameWorld, Vector, Grid, Robot, Direction, Cell, Graphics> {
 	
-	public GameWorld makeGameWorld(Grid grid, Robot robot);
+	public void makeNewGameWorld();
+	
+	public List<String> getAllActions();
+	public List<String> getAllPRedicates();
+	
+	public boolean executeAction(String action);
+	public boolean evaluatePredicate(String predicate);
+	
+	
+	public void drawGameWorld(Graphics g, int width, int height);
+	
+	public boolean undoAction(String action);
+	
+	
+	
+	/*public GameWorld makeGameWorld(Grid grid, Robot robot);
 	public GameWorld makeStandardEmptyGameWorld();
 	public GameWorld makeRandomGameWorld(int width,int height);
 	public void resetGameWorld(GameWorld world);
@@ -10,6 +27,7 @@ public interface FacadeGameWorld<GameWorld, Vector, Grid, Robot, Direction, Cell
 	public Robot makeRobot(Vector location,Direction direction);
 	public boolean robotWallInFront(GameWorld world);
 	public boolean robotOnGoal(GameWorld world);
+	
 	public void robotStepForwards(GameWorld world) throws Exception;
 	public void robotTurnLeft(GameWorld world);
 	public void robotTurnRight(GameWorld world);
@@ -27,6 +45,9 @@ public interface FacadeGameWorld<GameWorld, Vector, Grid, Robot, Direction, Cell
 	public Direction getRobotDirection(GameWorld world);
 	
 	public void drawGameWorld(Graphics g, GameWorld gameWorld, int width);
+	
+	
+	public void undo(String action);*/
 	
 	
 	
