@@ -9,6 +9,7 @@ class NotBlock extends ChainConditionBlock {
 		super();
 	}
 
+	@Override
 	protected boolean evaluate(GameController gamecontroller) {
 		if (!this.isValidCondition()) {
 			return false;

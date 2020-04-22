@@ -9,6 +9,7 @@ class WallInFront extends SingleConditionBlock {
 		super();
 	}
 
+	@Override
 	protected boolean evaluate(GameController gameController) {
 
 		if (gameController == null) {

@@ -37,7 +37,7 @@ public abstract class SurroundingBlock extends SequenceBlock {
 
 	/**
 	 * 
-	 * @ removes all blocks which are surrounded by this if block. Sets the pointer
+	 * @Post removes all blocks which are surrounded by this if block. Sets the pointer
 	 * to the first block to null.
 	 */
 	protected void removeBodyBlock() {
@@ -71,7 +71,7 @@ public abstract class SurroundingBlock extends SequenceBlock {
 
 	/**
 	 * 
-	 * @ removes the condition block and sets this to null. The surroundingBlock of
+	 * @Post removes the condition block and sets this to null. The surroundingBlock of
 	 * the condition will be null too.
 	 */
 	protected void removeConditionBlock() {
@@ -81,6 +81,10 @@ public abstract class SurroundingBlock extends SequenceBlock {
 
 	}
 
+	/**
+	 * 
+	 * @return True if the condition can be evaluated.
+	 */
 	protected boolean hasValidCondition() {
 		if (this.condition == null) {
 			return false;

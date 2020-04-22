@@ -25,6 +25,7 @@ public abstract class Block {
 	/**
 	 * 
 	 * @param presentationBlock The desired presentation for this Block.
+	 * @post The presentationBlock will be set
 	 */
 	protected void setPresentationBlock(PresentationBlock<?> presentationBlock) {
 		this.presentationBlock = presentationBlock;

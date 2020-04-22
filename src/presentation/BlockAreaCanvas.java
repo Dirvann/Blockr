@@ -19,10 +19,10 @@ import domain.CommandProcessor;
 import domain.ExecutionProcessor;
 import domain.GameController;
 import domain.ImplementationGameController;
+import domain.Vector;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
-import game_world.ImplementationGameWorld;
-import game_world.Vector;
+import domain.game_world.ImplementationGameWorld;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 
@@ -220,9 +220,9 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 				if (GW.robotOnGoal(GC.getGameWorld(blockrPanel.getGameController()))){
 					setErrorMessage("congratiolations!! You have beaten this level! \n Press F6 to start a new one. ");
 				}
-				//if (!GC.isExecuting(gameController)) {
-					//this.stopExecution();
-				//}
+				if (!GC.isExecuting(gameController)) {
+					this.stopExecution();
+				}
 				
 			} catch (Exception e1) {
 				if (e1.getMessage() == null) {

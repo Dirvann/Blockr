@@ -4,6 +4,12 @@ import domain.GameController;
 
 public abstract class ActionBlock extends SequenceBlock{
 	
+	/**
+	 * 
+	 * @param gameController The gameController where the block is in.
+	 * @throws Exception If action is not possible.
+	 * @post The action of the block will be performed
+	 */
 	abstract protected void performAction(GameController gameController) throws Exception;
 	
 	protected ActionBlock() {

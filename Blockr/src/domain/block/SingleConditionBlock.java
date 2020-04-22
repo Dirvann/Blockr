@@ -2,6 +2,7 @@ package domain.block;
 
 public abstract class SingleConditionBlock extends ConditionBlock {
 
+	@Override
 	protected boolean isValidCondition() {
 		return true;
 	}

@@ -48,7 +48,7 @@ public abstract class SequenceBlock extends Block {
 	}
 
 	/**
-	 * removes all the next blocks on the same level (same surrounding bloc). This
+	 * @Postremoves all the next blocks on the same level (same surrounding bloc). This
 	 * keeps the sequence of the next blocks, but they are now independent.
 	 */
 	protected void removeNextBlock() {

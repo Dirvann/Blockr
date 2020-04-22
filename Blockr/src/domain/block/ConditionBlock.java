@@ -6,8 +6,17 @@ public abstract class ConditionBlock extends Block {
 
 	protected ChainConditionBlock previous = null;
 
+	/**
+	 * 
+	 * @return true if it would be possible to evaluate.
+	 */
 	abstract protected boolean isValidCondition();
 
+	/**
+	 * 
+	 * @param gamecontroller
+	 * @return true if the condition is true;
+	 */
 	abstract protected boolean evaluate(GameController gamecontroller);
 
 	@Override

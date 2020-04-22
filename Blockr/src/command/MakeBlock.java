@@ -13,6 +13,11 @@ public class MakeBlock implements Command{
 	ImplementationGameController GCF = new ImplementationGameController();
 	ImplementationBlock BF = new ImplementationBlock();
 	
+	/**
+	 * 
+	 * @param blockToConnectTo block before group of blocks connected
+	 * @param blockToConnect first block of group of blocks that gets connected.
+	 */
 	public MakeBlock(GameController GC, PresentationBlock<?> block) {
 		this.GC = GC;
 		this.block = block;

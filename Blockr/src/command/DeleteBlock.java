@@ -11,6 +11,11 @@ public class DeleteBlock implements Command{
 	ImplementationGameController GCF = new ImplementationGameController();
 	ImplementationBlock BF = new ImplementationBlock();
 	
+	/**
+	 * 
+	 * @param GC the gamecontroller where the block is deleted.
+	 * @param block the block that gets deleted.
+	 */
 	public DeleteBlock(GameController GC, PresentationBlock<?> block) {
 		this.GC = GC;
 		this.block = block;
