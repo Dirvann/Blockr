@@ -1,8 +1,11 @@
 package game_world;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import exceptions.domainExceptions.OutOfBoundsException;
 import exceptions.domainExceptions.robotExceptions.RobotEnteringWallException;
@@ -23,6 +26,8 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	
 	public ImplementationGameWorld() {
 		makeNewGameWorld();
+		snapshots = new HashMap<>();
+		snapshotIndex = 0;
 	};
 	
 	
@@ -188,52 +193,49 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 		
 	}
 
-
+	private Map<String, GameWorld> snapshots;
+	private int snapshotIndex;
 
 	@Override
 	public List<String> getAllSnapshots() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<>(snapshots.keySet());
 	}
 
 
-
 	@Override
-	public void loadSnapshot(String arg0) {
-		// TODO Auto-generated method stub
-		
+	public void loadSnapshot(String snapshotName) {
+		this.gameWorld = snapshots.get(snapshotName).createCopy();
 	}
 
 
 
 	@Override
 	public String makeSnapshot() {
-		// TODO Auto-generated method stub
-		return null;
+		String snapshotName = "AutoSnapshot" + snapshotIndex;
+		snapshotIndex += 1;
+		makeSnapshot(snapshotName);
+		return snapshotName;
 	}
 
 
 
 	@Override
-	public void makeSnapshot(String arg0) {
-		// TODO Auto-generated method stub
-		
+	public void makeSnapshot(String snapshotName) {
+		snapshots.put(snapshotName, gameWorld.createCopy());
 	}
 
 
 
 	@Override
-	public void removeSnapshot(String arg0) {
-		// TODO Auto-generated method stub
-		
+	public void removeSnapshot(String snapshotName) {
+		snapshots.remove(snapshotName);		
 	}
 
 
 
 	@Override
 	public void resetGameWorld() {
-		// TODO Auto-generated method stub
-		
+		gameWorld.resetGameWorld();
 	}
 
 	
