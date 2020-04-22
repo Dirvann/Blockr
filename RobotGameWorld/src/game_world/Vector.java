@@ -2,8 +2,6 @@ package game_world;
 
 /**
  * A class of vectors involving an x value and a y value.
- * 
- * @author Geert Wesemael
  *
  */
 public final class Vector {

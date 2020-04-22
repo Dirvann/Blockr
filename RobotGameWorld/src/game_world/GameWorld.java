@@ -29,9 +29,9 @@ public class GameWorld {
 	 * 		  The grid for this new Gameworld.
 	 * @param robot
 	 * 		  The robot for this new Gameworld.
-	 * @post  The grid of this new Gameworld is equal to the given grid.
+	 * @post  The grid of this new Gameworld is the given grid.
 	 * 		  |new.getGrid() = grid
-	 * @post  The robot of this new Gameworld is equal to the given robot.
+	 * @post  The robot of this new Gameworld is the given robot.
 	 * 		  |new.getRobot() = robot
 	 */
 	protected GameWorld(Grid grid, Robot robot) {
@@ -44,7 +44,7 @@ public class GameWorld {
 	 * 
 	 * @post  The grid of this new Gameworld is a 5x5 grid filled with empty cells.
 	 * 		  |new.getGrid() = new Grid()
-	 * @post  The robot of this new Gameworld is equal to the given robot.
+	 * @post  The robot of this new Gameworld is the given robot.
 	 * 		  |new.getRobot() = new Robot(new Vector(0, 0))
 	 */
 	protected GameWorld() {
@@ -82,7 +82,7 @@ public class GameWorld {
 	 * 
 	 * @param grid
 	 * 		  The grid for this Gameworld.
-	 * @post  The grid of this Gameworld is equal to the given grid.
+	 * @post  The grid of this Gameworld is the given grid.
 	 * 		  |new.getGrid() = grid
 	 */
 	protected void setGrid(Grid grid) {
@@ -101,7 +101,7 @@ public class GameWorld {
 	 * 
 	 * @param robot
 	 * 		  The robot for this Gameworld.
-	 * @post  The robot of this Gameworld is equal to the given robot.
+	 * @post  The robot of this Gameworld is the given robot.
 	 * 		  |new.getRobot() = robot
 	 */
 	protected void setRobot(Robot robot) {
