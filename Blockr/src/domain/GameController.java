@@ -8,32 +8,32 @@ import game_world.ImplementationGameWorld;
 public class GameController {
 
 	private ProgramArea programArea;
-	private GameWorld gameWorld;
+	private ImplementationGameWorld iGameWorld;
 
 	ImplementationGameWorld gameWorldFunctions = new ImplementationGameWorld();
 
 	protected GameController() {
 		this.programArea = new ProgramArea();
-		this.gameWorld = gameWorldFunctions.makeRandomGameWorld(10, 10);
+		this.iGameWorld = new ImplementationGameWorld();
 	}
 
-	protected GameController(GameWorld gameWorld) {
+	protected GameController(ImplementationGameWorld iGameWorld) {
 		this.programArea = new ProgramArea();
-		this.gameWorld = gameWorld;
+		this.iGameWorld = iGameWorld;
 	}	
 
 	protected ExecutionCommand execute() throws Exception {
 		if (programArea.programInProgress()) {
 			try {
-				programArea.executeNextBlock(this);
+				programArea.executeNextBlock(getGameWorldImplementation());
 			} catch (Exception e) {
 				programArea.stopExecution();
-				gameWorldFunctions.resetGameWorld(gameWorld);
+				getGameWorldImplementation().resetGameWorld();
 				throw e;
 			}
 		} else {
 			//after each try reset to original state
-			gameWorldFunctions.resetGameWorld(gameWorld);
+			getGameWorldImplementation().resetGameWorld();
 			programArea.startExecution(); // this also throws exceptions
 		}
 		return programArea.exeCmd;
@@ -47,12 +47,12 @@ public class GameController {
 		return programArea.getNextBlockToExecute();
 	}
 
-	protected void setGameWorld(GameWorld gameWorld) {
-		this.gameWorld = gameWorld;
+	protected void setGameWorldImplementation(ImplementationGameWorld iGameWorld) {
+		this.iGameWorld = iGameWorld;
 	}
 
-	protected GameWorld getGameWorld() {
-		return this.gameWorld;
+	protected ImplementationGameWorld getGameWorldImplementation() {
+		return this.iGameWorld;
 	}
 
 	protected ProgramArea getProgramArea() {

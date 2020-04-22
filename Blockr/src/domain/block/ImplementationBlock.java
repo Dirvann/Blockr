@@ -3,6 +3,7 @@ package domain.block;
 import java.util.List;
 
 import domain.GameController;
+import game_world.ImplementationGameWorld;
 import presentation.block.PresentationBlock;
 
 public class ImplementationBlock implements FacadeBlock{
@@ -12,34 +13,26 @@ public class ImplementationBlock implements FacadeBlock{
 		return new IfBlock();
 	}
 
-	@Override
-	public ActionBlock makeMoveForwardBlock() {
-		return new MoveForward();
-	}
 
 	@Override
 	public ChainConditionBlock makeNotBlock() {
 		return new NotBlock();
 	}
 
-	@Override
-	public ActionBlock makeTurnLeftBlock() {
-		return new TurnLeft();
-	}
-
-	@Override
-	public ActionBlock makeTurnRightBlock() {
-		return new TurnRight();
-	}
-
-	@Override
-	public SingleConditionBlock makeWallInFrontBlock() {
-		return new WallInFront();
-	}
 
 	@Override
 	public SingleSurroundingBlock makeWhileBlock() {
 		return new WhileBlock();
+	}
+	
+	@Override
+	public SingleConditionBlock makeSingleConditionBlock(String name) {
+		return new SingleConditionBlock(name);
+	}
+	
+	@Override
+	public ActionBlock makeActionBlock(String name) {
+		return new ActionBlock(name);
 	}
 
 	@Override
@@ -81,8 +74,8 @@ public class ImplementationBlock implements FacadeBlock{
 	}
 
 	@Override
-	public Block execute(Block block, GameController gameController) throws Exception {
-		return block.execute(gameController);
+	public Block execute(Block block, ImplementationGameWorld iGameWorld) throws Exception {
+		return block.execute(iGameWorld);
 	}
 
 	@Override

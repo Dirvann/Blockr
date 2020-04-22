@@ -23,15 +23,15 @@ public class MoveForwardCommand extends ExecutionCommand {
 
 	@Override
 	public void undo() {
-		GWF.robotTurnLeft(GCF.getGameWorld(GC));
-		GWF.robotTurnLeft(GCF.getGameWorld(GC));
+		GWF.robotTurnLeft(GCF.getGameWorldImplementation(GC));
+		GWF.robotTurnLeft(GCF.getGameWorldImplementation(GC));
 		try {
-			GWF.robotStepForwards(GCF.getGameWorld(GC));
+			GWF.robotStepForwards(GCF.getGameWorldImplementation(GC));
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		GWF.robotTurnLeft(GCF.getGameWorld(GC));
-		GWF.robotTurnLeft(GCF.getGameWorld(GC));
+		GWF.robotTurnLeft(GCF.getGameWorldImplementation(GC));
+		GWF.robotTurnLeft(GCF.getGameWorldImplementation(GC));
 
 		super.undo();
 	}

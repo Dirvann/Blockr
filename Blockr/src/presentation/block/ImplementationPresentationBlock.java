@@ -24,38 +24,13 @@ public class ImplementationPresentationBlock implements FacadePresentationBlock{
 		return presentation;
 	}
 
-	@Override
-	public PresentationBlock<ActionBlock> makeTurnLeftBlock(Vector pos) {
-		ActionBlock block = BF.makeTurnLeftBlock();
-		PresentationBlock<ActionBlock> presentation = new ActionBlockPresentation(pos, block);
-		return presentation;
-	}
 
-	@Override
-	public PresentationBlock<ActionBlock> makeTurnRightBlock(Vector pos) {
-		ActionBlock block = BF.makeTurnRightBlock();
-		PresentationBlock<ActionBlock> presentation = new ActionBlockPresentation(pos, block);
-		return presentation;
-	}
 
-	@Override
-	public PresentationBlock<SingleConditionBlock> makeWallInFrontBlock(Vector pos) {
-		SingleConditionBlock block = BF.makeWallInFrontBlock();
-		PresentationBlock<SingleConditionBlock> presentation = new SingleConditionBlockPresentation(pos, block);
-		return presentation;
-	}
 
 	@Override
 	public PresentationBlock<SingleSurroundingBlock> makeWhileBlock(Vector pos) {
 		SingleSurroundingBlock block = BF.makeWhileBlock();
 		PresentationBlock<SingleSurroundingBlock> presentation = new SingleSurroundBlockPresentation(pos, block);
-		return presentation;
-	}
-
-	@Override
-	public PresentationBlock<ActionBlock> makeMoveForwardBlock(Vector pos) {
-		ActionBlock block = BF.makeMoveForwardBlock();
-		PresentationBlock<ActionBlock> presentation = new ActionBlockPresentation(pos, block);
 		return presentation;
 	}
 
@@ -106,6 +81,20 @@ public class ImplementationPresentationBlock implements FacadePresentationBlock{
 	public void addToPosition(PresentationBlock<?> block, Vector deltaPos) {
 		block.setPositionByDifference(deltaPos);
 		
+	}
+
+	@Override
+	public PresentationBlock<ActionBlock> makeActionBlock(String name, Vector pos) {
+		ActionBlock block = BF.makeActionBlock(name);
+		PresentationBlock<ActionBlock> presentation = new ActionBlockPresentation(pos, block);
+		return presentation;
+	}
+
+	@Override
+	public PresentationBlock<SingleConditionBlock> makeSingleConditionBlock(String name, Vector pos) {
+		SingleConditionBlock block = BF.makeSingleConditionBlock(name);
+		PresentationBlock<SingleConditionBlock> presentation = new SingleConditionBlockPresentation(pos, block);
+		return presentation;
 	}
 
 }

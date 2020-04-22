@@ -41,7 +41,7 @@ class UseCase2 {
 			e.printStackTrace();
 		}
 		gameWorld = fi.makeGameWorld(testGrid, new Vector(0,0));
-		gameController.setGameWorld(gameWorld);
+		gameController.setGameWorldImplementation(gameWorld);
 	}
 	
 	@Test

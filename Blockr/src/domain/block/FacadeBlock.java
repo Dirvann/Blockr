@@ -3,6 +3,7 @@ package domain.block;
 import java.util.List;
 
 import domain.GameController;
+import game_world.ImplementationGameWorld;
 import presentation.block.PresentationBlock;
 
 public interface FacadeBlock {
@@ -17,36 +18,12 @@ public interface FacadeBlock {
 	 */
 	public SingleSurroundingBlock makeIfBlock();
 
-	/**
-	 * 
-	 * @return A block that is able to perform the action Move Forward.
-	 */
-	public ActionBlock makeMoveForwardBlock();
 
 	/**
 	 * 
 	 * @return A not condition block.
 	 */
 	public ChainConditionBlock makeNotBlock();
-
-	/**
-	 * 
-	 * @return A block that is able to perform the action Turn Left.
-	 */
-	public ActionBlock makeTurnLeftBlock();
-
-	/**
-	 * 
-	 * @return A block that is able to perform the action Turn Right.
-	 */
-	public ActionBlock makeTurnRightBlock();
-
-	/**
-	 * 
-	 * @return A block that is able to check if there is a wall in front of the
-	 *         players avatar..
-	 */
-	public SingleConditionBlock makeWallInFrontBlock();
 
 	/**
 	 * 
@@ -154,10 +131,10 @@ public interface FacadeBlock {
 	 * @param gameController
 	 * @param block
 	 * @return next block in sequence
-	 * @Post every necessary command in the block is executed.
+	 * @post every necessary command in the block is executed.
 	 * @throws Exception if a block in the sequence is not executable.
 	 */
-	public Block execute(Block block, GameController gameController) throws Exception;
+	public Block execute(Block block, ImplementationGameWorld gameController) throws Exception;
 
 	// ________________________________________________________________________________________________//
 	// presentation functions
@@ -196,5 +173,11 @@ public interface FacadeBlock {
 	 *         is a condition) connected to.
 	 */
 	public SurroundingBlock getSurroundingBlock(Block block);
+
+
+	public SingleConditionBlock makeSingleConditionBlock(String name);
+
+
+	public ActionBlock makeActionBlock(String name);
 
 }
