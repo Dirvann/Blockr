@@ -3,7 +3,7 @@ package game_world.api;
 import java.awt.Graphics;
 import java.util.List;
 
-public interface FacadeGameWorld<ImplementationType> {
+public interface FacadeGameWorld {
 	
 	public void makeNewGameWorld();
 	
@@ -18,7 +18,13 @@ public interface FacadeGameWorld<ImplementationType> {
 	
 	public boolean undoAction(String action);
 	
-	public void resetGameWorld(ImplementationType implementation);
+	public void resetGameWorld();
+	
+	public String makeSnapshot();
+	public List<String> getAllSnapshots();
+	public void loadSnapshot(String snapshotID);
+	public void removeSnapshot(String snapshotID);
+	
 	
 	
 	/*public GameWorld makeGameWorld(Grid grid, Robot robot);

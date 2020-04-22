@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/1-projects/kuleuven/Blockr/RobotGameWorld/gameworld_api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Andreas Awouters/Documents/Studies/1920/SWOP/assignment/Blockr/RobotGameWorld/gameworld_api.jar"/>
 	<classpathentry kind="output" path="bin1"/>
 </classpath>
