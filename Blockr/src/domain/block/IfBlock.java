@@ -57,7 +57,7 @@ class IfBlock extends SingleSurroundingBlock {
 
 	@Override
 	protected String getName() {
-		return "if";
+		return "If";
 	}
 
 }
