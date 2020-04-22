@@ -41,6 +41,13 @@ public class PalettePresentation {
 			index++;
 		}
 		
+		
+		list.add(iPresentationBlock.makeNotBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
+		
+		list.add(iPresentationBlock.makeIfBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
+		// While
+		list.add(iPresentationBlock.makeWhileBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
+		
 		/*
 		// Move Forward
 		list.add(BFP.makeMoveForwardBlock(new Vector(xOffset, yOffset)));
@@ -49,11 +56,9 @@ public class PalettePresentation {
 		// Turn Right
 		list.add(BFP.makeTurnRightBlock(new Vector(xOffset, yOffset+yOffsetIncrement*2)));
 		// If
-		list.add(BFP.makeIfBlock(new Vector(xOffset, yOffset+yOffsetIncrement*3)));
-		// While
-		list.add(BFP.makeWhileBlock(new Vector(xOffset, yOffset+yOffsetIncrement*4)));
+		
 		// Not
-		list.add(BFP.makeNotBlock(new Vector(xOffset, yOffset+yOffsetIncrement*5)));
+		
 		// Wall In Front
 		list.add(BFP.makeWallInFrontBlock(new Vector(xOffset, yOffset+yOffsetIncrement*6)));
 		*/

@@ -281,7 +281,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		this.exe = new ExecutionProcessor();
 		
 		// TODO reset gameworld to original state snapshot
-		iGameWorld.loadSnapshot("originalState");
+		iGameWorld.loadSnapshot(BlockrPanel.originalSnapshotName);
 		
 	}
 	@Override
