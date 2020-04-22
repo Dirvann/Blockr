@@ -1,8 +1,9 @@
 package game_world.api;
 
+import java.awt.Graphics;
 import java.util.List;
 
-public interface FacadeGameWorld<GameWorld, Vector, Grid, Robot, Direction, Cell, Graphics> {
+public interface FacadeGameWorld {
 	
 	public void makeNewGameWorld();
 	
