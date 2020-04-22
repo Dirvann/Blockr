@@ -27,6 +27,7 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	public ImplementationGameWorld() {
 		makeNewGameWorld();
 		snapshots = new HashMap<>();
+		snapshotIndex = 0;
 	};
 	
 	
@@ -193,6 +194,7 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	}
 
 	private Map<String, GameWorld> snapshots;
+	private int snapshotIndex;
 
 	@Override
 	public List<String> getAllSnapshots() {
@@ -209,8 +211,10 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 
 	@Override
 	public String makeSnapshot() {
-		// TODO Auto-generated method stub
-		return null;
+		String snapshotName = "AutoSnapshot" + snapshotIndex;
+		snapshotIndex += 1;
+		makeSnapshot(snapshotName);
+		return snapshotName;
 	}
 
 
