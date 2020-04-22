@@ -10,13 +10,11 @@ public interface FacadeGameWorld {
 	public List<String> getAllActions();
 	public List<String> getAllPRedicates();
 	
-	public boolean executeAction(String action);
-	public boolean evaluatePredicate(String predicate);
-	
+	public ActionResult executeAction(String action);
+	public PredicateResult evaluatePredicate(String predicate);
+	public boolean undoAction(String action);
 	
 	public void drawGameWorld(Graphics g, int width, int height);
-	
-	public boolean undoAction(String action);
 	
 	public void resetGameWorld();
 	
