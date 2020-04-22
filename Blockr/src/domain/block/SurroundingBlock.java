@@ -23,7 +23,6 @@ public abstract class SurroundingBlock extends SequenceBlock {
 		this.bodyBlock = block;
 		block.setSurroundingBlock(this);
 		block.previous = null;
-
 	}
 
 	/**

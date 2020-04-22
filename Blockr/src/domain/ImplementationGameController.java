@@ -9,6 +9,7 @@ import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
 import game_world.GameWorld;
+import game_world.ImplementationGameWorld;
 import presentation.block.PresentationBlock;
 
 public class ImplementationGameController implements FacadeGameController{
@@ -24,18 +25,18 @@ public class ImplementationGameController implements FacadeGameController{
 	}
 
 	@Override
-	public GameController makeGameController(GameWorld gameWorld) {
-		return new GameController(gameWorld);
+	public GameController makeGameController(ImplementationGameWorld iGameWorld) {
+		return new GameController(iGameWorld);
 	}
 
 	@Override
-	public void setGameWorld(GameController gameController,GameWorld gameWorld) {
-		gameController.setGameWorld(gameWorld);
+	public void setGameWorldImplementation(GameController gameController,ImplementationGameWorld iGameWorld) {
+		gameController.setGameWorldImplementation(iGameWorld);
 	}
 
 	@Override
-	public GameWorld getGameWorld(GameController gameController) {
-		return gameController.getGameWorld();
+	public ImplementationGameWorld getGameWorldImplementation(GameController gameController) {
+		return gameController.getGameWorldImplementation();
 	}
 
 	@Override

@@ -235,4 +235,8 @@ public class GameWorld {
 		this.setRobot(new Robot(startRobot));
 	}
 	
+	public GameWorld createCopy() {
+		return new GameWorld(this.getGrid(), this.getRobot());
+	}
+	
 }

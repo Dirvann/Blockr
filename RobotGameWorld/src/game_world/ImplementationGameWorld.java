@@ -1,139 +1,121 @@
 package game_world;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import exceptions.domainExceptions.OutOfBoundsException;
+import exceptions.domainExceptions.robotExceptions.RobotEnteringWallException;
+import exceptions.domainExceptions.robotExceptions.RobotMovingOffGridException;
+import game_world.api.ActionResult;
 import game_world.api.FacadeGameWorld;
-import game_world.cell.Cell;
+import game_world.api.PredicateResult;
 import game_world.cell.Goal;
 import game_world.cell.Wall;
 import java.awt.Color;
 
-public class ImplementationGameWorld implements FacadeGameWorld<GameWorld, Vector, Grid, Robot, Direction, Cell, Graphics>{
+public class ImplementationGameWorld implements FacadeGameWorld {
 
-	public ImplementationGameWorld() {};
+	private final int gameWorldWidth = 10;
+	private final int gameWorldHeight = 10;
+	
+	private GameWorld gameWorld;
+	
+	public ImplementationGameWorld() {
+		makeNewGameWorld();
+		snapshots = new HashMap<>();
+		snapshotIndex = 0;
+	};
+	
+	
 	
 	@Override
-	public GameWorld makeGameWorld(Grid grid, Robot robot) {
-		return new GameWorld(grid,robot);
-	}
-
-	@Override
-	public GameWorld makeStandardEmptyGameWorld() {
-		return new GameWorld();
-	}
-
-	@Override
-	public GameWorld makeRandomGameWorld(int width, int height) {
-		return new GameWorld(width, height);
-	}
-	
-	@Override
-	public Robot makeRobot(Vector location, Direction direction) {
-		return new Robot(location,direction);
+	public List<String> getAllActions() {
+		return Arrays.asList("MoveForward", "TurnLeft", "TurnRight");
 	}
 	
 	@Override
-	public boolean robotWallInFront(GameWorld world) {
-		return world.robotWallInFront();
+	public List<String> getAllPRedicates() {
+		return Arrays.asList("WallInFront");
 	}
 
 	@Override
-	public boolean robotOnGoal(GameWorld world) {
-		return world.robotOnGoal();
-	}
-
-	@Override
-	public void robotStepForwards(GameWorld world) throws Exception {
-		world.robotStepForwards();
-	}
-
-	@Override
-	public void robotTurnLeft(GameWorld world) {
-		world.robotTurnLeft();
-	}
-
-	@Override
-	public void robotTurnRight(GameWorld world) {
-		world.robotTurnRight();
-	}
-
-	@Override
-	public Grid makeGrid(int height, int width, Vector[] locations, Cell[] cells) throws Exception {
-		return new Grid(height, width, locations, cells);
-	}
-
-	@Override
-	public Grid makeStandardEmptyGrid() {
-		return new Grid();
-	}
-
-	@Override
-	public Grid makeRandomGrid(int width, int height) {
-		return new Grid(width,height);
-	}
-
-	@Override
-	public void resetGameWorld(GameWorld world) {
-		world.resetGameWorld();
+	public ActionResult executeAction(String action) {
+		switch (action) {
+		case "MoveForward": {
+			try {
+				gameWorld.robotStepForwards();
+			} catch (RobotEnteringWallException | RobotMovingOffGridException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return ActionResult.Success;
+		}
 		
-	}
-
-	@Override
-	public Integer getGridWidth(GameWorld world) {
-		return world.getGrid().getHeight();
-	}
-
-	@Override
-	public Integer getGridHeight(GameWorld world) {
-		return world.getGrid().getHeight();
-	}
-
-	@Override
-	public boolean isWall(GameWorld world, Integer x, Integer y) {
-		try {
-			Cell cell = world.getGrid().getCell(x, y);
-			return (cell instanceof Wall);
-		} catch (Exception e) {
-			return true;
+		case "TurnLeft": {
+			gameWorld.robotTurnLeft();
+			return ActionResult.Success;
+		}
+		
+		case "TurnRight": {
+			gameWorld.robotTurnRight();
+			return ActionResult.Success;
+		}
+		
+		default:
+			return ActionResult.BadAction;
 		}
 	}
-
+	
 	@Override
-	public boolean isGoal(GameWorld world, Integer x, Integer y) {
-		try {
-			Cell cell = world.getGrid().getCell(x, y);
-			return (cell instanceof Goal);
-		} catch (Exception e) {
-			return true;
+	public PredicateResult evaluatePredicate(String predicate) {
+		switch (predicate) {
+		case "WallInFront": {
+			if (gameWorld.robotWallInFront()) {
+				return PredicateResult.True;
+			} else {
+				return PredicateResult.False;
+			}
+		}
+		
+		default:
+			return PredicateResult.BadPredicate;
 		}
 	}
-
+	
 	@Override
-	public Vector getRobotLocation(GameWorld world) {
-		return world.getRobot().getLocation();
+	public boolean undoAction(String action) {
+		// TODO
+		return false;
 	}
 
 	@Override
-	public Direction getRobotDirection(GameWorld world) {
-		return world.getRobot().getDirection();
+	public void makeNewGameWorld() {
+		this.gameWorld = new GameWorld(gameWorldWidth, gameWorldHeight);
 	}
-
+	
 	@Override
-	public void drawGameWorld(Graphics g, GameWorld gameWorld, int width) {
+	public void drawGameWorld(Graphics g, int width, int height) {
+		int gridWidth = gameWorld.getGrid().getWidth();
+		int gridHeight = gameWorld.getGrid().getHeight();
+		
 		int worldWidth = width;
-		int worldHeight = worldWidth / getGridWidth(gameWorld) * getGridHeight(gameWorld);
+		int worldHeight = worldWidth / gridWidth * gridHeight;
 		
-		int cellWidth = worldWidth / getGridWidth(gameWorld);
-		int cellHeight = worldHeight /getGridHeight(gameWorld);
+		int cellWidth = worldWidth / gridWidth;
+		int cellHeight = worldHeight / gridHeight;
 		
 		
 		// Vertical lines
-		for (int i = 0; i < getGridWidth(gameWorld) +1; i++) {
+		for (int i = 0; i < gridWidth +1; i++) {
 			g.drawLine(i * cellWidth, 0, i * cellWidth, worldHeight);
 		}
 		
 		// Horizontal lines
-		for (int i = 0; i < getGridHeight(gameWorld) +1; i++) {
+		for (int i = 0; i < gridHeight +1; i++) {
 			g.drawLine(0, i * cellHeight, worldWidth, i * cellHeight);
 		}
 		
@@ -141,9 +123,12 @@ public class ImplementationGameWorld implements FacadeGameWorld<GameWorld, Vecto
 		
 	}
 	
-	void drawCells(Graphics g, GameWorld gameWorld, int cellWidth, int cellHeight) {
-		for (int x = 0; x < getGridWidth(gameWorld); x++) {
-			for (int y = 0; y < getGridHeight(gameWorld); y++) {
+	private void drawCells(Graphics g, GameWorld gameWorld, int cellWidth, int cellHeight) {
+		int gridWidth = gameWorld.getGrid().getWidth();
+		int gridHeight = gameWorld.getGrid().getHeight();
+		
+		for (int x = 0; x < gridWidth; x++) {
+			for (int y = 0; y < gridHeight; y++) {
 				if (isWall(gameWorld, x, y)) {
 					g.setColor(Color.BLACK);
 					g.fillRect(cellWidth * x, cellHeight * y, cellWidth, cellHeight);
@@ -154,8 +139,8 @@ public class ImplementationGameWorld implements FacadeGameWorld<GameWorld, Vecto
 			}
 		}
 		
-		Vector robotPostition = getRobotLocation(gameWorld);
-		Direction robotDirection = getRobotDirection(gameWorld);
+		Vector robotPostition = gameWorld.getRobot().getLocation();
+		Direction robotDirection = gameWorld.getRobot().getDirection();
 
 		double circleRatio = 0.9;
 		double rectWidth = 0.2;
@@ -185,6 +170,72 @@ public class ImplementationGameWorld implements FacadeGameWorld<GameWorld, Vecto
 					(int) (cellWidth * rectWidth), cellHeight / 2);
 			break;
 		}
+	}
+
+	private boolean isWall(GameWorld gameWorld, int x, int y) {
+		try {
+			return gameWorld.getGrid().getCell(x, y) instanceof Wall;
+		} catch (OutOfBoundsException e) {
+			e.printStackTrace();
+			System.out.println("This should not happen. see RobotGameWorld");
+			return false;
+		}
+	}
+	
+	private boolean isGoal(GameWorld gameWorld, int x, int y) {
+		try {
+			return gameWorld.getGrid().getCell(x, y) instanceof Goal;
+		} catch (OutOfBoundsException e) {
+			e.printStackTrace();
+			System.out.println("This should not happen. see RobotGameWorld");
+			return false;
+		}
+		
+	}
+
+	private Map<String, GameWorld> snapshots;
+	private int snapshotIndex;
+
+	@Override
+	public List<String> getAllSnapshots() {
+		return new ArrayList<>(snapshots.keySet());
+	}
+
+
+	@Override
+	public void loadSnapshot(String snapshotName) {
+		this.gameWorld = snapshots.get(snapshotName).createCopy();
+	}
+
+
+
+	@Override
+	public String makeSnapshot() {
+		String snapshotName = "AutoSnapshot" + snapshotIndex;
+		snapshotIndex += 1;
+		makeSnapshot(snapshotName);
+		return snapshotName;
+	}
+
+
+
+	@Override
+	public void makeSnapshot(String snapshotName) {
+		snapshots.put(snapshotName, gameWorld.createCopy());
+	}
+
+
+
+	@Override
+	public void removeSnapshot(String snapshotName) {
+		snapshots.remove(snapshotName);		
+	}
+
+
+
+	@Override
+	public void resetGameWorld() {
+		gameWorld.resetGameWorld();
 	}
 
 	
