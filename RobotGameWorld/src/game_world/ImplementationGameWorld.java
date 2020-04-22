@@ -5,7 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import exceptions.domainExceptions.OutOfBoundsException;
+import exceptions.domainExceptions.robotExceptions.RobotEnteringWallException;
+import exceptions.domainExceptions.robotExceptions.RobotMovingOffGridException;
+import game_world.api.ActionResult;
 import game_world.api.FacadeGameWorld;
+import game_world.api.PredicateResult;
 import game_world.cell.Goal;
 import game_world.cell.Wall;
 import java.awt.Color;
@@ -34,15 +38,47 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	}
 
 	@Override
-	public boolean executeAction(String action) {
-		// TODO
-		return false;
+	public ActionResult executeAction(String action) {
+		switch (action) {
+		case "MoveForward": {
+			try {
+				gameWorld.robotStepForwards();
+			} catch (RobotEnteringWallException | RobotMovingOffGridException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return ActionResult.Success;
+		}
+		
+		case "TurnLeft": {
+			gameWorld.robotTurnLeft();
+			return ActionResult.Success;
+		}
+		
+		case "TurnRight": {
+			gameWorld.robotTurnRight();
+			return ActionResult.Success;
+		}
+		
+		default:
+			return ActionResult.BadAction;
+		}
 	}
 	
 	@Override
-	public boolean evaluatePredicate(String predicate) {
-		// TODO
-		return false;
+	public PredicateResult evaluatePredicate(String predicate) {
+		switch (predicate) {
+		case "WallInFront": {
+			if (gameWorld.robotWallInFront()) {
+				return PredicateResult.True;
+			} else {
+				return PredicateResult.False;
+			}
+		}
+		
+		default:
+			return PredicateResult.BadPredicate;
+		}
 	}
 	
 	@Override
@@ -149,6 +185,54 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 			System.out.println("This should not happen. see RobotGameWorld");
 			return false;
 		}
+		
+	}
+
+
+
+	@Override
+	public List<String> getAllSnapshots() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public void loadSnapshot(String arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public String makeSnapshot() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public void makeSnapshot(String arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void removeSnapshot(String arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void resetGameWorld() {
+		// TODO Auto-generated method stub
 		
 	}
 
