@@ -3,64 +3,86 @@ package testsuites;
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.awt.event.KeyEvent;
+import java.util.List;
+
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
+
 import org.junit.jupiter.api.Test;
 
 import domain.GameController;
+import domain.ImplementationGameController;
+import domain.block.ActionBlock;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
-import domain.game_world.Direction;
-import domain.game_world.GameWorld;
-import domain.game_world.Grid;
-import domain.game_world.cell.Cell;
-import domain.game_world.cell.Goal;
-import domain.game_world.cell.Wall;
-import game_world.Vector;
+import game_world.Direction;
+import game_world.GameWorld;
+import game_world.ImplementationGameWorld;
+import presentation.BlockAreaCanvas;
+import presentation.BlockrPanel;
 /**
- * Run Program
+ * ## Use Case 2: Run Program
+ * 
+ * ### Main Success Scenario
+ * 
+ * 1. User presses F5
+ * 
+ * 2. Next block is higlighted
+ * 
+ * 3. User presses F5
+ * 
+ * 4. Highlighted block is executed
+ * 
+ * repeat steps 2, 3 and 4 until program is finished.
+ * 
+ * ### Extensions
+ * 
+ * 1a. Program Area does not contain exactly one connected block group.
+ * 	   1. Execution does not start.
+ * 
+ * 1b. Program Area contains a condition block.
+ *     1. Execution does not start.
+ *  
+ * 1b. Program Area contains a surrounding block without condition.
+ *     1. Execution does not start
  */
 class UseCase2 {
 	
-	// F5 = gameController.execute() (Block)
-	// highlighted = gameController.nextToExecute() (Block/ null if not started)
+	private static BlockrPanel blockrPanel;
+	private ImplementationGameController GC;
+	private GameController gc;
+	static ImplementationBlock IB = new ImplementationBlock();
+	static ImplementationGameWorld IGW = new ImplementationGameWorld();
+	BlockAreaCanvas blockAreaCanvas;
 	
-	static ImplementationBlock fi = new ImplementationBlock();
-	static GameController gameController;
-	static GameWorld gameWorld;
-	static Grid testGrid;
-	static Block forwardBlock;
-	static Block forwardBlock2;
-	static Block wallInFrontBlock;
-	static Block whileBlock;
-	
-	public static void setup() {
-		gameController = fi.makeGameController();
-		try {
-			testGrid = new Grid(); // --> 5x5 grid
-		} catch (Exception e) {
-			fail();
-			e.printStackTrace();
-		}
-		gameWorld = fi.makeGameWorld(testGrid, new Vector(0,0));
-		gameController.setGameWorld(gameWorld);
+	private void setup() {
+		blockrPanel = new BlockrPanel();
+		GC = new ImplementationGameController();
+		gc = blockrPanel.getGameController();
+		blockAreaCanvas = blockrPanel.getBlockAreaCanvas();	
 	}
 	
 	@Test
 	void oneBlockRunProgram() {
 		setup();
-		gameWorld.getRobot().setDirection(Direction.DOWN);
-		// place block in program area
-		forwardBlock =fi.makeMoveForwardBlock();
-		gameController.addTopLevelBlock(forwardBlock);
-		// step 1
-		gameController.execute();
-		// step 2
-		assertEquals(forwardBlock,gameController.getNextBlockToExecute());
-		// step 3
-		gameController.execute();
-		// step 4
-		assertEquals(new Vector(0,1),gameWorld.getRobot().getLocation());
+		blockAreaCanvas.handleMousePressed(11, 71);
+		blockAreaCanvas.handleMouseReleased(500, 150);
+		assertEquals(null,GC.getNextBlockToExecute(gc));
+		IGW.robotTurnLeft(GC.getGameWorld(gc));
+		Direction expectedDir = IGW.getRobotDirection(GC.getGameWorld(gc));
+		IGW.robotTurnRight(GC.getGameWorld(gc));
+		
+		
+		KeyEvent a = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
+		KeyEvent b = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
+		blockAreaCanvas.handleKeyPressed(a);
+		assertEquals("Turn Left",IB.getName(GC.getNextBlockToExecute(gc)));
+		blockAreaCanvas.handleKeyPressed(b);
+		assertEquals(expectedDir,IGW.getRobotDirection(GC.getGameWorld(gc)));
+		assertEquals(null,GC.getNextBlockToExecute(gc));
 	}
-	
+/*	
 	@Test
 	void oneConditionBlockRunProgram() {
 		setup();
@@ -124,5 +146,5 @@ class UseCase2 {
 		// step 4
 		assertEquals(new Vector(0,2),gameWorld.getRobot().getLocation());
 	}
-	
+*/	
 }

@@ -75,4 +75,8 @@ public class BlockrPanel extends Panel {
 	public void redrawGameWorld() {
 		gameWorldC.repaint();
 	}
+	
+	public BlockAreaCanvas getBlockAreaCanvas() {
+		return blockAreaC;
+	}
 }
