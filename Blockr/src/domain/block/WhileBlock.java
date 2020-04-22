@@ -27,24 +27,6 @@ class WhileBlock extends SingleSurroundingBlock {
 	}
 
 	@Override
-	protected boolean hasValidExecutionColumn() {
-		// First check if this block has a valid condition
-		boolean result = true;
-		if (!this.hasValidCondition()) return false;
-		if (this.bodyBlock == null) return false;
-		// If this block has a bodyBlock, check if it can be executed
-		else{
-			result = result && this.bodyBlock.hasValidExecutionColumn();
-		}
-		// If this block has a following block, check if it can be executed
-		if (this.getNextBlock() != null) {
-			result = result && this.getNextBlock().hasValidExecutionColumn();
-		}
-		
-		return result;
-	}
-	
-	@Override
 	protected WhileBlock getNewBlockOfThisType() {
 		return new WhileBlock();
 	}

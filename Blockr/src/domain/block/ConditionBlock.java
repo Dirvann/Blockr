@@ -47,8 +47,8 @@ public abstract class ConditionBlock extends Block {
 	}
 	
 	@Override
-	protected Block execute(GameController gameController) throws Exception{
-		throw new Exception("conditionblocks can't be executed");
+	protected Block execute(GameController gameController) {
+		return null;
 	}
 	
 	@Override

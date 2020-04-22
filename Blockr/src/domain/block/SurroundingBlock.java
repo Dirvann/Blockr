@@ -96,8 +96,7 @@ public abstract class SurroundingBlock extends SequenceBlock {
 	@Override
 	protected boolean hasValidExecutionColumn() {
 		// First check if this block has a valid condition
-		boolean result = true;
-		if (!this.hasValidCondition()) return false;
+		boolean result = this.hasValidCondition();
 		// If this block has a bodyBlock, check if it can be executed
 		if (this.bodyBlock != null) {
 			result = result && this.bodyBlock.hasValidExecutionColumn();
