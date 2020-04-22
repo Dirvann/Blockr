@@ -27,6 +27,8 @@ public class BlockrPanel extends Panel {
 	private int preferredGameWorldWidth = 10;
 	private int preferredGameWorldHeight = 10;
 	
+	public final static String originalSnapshotName = "original";
+	
 	public BlockrPanel() {
 		// Set size of panel
 		this.setSize(1280, 720);
@@ -36,7 +38,8 @@ public class BlockrPanel extends Panel {
 		GC = new ImplementationGameController();
 		iGameWorld = new ImplementationGameWorld();
 		// TODO gameworld init.
-		iGameWorld.makeGameWorld();
+		iGameWorld.makeNewGameWorld();
+		iGameWorld.makeSnapshot(BlockrPanel.originalSnapshotName);
 		gameController = GC.makeGameController();
 		GC.setGameWorldImplementation(gameController, iGameWorld);
 		

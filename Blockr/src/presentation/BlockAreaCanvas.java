@@ -204,7 +204,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		switch (keyCode) {
 		case KeyEvent.VK_ESCAPE: // Esc
 			this.stopExecution();
-			iGameWorld.resetGameWorld(GC.getGameWorldImplementation(gameController));
+			iGameWorld.loadSnapshot(BlockrPanel.originalSnapshotName);
 			blockrPanel.redrawGameWorld();
 			break;
 
@@ -218,9 +218,10 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 				ExecutionCommand exeCmd = GC.execute(gameController);
 				exe.addExecutionStep(exeCmd);
 				blockrPanel.redrawGameWorld();
-				if (iGameWorld.robotOnGoal(GC.getGameWorldImplementation(blockrPanel.getGameController()))){
+				// TODO robot on goal with new implementation how?
+				/*if (iGameWorld.robotOnGoal(GC.getGameWorldImplementation(blockrPanel.getGameController()))){
 					setErrorMessage("congratiolations!! You have beaten this level! \n Press F6 to start a new one. ");
-				}
+				}*/
 				//if (!GC.isExecuting(gameController)) {
 					//this.stopExecution();
 				//}
@@ -241,7 +242,8 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 			int width = blockrPanel.getPreferredGameWorldWidth();
 			int height = blockrPanel.getPreferredGameWorldHeight();
 			// TODO create new gameworld
-			iGameWorld.makeGameWorld();
+			iGameWorld.makeNewGameWorld();
+			iGameWorld.makeSnapshot(BlockrPanel.originalSnapshotName);
 			GC.setGameWorldImplementation(gameController, iGameWorld);
 			this.stopExecution();
 			blockrPanel.redrawGameWorld();
@@ -279,7 +281,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		this.exe = new ExecutionProcessor();
 		
 		// TODO reset gameworld to original state snapshot
-		iGameWorld.setSnapshot("original");
+		iGameWorld.loadSnapshot("originalState");
 		
 	}
 	@Override

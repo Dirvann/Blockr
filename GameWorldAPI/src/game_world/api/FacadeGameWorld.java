@@ -21,6 +21,7 @@ public interface FacadeGameWorld {
 	public void resetGameWorld();
 	
 	public String makeSnapshot();
+	public void   makeSnapshot(String snapshotID);
 	public List<String> getAllSnapshots();
 	public void loadSnapshot(String snapshotID);
 	public void removeSnapshot(String snapshotID);
