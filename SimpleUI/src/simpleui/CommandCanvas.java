@@ -11,7 +11,9 @@ import game_world.api.PredicateResult;
 import simpleui.buttons.ActionButton;
 import simpleui.buttons.PredicateButton;
 import simpleui.buttons.ResetGameWorldButton;
+import simpleui.buttons.SnapshotButton;
 import simpleui.buttons.Button;
+import simpleui.buttons.CreateSnapshotButton;
 import simpleui.buttons.NewGameWorldButton;
 
 public class CommandCanvas extends Canvas implements MouseListener{
@@ -22,9 +24,10 @@ public class CommandCanvas extends Canvas implements MouseListener{
 	private GameWorldCanvas gameWorldC;
 
 	private ArrayList<Button<?>> buttons = new ArrayList<Button<?>>();
+	private ArrayList<SnapshotButton> snapshots = new ArrayList<SnapshotButton>();
 	
 	private int topOffset = 100;
-	private int actionXOffset = 100;
+	private int actionXOffset = 20;
 	private int predicateXOffset = ActionButton.width + actionXOffset + 30;
 	
 	private int seperation = 10;
@@ -52,12 +55,25 @@ public class CommandCanvas extends Canvas implements MouseListener{
 		buttons.add(new NewGameWorldButton(new Vector(20, 20)));
 		buttons.add(new ResetGameWorldButton(new Vector(20,20 + Button.height + 10)));
 		
-		System.out.println("TEST");
+		buttons.add(new CreateSnapshotButton(new Vector(60 + Button.width * 2, 20)));
+
 	}
 	
 	@Override
 	public void paint(Graphics g) {
 		for(Button<?> b : buttons) {
+			b.draw(g);
+		}
+		
+		List<String> snapNames = iGameWorld.getAllSnapshots();
+		
+		snapshots.clear();
+		int index = 1;
+		for(String name: snapNames) {
+			snapshots.add(new SnapshotButton(name, new Vector(60 + Button.width * 2, 30 + (Button.height + 10)*index++)));
+		}
+		
+		for(SnapshotButton b : snapshots) {
 			b.draw(g);
 		}
 	}
@@ -69,6 +85,14 @@ public class CommandCanvas extends Canvas implements MouseListener{
 		for(Button<?> b: buttons) {
 			if(b.collidesWith(pos)) {
 				b.execute(iGameWorld);
+				repaint();
+				gameWorldC.repaint();
+			}
+		}
+		for(SnapshotButton b: snapshots) {
+			if(b.collidesWith(pos)) {
+				b.execute(iGameWorld);
+				repaint();
 				gameWorldC.repaint();
 			}
 		}
