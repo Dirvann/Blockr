@@ -35,7 +35,7 @@ public interface FacadeGameWorld {
 	public ActionResult executeAction(String action);
 	
 	/**
-	 * Evaluate an action in the gameWorld
+	 * Evaluate a predicate in the gameWorld
 	 * 
 	 * @param predicate
 	 * 		  | name of the predicate to be evaluated
