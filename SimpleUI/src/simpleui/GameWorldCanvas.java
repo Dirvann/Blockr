@@ -1,3 +1,4 @@
+package simpleui;
 import java.awt.Canvas;
 import java.awt.Graphics;
 

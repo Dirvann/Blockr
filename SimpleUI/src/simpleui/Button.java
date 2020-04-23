@@ -1,3 +1,4 @@
+package simpleui;
 
 public abstract class Button {
 	
