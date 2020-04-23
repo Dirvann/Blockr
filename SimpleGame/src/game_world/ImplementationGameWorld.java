@@ -1,4 +1,4 @@
-package implementation;
+package game_world;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -7,18 +7,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import exceptions.OutOfBoundsException;
-import gameWorld.FallingBlock;
-import gameWorld.Position;
-import gameWorld.SimpleGameController;
 import game_world.api.ActionResult;
 import game_world.api.FacadeGameWorld;
 import game_world.api.PredicateResult;
 
-public class APIImplementation implements FacadeGameWorld {
+public class ImplementationGameWorld implements FacadeGameWorld {
 
 	private SimpleGameController gameController;
 	
-	public APIImplementation() {
+	public ImplementationGameWorld() {
 		gameController = new SimpleGameController();
 	}
 	
@@ -194,6 +191,12 @@ public class APIImplementation implements FacadeGameWorld {
 
 	@Override
 	public boolean undoAction(String arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean goalReached() {
 		// TODO Auto-generated method stub
 		return false;
 	}
