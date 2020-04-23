@@ -81,9 +81,9 @@ public class SimpleGameController {
 	
 	// Predicates
 	public boolean blockAbovePlayer() {
-		int playerY = getGameWorld().getPlayer().getPosition().getY();
+		int playerX = getGameWorld().getPlayer().getPosition().getX();
 		for (FallingBlock block : getGameWorld().getAllBlocks()) {
-			if (block.getPosition().getY() == playerY)
+			if (block.getPosition().getX() == playerX)
 				return true;
 		}
 		
