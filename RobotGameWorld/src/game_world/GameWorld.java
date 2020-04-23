@@ -34,7 +34,7 @@ public class GameWorld {
 	 * @post  The robot of this new Gameworld is the given robot.
 	 * 		  |new.getRobot() = robot
 	 */
-	protected GameWorld(Grid grid, Robot robot) {
+	public GameWorld(Grid grid, Robot robot) {
 		this.setGrid(grid);
 		this.startRobot = new Robot(robot.getLocation(),robot.getDirection()); //make copy
 		this.setRobot(robot);
@@ -47,7 +47,7 @@ public class GameWorld {
 	 * @post  The robot of this new Gameworld is the given robot.
 	 * 		  |new.getRobot() = new Robot(new Vector(0, 0))
 	 */
-	protected GameWorld() {
+	public GameWorld() {
 		this(new Grid(), new Robot(new Vector(0, 0)));
 	}
 	/**
@@ -63,7 +63,7 @@ public class GameWorld {
 	 * @post  The robot of this new Gameworld is placed at a random possible location.
 	 * 		  |new.getRobot() = new Robot(randomRobotLocation, getRandomRobotDirection())
 	 */
-	protected GameWorld(int width, int height) {
+	public GameWorld(int width, int height) {
 		this.setGrid(Grid.randomGrid(width, height));
 		Vector randomRobotLocation = this.getRandomRobotLocation();
 		this.startRobot = new Robot(randomRobotLocation, getRandomRobotDirection());
@@ -74,7 +74,7 @@ public class GameWorld {
 	 * 
 	 * @return the grid of this Gameworld.
 	 */
-	protected Grid getGrid() {
+	public Grid getGrid() {
 		return grid;
 	}
 	/**
@@ -85,7 +85,7 @@ public class GameWorld {
 	 * @post  The grid of this Gameworld is the given grid.
 	 * 		  |new.getGrid() = grid
 	 */
-	protected void setGrid(Grid grid) {
+	public void setGrid(Grid grid) {
 		this.grid = grid;
 	}
 	/**
@@ -93,7 +93,7 @@ public class GameWorld {
 	 * 
 	 * @return the robot of this Gameworld
 	 */
-	protected Robot getRobot() {
+	public Robot getRobot() {
 		return robot;
 	}
 	/**
@@ -104,7 +104,7 @@ public class GameWorld {
 	 * @post  The robot of this Gameworld is the given robot.
 	 * 		  |new.getRobot() = robot
 	 */
-	protected void setRobot(Robot robot) {
+	public void setRobot(Robot robot) {
 		this.robot = robot;
 	}
 	/**
@@ -112,7 +112,7 @@ public class GameWorld {
 	 * 
 	 * @return true if the cell in front of the robot is a wall.
 	 */
-	protected boolean robotWallInFront() {
+	public boolean robotWallInFront() {
 		try {
 			Vector positionInFront = getRobot().getPositionInFront();
 			return getGrid().getCell(positionInFront) instanceof Wall;
@@ -127,7 +127,7 @@ public class GameWorld {
 	 * @return true if the robot is on the same location as the goal.
 	 *       | result == getGrid().getCell(getRobot().getLocation()) instanceof Goal
 	 */
-	protected boolean robotOnGoal() {
+	public boolean robotOnGoal() {
 		try {
 			Vector currentPosition = getRobot().getLocation();
 			return getGrid().getCell(currentPosition) instanceof Goal;
@@ -145,7 +145,7 @@ public class GameWorld {
 	 * @throws RobotMovingOffGridException 
 	 * 		   The robot can't move off the grid.
 	 */
-	protected void robotStepForwards() throws RobotEnteringWallException, RobotMovingOffGridException {
+	public void robotStepForwards() throws RobotEnteringWallException, RobotMovingOffGridException {
 		try {
 			Vector positionInFront = getRobot().getPositionInFront();
 			if (getGrid().getCell(positionInFront) instanceof RobotCanEnter) {
@@ -163,7 +163,7 @@ public class GameWorld {
 	 * 
 	 * @post  The robot of this Gameworld is looking to the left of the previous direction.
 	 */
-	protected void robotTurnLeft() {
+	public void robotTurnLeft() {
 		getRobot().turnLeft();
 	}
 	/**
@@ -171,7 +171,7 @@ public class GameWorld {
 	 * 
 	 * @post  The robot of this Gameworld is looking to the right of the previous direction.
 	 */
-	protected void robotTurnRight() {
+	public void robotTurnRight() {
 		getRobot().turnRight();
 	}
 	/**
@@ -231,7 +231,7 @@ public class GameWorld {
 	 * @post The robot is location is set to it's original location.
 	 * 		 |new.getRobot().getLocation() = startRobot
 	 */
-	protected void resetGameWorld() {
+	public void resetGameWorld() {
 		this.setRobot(new Robot(startRobot));
 	}
 	

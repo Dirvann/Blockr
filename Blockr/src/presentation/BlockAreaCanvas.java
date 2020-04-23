@@ -21,7 +21,7 @@ import domain.GameController;
 import domain.ImplementationGameController;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
-import game_world.ImplementationGameWorld;
+import impl.root.ImplementationGameWorld;
 import domain.Vector;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
@@ -215,13 +215,16 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 				ExecutionCommand exeCmd = GC.execute(gameController);
 				exe.addExecutionStep(exeCmd);
 				blockrPanel.redrawGameWorld();
-				// TODO robot on goal with new implementation how?
+
 				/*if (iGameWorld.robotOnGoal(GC.getGameWorldImplementation(blockrPanel.getGameController()))){
 					setErrorMessage("congratiolations!! You have beaten this level! \n Press F6 to start a new one. ");
 				}*/
 				//if (!GC.isExecuting(gameController)) {
 					//this.stopExecution();
 				//}
+				if(iGameWorld.goalReached()) {
+					setErrorMessage("congratiolations!! You have beaten this level! \n Press F6 to start a new one. ");
+				}
 				
 			} catch (Exception e1) {
 				if (e1.getMessage() == null) {

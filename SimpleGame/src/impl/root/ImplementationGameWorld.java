@@ -1,4 +1,4 @@
-package game_world;
+package impl.root;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 import exceptions.OutOfBoundsException;
+import game_world.FallingBlock;
+import game_world.Position;
+import game_world.SimpleGameController;
 import game_world.api.ActionResult;
 import game_world.api.FacadeGameWorld;
 import game_world.api.PredicateResult;

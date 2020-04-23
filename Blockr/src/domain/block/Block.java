@@ -5,7 +5,7 @@ import java.util.List;
 
 import domain.GameController;
 import domain.ImplementationGameController;
-import game_world.ImplementationGameWorld;
+import impl.root.ImplementationGameWorld;
 import presentation.block.PresentationBlock;
 
 public abstract class Block {

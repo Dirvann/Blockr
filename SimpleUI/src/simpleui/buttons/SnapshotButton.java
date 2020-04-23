@@ -2,7 +2,7 @@ package simpleui.buttons;
 
 import java.awt.Color;
 
-import game_world.ImplementationGameWorld;
+import impl.root.ImplementationGameWorld;
 import simpleui.Vector;
 
 public class SnapshotButton extends Button<Boolean> {

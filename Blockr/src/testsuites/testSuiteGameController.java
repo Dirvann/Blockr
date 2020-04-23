@@ -19,7 +19,7 @@ import domain.block.SurroundingBlock;
 import exceptions.domainExceptions.BlockColumnNotExecutableException;
 import exceptions.domainExceptions.CantRunConditionException;
 import exceptions.domainExceptions.NotOneStartingBlockException;
-import game_world.ImplementationGameWorld;
+import impl.root.ImplementationGameWorld;
 import domain.Vector;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;

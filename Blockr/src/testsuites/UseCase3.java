@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import domain.GameController;
 import domain.ImplementationGameController;
 import domain.block.ImplementationBlock;
-import game_world.ImplementationGameWorld;
+import impl.root.ImplementationGameWorld;
 import presentation.BlockAreaCanvas;
 import presentation.BlockrPanel;
 /**

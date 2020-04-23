@@ -11,7 +11,7 @@ import domain.ImplementationGameController;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
 import domain.block.SurroundingBlock;
-import game_world.ImplementationGameWorld;
+import impl.root.ImplementationGameWorld;
 import domain.Vector;
 import presentation.BlockAreaCanvas;
 import presentation.BlockrPanel;

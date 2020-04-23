@@ -7,7 +7,7 @@ import domain.block.Block;
 import domain.block.ConditionBlock;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
-import game_world.ImplementationGameWorld;
+import impl.root.ImplementationGameWorld;
 import presentation.block.PresentationBlock;
 
 public interface FacadeGameController {

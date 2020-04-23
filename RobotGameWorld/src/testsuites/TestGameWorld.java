@@ -10,12 +10,12 @@ import org.junit.Test;
 import game_world.Direction;
 import game_world.GameWorld;
 import game_world.Grid;
-import game_world.ImplementationGameWorld;
 import game_world.Robot;
 import game_world.Vector;
 import game_world.cell.Cell;
 import game_world.cell.Goal;
 import game_world.cell.Wall;
+import impl.root.ImplementationGameWorld;
 
 public class TestGameWorld {
 	static Grid testGrid;

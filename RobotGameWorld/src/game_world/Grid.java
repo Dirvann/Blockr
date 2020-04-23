@@ -150,7 +150,7 @@ public class Grid {
 	 * 
 	 * @return width of the Grid.
 	 */
-	protected int getWidth() {
+	public int getWidth() {
 		return width;
 	}
 	/**
@@ -158,7 +158,7 @@ public class Grid {
 	 * 
 	 * @return height of the Grid.
 	 */
-	protected int getHeight() {
+	public int getHeight() {
 		return height;
 	}
 	/**
@@ -227,7 +227,7 @@ public class Grid {
 	 * @throws Exception
 	 * 		   The given x and y values don't lie inside of the Grid.
 	 */
-	protected Cell getCell(int x, int y) throws OutOfBoundsException {
+	public Cell getCell(int x, int y) throws OutOfBoundsException {
 		if (isInBounds(x, y)) {
 			return grid[y][x];
 		} else {

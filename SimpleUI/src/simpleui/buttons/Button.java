@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Area;
 
-import game_world.ImplementationGameWorld;
+import impl.root.ImplementationGameWorld;
 import simpleui.Vector;
 
 public abstract class Button<T> {

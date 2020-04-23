@@ -1,10 +1,10 @@
-package simpleui;
-import java.awt.Canvas;
+package client.main;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
+import simpleui.MainPanel;
 
-public class Main {
+public class ClientMainClass {
 
 	private static MainPanel mainPanel;
 

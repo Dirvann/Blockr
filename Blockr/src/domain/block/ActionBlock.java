@@ -3,7 +3,7 @@ package domain.block;
 import command.ActionBlockCommand;
 import domain.GameController;
 import domain.ImplementationGameController;
-import game_world.ImplementationGameWorld;
+import impl.root.ImplementationGameWorld;
 import game_world.api.ActionResult;
 
 public class ActionBlock extends SequenceBlock{

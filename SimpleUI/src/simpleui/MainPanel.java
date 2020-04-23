@@ -5,7 +5,7 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.JPanel;
 
-import game_world.ImplementationGameWorld;
+import impl.root.ImplementationGameWorld;
 
 public class MainPanel extends JPanel {
 

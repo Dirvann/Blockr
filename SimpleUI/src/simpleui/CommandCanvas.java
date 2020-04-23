@@ -6,7 +6,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import game_world.ImplementationGameWorld;
+import impl.root.ImplementationGameWorld;
 import game_world.api.PredicateResult;
 import simpleui.buttons.ActionButton;
 import simpleui.buttons.PredicateButton;

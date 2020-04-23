@@ -4,7 +4,7 @@ import domain.GameController;
 import domain.ImplementationGameController;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
-import game_world.ImplementationGameWorld;
+import impl.root.ImplementationGameWorld;
 
 public class ActionBlockCommand extends ExecutionCommand {
 	ImplementationGameController GCF = new ImplementationGameController();

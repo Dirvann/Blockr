@@ -1,7 +1,7 @@
 package domain.block;
 
 import domain.GameController;
-import game_world.ImplementationGameWorld;
+import impl.root.ImplementationGameWorld;
 
 public abstract class ConditionBlock extends Block {
 

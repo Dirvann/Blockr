@@ -1,6 +1,6 @@
 package domain.block;
 
-import game_world.ImplementationGameWorld;
+import impl.root.ImplementationGameWorld;
 import game_world.api.PredicateResult;
 
 public class SingleConditionBlock extends ConditionBlock {

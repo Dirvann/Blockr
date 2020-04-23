@@ -74,7 +74,7 @@ public class Robot {
 	 * 
 	 * @return the location of the Robot.
 	 */
-	protected Vector getLocation() {
+	public Vector getLocation() {
 		return location;
 	}
 	/**
@@ -93,7 +93,7 @@ public class Robot {
 	 * 
 	 * @return direction of the Robot.
 	 */
-	protected Direction getDirection() {
+	public Direction getDirection() {
 		return direction;
 	}
 	/**

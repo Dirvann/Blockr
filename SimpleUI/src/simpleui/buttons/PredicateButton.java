@@ -2,7 +2,7 @@ package simpleui.buttons;
 import java.awt.Color;
 
 
-import game_world.ImplementationGameWorld;
+import impl.root.ImplementationGameWorld;
 import game_world.api.PredicateResult;
 import simpleui.Vector;
 

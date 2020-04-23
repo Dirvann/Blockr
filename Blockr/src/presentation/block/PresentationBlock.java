@@ -16,7 +16,6 @@ import presentation.ProgramAreaPresentation;
 
 public abstract class PresentationBlock<T extends Block> {
 
-	// TODO Store safely, maybe elsewhere.
 	private static final int blockWidth = 100;
 	private static final int blockHeight = 20;
 

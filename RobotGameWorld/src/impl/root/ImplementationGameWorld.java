@@ -1,4 +1,4 @@
-package game_world;
+package impl.root;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -10,6 +10,9 @@ import java.util.Map;
 import exceptions.domainExceptions.OutOfBoundsException;
 import exceptions.domainExceptions.robotExceptions.RobotEnteringWallException;
 import exceptions.domainExceptions.robotExceptions.RobotMovingOffGridException;
+import game_world.Direction;
+import game_world.GameWorld;
+import game_world.Vector;
 import game_world.api.ActionResult;
 import game_world.api.FacadeGameWorld;
 import game_world.api.PredicateResult;

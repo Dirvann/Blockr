@@ -2,7 +2,7 @@ package simpleui;
 import java.awt.Canvas;
 import java.awt.Graphics;
 
-import game_world.ImplementationGameWorld;
+import impl.root.ImplementationGameWorld;
 
 public class GameWorldCanvas extends Canvas {
 

@@ -3,7 +3,7 @@ package domain.block;
 import java.util.List;
 
 import domain.GameController;
-import game_world.ImplementationGameWorld;
+import impl.root.ImplementationGameWorld;
 import presentation.block.PresentationBlock;
 
 public class ImplementationBlock implements FacadeBlock{
