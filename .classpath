@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="assignments/assignment 2/toZip/src"/>
+	<classpathentry kind="src" path="Blockr/src"/>
+	<classpathentry kind="src" path="GameWorldAPI/src"/>
+	<classpathentry kind="src" path="RobotGameWorld/src"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="assignments/assignment 2/toZip/system.jar"/>
+	<classpathentry kind="lib" path="Blockr/gameworld_robot.jar"/>
+	<classpathentry kind="lib" path="RobotGameWorld/gameworld_api.jar"/>
+	<classpathentry kind="output" path="Blockr/bin"/>
+</classpath>
