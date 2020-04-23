@@ -106,8 +106,8 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 		int worldWidth = width;
 		int worldHeight = height;
 		
-		int cellWidth = worldWidth / gridWidth;
-		int cellHeight = worldHeight / gridHeight;
+		int cellWidth = worldWidth / (gridWidth+1);
+		int cellHeight = worldHeight / (gridHeight);
 		
 		g.setColor(Color.black);
 		
