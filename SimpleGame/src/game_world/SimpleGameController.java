@@ -1,5 +1,7 @@
 package game_world;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import exceptions.OutOfBoundsException;
@@ -116,13 +118,20 @@ public class SimpleGameController {
 	}
 	
 	private void moveAllBlocksDown() {
+		
+		List<FallingBlock> blocksToDelete = new ArrayList<>();
+		
 		for (FallingBlock block : getGameWorld().getAllBlocks()) {
 			block.moveDown();
 			if (block.getPosition().getY() >= getHeight()) {
 				currentNrDodged += 1;
-				getGameWorld().getAllBlocks().remove(block);
+				blocksToDelete.add(block);
 			}
 		}
+		
+		getGameWorld().getAllBlocks().removeAll(blocksToDelete);
+
+
 	}
 	
 	private boolean playerCollidesWithBlock() {
