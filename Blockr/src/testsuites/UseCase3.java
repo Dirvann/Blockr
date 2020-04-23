@@ -3,59 +3,120 @@ package testsuites;
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.awt.event.KeyEvent;
+import java.util.List;
+
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
+
 import org.junit.jupiter.api.Test;
 
 import domain.GameController;
+import domain.ImplementationGameController;
+import domain.block.ActionBlock;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
-import domain.game_world.Direction;
-import domain.game_world.GameWorld;
-import domain.game_world.Grid;
-import domain.game_world.cell.Cell;
-import domain.game_world.cell.Goal;
-import domain.game_world.cell.Wall;
-import game_world.Vector;
+import game_world.Direction;
+import game_world.GameWorld;
+import game_world.ImplementationGameWorld;
+import presentation.BlockAreaCanvas;
+import presentation.BlockrPanel;
 /**
- * Reset Game World
+ * ## Use Case 3: Reset Game World
+ * 
+ * ### Main Success Scenario
+ * 
+ * 1. User presses Escape
+ * 
+ * 2. The program stops running
+ * 
+ * 3. The game world resets to the original state
+ * 
+ * ### Extensions
+ * 
+ * 1a. User modifies program while it's running
+ *     1. The program stops running
+ *     2. The game world resets to the original state
  */
 class UseCase3 {
-	// Escape = gameController.resetWorld();
 	
-	static ImplementationBlock fi = new ImplementationBlock();
-	static GameController gameController;
-	static GameWorld gameWorld;
-	static Grid testGrid;
-	static Block forwardBlock;
-	static Block forwardBlock2;
+	private static BlockrPanel blockrPanel;
+	private ImplementationGameController GC;
+	private GameController gc;
+	static ImplementationBlock IB = new ImplementationBlock();
+	static ImplementationGameWorld IGW = new ImplementationGameWorld();
+	BlockAreaCanvas blockAreaCanvas;
 	
-	public static void setup() {
-		gameController = fi.makeGameController();
-		try {
-			testGrid = new Grid(); // --> 5x5 grid
-		} catch (Exception e) {
-			fail();
-			e.printStackTrace();
-		}
-		gameWorld = fi.makeGameWorld(testGrid, new Vector(0,0));
-		gameController.setGameWorldImplementation(gameWorld);
+	private void setup() {
+		blockrPanel = new BlockrPanel();
+		GC = new ImplementationGameController();
+		gc = blockrPanel.getGameController();
+		blockAreaCanvas = blockrPanel.getBlockAreaCanvas();	
+	}
+	@Test
+	void resetGameOneBlock() {
+		setup();
+		//start program: TurnLeft
+		blockAreaCanvas.handleMousePressed(11, 71);
+		blockAreaCanvas.handleMouseReleased(500, 150);
+		assertEquals(null,GC.getNextBlockToExecute(gc));
+		KeyEvent a = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
+		KeyEvent b = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_ESCAPE, KeyEvent.CHAR_UNDEFINED);
+		blockAreaCanvas.handleKeyPressed(a);
+		assertEquals("TurnLeft",IB.getName(GC.getNextBlockToExecute(gc)));
+		blockAreaCanvas.handleKeyPressed(b);
+		assertEquals(null,GC.getNextBlockToExecute(gc));
 	}
 	
 	@Test
-	void test() {
+	void resetGameMoreBlocks() {
 		setup();
-		gameWorld.getRobot().setDirection(Direction.DOWN);
-		// place blocks in program area
-		forwardBlock =fi.makeMoveForwardBlock();
-		gameController.addTopLevelBlock(forwardBlock);
-		forwardBlock2 = fi.makeMoveForwardBlock();
-		fi.connect(forwardBlock, forwardBlock2);
-		gameController.execute();
-		gameController.execute();
-		assertEquals(new Vector(0,1),gameWorld.getRobot().getLocation());
-		//step 1/2
-		gameController.resetWorld();
-		//step 3
-		assertEquals(new Vector(0,0),gameWorld.getRobot().getLocation());
+		//start program: TurnLeft / Turn Right
+		blockAreaCanvas.handleMousePressed(11, 71);
+		blockAreaCanvas.handleMouseReleased(500, 70);
+		blockAreaCanvas.handleMousePressed(11, 131);
+		blockAreaCanvas.handleMouseReleased(500, 90);
+		assertEquals(null,GC.getNextBlockToExecute(gc));
+		//stop after 1 execute
+		KeyEvent a = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
+		KeyEvent b = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_ESCAPE, KeyEvent.CHAR_UNDEFINED);
+		blockAreaCanvas.handleKeyPressed(a);
+		assertEquals("TurnLeft",IB.getName(GC.getNextBlockToExecute(gc)));
+		blockAreaCanvas.handleKeyPressed(b);
+		assertEquals(null,GC.getNextBlockToExecute(gc));
+		//stop after 2 execute
+		KeyEvent c = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
+		KeyEvent d = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
+		KeyEvent e = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_ESCAPE, KeyEvent.CHAR_UNDEFINED);
+		blockAreaCanvas.handleKeyPressed(c);
+		assertEquals("TurnLeft",IB.getName(GC.getNextBlockToExecute(gc)));
+		blockAreaCanvas.handleKeyPressed(d);
+		assertEquals("TurnRight",GC.getNextBlockToExecute(gc));
+		blockAreaCanvas.handleKeyPressed(e);
+		assertEquals(null,GC.getNextBlockToExecute(gc));
 	}
-
+	
+	@Test
+	void modifiesProgramWhileRunning() {
+		setup();
+		//start program: TurnLeft
+		blockAreaCanvas.handleMousePressed(11, 71);
+		blockAreaCanvas.handleMouseReleased(500, 150);
+		assertEquals(null,GC.getNextBlockToExecute(gc));
+		KeyEvent a = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
+		blockAreaCanvas.handleKeyPressed(a);
+		assertEquals("TurnLeft",IB.getName(GC.getNextBlockToExecute(gc)));
+		//modify program: TurnLeft / TurnRight
+		blockAreaCanvas.handleMousePressed(11, 131);
+		blockAreaCanvas.handleMouseReleased(500, 90);
+		assertEquals(null,GC.getNextBlockToExecute(gc));
+		KeyEvent b = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
+		KeyEvent c = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
+		blockAreaCanvas.handleKeyPressed(b);
+		blockAreaCanvas.handleKeyPressed(c);
+		assertEquals("TurnRight",IB.getName(GC.getNextBlockToExecute(gc)));
+		blockAreaCanvas.handleMousePressed(11, 71);
+		blockAreaCanvas.handleMouseReleased(500, 150);
+		assertEquals(null,GC.getNextBlockToExecute(gc));
+	}
 }
