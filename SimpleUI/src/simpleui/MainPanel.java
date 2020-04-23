@@ -1,3 +1,4 @@
+package simpleui;
 import java.awt.Color;
 
 import javax.swing.JPanel;
