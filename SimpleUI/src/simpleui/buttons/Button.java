@@ -1,3 +1,5 @@
+package simpleui.buttons;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -7,18 +9,21 @@ import java.awt.geom.Area;
 
 import game_world.ImplementationGameWorld;
 import game_world.api.ActionResult;
+import game_world.api.PredicateResult;
+import simpleui.Vector;
 
-public class ActionButton {
-	
+public abstract class Button<T> {
 	private String name;
 	private final Vector position;
-	final static  int width = 170;
-	final static int height = 40;
+	final public static  int width = 150;
+	final public static int height = 25;
 	private static final Font font = new Font("Arial", Font.PLAIN, (int) (height * 0.7));
+	private Color color;
 	
-	public ActionButton(String name, Vector pos) {
+	public Button(String name, Vector pos, Color c) {
 		this.name = name;
 		this.position = pos;
+		this.color = c;
 	}
 	
 	public String getName() {
@@ -31,17 +36,14 @@ public class ActionButton {
 	
 	public void draw(Graphics gr) {
 		Graphics2D g = (Graphics2D)gr;
-		g.setColor(Color.GREEN);
-		g.fill(new Area(new Rectangle(position.getX(), position.getY(), ActionButton.width, ActionButton.height)));
+		g.setColor(this.color);
+		g.fill(new Area(new Rectangle(position.getX(), position.getY(), Button.width, Button.height)));
 
 		g.setColor(Color.BLACK);
 		g.setFont(font);
-		g.drawString(this.name,position.getX(), position.getY() + (int)(ActionButton.height * 0.8));
+		g.drawString(this.name,position.getX(), position.getY() + (int)(Button.height * 0.8));
 	}
 	
-	public ActionResult execute(ImplementationGameWorld iGameWorld) {
-		return iGameWorld.executeAction(this.name);
-	}
 	
 	public boolean collidesWith(Vector pos) {
 		if(pos.getX() < position.getX()) return false;
@@ -50,4 +52,6 @@ public class ActionButton {
 		if(pos.getY() > position.getY() + height) return false;
 		return true;
 	}
+	
+	public abstract T execute(ImplementationGameWorld iGameWorld);
 }
