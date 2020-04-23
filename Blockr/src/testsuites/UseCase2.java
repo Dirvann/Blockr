@@ -77,6 +77,7 @@ class UseCase2 {
 		KeyEvent a = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
 		KeyEvent b = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
 		blockAreaCanvas.handleKeyPressed(a);
+		// lees console
 		assertEquals("Turn Left",IB.getName(GC.getNextBlockToExecute(gc)));
 		blockAreaCanvas.handleKeyPressed(b);
 		assertEquals(expectedDir,IGW.getRobotDirection(GC.getGameWorld(gc)));

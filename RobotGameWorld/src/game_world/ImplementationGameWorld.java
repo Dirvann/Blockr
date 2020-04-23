@@ -66,7 +66,7 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 		}
 		
 		default:
-			return ActionResult.BadAction;
+			return ActionResult.UnknownAction;
 		}
 	}
 	

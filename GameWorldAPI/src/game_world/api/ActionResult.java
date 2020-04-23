@@ -2,7 +2,7 @@ package game_world.api;
 
 public enum ActionResult {
 	Success,
-	BadAction,
+	UnknownAction,
 	Illegal,
 	GoalReached,
 }
