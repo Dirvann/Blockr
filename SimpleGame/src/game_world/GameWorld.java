@@ -24,6 +24,13 @@ public class GameWorld {
 		this.blocks = new ArrayList<FallingBlock>();
 	}
 	
+	private GameWorld(int width, int height,Player p, ArrayList<FallingBlock> block) {
+		this.blocks = block;
+		this.width = width;
+		this.player = p;
+		this.height = height;
+	}
+	
 	
 	public Player getPlayer() {
 		return this.player;
@@ -63,6 +70,13 @@ public class GameWorld {
 	
 	public void addBlock(int x) {
 		this.blocks.add(new FallingBlock(x, 0));
+	}
+	public GameWorld createCopy() {
+		ArrayList<FallingBlock> list = new ArrayList<FallingBlock>();
+		for(FallingBlock b : blocks) {
+			list.add(b.createCopy());
+		}
+		return new GameWorld(width, height,new Player(new Position(this.player.getPosition().getX(), this.player.getPosition().getY())), list);
 	}
 	
 }

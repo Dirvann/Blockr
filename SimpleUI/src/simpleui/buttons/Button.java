@@ -8,15 +8,13 @@ import java.awt.Rectangle;
 import java.awt.geom.Area;
 
 import game_world.ImplementationGameWorld;
-import game_world.api.ActionResult;
-import game_world.api.PredicateResult;
 import simpleui.Vector;
 
 public abstract class Button<T> {
 	private String name;
 	private final Vector position;
-	final public static  int width = 150;
-	final public static int height = 25;
+	final public static  int width = 200;
+	final public static int height = 35;
 	private static final Font font = new Font("Arial", Font.PLAIN, (int) (height * 0.7));
 	private Color color;
 	

@@ -26,9 +26,9 @@ public class CommandCanvas extends Canvas implements MouseListener{
 	private ArrayList<Button<?>> buttons = new ArrayList<Button<?>>();
 	private ArrayList<SnapshotButton> snapshots = new ArrayList<SnapshotButton>();
 	
-	private int topOffset = 100;
+	private int topOffset = Button.height * 2 + 50;
 	private int actionXOffset = 20;
-	private int predicateXOffset = ActionButton.width + actionXOffset + 30;
+	private int predicateXOffset = Button.width + actionXOffset + 30;
 	
 	private int seperation = 10;
 
@@ -80,22 +80,34 @@ public class CommandCanvas extends Canvas implements MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("Mouse pressed " + e.getX());
 		Vector pos = new Vector(e.getX(), e.getY());
-		for(Button<?> b: buttons) {
-			if(b.collidesWith(pos)) {
-				b.execute(iGameWorld);
-				repaint();
-				gameWorldC.repaint();
+		if(e.getButton() == 3) {
+			for(SnapshotButton b: snapshots) {
+				if(b.collidesWith(pos)) {
+					iGameWorld.removeSnapshot(b.getName());
+					repaint();
+					gameWorldC.repaint();
+				}
+			}
+		} else {
+			for(Button<?> b: buttons) {
+				if(b.collidesWith(pos)) {
+					b.execute(iGameWorld);
+					repaint();
+					gameWorldC.repaint();
+				}
+			}
+			for(SnapshotButton b: snapshots) {
+				if(b.collidesWith(pos)) {
+					b.execute(iGameWorld);
+					repaint();
+					gameWorldC.repaint();
+				}
 			}
 		}
-		for(SnapshotButton b: snapshots) {
-			if(b.collidesWith(pos)) {
-				b.execute(iGameWorld);
-				repaint();
-				gameWorldC.repaint();
-			}
-		}
+	
+		
+		
 	}
 
 	@Override

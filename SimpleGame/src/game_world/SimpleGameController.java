@@ -167,6 +167,6 @@ public class SimpleGameController {
 	}
 	
 	public SimpleGameController createCopy() {
-		return new SimpleGameController(this.gameWorld, this.dodgeGoal, this.gameInProgress, this.blockSpawnRandom);
+		return new SimpleGameController(this.gameWorld.createCopy(), this.dodgeGoal, this.gameInProgress, this.blockSpawnRandom);
 	}
 }

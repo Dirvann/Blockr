@@ -1,5 +1,7 @@
 package simpleui;
 import java.awt.Color;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.JPanel;
 
@@ -44,6 +46,22 @@ public class MainPanel extends JPanel {
 		this.add(gameWorldC);
 		gameWorldC.setBounds(worldPanelStart, 0, worldPanelWidth, this.getHeight());
 		gameWorldC.setBackground(Color.WHITE);
+		
+		//this.addComponentListener(new ResizeListener());
+	}
+	
+	private class ResizeListener extends ComponentAdapter {
+		public void componentResized(ComponentEvent e) {
+			// panel borders
+			int worldPanelStart = (int) (e.getComponent().getWidth() * (1 - worldProportion));
+			int worldPanelWidth = (int) (e.getComponent().getWidth() * worldProportion);
+			
+			commandC.setBounds(0,0,worldPanelStart, e.getComponent().getHeight());
+			gameWorldC.setBounds(worldPanelStart, 0, worldPanelWidth, e.getComponent().getHeight());
+			commandC.repaint();
+			gameWorldC.repaint();
+			
+        }
 	}
 	
 

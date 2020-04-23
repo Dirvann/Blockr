@@ -21,4 +21,8 @@ public class FallingBlock {
 		public void moveDown() {
 			this.position = this.getPosition().translate(0, 1);
 		}
+		
+		public FallingBlock createCopy() {
+			return new FallingBlock(getPosition().getX(), getPosition().getY());
+		}
 }
