@@ -59,6 +59,7 @@ class UseCase1 {
 		blockAreaCanvas.handleMouseDragged(30, 30);
 		blockAreaCanvas.handleMouseDragged(80, 40);
 		blockAreaCanvas.handleMouseDragged(200, 40);
+		blockAreaCanvas.handleMouseDragged(500, 150);
 		blockAreaCanvas.handleMouseReleased(500, 150);
 		System.out.println(IPB.getPosition(IB.getPresentationBlock(GC.getCopyOfAllBlocks(gc).get(0))).getX() + " "+ IPB.getPosition(IB.getPresentationBlock(GC.getCopyOfAllBlocks(gc).get(0))).getY());
 		List<Block> topLevelBlocks = GC.getCopyOfAllBlocks(gc);
