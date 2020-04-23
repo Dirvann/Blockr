@@ -106,6 +106,10 @@ public class SimpleGameController {
 	
 	// State Evolution
 	private void endTurn() {
+		if (!gameInProgress()) {
+			startGame();
+		}
+		
 		moveAllBlocksDown();
 		
 		if (playerCollidesWithBlock())
