@@ -18,6 +18,7 @@ import domain.block.Block;
 import domain.block.ImplementationBlock;
 import presentation.BlockAreaCanvas;
 import presentation.BlockrPanel;
+import presentation.block.ImplementationPresentationBlock;
 
 /**
  * ## Use Case 1: Add Program Block
@@ -45,6 +46,7 @@ class UseCase1 {
 	private ImplementationGameController GC;
 	private GameController gc;
 	static ImplementationBlock IB = new ImplementationBlock();
+	static ImplementationPresentationBlock IPB = new ImplementationPresentationBlock();
 	BlockAreaCanvas blockAreaCanvas;
 	
 	private void setup() {
@@ -68,6 +70,7 @@ class UseCase1 {
 		blockAreaCanvas.handleMouseDragged(80, 40);
 		blockAreaCanvas.handleMouseDragged(200, 40);
 		blockAreaCanvas.handleMouseReleased(500, 150);
+		System.out.println(IPB.getPosition(IB.getPresentationBlock(GC.getCopyOfAllBlocks(gc).get(0))).getX() + " "+ IPB.getPosition(IB.getPresentationBlock(GC.getCopyOfAllBlocks(gc).get(0))).getY());
 		List<Block> topLevelBlocks = GC.getCopyOfAllBlocks(gc);
 		assertEquals(1,topLevelBlocks.size());
 		assertEquals("MoveForward",IB.getName(topLevelBlocks.get(0)));
@@ -83,23 +86,26 @@ class UseCase1 {
 	void connectingBlocks() {
 		setup();
 		blockAreaCanvas.handleMousePressed(11, 11);
+		blockAreaCanvas.handleMouseDragged(500, 50);
 		blockAreaCanvas.handleMouseReleased(500, 50);
 		Block block = GC.getCopyOfAllBlocks(gc).get(0);
 		//Add another block
 		blockAreaCanvas.handleMousePressed(11, 191);
+		blockAreaCanvas.handleMouseDragged(600, 550);
 		blockAreaCanvas.handleMouseReleased(600, 550);
 		assertEquals(2,GC.getCopyOfAllBlocks(gc).size());
 		//Add connecting block
 		blockAreaCanvas.handleMousePressed(11, 71);
-		blockAreaCanvas.handleMouseDragged(499, 69);
+		blockAreaCanvas.handleMouseDragged(500, 70);
 		blockAreaCanvas.handleMouseReleased(500, 70);
-		assertEquals(3,GC.getCopyOfAllTopLevelBlocks(gc).size());
-		System.out.println(GC.getCopyOfAllTopLevelBlocks(gc));
+		assertEquals(3,GC.getCopyOfAllBlocks(gc).size());
+		System.out.println(GC.getCopyOfAllBlocks(gc));
 		assertEquals("TurnLeft",IB.getName(IB.getNextBlock(block)));
 		//Snap in between
 		blockAreaCanvas.handleMousePressed(11, 131);
+		blockAreaCanvas.handleMouseDragged(501, 71);
 		blockAreaCanvas.handleMouseReleased(501, 71); //not exactly, close enough
-		assertEquals(4,GC.getCopyOfAllTopLevelBlocks(gc).size());
+		assertEquals(4,GC.getCopyOfAllBlocks(gc).size());
 		assertEquals("TurnRight",IB.getName(IB.getNextBlock(block)));
 		assertEquals("TurnLeft",IB.getName(IB.getNextBlock(IB.getNextBlock(block))));
 	}
@@ -109,6 +115,7 @@ class UseCase1 {
 		setup();
 		for (int i=0;i<16;i++) {
 			blockAreaCanvas.handleMousePressed(11, 11);
+			blockAreaCanvas.handleMouseDragged(500, 50);
 			blockAreaCanvas.handleMouseReleased(500, 50);
 		}
 		assertEquals(15,GC.getCopyOfAllBlocks(gc).size());

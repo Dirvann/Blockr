@@ -58,6 +58,7 @@ class UseCase3 {
 		setup();
 		//start program: TurnLeft
 		blockAreaCanvas.handleMousePressed(11, 71);
+		blockAreaCanvas.handleMouseDragged(500, 150);
 		blockAreaCanvas.handleMouseReleased(500, 150);
 		assertEquals(null,GC.getNextBlockToExecute(gc));
 		KeyEvent a = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
@@ -73,8 +74,10 @@ class UseCase3 {
 		setup();
 		//start program: TurnLeft / Turn Right
 		blockAreaCanvas.handleMousePressed(11, 71);
+		blockAreaCanvas.handleMouseDragged(500, 70);
 		blockAreaCanvas.handleMouseReleased(500, 70);
 		blockAreaCanvas.handleMousePressed(11, 131);
+		blockAreaCanvas.handleMouseDragged(500, 90);
 		blockAreaCanvas.handleMouseReleased(500, 90);
 		assertEquals(null,GC.getNextBlockToExecute(gc));
 		//stop after 1 execute
@@ -91,7 +94,7 @@ class UseCase3 {
 		blockAreaCanvas.handleKeyPressed(c);
 		assertEquals("TurnLeft",IB.getName(GC.getNextBlockToExecute(gc)));
 		blockAreaCanvas.handleKeyPressed(d);
-		assertEquals("TurnRight",GC.getNextBlockToExecute(gc));
+		assertEquals("TurnRight",IB.getName(GC.getNextBlockToExecute(gc)));
 		blockAreaCanvas.handleKeyPressed(e);
 		assertEquals(null,GC.getNextBlockToExecute(gc));
 	}
@@ -101,6 +104,7 @@ class UseCase3 {
 		setup();
 		//start program: TurnLeft
 		blockAreaCanvas.handleMousePressed(11, 71);
+		blockAreaCanvas.handleMouseDragged(500, 150);
 		blockAreaCanvas.handleMouseReleased(500, 150);
 		assertEquals(null,GC.getNextBlockToExecute(gc));
 		KeyEvent a = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
@@ -108,14 +112,17 @@ class UseCase3 {
 		assertEquals("TurnLeft",IB.getName(GC.getNextBlockToExecute(gc)));
 		//modify program: TurnLeft / TurnRight
 		blockAreaCanvas.handleMousePressed(11, 131);
-		blockAreaCanvas.handleMouseReleased(500, 90);
+		blockAreaCanvas.handleMouseDragged(500, 170);
+		blockAreaCanvas.handleMouseReleased(500, 1700);
 		assertEquals(null,GC.getNextBlockToExecute(gc));
 		KeyEvent b = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
 		KeyEvent c = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
 		blockAreaCanvas.handleKeyPressed(b);
+		assertEquals("TurnLeft",IB.getName(GC.getNextBlockToExecute(gc)));
 		blockAreaCanvas.handleKeyPressed(c);
 		assertEquals("TurnRight",IB.getName(GC.getNextBlockToExecute(gc)));
 		blockAreaCanvas.handleMousePressed(11, 71);
+		blockAreaCanvas.handleMouseDragged(500, 150);
 		blockAreaCanvas.handleMouseReleased(500, 150);
 		assertEquals(null,GC.getNextBlockToExecute(gc));
 	}
