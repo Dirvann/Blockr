@@ -31,17 +31,40 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	};
 	
 	
-	
+	/**
+	 * List of all valid actions
+	 * 
+	 * @return a list of Strings with all valid action names
+	 * 		   | "MoveForward", "TurnLeft", "TurnRight"
+	 */
 	@Override
 	public List<String> getAllActions() {
 		return Arrays.asList("MoveForward", "TurnLeft", "TurnRight");
 	}
 	
+	/**
+	 * List of all valid predicates
+	 * 
+	 * @return a list of Strings with all valid predicate names
+	 * 		   | "WallInFront"
+	 */
 	@Override
 	public List<String> getAllPRedicates() {
 		return Arrays.asList("WallInFront");
 	}
 
+	/**
+	 * Execute an action in the robotGameWorld
+	 * 
+	 * @param action 
+	 * 		  | name of the action to be executed
+	 * 		  | "MoveForward" || "TurnLeft" || "TurnRight"
+	 * @return ActionResult depending on the result of the action
+	 * 		  | Success :  		Action executed successfully
+	 * 		  | Illegal :  		Action is illegal in the current game state
+	 * 		  | GoalReached : 	Action resulted in the reaching of the goal
+	 * 		  | UnknownAction :	Action is not known in the current gameWorld system
+	 */
 	@Override
 	public ActionResult executeAction(String action) {
 		switch (action) {
@@ -69,6 +92,17 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 		}
 	}
 	
+	/**
+	 * Evaluate a predicate in the gameWorld
+	 * 
+	 * @param predicate
+	 * 		  | name of the predicate to be evaluated
+	 *        | "WallInFront"
+	 * @return PredicateResult depending on the evaluation of the predicate
+	 * 		  | True :  		Result of evaluation is true
+	 * 		  | False :  		Result of evaluation is false
+	 * 		  | BadPredicate :  Predicate is not known in the current gameWorld system
+	 */
 	@Override
 	public PredicateResult evaluatePredicate(String predicate) {
 		switch (predicate) {
@@ -85,6 +119,16 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 		}
 	}
 	
+	/**
+	 * Undo an action in the gameWorld
+	 * 
+	 * @param action 
+	 * 		  | name of the action to be undone
+	 * @return ActionResult depending on the result of the undo
+	 * 		  | Success :  		Undo executed successfully
+	 * 		  | Illegal :  		Undo is illegal in the current game state
+	 * 		  | UnknownAction :	Action is not known in the current gameWorld system
+	 */
 	@Override
 	public ActionResult undoAction(String action) {
 		switch (action) {
@@ -116,11 +160,25 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 		}
 	}
 
+	/**
+	 * Create a new gameMode
+	 */
 	@Override
 	public void makeNewGameWorld() {
 		this.gameWorld = new GameWorld(gameWorldWidth, gameWorldHeight);
 	}
 	
+	/**
+	 * Draw the gameWorld onto a Graphics object
+	 * 
+	 * @param g
+	 * 		  | Graphics object to draw the gameWorld on
+	 * @param width
+	 * 		  | allowed width of the drawing
+	 * @param height
+	 * 	      | allowed height of the drawing
+	 * 
+	 */
 	@Override
 	public void drawGameWorld(Graphics g, int width, int height) {
 		int gridWidth = gameWorld.getGrid().getWidth();
@@ -220,19 +278,35 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	private Map<String, GameWorld> snapshots;
 	private int snapshotIndex;
 
+	/**
+	 * get all snapshot IDs
+	 * 
+	 * @return List of all snapshot IDs
+	 */
 	@Override
 	public List<String> getAllSnapshots() {
 		return new ArrayList<>(snapshots.keySet());
 	}
 
 
+	/**
+	 * Load the game state from the snapshot with given snapshotID
+	 * 
+	 * @param snapshotID
+	 * 		  | ID of snapshot to load
+	 * @post if valid ID, corresponding snapshot is loaded
+	 */
 	@Override
 	public void loadSnapshot(String snapshotName) {
 		this.gameWorld = snapshots.get(snapshotName).createCopy();
 	}
 
 
-
+	/**
+	 * Make a snapshot of the current gameWorld state
+	 * 
+	 * @return ID of the taken snapshot
+	 */
 	@Override
 	public String makeSnapshot() {
 		String snapshotName = "AutoSnapshot" + snapshotIndex;
@@ -242,28 +316,45 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	}
 
 
-
+	/**
+	 * make a snapshot of the current gameWorld state
+	 * 
+	 * @param snapshotID
+	 *        | taken snapshots ID is equal to given ID
+	 */
 	@Override
 	public void makeSnapshot(String snapshotName) {
 		snapshots.put(snapshotName, gameWorld.createCopy());
 	}
 
 
-
+	/**
+	 * remove the snapshot with the given snapshotID
+	 * 
+	 * @param snapshotID
+	 * 		  | iD of snapshot to remove
+	 * @post if valid ID, corresponding snapshot is removed
+	 */
 	@Override
 	public void removeSnapshot(String snapshotName) {
 		snapshots.remove(snapshotName);		
 	}
 
 
-
+	/**
+	 * reset the gameWorld
+	 */
 	@Override
 	public void resetGameWorld() {
 		gameWorld.resetGameWorld();
 	}
 
 
-
+	/**
+	 * 
+	 * 
+	 * @return true if the goal is reached in the current game state
+	 */
 	@Override
 	public boolean goalReached() {
 		return this.gameWorld.robotOnGoal();
