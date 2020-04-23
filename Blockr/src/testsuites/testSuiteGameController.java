@@ -20,10 +20,7 @@ import exceptions.domainExceptions.BlockColumnNotExecutableException;
 import exceptions.domainExceptions.CantRunConditionException;
 import exceptions.domainExceptions.NotOneStartingBlockException;
 import game_world.ImplementationGameWorld;
-import game_world.Vector;
-import game_world.cell.Cell;
-import game_world.cell.Goal;
-import game_world.cell.Wall;
+import domain.Vector;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 
@@ -34,7 +31,6 @@ public class testSuiteGameController {
 	static ImplementationPresentationBlock IPB = new ImplementationPresentationBlock();	
 	static ImplementationGameWorld IGW = new ImplementationGameWorld();
 
-	static Cell[] cells = { new Goal(), new Wall(), new Wall() };
 	static Vector[] locations = { new Vector(1, 1), new Vector(1, 0), new Vector(2, 2) };
 	
 	static PresentationBlock<ActionBlock> left,right, forward, forward2;
