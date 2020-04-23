@@ -32,8 +32,7 @@ public class addToBodyCommand implements Command{
 
 	@Override
 	public void execute() {
-		GCF.setBody(surroundingBlock, blockToConnect, GC);	
-		GCF.removeTopLevelBlock(GC, blockToConnect);
+		GCF.setBody(surroundingBlock, blockToConnect, GC);
 	}
 
 	@Override

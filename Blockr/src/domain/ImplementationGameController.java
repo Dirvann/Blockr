@@ -8,7 +8,6 @@ import domain.block.ConditionBlock;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
-import game_world.GameWorld;
 import game_world.ImplementationGameWorld;
 import presentation.block.PresentationBlock;
 
@@ -43,18 +42,6 @@ public class ImplementationGameController implements FacadeGameController{
 	public ProgramArea getProgramArea(GameController gameController) {
 		return gameController.getProgramArea();
 	}
-	
-	@Override
-	public void addTopLevelBlock(GameController gameController, Block block) {
-		gameController.getProgramArea().addTopLevelBlock(block);
-		
-	}
-
-	@Override
-	public void removeTopLevelBlock(GameController gameController, Block block) {
-		gameController.getProgramArea().removeTopLevelBlock(block);
-		
-	}
 
 	@Override
 	public ExecutionCommand execute(GameController gameController) throws Exception {
@@ -81,11 +68,6 @@ public class ImplementationGameController implements FacadeGameController{
 	public void removeBlockFromProgramArea(GameController gameController, PresentationBlock<?> pBlock) {
 		gameController.getProgramArea().removeBlock(pBlock);
 		
-	}
-
-	@Override
-	public Boolean isTopLevelBlock(GameController gameController, Block block) {
-		return gameController.getProgramArea().isTopLevelBlock(block);
 	}
 
 	@Override
@@ -130,16 +112,6 @@ public class ImplementationGameController implements FacadeGameController{
 		
 	}
 
-	@Override
-	public Block getNextToExecute(GameController GC) {
-		return GC.getNextBlockToExecute();
-	}
-
-	@Override
-	public void setNextToExecute(GameController GC, Block block) {
-		GC.getProgramArea().nextToExecute = block;
-		
-	}
 
 	@Override
 	public ExecutionCommand getExecutionCommand(GameController GC) {

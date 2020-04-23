@@ -49,8 +49,7 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 			try {
 				gameWorld.robotStepForwards();
 			} catch (RobotEnteringWallException | RobotMovingOffGridException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				return ActionResult.Illegal;
 			}
 			return ActionResult.Success;
 		}
@@ -236,6 +235,13 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	@Override
 	public void resetGameWorld() {
 		gameWorld.resetGameWorld();
+	}
+
+
+
+	@Override
+	public boolean goalReached() {
+		return this.gameWorld.robotOnGoal();
 	}
 
 	
