@@ -3,12 +3,12 @@ import javax.swing.WindowConstants;
 
 public class Main {
 
-	private static BlockrPanel blockrPanel;
+	private static MainPanel mainPanel;
 
 	public static void main(String[] args) {
-		JFrame frame = new JFrame("Blockr");
-		blockrPanel = new BlockrPanel();
-		frame.add(blockrPanel);
+		JFrame frame = new JFrame("SimpleUI");
+		mainPanel = new MainPanel();
+		frame.add(mainPanel);
 		frame.pack();
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
