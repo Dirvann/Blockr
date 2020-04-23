@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import command.Command;
 import command.DraggingCommand;
 import domain.block.ImplementationBlock;
-import game_world.Vector;
 import presentation.block.PresentationBlock;
 
 // This class is specially made for the creation of the block structure in programArea. 

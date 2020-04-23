@@ -9,7 +9,7 @@ import domain.block.Block;
 import domain.block.ChainConditionBlock;
 import domain.block.SingleConditionBlock;
 import domain.block.SingleSurroundingBlock;
-import game_world.Vector;
+import domain.Vector;
 
 public interface FacadePresentationBlock {
 	

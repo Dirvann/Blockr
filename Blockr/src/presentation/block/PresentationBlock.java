@@ -11,7 +11,7 @@ import domain.GameController;
 import domain.ImplementationGameController;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
-import game_world.Vector;
+import domain.Vector;
 import presentation.ProgramAreaPresentation;
 
 public abstract class PresentationBlock<T extends Block> {
