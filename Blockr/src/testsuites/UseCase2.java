@@ -69,83 +69,74 @@ class UseCase2 {
 		blockAreaCanvas.handleMousePressed(11, 71);
 		blockAreaCanvas.handleMouseReleased(500, 150);
 		assertEquals(null,GC.getNextBlockToExecute(gc));
-		IGW.robotTurnLeft(GC.getGameWorld(gc));
-		Direction expectedDir = IGW.getRobotDirection(GC.getGameWorld(gc));
-		IGW.robotTurnRight(GC.getGameWorld(gc));
-		
+		//IGW.robotTurnLeft(GC.getGameWorld(gc));
+		//Direction expectedDir = IGW.getRobotDirection(GC.getGameWorld(gc));
+		//IGW.robotTurnRight(GC.getGameWorld(gc));
 		
 		KeyEvent a = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
 		KeyEvent b = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
 		blockAreaCanvas.handleKeyPressed(a);
-		// lees console
-		assertEquals("Turn Left",IB.getName(GC.getNextBlockToExecute(gc)));
+		assertEquals("TurnLeft",IB.getName(GC.getNextBlockToExecute(gc)));
 		blockAreaCanvas.handleKeyPressed(b);
-		assertEquals(expectedDir,IGW.getRobotDirection(GC.getGameWorld(gc)));
+		//assertEquals(expectedDir,IGW.getRobotDirection(GC.getGameWorld(gc)));
 		assertEquals(null,GC.getNextBlockToExecute(gc));
-	}
-/*	
-	@Test
-	void oneConditionBlockRunProgram() {
-		setup();
-		gameWorld.getRobot().setDirection(Direction.DOWN);
-		// place block in program area
-		wallInFrontBlock =fi.makeWallInFrontBlock();
-		gameController.addTopLevelBlock(wallInFrontBlock);
-		// step 1b
-		gameController.execute();
-		assertEquals(null,gameController.getNextBlockToExecute());
-	}
-	
-	@Test
-	void surroundingBlockNoConditionFail() {
-		setup();
-		// place blocks in program area
-		whileBlock =fi.makeMoveForwardBlock();
-		gameController.addTopLevelBlock(whileBlock);
-		// step 1b
-		gameController.execute();
-		assertEquals(null,gameController.getNextBlockToExecute());
-	}
-	
-	@Test
-	void moreBlocksProgramFail() {
-		setup();
-		gameWorld.getRobot().setDirection(Direction.DOWN);
-		// place blocks in program area
-		forwardBlock =fi.makeMoveForwardBlock();
-		gameController.addTopLevelBlock(forwardBlock);
-		forwardBlock2 = fi.makeMoveForwardBlock();
-		gameController.addTopLevelBlock(forwardBlock2);
-		// step 1a
-		gameController.execute();
-		assertEquals(null,gameController.getNextBlockToExecute());
-		gameController.execute();
-		assertEquals(new Vector(0,0),gameWorld.getRobot().getLocation());
 	}
 	
 	@Test
 	void connectedBlocksRunProgram() {
 		setup();
-		gameWorld.getRobot().setDirection(Direction.DOWN);
-		// place blocks in program area
-		forwardBlock =fi.makeMoveForwardBlock();
-		gameController.addTopLevelBlock(forwardBlock);
-		forwardBlock2 = fi.makeMoveForwardBlock();
-		fi.connect(forwardBlock, forwardBlock2);
-		// step 1
-		gameController.execute();
-		// step 2
-		assertEquals(forwardBlock,gameController.getNextBlockToExecute());
-		// step 3
-		gameController.execute();
-		// step 4
-		assertEquals(new Vector(0,1),gameWorld.getRobot().getLocation());
-		// step 2
-		assertEquals(forwardBlock2,gameController.getNextBlockToExecute());
-		// step 3
-		gameController.execute();
-		// step 4
-		assertEquals(new Vector(0,2),gameWorld.getRobot().getLocation());
+		//Move Forward / Turn Left / Turn Right
+		blockAreaCanvas.handleMousePressed(11, 11);
+		blockAreaCanvas.handleMouseReleased(500, 50);
+		blockAreaCanvas.handleMousePressed(11, 71);
+		blockAreaCanvas.handleMouseReleased(500, 70);
+		blockAreaCanvas.handleMousePressed(11, 131);
+		blockAreaCanvas.handleMouseReleased(500, 90);
+		//key events
+		KeyEvent a = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
+		KeyEvent b = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
+		KeyEvent c = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
+		KeyEvent d = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
+		//check if running works
+		blockAreaCanvas.handleKeyPressed(a);
+		assertEquals("MoveForward",IB.getName(GC.getNextBlockToExecute(gc)));
+		blockAreaCanvas.handleKeyPressed(b);
+		assertEquals("TurnLeft",GC.getNextBlockToExecute(gc));
+		blockAreaCanvas.handleKeyPressed(c);
+		assertEquals("TurnRight",GC.getNextBlockToExecute(gc));
+		blockAreaCanvas.handleKeyPressed(d);
+		assertEquals(null,GC.getNextBlockToExecute(gc));
 	}
-*/	
+	
+	@Test
+	void oneConditionBlockRunProgram() {
+		setup();
+		blockAreaCanvas.handleMousePressed(11, 191);
+		blockAreaCanvas.handleMouseReleased(500, 50);
+		KeyEvent a = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
+		blockAreaCanvas.handleKeyPressed(a);
+		assertEquals(null,GC.getNextBlockToExecute(gc));
+	}
+	
+	@Test
+	void surroundingBlockNoConditionFail() {
+		setup();
+		blockAreaCanvas.handleMousePressed(11, 311);
+		blockAreaCanvas.handleMouseReleased(500, 50);
+		KeyEvent a = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
+		blockAreaCanvas.handleKeyPressed(a);
+		assertEquals(null,GC.getNextBlockToExecute(gc));		
+	}
+	
+	@Test
+	void moreBlocksProgramFail() {
+		setup();
+		blockAreaCanvas.handleMousePressed(11, 11);
+		blockAreaCanvas.handleMouseReleased(500, 50);
+		blockAreaCanvas.handleMousePressed(11, 11);
+		blockAreaCanvas.handleMouseReleased(500, 30);
+		KeyEvent a = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
+		blockAreaCanvas.handleKeyPressed(a);
+		assertEquals(null,GC.getNextBlockToExecute(gc));	
+	}
 }
