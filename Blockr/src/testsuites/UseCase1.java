@@ -1,19 +1,10 @@
 package testsuites;
 
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.awt.event.KeyEvent;
 import java.util.List;
-
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
-
 import org.junit.jupiter.api.Test;
-
 import domain.GameController;
 import domain.ImplementationGameController;
-import domain.block.ActionBlock;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
 import presentation.BlockAreaCanvas;
@@ -32,7 +23,7 @@ import presentation.block.ImplementationPresentationBlock;
  * 
  * ### Extensions
  * 
- * 1a. When the user releases the mouse key, one of the block�s
+ * 1a. When the user releases the mouse key, one of the blocks
  *     connectors is near a compatible opposite connector of another block.
  *    1. The system adds a new block of the same type to the ProgramArea; 
  *       the new block is inserted into an existing group of connected blocks at the matching connection point.
@@ -56,7 +47,6 @@ class UseCase1 {
 		//frame.pack();
 		//frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		//frame.setVisible(true);
-		
 		GC = new ImplementationGameController();
 		gc = blockrPanel.getGameController();
 		blockAreaCanvas = blockrPanel.getBlockAreaCanvas();	
@@ -75,11 +65,6 @@ class UseCase1 {
 		assertEquals(1,topLevelBlocks.size());
 		assertEquals("MoveForward",IB.getName(topLevelBlocks.get(0)));
 		assertEquals(null,GC.getNextBlockToExecute(gc));
-		
-		//KeyEvent a = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
-		//KeyEvent b = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_RELEASED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
-		//blockAreaCanvas.handleKeyPressed(a);
-		//assertTrue(GC.getNextBlockToExecute(gc) instanceof ActionBlock);
 	}
 	
 	@Test
@@ -119,6 +104,5 @@ class UseCase1 {
 			blockAreaCanvas.handleMouseReleased(500, 50);
 		}
 		assertEquals(15,GC.getCopyOfAllBlocks(gc).size());
-		//TODO: Difficulties trying to trace a color from a canvas at certain location
 	}
 }

@@ -1,23 +1,11 @@
 package testsuites;
 
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.awt.event.KeyEvent;
-import java.util.List;
-
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
-
 import org.junit.jupiter.api.Test;
-
 import domain.GameController;
 import domain.ImplementationGameController;
-import domain.block.ActionBlock;
-import domain.block.Block;
 import domain.block.ImplementationBlock;
-import game_world.Direction;
-import game_world.GameWorld;
 import game_world.ImplementationGameWorld;
 import presentation.BlockAreaCanvas;
 import presentation.BlockrPanel;
@@ -28,7 +16,7 @@ import presentation.BlockrPanel;
  * 
  * 1. User presses F5
  * 
- * 2. Next block is higlighted
+ * 2. Next block is highlighted
  * 
  * 3. User presses F5
  * 
