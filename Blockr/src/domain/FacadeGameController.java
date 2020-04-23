@@ -25,7 +25,7 @@ public interface FacadeGameController {
 	
 	public void addTopLevelBlock(GameController gameController,Block block);
 	public void removeTopLevelBlock(GameController gameController,Block block);
-	public List<Block> getCopyOfAllTopLevelBlocks(GameController gameController);
+	public List<Block> getCopyOfAllBlocks(GameController gameController);
 	public Boolean isTopLevelBlock(GameController gameController, Block block);
 
 	public ExecutionCommand execute(GameController gameController) throws Exception;

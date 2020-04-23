@@ -35,15 +35,16 @@ class TestGameController {
 
 	private static void setup() {
 		try {
-			left = IB.makeTurnLeftBlock(); // create blocks
-			right = IB.makeTurnRightBlock();
-			forward = IB.makeMoveForwardBlock();
-			forward2 = IB.makeMoveForwardBlock();
-			wallInFront = IB.makeWallInFrontBlock();
+			left = IB.makeActionBlock("TurnLeft"); // create blocks
+			right = IB.makeActionBlock("TurnRight");
+			forward = IB.makeActionBlock("MoveForward");
+			forward2 = IB.makeActionBlock("MoveForward");
+			wallInFront = IB.makeSingleConditionBlock("WallInFront");
 			not = IB.makeNotBlock();
 			ifB = IB.makeIfBlock();
 			whileB = IB.makeWhileBlock();
-			gc = IGC.makeGameController(IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.DOWN)));
+			IGW = new ImplementationGameWorld();
+			gc = IGC.makeGameController(IGW);
 		} catch (Exception e) {
 			System.out.println("Testclass failed in setup phase.");
 		}

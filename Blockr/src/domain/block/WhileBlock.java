@@ -14,6 +14,11 @@ class WhileBlock extends SingleSurroundingBlock {
 	}
 
 	@Override
+	protected boolean hasValidExecutionColumn() {
+		if (this.getBodyBlock() == null) return false;
+		return super.hasValidExecutionColumn();
+	}
+	@Override
 	protected Block execute(ImplementationGameWorld iGameWorld) throws Exception {
 		if (getConditionBlock() == null || !getConditionBlock().isValidCondition()) {
 			throw new NoConditionBlockException();

@@ -2,7 +2,6 @@ package domain;
 
 import command.ExecutionCommand;
 import domain.block.Block;
-import game_world.GameWorld;
 import game_world.ImplementationGameWorld;
 
 public class GameController {

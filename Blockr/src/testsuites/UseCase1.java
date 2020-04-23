@@ -68,7 +68,7 @@ class UseCase1 {
 		blockAreaCanvas.handleMouseDragged(80, 40);
 		blockAreaCanvas.handleMouseDragged(200, 40);
 		blockAreaCanvas.handleMouseReleased(500, 150);
-		List<Block> topLevelBlocks = GC.getCopyOfAllTopLevelBlocks(gc);
+		List<Block> topLevelBlocks = GC.getCopyOfAllBlocks(gc);
 		assertEquals(1,topLevelBlocks.size());
 		assertEquals("Move Forward",IB.getName(topLevelBlocks.get(0)));
 		assertEquals(null,GC.getNextBlockToExecute(gc));
@@ -84,22 +84,22 @@ class UseCase1 {
 		setup();
 		blockAreaCanvas.handleMousePressed(11, 11);
 		blockAreaCanvas.handleMouseReleased(500, 50);
-		Block block = GC.getCopyOfAllTopLevelBlocks(gc).get(0);
+		Block block = GC.getCopyOfAllBlocks(gc).get(0);
 		//Add another block
 		blockAreaCanvas.handleMousePressed(11, 191);
 		blockAreaCanvas.handleMouseReleased(600, 550);
-		assertEquals(2,GC.getCopyOfAllTopLevelBlocks(gc).size());
+		assertEquals(2,GC.getCopyOfAllBlocks(gc).size());
 		//Add connecting block
 		blockAreaCanvas.handleMousePressed(11, 71);
 		blockAreaCanvas.handleMouseDragged(499, 69);
 		blockAreaCanvas.handleMouseReleased(500, 70);
-		assertEquals(3,GC.getCopyOfAllTopLevelBlocks(gc).size());
-		System.out.println(GC.getCopyOfAllTopLevelBlocks(gc));
+		assertEquals(3,GC.getCopyOfAllBlocks(gc).size());
+		System.out.println(GC.getCopyOfAllBlocks(gc));
 		assertEquals("Turn Left",IB.getName(IB.getNextBlock(block)));
 		//Snap in between
 		blockAreaCanvas.handleMousePressed(11, 131);
 		blockAreaCanvas.handleMouseReleased(501, 71); //not exactly, close enough
-		assertEquals(4,GC.getCopyOfAllTopLevelBlocks(gc).size());
+		assertEquals(4,GC.getCopyOfAllBlocks(gc).size());
 		assertEquals("Turn Right",IB.getName(IB.getNextBlock(block)));
 		assertEquals("Turn Left",IB.getName(IB.getNextBlock(IB.getNextBlock(block))));
 	}
@@ -111,7 +111,7 @@ class UseCase1 {
 			blockAreaCanvas.handleMousePressed(11, 11);
 			blockAreaCanvas.handleMouseReleased(500, 50);
 		}
-		assertEquals(15,GC.getCopyOfAllTopLevelBlocks(gc).size());
+		assertEquals(15,GC.getCopyOfAllBlocks(gc).size());
 		//TODO: Difficulties trying to trace a color from a canvas at certain location
 	}
 }

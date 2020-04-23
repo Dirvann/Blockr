@@ -24,7 +24,7 @@ public class ProgramAreaPresentation {
 	}
 	
 	public void paint(Graphics g) {
-		List<Block> programAreaBlocks = GC.getCopyOfAllTopLevelBlocks(gameController);
+		List<Block> programAreaBlocks = GC.getCopyOfAllBlocks(gameController);
 		for (Block pBlock: programAreaBlocks) {
 			BFP.draw(g, BF.getPresentationBlock(pBlock));
 		}
@@ -33,7 +33,7 @@ public class ProgramAreaPresentation {
 	
 	
 	public PresentationBlock<?> getBlockAtPosition(Vector position) {
-		for (Block block:  GC.getCopyOfAllTopLevelBlocks(gameController)) {
+		for (Block block:  GC.getCopyOfAllBlocks(gameController)) {
 			if (BFP.collidesWithPosition(position, BF.getPresentationBlock(block))) {
 				return BF.getPresentationBlock(block);
 			}
@@ -44,7 +44,7 @@ public class ProgramAreaPresentation {
 	
 	public Command snapBlock(PresentationBlock<?> block){
 		Command cmd = null;
-		for (Block blockListElement:  GC.getCopyOfAllTopLevelBlocks(gameController)) {
+		for (Block blockListElement:  GC.getCopyOfAllBlocks(gameController)) {
 			PresentationBlock<?> pBlock = BF.getPresentationBlock(blockListElement);
 			cmd = BFP.canSnap(pBlock, block, this.gameController);
 			if (cmd != null) {

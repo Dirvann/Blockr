@@ -1,7 +1,11 @@
 package testsuites;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -10,30 +14,33 @@ import domain.block.ConditionBlock;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
+import exceptions.domainExceptions.InfiniteLoopWhileException;
+import exceptions.domainExceptions.NoConditionBlockException;
 
 public class TestsLogicalBlocks {
 	private static ImplementationBlock BF = new ImplementationBlock();
 
-	static SequenceBlock startBlock = BF.makeMoveForwardBlock();
+	static SequenceBlock startBlock = BF.makeActionBlock("MoveForward");
 	static SurroundingBlock ifBlock1 = BF.makeIfBlock();
 	static SurroundingBlock whileBlock1 = BF.makeWhileBlock();
-	static SequenceBlock mF1 = BF.makeMoveForwardBlock();
-	static SequenceBlock mF2 = BF.makeMoveForwardBlock();
-	static SequenceBlock tR1 = BF.makeTurnRightBlock();
-	static SequenceBlock tL1 = BF.makeTurnLeftBlock();
+	static SequenceBlock mF1 = BF.makeActionBlock("MoveForward");
+	static SequenceBlock mF2 = BF.makeActionBlock("MoveForward");
+	static SequenceBlock tR1 = BF.makeActionBlock("TurnRight");
+	static SequenceBlock tL1 = BF.makeActionBlock("TurnLeft");
 	static ConditionBlock not1 = BF.makeNotBlock();
-	static ConditionBlock iswall1 = BF.makeWallInFrontBlock();
+	static ConditionBlock iswall1 = BF.makeSingleConditionBlock("WallInFront");
 
 	public static void clearAll() {
-		startBlock = BF.makeMoveForwardBlock();
+
+		startBlock = BF.makeActionBlock("MoveForward");
 		ifBlock1 = BF.makeIfBlock();
 		whileBlock1 = BF.makeWhileBlock();
-		mF1 = BF.makeMoveForwardBlock();
-		mF2 = BF.makeMoveForwardBlock();
-		tR1 = BF.makeTurnRightBlock();
-		tL1 = BF.makeTurnLeftBlock();
+		mF1 = BF.makeActionBlock("MoveForward");
+		mF2 = BF.makeActionBlock("MoveForward");
+		tR1 = BF.makeActionBlock("TurnRight");
+		tL1 = BF.makeActionBlock("TurnLeft");
 		not1 = BF.makeNotBlock();
-		iswall1 = BF.makeWallInFrontBlock();
+		iswall1 = BF.makeSingleConditionBlock("WallInFront");
 	}
 
 //	
@@ -66,6 +73,7 @@ public class TestsLogicalBlocks {
 		BF.addBodyBlock(whileBlock1, mF1);
 		assertEquals(mF1, BF.getBodyBlock(whileBlock1));
 		assertEquals(whileBlock1, BF.getSurroundingBlock(tR1));
+		
 		/*
 		 * moveForward() 
 		 * while(not istWall())
@@ -123,7 +131,7 @@ public class TestsLogicalBlocks {
 		init1();
 		BF.connect(mF1, ifBlock1);
 		ConditionBlock not2 = BF.makeNotBlock();
-		ConditionBlock isWall2 = BF.makeWallInFrontBlock();
+		ConditionBlock isWall2 = BF.makeSingleConditionBlock("WallInFront");
 		BF.connect(not2, isWall2);
 		BF.setConditionBlock(ifBlock1, not2);
 
@@ -171,59 +179,155 @@ public class TestsLogicalBlocks {
 		BF.disconnect(BF.getNextBlock(startBlock));
 
 	}
-//	
-//	@Test 
-//	void previousAndNext() {
-//		System.out.printf("\n test prev and next \n" + "____________________________________________________________" + "\n" + "\n");
-//		init1();
-//		assertNull( startBlock.getPreviousBlock()); 
-//		assertEquals(whileBlock1, startBlock.getNextBlock());
-//		
-//		assertNull(whileBlock1.getNextBlock()); 
-//		assertEquals(startBlock, whileBlock1.getPreviousBlock());
-//		
-//		assertNull(mF1.getPreviousBlock());
-//		assertEquals(tL1, mF1.getNextBlock());
-//
-//		assertEquals(tR1, tL1.getNextBlock());
-//		assertEquals(mF1, tL1.getPreviousBlock());
-//		
-//		mF1.removeNextBlock();
-//		
-//		assertNull(mF1.getNextBlock());
-//		assertNull(tL1.getPreviousBlock());
-//	}
-//	
-//	
-//	@Test
-//	void testIf() throws Exception {
-//		System.out.printf("\n test if loop \n" + "____________________________________________________________" + "\n" + "\n");
-//
-//		init1();
-//		/*
-//		 * moveForward() 
-//		 * while(not istWall()){ 
-//		 * 		moveForward()
-//		 * 		turnLeft() 
-//		 * 		turnRight() 
-//		 *  }
-//		 */
-//		
-//		mF1.setNextBlock(ifBlock1);
-//		ifBlock1.setBodyBlock(mF2);
-//		ifBlock1.setConditionBlock(not1); //still not iswall
-//		
-//		Block[] desiredResult = {startBlock, whileBlock1, mF1, ifBlock1, mF2, tL1, tR1,  whileBlock1, mF1, ifBlock1, mF2, tL1, tR1};
-//		Block current = startBlock;
-//		int i = 0;
-//		while (current != null && i < desiredResult.length) {
-//			assertEquals(desiredResult[i], current);
-//			current = current.execute(null);
-//			
-//			i += 1;
-//		}
-//		assertEquals(desiredResult.length, i);
-//		
-//	}
+	
+	@Test
+	void testSurroundingBlocks() throws Exception {
+		clearAll();
+		init1();
+
+		SequenceBlock tL2 = BF.makeActionBlock("TurnLeft");
+		SequenceBlock tL3 = BF.makeActionBlock("TurnLeft");
+		BF.connect(tL2, tL3);
+		BF.addBodyBlock(whileBlock1, tL2);
+		assertEquals(tL2, BF.getBodyBlock(whileBlock1));
+		assertEquals(whileBlock1, BF.getSurroundingBlock(tR1));
+		assertEquals(whileBlock1, BF.getSurroundingBlock(tL2));
+		assertEquals(whileBlock1, BF.getSurroundingBlock(mF1));
+		assertTrue(BF.isValidStartingBlock(startBlock));
+		BF.disconnect(mF1);
+
+		assertEquals(null, BF.getNextBlock(tL3));
+		assertEquals(null, BF.getSurroundingBlock(mF1));
+		
+		BF.disconnect(tL2);
+		assertEquals(null, BF.getSurroundingBlock(tL2));
+		assertEquals(null, BF.getBodyBlock(whileBlock1));
+		//empty while -> false
+		assertFalse(BF.isValidStartingBlock(startBlock));
+		
+		clearAll();
+		
+		BF.connect(startBlock, ifBlock1);
+		BF.connect(ifBlock1, tL1);
+		//this one doesnt do anything
+		BF.connect(ifBlock1, iswall1);
+		BF.setConditionBlock(ifBlock1, iswall1);
+		BF.setConditionBlock(ifBlock1, not1);
+		BF.addBodyBlock(ifBlock1, mF1);
+		assertTrue(BF.isValidStartingBlock(startBlock));
+		
+		//test execute
+		Block[] desiredResult = { startBlock, ifBlock1, mF1, tL1, null};
+		Block current = startBlock;
+		int i = 0;
+		while (current != null && i < desiredResult.length) {
+			assertEquals(desiredResult[i], current);
+			current = BF.execute(current, null);
+			i += 1;
+		}
+		//end execute
+		
+		
+		BF.disconnect(mF1);
+		assertTrue(BF.isValidStartingBlock(startBlock));
+		List<Block> allBlocks = BF.getAllNextBlocks(startBlock);
+		assertTrue(allBlocks.contains(startBlock));
+		assertTrue(allBlocks.contains(ifBlock1));
+		assertTrue(allBlocks.contains(iswall1));
+		assertFalse(allBlocks.contains(mF1));
+		assertTrue(allBlocks.contains(not1));
+		
+		//test execute
+		Block[] desiredResult1 = { startBlock, ifBlock1, tL1, null};
+		Block current1 = startBlock;
+		int j = 0;
+		while (current1 != null && j < desiredResult1.length) {
+			assertEquals(desiredResult1[j], current1);
+			current1 = BF.execute(current1, null);
+			j += 1;
+		}
+		//end execute
+
+		BF.disconnect(iswall1);
+		assertFalse(BF.isValidStartingBlock(startBlock));
+		try {
+			BF.execute(ifBlock1, null);
+			throw new Exception("ifBlock should not be able to execute");
+		} catch (NoConditionBlockException e) {
+		}
+		BF.disconnect(not1);
+		try {
+			BF.execute(ifBlock1, null);
+			throw new Exception("ifBlock should not be able to execute");
+		} catch (NoConditionBlockException e) {
+		}
+		
+		
+		//clear all connections to try exceptions while
+		clearAll();
+		try {
+			BF.execute(whileBlock1, null);
+			throw new Exception("whileBlock should not be able to execute");
+		} catch (NoConditionBlockException e) {
+		}
+		BF.setConditionBlock(whileBlock1, not1);
+		try {
+			BF.execute(whileBlock1, null);
+			throw new Exception("whileBlock should not be able to execute");
+		} catch (NoConditionBlockException e) {
+		}
+		BF.connect(not1, iswall1);
+		try {
+			BF.execute(whileBlock1, null);
+			throw new Exception("whileBlock should not be able to execute");
+		} catch (InfiniteLoopWhileException e) {
+		}
+		BF.addBodyBlock(whileBlock1, mF1);
+		assertEquals(mF1, BF.execute(whileBlock1, null));
+		BF.disconnect(iswall1);
+		BF.setConditionBlock(whileBlock1, iswall1);
+		
+		assertNull(BF.execute(whileBlock1, null));
+		
+		clearAll();
+		try {
+			BF.execute(ifBlock1, null);
+			throw new Exception("ifBlock should not be able to execute");
+		} catch (NoConditionBlockException e) {
+		}
+		BF.setConditionBlock(ifBlock1, not1);
+		try {
+			BF.execute(ifBlock1, null);
+			throw new Exception("ifBlock should not be able to execute");
+		} catch (NoConditionBlockException e) {
+		}
+		BF.connect(not1, iswall1);
+		BF.connect(not1, BF.makeNotBlock());
+		assertEquals(null, BF.execute(ifBlock1, null));
+	}
+	
+	@Test
+	void testName() {
+		assertEquals("TurnLeft", BF.getName(tL1));
+		assertEquals("TurnRight", BF.getName(tR1));
+		assertEquals("MoveForward", BF.getName(mF1));
+		assertEquals("If", BF.getName(ifBlock1));
+		assertEquals("While", BF.getName(whileBlock1));
+		assertEquals("Not", BF.getName(not1));
+		assertEquals("WallInFront", BF.getName(iswall1));
+	}
+	
+	@Test
+	void nestedLoops() throws Exception {
+		clearAll();
+		SurroundingBlock if2 = BF.makeIfBlock();
+		BF.addBodyBlock(if2, ifBlock1);
+		BF.setConditionBlock(if2, not1);
+		BF.connect(not1, iswall1);
+		BF.setConditionBlock(ifBlock1, BF.makeSingleConditionBlock("WallInFront"));
+		BF.connect(if2, mF1);
+		assertEquals(mF1, BF.execute(ifBlock1, null));
+	}
+
 
 }

@@ -94,7 +94,7 @@ public class ImplementationGameController implements FacadeGameController{
 	}
 
 	@Override
-	public List<Block> getCopyOfAllTopLevelBlocks(GameController gameController) {
+	public List<Block> getCopyOfAllBlocks(GameController gameController) {
 		return gameController.getProgramArea().getAllBlocks();		
 	}
 
