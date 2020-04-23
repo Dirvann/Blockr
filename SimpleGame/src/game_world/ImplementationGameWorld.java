@@ -30,12 +30,12 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	
 	@Override
 	public List<String> getAllActions() {
-		return Arrays.asList("MoveLeft", "MoveRight", "StandStill", "StartGame");
+		return Arrays.asList("MoveLeft", "MoveRight", "StandStill"/*, "StartGame"*/);
 	}
 	
 	@Override
 	public List<String> getAllPRedicates() {
-		return Arrays.asList("BlockAbovePlayer", "GoalReached");
+		return Arrays.asList("BlockAbovePlayer"/*, "GoalReached"*/);
 	}
 	
 	@Override
@@ -64,10 +64,10 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 			return ActionResult.Success;
 		}
 		
-		case "StartGame": {
+		/*case "StartGame": {
 			gameController.startGame();
 			return ActionResult.Success;
-		}
+		}*/
 		
 		default:
 			return ActionResult.UnknownAction;
@@ -85,13 +85,13 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 			}
 		}
 		
-		case "GoalReached": {
+		/*case "GoalReached": {
 			if (gameController.goalReached()) {
 				return PredicateResult.True;
 			} else {
 				return PredicateResult.False;
 			}
-		}
+		}*/
 		
 		default:
 			return PredicateResult.BadPredicate;
