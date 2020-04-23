@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import command.Command;
 import domain.GameController;
 import domain.block.*;
-import game_world.Vector;
+import domain.Vector;
 
 public class ImplementationPresentationBlock implements FacadePresentationBlock{
 	private ImplementationBlock BF = new ImplementationBlock();

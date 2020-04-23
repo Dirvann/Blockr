@@ -1,6 +1,6 @@
 package command;
 
-import game_world.Vector;
+import domain.Vector;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 
