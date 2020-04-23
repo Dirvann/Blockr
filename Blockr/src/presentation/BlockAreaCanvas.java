@@ -115,7 +115,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		PresentationBlock<?> paletteBlockP = paletteP.GetClickedPaletteBlock(mousePos);
 		// Clicked block in palette
 		// Create functional copy of paletteBlock and add to programArea
-		if (paletteBlockP != null && GC.getAmountOfBlocksLeft(blockrPanel.getGameController()) >= 0) {
+		if (paletteBlockP != null && GC.getAmountOfBlocksLeft(blockrPanel.getGameController()) > 0) {
 			PresentationBlock<?> presentationCopy = BFP.makeCopy(paletteBlockP);
 			GC.addBlockToProgramArea(blockrPanel.getGameController(), presentationCopy);
 			selectedBlock = presentationCopy;
