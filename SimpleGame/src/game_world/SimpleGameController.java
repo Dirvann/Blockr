@@ -30,6 +30,13 @@ public class SimpleGameController {
 		blockSpawnRandom = new Random();
 	}
 	
+	public SimpleGameController(GameWorld w, int dodgeGoal, boolean gameInProgress, Random blockSpawnRandom) {
+		gameWorld = w;
+		this.dodgeGoal = dodgeGoal;
+		this.gameInProgress = gameInProgress;
+		this.blockSpawnRandom = blockSpawnRandom;
+	}
+	
 	// State inspection
 	public int getWidth() {
 		return this.width;
@@ -144,5 +151,9 @@ public class SimpleGameController {
 		if (blockSpawnRandom.nextBoolean()) {
 			gameWorld.addBlock(blockSpawnRandom.nextInt(getWidth()));
 		}
+	}
+	
+	public SimpleGameController createCopy() {
+		return new SimpleGameController(this.gameWorld, this.dodgeGoal, this.gameInProgress, this.blockSpawnRandom);
 	}
 }
