@@ -5,7 +5,6 @@ import java.util.List;
 
 import command.ExecutionCommand;
 import domain.block.Block;
-import domain.block.ConditionBlock;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
 import exceptions.domainExceptions.BlockColumnNotExecutableException;
@@ -190,25 +189,9 @@ public class ProgramArea {
 
 		return list;
 	}
-	
-	protected void connect(Block firstBlock, Block secondBlock) {
-		BF.connect(firstBlock, secondBlock);
-	}
 
 	protected int getBlocksLeft() {
 		return blocksLeft;
-	}
-
-	protected void setBlocksLeft(int blocksLeft) {
-		this.blocksLeft = blocksLeft;
-	}
-
-	protected void increaseBlocksLeft() {
-		blocksLeft += 1;
-	}
-
-	protected void decreaseBlocksLeft() {
-		blocksLeft -= 1;
 	}
 
 	protected ExecutionCommand getExecutionCommand() {

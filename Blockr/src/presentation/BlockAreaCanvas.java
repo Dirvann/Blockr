@@ -169,9 +169,6 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 			
 			//makes the command for snapping (undo/redo). null if not snapped
 			this.postCommand = programAreaP.snapBlock(selectedBlock);
-			if (postCommand != null) {
-				GC.removeTopLevelBlock(blockrPanel.getGameController(), BFP.getBlock(selectedBlock));
-			}
 
 			// Delete if over palette
 			int paletteBorder = (int) (panelProportion * this.getWidth());

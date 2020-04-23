@@ -49,8 +49,7 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 			try {
 				gameWorld.robotStepForwards();
 			} catch (RobotEnteringWallException | RobotMovingOffGridException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				return ActionResult.Illegal;
 			}
 			return ActionResult.Success;
 		}

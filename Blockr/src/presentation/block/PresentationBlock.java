@@ -8,6 +8,7 @@ import java.util.List;
 import command.Command;
 import command.ConnectCommand;
 import domain.GameController;
+import domain.ImplementationGameController;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
 import game_world.Vector;
@@ -33,6 +34,7 @@ public abstract class PresentationBlock<T extends Block> {
 	private Vector position;
 
 	private ImplementationBlock blockFunctions = new ImplementationBlock();
+	private ImplementationGameController IGC = new ImplementationGameController();
 
 	protected PresentationBlock(Vector pos, T block) {
 		this.position = pos;
@@ -191,7 +193,7 @@ public abstract class PresentationBlock<T extends Block> {
 		Block next = blockFunctions.getNextBlock(getBlock());
 		
 		if (b.getGivingSnapPoint().distanceTo(getReceivingSnapPoints().get(0)) <= getSnapDistance()
-				&& blockFunctions.connect(getBlock(), b.getBlock())) {
+				&& IGC.connect(getBlock(), b.getBlock(), GC)) {
 			return new ConnectCommand(getBlock(), b.getBlock(), next, GC);
 		}
 		return null;

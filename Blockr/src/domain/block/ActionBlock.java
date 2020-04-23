@@ -1,8 +1,7 @@
 package domain.block;
 
-import command.turnRightCommand;
-import domain.GameController;
 import game_world.ImplementationGameWorld;
+import game_world.api.ActionResult;
 
 public class ActionBlock extends SequenceBlock{
 	
@@ -24,7 +23,8 @@ public class ActionBlock extends SequenceBlock{
 		if (iGameWorld == null) 
 			System.out.println(this.name);
 		else {
-			iGameWorld.executeAction(getName());
+			ActionResult result = iGameWorld.executeAction(getName());
+			if (result == ActionResult.Illegal) throw new Exception("illegal move");
 			//TODO implement undo
 			//IGC.setExecutionCommand(new turnRightCommand(null, null, null, gameController), gameController);
 		}

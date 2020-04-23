@@ -13,6 +13,7 @@ import command.ConnectCommand;
 import command.addToBodyCommand;
 import command.setConditionCommand;
 import domain.GameController;
+import domain.ImplementationGameController;
 import domain.block.Block;
 import domain.block.ConditionBlock;
 import domain.block.ImplementationBlock;
@@ -156,19 +157,20 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 		Block next = BF.getNextBlock(getBlock());
 		ConditionBlock condition = BF.getConditionBlock(getBlock());
 		SequenceBlock body = BF.getBodyBlock(getBlock());
+		ImplementationGameController IGC = new ImplementationGameController();
 		
 		if (b.getBlock() instanceof ConditionBlock
 				&& b.getGivingSnapPoint().distanceTo(getConditionSnapPoint()) <= getSnapDistance()) {
-			BF.setConditionBlock(getBlock(), (ConditionBlock) b.getBlock());
+			IGC.setCondition(getBlock(), (ConditionBlock) b.getBlock(), GC);
 			return new setConditionCommand(getBlock(), (ConditionBlock) b.getBlock(), condition, GC);
 		}
 		if (b.getBlock() instanceof SequenceBlock) {
 			if (b.getGivingSnapPoint().distanceTo(getBodySnapPoint()) <= getSnapDistance()) {
-				BF.addBodyBlock(getBlock(), (SequenceBlock) b.getBlock());
+				IGC.setBody(getBlock(), (SequenceBlock) b.getBlock(), GC);
 				return new addToBodyCommand(getBlock(), (SequenceBlock) b.getBlock(), body, GC);
 			}
 			if (b.getGivingSnapPoint().distanceTo(getSequenceSnapPoint()) <= getSnapDistance()) {
-				BF.connect(getBlock(), b.getBlock());
+				IGC.connect(getBlock(), b.getBlock(), GC);
 				return new ConnectCommand(getBlock(), b.getBlock(), next, GC);
 			}
 		}
