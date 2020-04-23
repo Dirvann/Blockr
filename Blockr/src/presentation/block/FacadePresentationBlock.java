@@ -25,34 +25,10 @@ public interface FacadePresentationBlock {
 
 		/**
 		 * 
-		 * @return A block that is able to perform the action Move Forward.
-		 */
-		public PresentationBlock<ActionBlock> makeMoveForwardBlock(Vector pos);
-
-		/**
-		 * 
 		 * @return A not condition block.
 		 */
 		public PresentationBlock<ChainConditionBlock> makeNotBlock(Vector pos);
 
-		/**
-		 * 
-		 * @return A block that is able to perform the action Turn Left.
-		 */
-		public PresentationBlock<ActionBlock> makeTurnLeftBlock(Vector pos);
-
-		/**
-		 * 
-		 * @return A block that is able to perform the action Turn Right.
-		 */
-		public PresentationBlock<ActionBlock> makeTurnRightBlock(Vector pos);
-
-		/**
-		 * 
-		 * @return A block that is able to check if there is a wall in front of the
-		 *         players avatar..
-		 */
-		public PresentationBlock<SingleConditionBlock> makeWallInFrontBlock(Vector pos);
 
 		/**
 		 * 
@@ -60,6 +36,12 @@ public interface FacadePresentationBlock {
 		 *         body.
 		 */
 		public PresentationBlock<SingleSurroundingBlock> makeWhileBlock(Vector pos);
+		
+		
+		public PresentationBlock<ActionBlock> makeActionBlock(String name, Vector pos);
+		
+		public PresentationBlock<SingleConditionBlock> makeSingleConditionBlock(String name, Vector pos);
+		
 
 		
 		public boolean collidesWithPosition(Vector pos, PresentationBlock<?> block);

@@ -51,10 +51,10 @@ class TestGameController {
 	
 	// formatting functions
 	private Direction robotDirection(GameController gc){
-		return IGW.getRobotDirection(IGC.getGameWorld(gc));
+		return IGW.getRobotDirection(IGC.getGameWorldImplementation(gc));
 	}
 	private Vector robotLocation(GameController gc) {
-		return IGW.getRobotLocation(IGC.getGameWorld(gc));
+		return IGW.getRobotLocation(IGC.getGameWorldImplementation(gc));
 	}
 	
 	/**
@@ -99,12 +99,12 @@ class TestGameController {
 			IGC.execute(gc);
 			assertEquals(new Vector(0,1),robotLocation(gc));
 			// robot moves one down
-			IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.DOWN)));
+			IGC.setGameWorldImplementation(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.DOWN)));
 			IGC.execute(gc);
 			IGC.execute(gc);
 			assertEquals(new Vector(0,1),robotLocation(gc));
 			// robot moves one right
-			IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(1,1), Direction.RIGHT)));
+			IGC.setGameWorldImplementation(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(1,1), Direction.RIGHT)));
 			IGC.execute(gc);
 			IGC.execute(gc);
 			assertEquals(new Vector(2,1),robotLocation(gc));
@@ -119,7 +119,7 @@ class TestGameController {
 		setup();
 		// walk against wall
 		try {
-		IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.RIGHT)));
+		IGC.setGameWorldImplementation(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.RIGHT)));
 		IGC.addTopLevelBlock(gc,forward);
 		IGC.execute(gc);
 		IGC.execute(gc);
@@ -129,7 +129,7 @@ class TestGameController {
 		}
 		// walk off grid
 		try {
-		IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.UP)));
+		IGC.setGameWorldImplementation(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.UP)));
 		IGC.execute(gc);
 		IGC.execute(gc);
 		fail();
@@ -142,7 +142,7 @@ class TestGameController {
 	void connectActionBlocks() {
 		setup();
 		try {
-			IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.RIGHT)));
+			IGC.setGameWorldImplementation(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.RIGHT)));
 			// 2 blocks execute TR/FW
 			IGC.addTopLevelBlock(gc,right);
 			IB.connect(right,forward);
@@ -152,7 +152,7 @@ class TestGameController {
 			assertEquals(new Vector(0,1),robotLocation(gc));
 			assertEquals(Direction.DOWN,robotDirection(gc));
 			// add a block to those 2 blocks TR/FW/TL
-			IGW.resetGameWorld(IGC.getGameWorld(gc));
+			IGW.resetGameWorld(IGC.getGameWorldImplementation(gc));
 			assertEquals(new Vector(0,0),robotLocation(gc));
 			assertEquals(Direction.RIGHT,robotDirection(gc));
 			IB.connect(forward, left);
@@ -163,7 +163,7 @@ class TestGameController {
 			assertEquals(new Vector(0,1),robotLocation(gc));
 			assertEquals(Direction.RIGHT,robotDirection(gc));
 			// add a block in between TR/FW/FW2/TL
-			IGW.resetGameWorld(IGC.getGameWorld(gc));
+			IGW.resetGameWorld(IGC.getGameWorldImplementation(gc));
 			IB.connect(forward,forward2);
 			IGC.execute(gc);
 			IGC.execute(gc);
@@ -173,7 +173,7 @@ class TestGameController {
 			assertEquals(new Vector(0,2),robotLocation(gc));
 			assertEquals(Direction.RIGHT,robotDirection(gc));
 			// disconnect and reconnect TR/FW/FW2/TL -/-> FW2/TL -> TR//FW -> TR/FW2/TL/FW
-			IGW.resetGameWorld(IGC.getGameWorld(gc));
+			IGW.resetGameWorld(IGC.getGameWorldImplementation(gc));
 			IB.disconnect(forward2);
 			//TR/FW
 			IGC.execute(gc);
@@ -182,7 +182,7 @@ class TestGameController {
 			assertEquals(new Vector(0,1),robotLocation(gc)); 
 			assertEquals(Direction.DOWN,robotDirection(gc));
 			//FW2/TL
-			IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.DOWN)));
+			IGC.setGameWorldImplementation(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.DOWN)));
 			IGC.addTopLevelBlock(gc,forward2);
 			IGC.removeTopLevelBlock(gc,right);
 			IGC.execute(gc);
@@ -191,7 +191,7 @@ class TestGameController {
 			assertEquals(new Vector(0,1),robotLocation(gc)); 
 			assertEquals(Direction.RIGHT,robotDirection(gc));
 			//TR/FW2/TL/FW
-			IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.RIGHT)));
+			IGC.setGameWorldImplementation(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,0), Direction.RIGHT)));
 			IGC.removeTopLevelBlock(gc,forward2);
 			IGC.addTopLevelBlock(gc,right);
 			IB.connect(right,forward2);
@@ -265,7 +265,7 @@ class TestGameController {
 			IGC.removeTopLevelBlock(gc, ifB);
 			
 			// WHILE () {}
-			IGW.resetGameWorld(IGC.getGameWorld(gc));
+			IGW.resetGameWorld(IGC.getGameWorldImplementation(gc));
 			IGC.addTopLevelBlock(gc, whileB);
 			try {
 				IGC.execute(gc);
@@ -341,7 +341,7 @@ class TestGameController {
 			IGC.execute(gc);
 			assertEquals(new Vector(0,0),robotLocation(gc));
 			// IF ( Not / WallInFront) { F }
-			IGW.resetGameWorld(IGC.getGameWorld(gc));
+			IGW.resetGameWorld(IGC.getGameWorldImplementation(gc));
 			IB.disconnect(wallInFront);
 			IB.connect(not,wallInFront);
 			IB.setConditionBlock((SurroundingBlock) ifB,(ConditionBlock) not);
@@ -350,7 +350,7 @@ class TestGameController {
 			IGC.execute(gc);
 			assertEquals(new Vector(0,1),robotLocation(gc));
 			//  F2 / IF ( Not / WallInFront ) { Left } / F
-			IGW.resetGameWorld(IGC.getGameWorld(gc));
+			IGW.resetGameWorld(IGC.getGameWorldImplementation(gc));
 			IGC.addTopLevelBlock(gc, forward2);
 			IGC.removeTopLevelBlock(gc,ifB);
 			IB.connect(forward2, ifB);
@@ -390,7 +390,7 @@ class TestGameController {
 			assertEquals(new Vector(0,0),robotLocation(gc));
 			
 			// WHILE ( Not / WallInFront) { F }
-			IGW.resetGameWorld(IGC.getGameWorld(gc));
+			IGW.resetGameWorld(IGC.getGameWorldImplementation(gc));
 			IB.disconnect(wallInFront);
 			IB.connect(not,wallInFront);
 			IB.setConditionBlock((SurroundingBlock) whileB,(ConditionBlock) not);
@@ -411,7 +411,7 @@ class TestGameController {
 			}
 			
 			//  F2 / WHILE ( Not / WallInFront ) { Right } / Left
-			IGC.setGameWorld(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,1), Direction.RIGHT)));
+			IGC.setGameWorldImplementation(gc,IGW.makeGameWorld(IGW.makeGrid(3, 3, locations, cells), IGW.makeRobot(new Vector(0,1), Direction.RIGHT)));
 			IGC.addTopLevelBlock(gc, forward2);
 			IGC.removeTopLevelBlock(gc,whileB);
 			IB.connect(forward2, whileB);

@@ -21,7 +21,7 @@ public class turnRightCommand extends ExecutionCommand{
 
 	@Override
 	public void undo() {
-		GWF.robotTurnLeft(GCF.getGameWorld(GC));
+		GWF.robotTurnLeft(GCF.getGameWorldImplementation(GC));
 		super.undo();
 	}
 }

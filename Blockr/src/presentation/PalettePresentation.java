@@ -4,17 +4,19 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import game_world.ImplementationGameWorld;
 import game_world.Vector;
 import presentation.block.*;
 
 public class PalettePresentation {
 
 	private List<PresentationBlock<?>> paletteBlocks;
-	private ImplementationPresentationBlock BFP = new ImplementationPresentationBlock();
+	private ImplementationPresentationBlock iPresentationBlock = new ImplementationPresentationBlock();
 
 	
 	public PalettePresentation() {
 		paletteBlocks = new ArrayList<PresentationBlock<?>>();
+
 		
 		initialisePaletteBlocksList(paletteBlocks);
 	}
@@ -24,6 +26,29 @@ public class PalettePresentation {
 		final int yOffset = 10;
 		final int yOffsetIncrement = 60;
 		
+		ImplementationGameWorld iGameWorld = new ImplementationGameWorld();
+		
+		List<String> actionList = iGameWorld.getAllActions();
+		List<String> predicateList = iGameWorld.getAllPRedicates();
+		
+		int index = 0;
+		for (int i = 0; i < actionList.size(); i++) {
+			list.add(iPresentationBlock.makeActionBlock(actionList.get(i),new Vector(xOffset, yOffset + yOffsetIncrement*index)));
+			index++;
+		}
+		for (int i = 0; i < predicateList.size(); i++) {
+			list.add(iPresentationBlock.makeSingleConditionBlock(predicateList.get(i),new Vector(xOffset, yOffset + yOffsetIncrement*index)));
+			index++;
+		}
+		
+		
+		list.add(iPresentationBlock.makeNotBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
+		
+		list.add(iPresentationBlock.makeIfBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
+		// While
+		list.add(iPresentationBlock.makeWhileBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
+		
+		/*
 		// Move Forward
 		list.add(BFP.makeMoveForwardBlock(new Vector(xOffset, yOffset)));
 		// Turn Left
@@ -31,19 +56,18 @@ public class PalettePresentation {
 		// Turn Right
 		list.add(BFP.makeTurnRightBlock(new Vector(xOffset, yOffset+yOffsetIncrement*2)));
 		// If
-		list.add(BFP.makeIfBlock(new Vector(xOffset, yOffset+yOffsetIncrement*3)));
-		// While
-		list.add(BFP.makeWhileBlock(new Vector(xOffset, yOffset+yOffsetIncrement*4)));
+		
 		// Not
-		list.add(BFP.makeNotBlock(new Vector(xOffset, yOffset+yOffsetIncrement*5)));
+		
 		// Wall In Front
 		list.add(BFP.makeWallInFrontBlock(new Vector(xOffset, yOffset+yOffsetIncrement*6)));
+		*/
 	}
 	
 	
 	public PresentationBlock<?> GetClickedPaletteBlock(Vector position) {
 		for (PresentationBlock<?> pBlock: paletteBlocks) {
-			if (BFP.collidesWithPosition(position, pBlock)) {
+			if (iPresentationBlock.collidesWithPosition(position, pBlock)) {
 				return pBlock;
 			}
 		}
@@ -54,7 +78,7 @@ public class PalettePresentation {
 	
 	public void paint(Graphics g) {
 		for (PresentationBlock<?> pBlock: paletteBlocks) {
-			BFP.draw(g, pBlock);;
+			iPresentationBlock.draw(g, pBlock);;
 		}
 	}
 

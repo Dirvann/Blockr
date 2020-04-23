@@ -10,7 +10,6 @@ import presentation.block.PresentationBlock;
 
 public abstract class Block {
 	ImplementationGameController IGC = new ImplementationGameController();
-	ImplementationGameWorld IGW = new ImplementationGameWorld();
 	protected PresentationBlock<?> presentationBlock = null;
 	protected SurroundingBlock surroundingBlock = null;
 
@@ -37,7 +36,7 @@ public abstract class Block {
 	 * @Post every necessary command in the block is executed.
 	 * @throws Exception if a block in the sequence is not executable.
 	 */
-	protected abstract Block execute(GameController gameController) throws Exception;
+	protected abstract Block execute(ImplementationGameWorld iGameWorld) throws Exception;
 
 	/**
 	 * 

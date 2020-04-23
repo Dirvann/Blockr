@@ -22,10 +22,12 @@ public class BlockrPanel extends Panel {
 	
 	private GameController gameController;
 	private ImplementationGameController GC;
-	private ImplementationGameWorld GW;
+	private ImplementationGameWorld iGameWorld;
 	
 	private int preferredGameWorldWidth = 10;
 	private int preferredGameWorldHeight = 10;
+	
+	public final static String originalSnapshotName = "original";
 	
 	public BlockrPanel() {
 		// Set size of panel
@@ -34,22 +36,25 @@ public class BlockrPanel extends Panel {
 		
 		// Set variables for game functions
 		GC = new ImplementationGameController();
-		GW = new ImplementationGameWorld();
+		iGameWorld = new ImplementationGameWorld();
+		// TODO gameworld init.
+		iGameWorld.makeNewGameWorld();
+		iGameWorld.makeSnapshot(BlockrPanel.originalSnapshotName);
 		gameController = GC.makeGameController();
-		GC.setGameWorld(gameController, GW.makeRandomGameWorld(preferredGameWorldWidth, preferredGameWorldHeight));
+		GC.setGameWorldImplementation(gameController, iGameWorld);
 		
 		// Define panel borders
 		int worldPanelStart = (int) (this.getWidth() * (1 - worldProportion));
 		int worldPanelWidth = (int) (this.getWidth() * worldProportion);
 		
 		// Add block Area Canvas
-		this.blockAreaC = new BlockAreaCanvas(this);
+		this.blockAreaC = new BlockAreaCanvas(this, iGameWorld);
 		this.add(blockAreaC);
 		blockAreaC.setBounds(0, 0, worldPanelStart, this.getHeight());
 		blockAreaC.setBackground(Color.WHITE);
 		
 		// Add gameWorld Canvas
-		this.gameWorldC = new GameWorldCanvas(this);
+		this.gameWorldC = new GameWorldCanvas(this, iGameWorld);
 		this.add(gameWorldC);
 		gameWorldC.setBounds(worldPanelStart, 0, worldPanelWidth, this.getHeight());
 		gameWorldC.setBackground(Color.WHITE);

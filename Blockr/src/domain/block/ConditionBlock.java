@@ -1,6 +1,7 @@
 package domain.block;
 
 import domain.GameController;
+import game_world.ImplementationGameWorld;
 
 public abstract class ConditionBlock extends Block {
 
@@ -17,7 +18,7 @@ public abstract class ConditionBlock extends Block {
 	 * @param gamecontroller
 	 * @return true if the condition is true;
 	 */
-	abstract protected boolean evaluate(GameController gamecontroller);
+	abstract protected boolean evaluate(ImplementationGameWorld gamecontroller);
 
 	@Override
 	protected void disconnect() {
@@ -47,8 +48,8 @@ public abstract class ConditionBlock extends Block {
 	}
 	
 	@Override
-	protected Block execute(GameController gameController) throws Exception{
-		throw new Exception("conditionblocks can't be executed");
+	protected Block execute(ImplementationGameWorld gameController) {
+		return null;
 	}
 	
 	@Override

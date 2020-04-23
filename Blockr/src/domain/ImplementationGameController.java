@@ -9,14 +9,15 @@ import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
 import game_world.GameWorld;
+import game_world.ImplementationGameWorld;
 import presentation.block.PresentationBlock;
 
-public class ImplementationGameController implements FacadeGameController {
+public class ImplementationGameController implements FacadeGameController{
+
 
 	ImplementationBlock BF = new ImplementationBlock();
-
-	public ImplementationGameController() {
-	};
+	
+	public ImplementationGameController() {};
 
 	@Override
 	public GameController makeGameController() {
@@ -24,35 +25,35 @@ public class ImplementationGameController implements FacadeGameController {
 	}
 
 	@Override
-	public GameController makeGameController(GameWorld gameWorld) {
-		return new GameController(gameWorld);
+	public GameController makeGameController(ImplementationGameWorld iGameWorld) {
+		return new GameController(iGameWorld);
 	}
 
 	@Override
-	public void setGameWorld(GameController gameController, GameWorld gameWorld) {
-		gameController.setGameWorld(gameWorld);
+	public void setGameWorldImplementation(GameController gameController,ImplementationGameWorld iGameWorld) {
+		gameController.setGameWorldImplementation(iGameWorld);
 	}
 
 	@Override
-	public GameWorld getGameWorld(GameController gameController) {
-		return gameController.getGameWorld();
+	public ImplementationGameWorld getGameWorldImplementation(GameController gameController) {
+		return gameController.getGameWorldImplementation();
 	}
 
 	@Override
 	public ProgramArea getProgramArea(GameController gameController) {
 		return gameController.getProgramArea();
 	}
-
+	
 	@Override
 	public void addTopLevelBlock(GameController gameController, Block block) {
 		gameController.getProgramArea().addTopLevelBlock(block);
-
+		
 	}
 
 	@Override
 	public void removeTopLevelBlock(GameController gameController, Block block) {
 		gameController.getProgramArea().removeTopLevelBlock(block);
-
+		
 	}
 
 	@Override
@@ -73,13 +74,13 @@ public class ImplementationGameController implements FacadeGameController {
 	@Override
 	public void addBlockToProgramArea(GameController gameController, PresentationBlock<?> pBlock) {
 		gameController.getProgramArea().addBlock(pBlock);
-
+		
 	}
 
 	@Override
 	public void removeBlockFromProgramArea(GameController gameController, PresentationBlock<?> pBlock) {
 		gameController.getProgramArea().removeBlock(pBlock);
-
+		
 	}
 
 	@Override
@@ -94,7 +95,7 @@ public class ImplementationGameController implements FacadeGameController {
 
 	@Override
 	public List<Block> getCopyOfAllTopLevelBlocks(GameController gameController) {
-		return gameController.getProgramArea().getAllBlocks();
+		return gameController.getProgramArea().getAllBlocks();		
 	}
 
 	@Override
@@ -103,12 +104,12 @@ public class ImplementationGameController implements FacadeGameController {
 			gamecontroller.getProgramArea().addTopLevelBlock(block);
 			BF.disconnect(block);
 		}
-
+		
 	}
 
 	@Override
 	public boolean connect(Block firstBlock, Block secondBlock, GameController GC) {
-		if (BF.connect(firstBlock, secondBlock)) {
+		if(BF.connect(firstBlock, secondBlock)) {
 			GC.getProgramArea().removeTopLevelBlock(secondBlock);
 			return true;
 		}
@@ -119,14 +120,14 @@ public class ImplementationGameController implements FacadeGameController {
 	public void setBody(SurroundingBlock surroundingBlock, SequenceBlock block, GameController GC) {
 		BF.addBodyBlock(surroundingBlock, block);
 		GC.getProgramArea().removeTopLevelBlock(block);
-
+		
 	}
 
 	@Override
 	public void setCondition(SurroundingBlock surroundingBlock, ConditionBlock condition, GameController GC) {
 		BF.setConditionBlock(surroundingBlock, condition);
 		GC.getProgramArea().removeTopLevelBlock(condition);
-
+		
 	}
 
 	@Override
@@ -137,7 +138,7 @@ public class ImplementationGameController implements FacadeGameController {
 	@Override
 	public void setNextToExecute(GameController GC, Block block) {
 		GC.getProgramArea().nextToExecute = block;
-
+		
 	}
 
 	@Override
@@ -147,11 +148,8 @@ public class ImplementationGameController implements FacadeGameController {
 
 	@Override
 	public void setExecutionCommand(ExecutionCommand exeCmd, GameController GC) {
-		if (GC != null) {
-			GC.getProgramArea().setExecutionCommand(exeCmd);
-		}
-//		else System.out.println("GameController is null");
-
+		GC.getProgramArea().setExecutionCommand(exeCmd);
+		
 	}
 
 	@Override
@@ -161,10 +159,12 @@ public class ImplementationGameController implements FacadeGameController {
 	}
 
 	@Override
-	public void setNewExecution(Block currentlyExecuted, Block nextToExecute, GameController GC) {
+	public void setNewExecution(Block currentlyExecuted, Block nextToExecute,
+			GameController GC) {
 		GC.getProgramArea().currentExe = currentlyExecuted;
 		GC.getProgramArea().nextToExecute = nextToExecute;
-
+		
 	}
+
 
 }

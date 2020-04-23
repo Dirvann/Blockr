@@ -8,15 +8,16 @@ import domain.block.ConditionBlock;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
 import game_world.GameWorld;
+import game_world.ImplementationGameWorld;
 import presentation.block.PresentationBlock;
 
 public interface FacadeGameController {
 	
+	public GameController makeGameController(ImplementationGameWorld iGameWorld);
 	public GameController makeGameController();
-	public GameController makeGameController(GameWorld gameWorld);
 	
-	public void setGameWorld(GameController gameController, GameWorld gameWorld);
-	public GameWorld getGameWorld(GameController gameController);
+	public void setGameWorldImplementation(GameController gameController, ImplementationGameWorld iGameWorld);
+	public ImplementationGameWorld getGameWorldImplementation(GameController gameController);
 	public ProgramArea getProgramArea(GameController gameController);
 	
 	public void addBlockToProgramArea(GameController gameController,PresentationBlock<?> pBlock);

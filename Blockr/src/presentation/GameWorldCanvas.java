@@ -15,16 +15,14 @@ public class GameWorldCanvas extends Canvas {
 	private static final long serialVersionUID = -5278879530185183350L;
 	
 	private BlockrPanel blockrPanel;
-	private ImplementationGameController GC;
-	private ImplementationGameWorld GW;
+	private ImplementationGameWorld iGameWorld;
 	
-	public GameWorldCanvas(BlockrPanel blockrPanel) {
-		GC = new ImplementationGameController();
-		GW = new ImplementationGameWorld();
+	public GameWorldCanvas(BlockrPanel blockrPanel, ImplementationGameWorld iGameWorld) {
+		this.iGameWorld = iGameWorld;
 		this.blockrPanel = blockrPanel;
 	}
 	
 	public void paint(Graphics g) {
-		GW.drawGameWorld(g,GC.getGameWorld(blockrPanel.getGameController()), getWidth());
+		iGameWorld.drawGameWorld(g,getWidth(),getHeight());
 	}
 }
