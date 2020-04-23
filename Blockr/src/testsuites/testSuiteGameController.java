@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.Test;
 
-import command.turnLeftCommand;
 import domain.GameController;
 import domain.ImplementationGameController;
 import domain.block.ActionBlock;
@@ -17,13 +16,14 @@ import domain.block.SequenceBlock;
 import domain.block.SingleConditionBlock;
 import domain.block.SingleSurroundingBlock;
 import domain.block.SurroundingBlock;
+import exceptions.domainExceptions.BlockColumnNotExecutableException;
+import exceptions.domainExceptions.CantRunConditionException;
 import exceptions.domainExceptions.NotOneStartingBlockException;
 import game_world.ImplementationGameWorld;
 import game_world.Vector;
 import game_world.cell.Cell;
 import game_world.cell.Goal;
 import game_world.cell.Wall;
-import presentation.block.ChainConditionBlockPresentation;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 
@@ -81,7 +81,11 @@ public class testSuiteGameController {
 		assertEquals(2, IGC.getCopyOfAllBlocks(gc).size());
 		IGC.execute(gc);
 		assertEquals(IPB.getBlock(forward), IGC.getNextBlockToExecute(gc));
-		IGC.execute(gc);
+		try {
+			IGC.execute(gc);
+		} catch (Exception e) {
+			return;
+		}
 		assertEquals(IPB.getBlock(left), IGC.getNextBlockToExecute(gc));
 		IGC.stopExecution(gc);
 		assertEquals(null, IGC.getNextBlockToExecute(gc));
@@ -127,10 +131,138 @@ public class testSuiteGameController {
 			IGC.execute(gc);
 			executingBlock = IGC.getNextBlockToExecute(gc);
 		}
-		
-		IGC.execute(gc);
+		try {
+			IGC.execute(gc);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		assertEquals(null, IGC.getNextBlockToExecute(gc));
 		assertFalse(IGC.isExecuting(gc));
+	}
+	
+	@Test
+	public void invalidBlocks() throws Exception {
+		setup();
+		IGC.addBlockToProgramArea(gc, whileB);
+		IGC.addBlockToProgramArea(gc, not);
+		IGC.addBlockToProgramArea(gc, forward);
+		IGC.addBlockToProgramArea(gc, forward2);
+		IGC.addBlockToProgramArea(gc, left);
+		assertEquals(10, IGC.getAmountOfBlocksLeft(gc));
+		
+		IGC.setBody((SurroundingBlock) IPB.getBlock(whileB), (SequenceBlock) IPB.getBlock(forward), gc);
+		IGC.setCondition((SurroundingBlock) IPB.getBlock(whileB), (ConditionBlock) IPB.getBlock(not), gc);
+		IGC.connect(IPB.getBlock(whileB), IPB.getBlock(forward2), gc);
+		IGC.connect(IPB.getBlock(forward2), IPB.getBlock(left), gc);
+		
+		try {
+			IGC.execute(gc);
+			throw new Exception("test invalid block failed");
+		} catch (BlockColumnNotExecutableException e) {
+			// TODO: handle exception
+		}
+	
+	}
+	@Test
+	public void invalidBlocksAdvanced() throws Exception {
+		setup();
+		IGC.addBlockToProgramArea(gc, whileB);
+		IGC.addBlockToProgramArea(gc, not);
+		IGC.addBlockToProgramArea(gc, forward);
+		IGC.addBlockToProgramArea(gc, forward2);
+		IGC.addBlockToProgramArea(gc, left);
+		assertEquals(10, IGC.getAmountOfBlocksLeft(gc));
+		
+		IGC.setBody((SurroundingBlock) IPB.getBlock(whileB), (SequenceBlock) IPB.getBlock(forward), gc);
+		IGC.setCondition((SurroundingBlock) IPB.getBlock(whileB), (ConditionBlock) IPB.getBlock(not), gc);
+		IGC.connect(IPB.getBlock(whileB), IPB.getBlock(forward2), gc);
+		IGC.connect(IPB.getBlock(forward2), IPB.getBlock(left), gc);
+		
+		IGC.addBlockToProgramArea(gc, ifB);
+		PresentationBlock<SingleConditionBlock> isWall2 = IPB.makeSingleConditionBlock("WallInFront", null);
+		IGC.setCondition((SurroundingBlock) IPB.getBlock(ifB), (ConditionBlock) IPB.getBlock(isWall2), gc);
+		IGC.setBody((SurroundingBlock) IPB.getBlock(ifB), (SequenceBlock) IPB.getBlock(whileB), gc);
+		
+		try {
+			IGC.execute(gc);
+			throw new Exception("test invalid block failed");
+		} catch (BlockColumnNotExecutableException e) {
+			// TODO: handle exception
+		}
+	
+	}
+	
+	@Test
+	public void topLevelBlockIsCondition() throws Exception {
+		setup();
+		IGC.addBlockToProgramArea(gc, wallinfront);
+		try {
+			IGC.execute(gc);
+		} catch (CantRunConditionException e) {
+			// TODO: handle exception
+		}
+	}
+	
+	@Test
+	public void disconnectBlocks() throws Exception {
+		setup();
+		IGC.addBlockToProgramArea(gc, whileB);
+		IGC.addBlockToProgramArea(gc, not);
+		IGC.addBlockToProgramArea(gc, forward);
+		IGC.addBlockToProgramArea(gc, forward2);
+		IGC.addBlockToProgramArea(gc, left);
+		assertEquals(10, IGC.getAmountOfBlocksLeft(gc));
+		
+		IGC.setBody((SurroundingBlock) IPB.getBlock(whileB), (SequenceBlock) IPB.getBlock(forward), gc);
+		IGC.setCondition((SurroundingBlock) IPB.getBlock(whileB), (ConditionBlock) IPB.getBlock(not), gc);
+		IGC.connect(IPB.getBlock(whileB), IPB.getBlock(forward2), gc);
+		IGC.connect(IPB.getBlock(forward2), IPB.getBlock(left), gc);
+		
+		IGC.addBlockToProgramArea(gc, ifB);
+		PresentationBlock<SingleConditionBlock> isWall2 = IPB.makeSingleConditionBlock("WallInFront", null);
+		IGC.addBlockToProgramArea(gc, isWall2);
+		IGC.setCondition((SurroundingBlock) IPB.getBlock(ifB), (ConditionBlock) IPB.getBlock(isWall2), gc);
+		IGC.setBody((SurroundingBlock) IPB.getBlock(ifB), (SequenceBlock) IPB.getBlock(whileB), gc);
+		
+		IGC.disconnect(IPB.getBlock(whileB), gc);
+		try {
+			IGC.execute(gc);
+		} catch (NotOneStartingBlockException e) {
+			// TODO: handle exception
+		}
+		
+		IGC.removeBlockFromProgramArea(gc, whileB);
+		assertEquals(13, IGC.getAmountOfBlocksLeft(gc));
+		IGC.execute(gc); 
+		assertEquals(IPB.getBlock(ifB), IGC.getNextBlockToExecute(gc));
+	}
+	
+	@Test
+	public void removeBeforeDisconnect() throws Exception {
+
+		setup();
+		IGC.addBlockToProgramArea(gc, whileB);
+		IGC.addBlockToProgramArea(gc, not);
+		IGC.addBlockToProgramArea(gc, forward);
+		IGC.addBlockToProgramArea(gc, forward2);
+		IGC.addBlockToProgramArea(gc, left);
+		assertEquals(10, IGC.getAmountOfBlocksLeft(gc));
+		
+		IGC.setBody((SurroundingBlock) IPB.getBlock(whileB), (SequenceBlock) IPB.getBlock(forward), gc);
+		IGC.setCondition((SurroundingBlock) IPB.getBlock(whileB), (ConditionBlock) IPB.getBlock(not), gc);
+		IGC.connect(IPB.getBlock(whileB), IPB.getBlock(forward2), gc);
+		IGC.connect(IPB.getBlock(forward2), IPB.getBlock(left), gc);
+		
+		IGC.addBlockToProgramArea(gc, ifB);
+		PresentationBlock<SingleConditionBlock> isWall2 = IPB.makeSingleConditionBlock("WallInFront", null);
+		IGC.addBlockToProgramArea(gc, isWall2);
+		IGC.setCondition((SurroundingBlock) IPB.getBlock(ifB), (ConditionBlock) IPB.getBlock(isWall2), gc);
+		IGC.setBody((SurroundingBlock) IPB.getBlock(ifB), (SequenceBlock) IPB.getBlock(whileB), gc);
+		
+		IGC.removeBlockFromProgramArea(gc, whileB);
+		assertEquals(13, IGC.getAmountOfBlocksLeft(gc));
+		IGC.execute(gc); 
+		assertEquals(IPB.getBlock(ifB), IGC.getNextBlockToExecute(gc));
 	}
 	
 }
