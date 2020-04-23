@@ -202,9 +202,9 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	}
 
 	@Override
-	public boolean undoAction(String arg0) {
+	public ActionResult undoAction(String arg0) {
 		// TODO Auto-generated method stub
-		return false;
+		return ActionResult.Success;
 	}
 
 	@Override
