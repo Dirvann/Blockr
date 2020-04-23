@@ -3,8 +3,11 @@ package game_world;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import exceptions.OutOfBoundsException;
 import game_world.api.ActionResult;
@@ -15,13 +18,19 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 
 	private SimpleGameController gameController;
 	
+	private Map<String, SimpleGameController> snapshots;
+	private int snapshotIndex;
+	
 	public ImplementationGameWorld() {
 		gameController = new SimpleGameController();
+		gameController.startGame();
+		snapshots = new HashMap<>();
+		snapshotIndex = 0;
 	}
 	
 	@Override
 	public List<String> getAllActions() {
-		return Arrays.asList("MoveLeft", "MoveRight", "StandStill", "Startgame");
+		return Arrays.asList("MoveLeft", "MoveRight", "StandStill", "StartGame");
 	}
 	
 	@Override
@@ -95,7 +104,7 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 		int gridHeight = gameController.getHeight();
 		
 		int worldWidth = width;
-		int worldHeight = worldWidth / gridWidth * gridHeight;
+		int worldHeight = height;
 		
 		int cellWidth = worldWidth / gridWidth;
 		int cellHeight = worldHeight / gridHeight;
@@ -137,50 +146,54 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	private void drawDodgeScore(Graphics g) {
 		g.setFont(new Font("Arial", Font.PLAIN, 20));
 		String dodgedString = "Blocks dodged: " + gameController.getCurrentNrDodged() + "/" + gameController.getDodgeGoal();
-		g.drawString(dodgedString, 10, 10);
+		g.drawString(dodgedString, 10, 25);
 	}
 	
 	private void drawStartMessage(Graphics g) {
 		g.setFont(new Font("Arial", Font.PLAIN, 20));
-		g.drawString("press start to begin new game", 10, 10);
+		g.drawString("press start to begin new game", 10, 25);
 	}
 	
 	
 	@Override
 	public void makeNewGameWorld() {
-		// TODO Auto-generated method stub
-		
+		gameController = new SimpleGameController();
+		gameController.startGame();
 	}
 
 	@Override
 	public List<String> getAllSnapshots() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<>(snapshots.keySet());
 	}
 
+
 	@Override
-	public void loadSnapshot(String arg0) {
-		// TODO Auto-generated method stub
-		
+	public void loadSnapshot(String snapshotName) {
+		this.gameController = snapshots.get(snapshotName).createCopy(); //TODO create copy
 	}
+
 
 
 	@Override
 	public String makeSnapshot() {
-		// TODO Auto-generated method stub
-		return null;
+		String snapshotName = "AutoSnapshot" + snapshotIndex;
+		snapshotIndex += 1;
+		makeSnapshot(snapshotName);
+		return snapshotName;
 	}
 
-	@Override
-	public void makeSnapshot(String arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
-	public void removeSnapshot(String arg0) {
-		// TODO Auto-generated method stub
-		
+	public void makeSnapshot(String snapshotName) {
+		snapshots.put(snapshotName, gameController.createCopy());
+	}
+
+
+
+	@Override
+	public void removeSnapshot(String snapshotName) {
+		snapshots.remove(snapshotName);		
 	}
 
 	@Override
@@ -197,8 +210,7 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 
 	@Override
 	public boolean goalReached() {
-		// TODO Auto-generated method stub
-		return false;
+		return gameController.goalReached();
 	}
 
 }
