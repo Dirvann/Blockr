@@ -199,7 +199,6 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	@Override
 	public void resetGameWorld() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
