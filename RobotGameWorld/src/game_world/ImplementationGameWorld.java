@@ -238,5 +238,12 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 		gameWorld.resetGameWorld();
 	}
 
+
+
+	@Override
+	public boolean goalReached() {
+		return this.gameWorld.robotOnGoal();
+	}
+
 	
 }
