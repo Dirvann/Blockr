@@ -1,11 +1,14 @@
 package command;
 
 import domain.GameController;
+import domain.ImplementationGameController;
 import domain.block.Block;
+import domain.block.ImplementationBlock;
 import game_world.ImplementationGameWorld;
 
-public class turnLeftCommand extends ExecutionCommand{
-	ImplementationGameWorld GWF = new ImplementationGameWorld();
+public class ActionBlockCommand extends ExecutionCommand {
+	ImplementationGameController GCF = new ImplementationGameController();
+	ImplementationBlock BF = new ImplementationBlock();
 
 	/**
 	 * 
@@ -14,12 +17,18 @@ public class turnLeftCommand extends ExecutionCommand{
 	 * @param nextToExecute The next block to execute.
 	 * @param GC The gameController where the blocks are stored in.
 	 */
-	public turnLeftCommand(Block previouslyExecuted, Block currentlyExecuted, Block nextToExecute, GameController GC) {
+	public ActionBlockCommand(Block previouslyExecuted, Block currentlyExecuted, Block nextToExecute, GameController GC) {
 		super(previouslyExecuted, currentlyExecuted, nextToExecute, GC);
+
 	}
+
 	@Override
 	public void undo() {
-		GWF.robotTurnRight(GCF.getGameWorldImplementation(GC));
+
+		ImplementationGameWorld GWF = GCF.getGameWorldImplementation(GC);
+		GWF.executeAction(BF.getName(currentlyExecuted));
+
 		super.undo();
 	}
+
 }

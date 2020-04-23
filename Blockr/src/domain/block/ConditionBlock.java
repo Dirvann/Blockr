@@ -48,7 +48,7 @@ public abstract class ConditionBlock extends Block {
 	}
 	
 	@Override
-	protected Block execute(ImplementationGameWorld gameController) {
+	protected Block execute(GameController gameController) {
 		return null;
 	}
 	

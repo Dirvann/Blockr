@@ -3,7 +3,6 @@ package domain.block;
 import java.util.List;
 
 import domain.GameController;
-import game_world.ImplementationGameWorld;
 import presentation.block.PresentationBlock;
 
 public interface FacadeBlock {
@@ -134,7 +133,7 @@ public interface FacadeBlock {
 	 * @post every necessary command in the block is executed.
 	 * @throws Exception if a block in the sequence is not executable.
 	 */
-	public Block execute(Block block, ImplementationGameWorld gameController) throws Exception;
+	public Block execute(Block block, GameController gameController) throws Exception;
 
 	// ________________________________________________________________________________________________//
 	// presentation functions

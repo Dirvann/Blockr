@@ -1,6 +1,5 @@
 package domain.block;
 
-import domain.GameController;
 import game_world.ImplementationGameWorld;
 import game_world.api.PredicateResult;
 

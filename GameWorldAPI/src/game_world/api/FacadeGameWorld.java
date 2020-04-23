@@ -14,7 +14,7 @@ public interface FacadeGameWorld {
 	public PredicateResult evaluatePredicate(String predicate);
 	
 	public boolean goalReached();
-	public boolean undoAction(String action);
+	public ActionResult undoAction(String action);
 	
 	public void drawGameWorld(Graphics g, int width, int height);
 	

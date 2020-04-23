@@ -236,8 +236,8 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 
 		case KeyEvent.VK_F6: // F6
 			System.out.println("Changed gameWorld");
-			int width = blockrPanel.getPreferredGameWorldWidth();
-			int height = blockrPanel.getPreferredGameWorldHeight();
+			blockrPanel.getPreferredGameWorldWidth();
+			blockrPanel.getPreferredGameWorldHeight();
 			// TODO create new gameworld
 			iGameWorld.makeNewGameWorld();
 			iGameWorld.makeSnapshot(BlockrPanel.originalSnapshotName);

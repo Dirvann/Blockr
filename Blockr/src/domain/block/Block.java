@@ -36,7 +36,7 @@ public abstract class Block {
 	 * @Post every necessary command in the block is executed.
 	 * @throws Exception if a block in the sequence is not executable.
 	 */
-	protected abstract Block execute(ImplementationGameWorld iGameWorld) throws Exception;
+	protected abstract Block execute(GameController GC) throws Exception;
 
 	/**
 	 * 

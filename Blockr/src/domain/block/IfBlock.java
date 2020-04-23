@@ -4,7 +4,6 @@ import command.ExecutionCommand;
 import domain.GameController;
 import domain.ImplementationGameController;
 import exceptions.domainExceptions.NoConditionBlockException;
-import game_world.ImplementationGameWorld;
 
 class IfBlock extends SingleSurroundingBlock {
 	
@@ -15,15 +14,14 @@ class IfBlock extends SingleSurroundingBlock {
 	}
 
 	@Override
-	protected Block execute(ImplementationGameWorld iGameWorld) throws Exception {
+	protected Block execute(GameController GC) throws Exception {
 		ImplementationGameController GCF = new ImplementationGameController();
 		if (getConditionBlock() == null || !getConditionBlock().isValidCondition()) {
 			throw new NoConditionBlockException();
 		}
 		if (this.getBodyBlock() != null) {
-			if (getConditionBlock().evaluate(iGameWorld)) {
-				//TODO impelemnt undo
-				//GCF.setExecutionCommand(new ExecutionCommand(null, null, null, iGameWorld), iGameWorld);
+			if (getConditionBlock().evaluate(GCF.getGameWorldImplementation(GC))) {
+				GCF.setExecutionCommand(new ExecutionCommand(null, null, null, GC), GC);
 				return this.getBodyBlock();
 			}
 		}
@@ -33,7 +31,7 @@ class IfBlock extends SingleSurroundingBlock {
 			}
 			return this.getSurroundingBlock().getNextAfterLoop();
 		}
-		//GCF.setExecutionCommand(new ExecutionCommand(null, null, null, iGameWorld), iGameWorld);
+		GCF.setExecutionCommand(new ExecutionCommand(null, null, null, GC), GC);
 		return this.getNextBlock();
 	}
 

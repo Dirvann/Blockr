@@ -1,5 +1,8 @@
 package domain.block;
 
+import command.ActionBlockCommand;
+import domain.GameController;
+import domain.ImplementationGameController;
 import game_world.ImplementationGameWorld;
 import game_world.api.ActionResult;
 
@@ -17,7 +20,9 @@ public class ActionBlock extends SequenceBlock{
 	 * @throws Exception If action is not possible.
 	 * @post The action of the block will be performed
 	 */
-	protected void performAction(ImplementationGameWorld iGameWorld) throws Exception {
+	protected void performAction(GameController GC) throws Exception {
+		ImplementationGameController GCF = new ImplementationGameController();
+		ImplementationGameWorld iGameWorld = GCF.getGameWorldImplementation(GC);
 		
 		
 		if (iGameWorld == null) 
@@ -25,14 +30,13 @@ public class ActionBlock extends SequenceBlock{
 		else {
 			ActionResult result = iGameWorld.executeAction(getName());
 			if (result == ActionResult.Illegal) throw new Exception("illegal move");
-			//TODO implement undo
-			//IGC.setExecutionCommand(new turnRightCommand(null, null, null, gameController), gameController);
+			IGC.setExecutionCommand(new ActionBlockCommand(null, null, null, GC), GC);
 		}
 	}
 	
 	@Override
-	protected Block execute(ImplementationGameWorld iGameWorld) throws Exception {
-		performAction(iGameWorld);
+	protected Block execute(GameController GC) throws Exception {
+		performAction(GC);
 		
 		if (this.getNextBlock() == null) {
 			if (this.getSurroundingBlock() == null) {

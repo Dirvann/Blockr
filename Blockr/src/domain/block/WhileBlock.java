@@ -2,9 +2,9 @@ package domain.block;
 
 import command.ExecutionCommand;
 import domain.GameController;
+import domain.ImplementationGameController;
 import exceptions.domainExceptions.InfiniteLoopWhileException;
 import exceptions.domainExceptions.NoConditionBlockException;
-import game_world.ImplementationGameWorld;
 
 class WhileBlock extends SingleSurroundingBlock {
 	
@@ -19,17 +19,18 @@ class WhileBlock extends SingleSurroundingBlock {
 		return super.hasValidExecutionColumn();
 	}
 	@Override
-	protected Block execute(ImplementationGameWorld iGameWorld) throws Exception {
+	protected Block execute(GameController GC) throws Exception {
+		ImplementationGameController IGC = new ImplementationGameController();
 		if (getConditionBlock() == null || !getConditionBlock().isValidCondition()) {
 			throw new NoConditionBlockException();
 		}
-		if (getConditionBlock().evaluate(iGameWorld)) {
+		if (getConditionBlock().evaluate(IGC.getGameWorldImplementation(GC))) {
 			if (this.getBodyBlock() == null) throw new InfiniteLoopWhileException();
-			// TODO implement undo
-			//IGC.setExecutionCommand(new ExecutionCommand(null, null, null, gameController), gameController);
+			
+			IGC.setExecutionCommand(new ExecutionCommand(null, null, null, GC), GC);
 			return this.getBodyBlock();
 		}
-		//IGC.setExecutionCommand(new ExecutionCommand(null, null, null, gameController), gameController);
+		IGC.setExecutionCommand(new ExecutionCommand(null, null, null, GC), GC);
 		return this.getNextBlock();
 	}
 

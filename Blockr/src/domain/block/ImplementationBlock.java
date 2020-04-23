@@ -74,8 +74,8 @@ public class ImplementationBlock implements FacadeBlock{
 	}
 
 	@Override
-	public Block execute(Block block, ImplementationGameWorld iGameWorld) throws Exception {
-		return block.execute(iGameWorld);
+	public Block execute(Block block, GameController GC) throws Exception {
+		return block.execute(GC);
 	}
 
 	@Override

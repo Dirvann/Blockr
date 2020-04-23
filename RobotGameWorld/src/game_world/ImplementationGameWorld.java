@@ -86,9 +86,34 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	}
 	
 	@Override
-	public boolean undoAction(String action) {
-		// TODO
-		return false;
+	public ActionResult undoAction(String action) {
+		switch (action) {
+		case "MoveForward": {
+			gameWorld.robotTurnLeft();
+			gameWorld.robotTurnLeft();
+			try {
+				gameWorld.robotStepForwards();
+			} catch (RobotEnteringWallException | RobotMovingOffGridException e) {
+				return ActionResult.Illegal;
+			}
+			gameWorld.robotTurnLeft();
+			gameWorld.robotTurnLeft();
+			return ActionResult.Success;
+		}
+		
+		case "TurnLeft": {
+			gameWorld.robotTurnRight();
+			return ActionResult.Success;
+		}
+		
+		case "TurnRight": {
+			gameWorld.robotTurnLeft();
+			return ActionResult.Success;
+		}
+		
+		default:
+			return ActionResult.UnknownAction;
+		}
 	}
 
 	@Override

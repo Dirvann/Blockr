@@ -24,7 +24,7 @@ public class GameController {
 	protected ExecutionCommand execute() throws Exception {
 		if (programArea.programInProgress()) {
 			try {
-				programArea.executeNextBlock(getGameWorldImplementation());
+				programArea.executeNextBlock(this);
 			} catch (Exception e) {
 				programArea.stopExecution();
 				getGameWorldImplementation().resetGameWorld();
