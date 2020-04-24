@@ -4,7 +4,7 @@ import domain.GameController;
 import domain.ImplementationGameController;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
-import impl.root.ImplementationGameWorld;
+import game_world.api.FacadeGameWorld;
 
 public class ActionBlockCommand extends ExecutionCommand {
 	ImplementationGameController GCF = new ImplementationGameController();
@@ -25,7 +25,7 @@ public class ActionBlockCommand extends ExecutionCommand {
 	@Override
 	public void undo() {
 
-		ImplementationGameWorld GWF = GCF.getGameWorldImplementation(GC);
+		FacadeGameWorld GWF = GCF.getGameWorldImplementation(GC);
 		GWF.undoAction(BF.getName(currentlyExecuted));
 		super.undo();
 	}

@@ -210,6 +210,8 @@ class UseCase5 {
 		assertEquals("MoveForward",IB.getName(moveBlock));
 		Block leftBlock = IB.getNextBlock(moveBlock);
 		assertEquals("TurnLeft",IB.getName(leftBlock));
+		assertEquals(new Vector(499,49),IPB.getPosition(IB.getPresentationBlock(moveBlock)));
+		assertEquals(new Vector(499,69),IPB.getPosition(IB.getPresentationBlock(leftBlock)));
 		//run
 		KeyEvent a = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
 		KeyEvent b = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
@@ -217,15 +219,19 @@ class UseCase5 {
 		assertEquals("MoveForward",IB.getName(GC.getNextBlockToExecute(gc)));
 		blockAreaCanvas.handleKeyPressed(b);
 		assertEquals("TurnLeft",IB.getName(GC.getNextBlockToExecute(gc)));
-		//move a block
+		//move a block + Stop run
 		blockAreaCanvas.handleMousePressed(500, 50);
+		blockAreaCanvas.handleMouseDragged(500, 50);
+		blockAreaCanvas.handleMouseDragged(450, 70);
 		blockAreaCanvas.handleMouseDragged(400, 100);
 		blockAreaCanvas.handleMousePressed(400, 100);
 		assertEquals(new Vector(399,99),IPB.getPosition(IB.getPresentationBlock(moveBlock)));
-		assertEquals(new Vector(399,119),IPB.getPosition(IB.getPresentationBlock(moveBlock)));
-		//undo movement and snap
+		assertEquals(new Vector(399,119),IPB.getPosition(IB.getPresentationBlock(leftBlock)));
+		//undo movement 
 		KeyEvent c = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_Z,'z');
 		blockAreaCanvas.handleKeyPressed(c);
+		System.out.println(IPB.getPosition(IB.getPresentationBlock(moveBlock)).getX()+" "+IPB.getPosition(IB.getPresentationBlock(moveBlock)).getY());
+		System.out.println(IPB.getPosition(IB.getPresentationBlock(leftBlock)).getX()+" "+IPB.getPosition(IB.getPresentationBlock(moveBlock)).getY());
 		assertEquals(new Vector(499,49),IPB.getPosition(IB.getPresentationBlock(moveBlock)));
 		assertEquals(new Vector(499,69),IPB.getPosition(IB.getPresentationBlock(leftBlock)));
 		//undo add before running

@@ -6,7 +6,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import impl.root.ImplementationGameWorld;
+import game_world.api.FacadeGameWorld;
 import game_world.api.PredicateResult;
 import simpleui.buttons.ActionButton;
 import simpleui.buttons.PredicateButton;
@@ -20,7 +20,7 @@ public class CommandCanvas extends Canvas implements MouseListener{
 
 	private static final long serialVersionUID = 1L;
 
-	private ImplementationGameWorld iGameWorld;
+	private FacadeGameWorld iGameWorld;
 	private GameWorldCanvas gameWorldC;
 
 	private ArrayList<Button<?>> buttons = new ArrayList<Button<?>>();
@@ -32,7 +32,7 @@ public class CommandCanvas extends Canvas implements MouseListener{
 	
 	private int seperation = 10;
 
-	public CommandCanvas(ImplementationGameWorld iGameWorld, GameWorldCanvas gameWorldC) {
+	public CommandCanvas(FacadeGameWorld iGameWorld, GameWorldCanvas gameWorldC) {
 		this.iGameWorld = iGameWorld;
 		this.gameWorldC = gameWorldC;
 

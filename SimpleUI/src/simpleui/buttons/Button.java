@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Area;
 
-import impl.root.ImplementationGameWorld;
+import game_world.api.FacadeGameWorld;
 import simpleui.Vector;
 
 public abstract class Button<T> {
@@ -51,5 +51,5 @@ public abstract class Button<T> {
 		return true;
 	}
 	
-	public abstract T execute(ImplementationGameWorld iGameWorld);
+	public abstract T execute(FacadeGameWorld iGameWorld);
 }

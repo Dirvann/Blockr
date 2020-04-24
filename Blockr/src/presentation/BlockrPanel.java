@@ -3,9 +3,10 @@ package presentation;
 import java.awt.Color;
 import java.awt.Panel;
 
+import client.main.ClientMainClass;
 import domain.GameController;
 import domain.ImplementationGameController;
-import impl.root.ImplementationGameWorld;
+import game_world.api.FacadeGameWorld;
 
 
 public class BlockrPanel extends Panel {
@@ -22,7 +23,7 @@ public class BlockrPanel extends Panel {
 	
 	private GameController gameController;
 	private ImplementationGameController GC;
-	private ImplementationGameWorld iGameWorld;
+	private FacadeGameWorld iGameWorld;
 	
 	private int preferredGameWorldWidth = 10;
 	private int preferredGameWorldHeight = 10;
@@ -35,14 +36,14 @@ public class BlockrPanel extends Panel {
 	 * and a canvas for the gameWorld to be drawn on.
 	 * Also creates the necessary objects for the program to function.
 	 */
-	public BlockrPanel() {
+	public BlockrPanel() throws InstantiationException, IllegalAccessException {
 		// Set size of panel
 		this.setSize(1280, 720);
 		this.setBackground(Color.LIGHT_GRAY);
 		
 		// Set variables for game functions
 		GC = new ImplementationGameController();
-		iGameWorld = new ImplementationGameWorld();
+		iGameWorld = FacadeGameWorld.newInstance(ClientMainClass.getImplementationClass());
 		// TODO gameworld init.
 		iGameWorld.makeNewGameWorld();
 		iGameWorld.makeSnapshot(BlockrPanel.originalSnapshotName);

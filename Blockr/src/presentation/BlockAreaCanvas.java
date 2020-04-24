@@ -19,10 +19,10 @@ import domain.CommandProcessor;
 import domain.ExecutionProcessor;
 import domain.GameController;
 import domain.ImplementationGameController;
+import domain.Vector;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
-import impl.root.ImplementationGameWorld;
-import domain.Vector;
+import game_world.api.FacadeGameWorld;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 
@@ -39,7 +39,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	
 	private ImplementationBlock BF = new ImplementationBlock();
 	private ImplementationPresentationBlock BFP = new ImplementationPresentationBlock();
-	private ImplementationGameWorld iGameWorld;
+	private FacadeGameWorld iGameWorld;
 	private ImplementationGameController GC = new ImplementationGameController(); 
 	
 	private BlockrPanel blockrPanel;
@@ -68,8 +68,8 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	 * @param iGameWorld
 	 *  	  | Interface used by the panel
 	 */
-	public BlockAreaCanvas(BlockrPanel blockrPanel, ImplementationGameWorld iGameWorld) {
-		paletteP = new PalettePresentation();
+	public BlockAreaCanvas(BlockrPanel blockrPanel, FacadeGameWorld iGameWorld) {
+		paletteP = new PalettePresentation(iGameWorld);
 		programAreaP = new ProgramAreaPresentation(blockrPanel.getGameController());
 		this.iGameWorld = iGameWorld;
 		

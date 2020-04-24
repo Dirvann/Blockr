@@ -5,7 +5,8 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.JPanel;
 
-import impl.root.ImplementationGameWorld;
+import client.main.ClientMainClass;
+import game_world.api.FacadeGameWorld;
 
 public class MainPanel extends JPanel {
 
@@ -16,18 +17,18 @@ public class MainPanel extends JPanel {
 	
 	private GameWorldCanvas gameWorldC;
 	private CommandCanvas commandC;
-	private ImplementationGameWorld iGameWorld;
+	private FacadeGameWorld iGameWorld;
 	private final static String originalSnapshotName = "original";
 	
 	private double worldProportion = 0.4;
 	
-	public MainPanel() {
+	public MainPanel() throws InstantiationException, IllegalAccessException {
 		// set size of the panel
 		this.setSize(1280, 720);
 		this.setBackground(Color.LIGHT_GRAY);
 		
 		// gameworld init
-		iGameWorld = new ImplementationGameWorld();
+		iGameWorld = FacadeGameWorld.newInstance(ClientMainClass.getImplementationClass());
 		iGameWorld.makeNewGameWorld();
 		iGameWorld.makeSnapshot(MainPanel.originalSnapshotName);
 		

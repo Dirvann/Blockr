@@ -1,8 +1,7 @@
 package simpleui.buttons;
 import java.awt.Color;
 
-
-import impl.root.ImplementationGameWorld;
+import game_world.api.FacadeGameWorld;
 import game_world.api.PredicateResult;
 import simpleui.Vector;
 
@@ -13,7 +12,7 @@ public class PredicateButton extends Button<PredicateResult>{
 	}
 
 	@Override
-	public PredicateResult execute(ImplementationGameWorld iGameWorld) {
+	public PredicateResult execute(FacadeGameWorld iGameWorld) {
 		return iGameWorld.evaluatePredicate(getName());
 	}
 	

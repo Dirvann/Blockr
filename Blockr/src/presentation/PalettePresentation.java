@@ -4,9 +4,11 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import impl.root.ImplementationGameWorld;
+import client.main.ClientMainClass;
 import domain.Vector;
-import presentation.block.*;
+import game_world.api.FacadeGameWorld;
+import presentation.block.ImplementationPresentationBlock;
+import presentation.block.PresentationBlock;
 
 public class PalettePresentation {
 
@@ -14,19 +16,18 @@ public class PalettePresentation {
 	private ImplementationPresentationBlock iPresentationBlock = new ImplementationPresentationBlock();
 
 	
-	public PalettePresentation() {
+	public PalettePresentation(FacadeGameWorld iGameWorld) {
 		paletteBlocks = new ArrayList<PresentationBlock<?>>();
 
 		
-		initialisePaletteBlocksList(paletteBlocks);
+		initialisePaletteBlocksList(paletteBlocks, iGameWorld);
 	}
 	
-	private void initialisePaletteBlocksList(List<PresentationBlock<?>> list) {
+	private void initialisePaletteBlocksList(List<PresentationBlock<?>> list, FacadeGameWorld iGameWorld) {
 		final int xOffset = 10;
 		final int yOffset = 10;
 		final int yOffsetIncrement = 60;
 		
-		ImplementationGameWorld iGameWorld = new ImplementationGameWorld();
 		
 		List<String> actionList = iGameWorld.getAllActions();
 		List<String> predicateList = iGameWorld.getAllPRedicates();

@@ -1,7 +1,7 @@
 package domain.block;
 
 import domain.GameController;
-import impl.root.ImplementationGameWorld;
+import game_world.api.FacadeGameWorld;
 
 public abstract class ConditionBlock extends Block {
 
@@ -15,10 +15,10 @@ public abstract class ConditionBlock extends Block {
 
 	/**
 	 * 
-	 * @param gamecontroller
+	 * @param iGameWorld
 	 * @return true if the condition is true;
 	 */
-	abstract protected boolean evaluate(ImplementationGameWorld gamecontroller);
+	abstract protected boolean evaluate(FacadeGameWorld iGameWorld);
 
 	@Override
 	protected void disconnect() {
