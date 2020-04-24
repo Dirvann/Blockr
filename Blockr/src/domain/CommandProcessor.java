@@ -18,7 +18,12 @@ public class CommandProcessor {
 	int nbCommandsUndone;
 
 	/**
-	 * @post Undoes all the changed made by the last command in the stack.
+	 * This function undoes the next command to undo. An undone Command can always
+	 * be redone, except when a new change has been made when this command has been
+	 * undone.
+	 * 
+	 * @post Undoes all the changed made by the last command in the stack and adjust
+	 *       the current index of the undoStack.
 	 */
 	public void undo() {
 		if (undoStack.size() > nbCommandsUndone)
@@ -26,6 +31,8 @@ public class CommandProcessor {
 	}
 
 	/**
+	 * This function redoes the most recent undone command.
+	 * 
 	 * @post Re-does the most recent undone command.
 	 */
 	public void redo() {
@@ -34,6 +41,9 @@ public class CommandProcessor {
 	}
 
 	/**
+	 * When a block has been dragged, a new draggingCommand has been made. This
+	 * function makes sure that command is added to the undostack so this command
+	 * can be undone in the future.
 	 * 
 	 * @param command The new command that HAS BEEN executed.
 	 * @post The command will be added to the undoStack. If there were commands
@@ -50,6 +60,8 @@ public class CommandProcessor {
 	}
 
 	/**
+	 * This function is used to make a new draggingCommand and store it in the
+	 * undoStack.
 	 * 
 	 * @param oldPos
 	 * @param newPos
