@@ -4,7 +4,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="src" path="/GameWorldAPI"/>
-	<classpathentry kind="lib" path="C:/1-projects/kuleuven/Blockr/jars/gameworld_api.jar"/>
-	<classpathentry kind="lib" path="C:/1-projects/kuleuven/Blockr/jars/gameworld_robot.jar"/>
+	<classpathentry kind="lib" path="C:/1-projects/kuleuven/Blockr/jars/new/gameworldapi.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
