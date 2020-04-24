@@ -40,6 +40,8 @@ public class BlockrPanel extends Panel {
 	
 	public final static String originalSnapshotName = "original";
 	
+	private static Class<?> iGameWorldClass;
+	
 	/**
 	 * Create a new BlockrPanel
 	 * This will in turn create a canvas for the block Area
@@ -49,14 +51,16 @@ public class BlockrPanel extends Panel {
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
 	 */
-	public BlockrPanel() throws InstantiationException, IllegalAccessException {
+	public BlockrPanel(Class<?> iGameWorldClass) throws InstantiationException, IllegalAccessException {
+		
+		BlockrPanel.iGameWorldClass = iGameWorldClass;
 		// Set size of panel
 		this.setSize(1280, 720);
 		this.setBackground(Color.LIGHT_GRAY);
 		
 		// Set variables for game functions
 		GC = new ImplementationGameController();
-		iGameWorld = FacadeGameWorld.newInstance(ClientMainClass.getImplementationClass());
+		iGameWorld = FacadeGameWorld.newInstance(BlockrPanel.getImplementationClass());
 		// TODO gameworld init.
 		iGameWorld.makeNewGameWorld();
 		iGameWorld.makeSnapshot(BlockrPanel.originalSnapshotName);
@@ -126,5 +130,9 @@ public class BlockrPanel extends Panel {
 	 */
 	public BlockAreaCanvas getBlockAreaCanvas() {
 		return blockAreaC;
+	}
+	
+	public static Class<?> getImplementationClass() {
+		return BlockrPanel.iGameWorldClass;
 	}
 }

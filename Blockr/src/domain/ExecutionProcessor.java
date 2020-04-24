@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import command.ExecutionCommand;
 
-
 //This class is specially made to control the commands during the execution. 
 public class ExecutionProcessor {
 
@@ -14,7 +13,10 @@ public class ExecutionProcessor {
 	int nbCommandsUndone;
 
 	/**
-	 * @post Undoes all the changed made by the last command in the stack.
+	 * A function to undo the most recent command that hasn't been undone yet.
+	 * 
+	 * @post Undoes all the changed made by the last command in the stack that
+	 *       hasn't been undone.
 	 */
 	public void undo() {
 		if (undoStack.size() > nbCommandsUndone)
@@ -22,7 +24,9 @@ public class ExecutionProcessor {
 	}
 
 	/**
-	 * @post Redoes the most recent undone command.
+	 * A function that redoes the most recent undone command in the stack
+	 * 
+	 * @post Redoes the most recent undone command and changes the current index of the stack (nbOfCommandsUndone)
 	 */
 	public void redo() {
 		if (nbCommandsUndone > 0)
@@ -30,10 +34,11 @@ public class ExecutionProcessor {
 	}
 
 	/**
+	 * A function that is used to add an element to the stack.
 	 * 
 	 * @param command The new command that HAS BEEN executed.
 	 * @post The command will be added to the undoStack. If there were commands
-	 *       undone, they will be removed from the undoStack. command will be the
+	 *       undone, they will be removed from the undoStack. command will then be the
 	 *       top element of the undoStack.
 	 */
 	void executed(ExecutionCommand command) {
@@ -45,6 +50,7 @@ public class ExecutionProcessor {
 	}
 
 	/**
+	 * This function adds an executionCommand to the stack.
 	 * 
 	 * @param exeCmd The execution command that has been executed.
 	 * @post if exeCmd is not null, it will be added to undoStack and removes all of
