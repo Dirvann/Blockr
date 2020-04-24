@@ -1,7 +1,12 @@
 package domain;
 /**
  * A class of vectors involving an x value and a y value.
- *
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
  */
 public final class Vector {
 

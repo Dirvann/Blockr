@@ -5,7 +5,18 @@ import command.ExecutionCommand;
 import domain.block.Block;
 import game_world.api.FacadeGameWorld;
 import presentation.BlockrPanel;
-
+/**
+ * A class of GameController that holds the ProgramArea and Gameworld Implementation.
+ * It contains functions for the execution of the program. This class connects
+ * and controls the ProgramArea and the Gameworld.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 public class GameController {
 
 	private ProgramArea programArea;
