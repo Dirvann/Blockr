@@ -5,6 +5,16 @@ import domain.ImplementationGameController;
 import domain.block.ImplementationBlock;
 import presentation.block.PresentationBlock;
 
+/**
+ * A class that holds all the information about the action where a block is
+ * deleted. This information consists of the objects block and
+ * GameController. The class also specifies what must happen to undo and execute this
+ * command.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters, Thomas Van Erum, Dirk Vanbeveren, Geert Wesemael
+ *
+ */
 public class DeleteBlock implements Command {
 	GameController GC;
 	PresentationBlock<?> block;

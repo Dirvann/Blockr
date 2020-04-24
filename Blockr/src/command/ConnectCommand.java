@@ -4,7 +4,17 @@ import domain.GameController;
 import domain.ImplementationGameController;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
-
+/**
+ * A class that holds all the information about the action where a block got
+ * connected to another block. This information consists of
+ * the objects blockToConnect, blockToConnectTo and nextBlock (the block that
+ * was previously connected to blockToConnectTo). The class also specifies what must
+ * happen to undo and execute this command.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters, Thomas Van Erum, Dirk Vanbeveren, Geert Wesemael
+ *
+ */
 public class ConnectCommand implements Command {
 	ImplementationBlock BF = new ImplementationBlock();
 	// first block of group of blocks that gets connected.

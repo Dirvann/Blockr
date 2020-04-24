@@ -3,7 +3,16 @@ package command;
 import domain.GameController;
 import domain.ImplementationGameController;
 import domain.block.Block;
-
+/**
+ * A class that holds all the information about the execution by a block
+ * (currently executed) that is not an actionBlock. This information consists of the objects
+ * previouslyExecuted, currentlyExecuted and nextToExecute. The class also
+ * specifies what must happen to undo and execute this command.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters, Thomas Van Erum, Dirk Vanbeveren, Geert Wesemael
+ *
+ */
 public class ExecutionCommand {
 	protected ImplementationGameController GCF = new ImplementationGameController();
 	protected Block previouslyExecuted;
