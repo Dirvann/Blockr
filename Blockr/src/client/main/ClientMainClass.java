@@ -4,7 +4,14 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import presentation.BlockrPanel;
-
+/**
+* @version 3.0
+* @author Andreas Awouters
+* 		   Thomas Van Erum
+* 		   Dirk Vanbeveren
+* 		   Geert Wesemael
+*
+*/
 public class  ClientMainClass {
 
 	private static BlockrPanel blockrPanel;
