@@ -158,15 +158,14 @@ class UseCase5 {
 		blockAreaCanvas.handleMousePressed(11, 131);
 		blockAreaCanvas.handleMouseDragged(500, 90);
 		blockAreaCanvas.handleMouseReleased(500, 90);
-		//key events
-		KeyEvent a = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
-		KeyEvent b = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
-		KeyEvent c = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
 		//check if running works
+		KeyEvent a = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
 		blockAreaCanvas.handleKeyPressed(a);
 		assertEquals("MoveForward",IB.getName(GC.getNextBlockToExecute(gc)));
+		KeyEvent b = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
 		blockAreaCanvas.handleKeyPressed(b);
 		assertEquals("TurnLeft",IB.getName(GC.getNextBlockToExecute(gc)));
+		KeyEvent c = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
 		blockAreaCanvas.handleKeyPressed(c);
 		assertEquals("TurnRight",IB.getName(GC.getNextBlockToExecute(gc)));
 		//stop at turnleft
@@ -214,9 +213,9 @@ class UseCase5 {
 		assertEquals(new Vector(499,69),IPB.getPosition(IB.getPresentationBlock(leftBlock)));
 		//run
 		KeyEvent a = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
-		KeyEvent b = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
 		blockAreaCanvas.handleKeyPressed(a);
 		assertEquals("MoveForward",IB.getName(GC.getNextBlockToExecute(gc)));
+		KeyEvent b = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
 		blockAreaCanvas.handleKeyPressed(b);
 		assertEquals("TurnLeft",IB.getName(GC.getNextBlockToExecute(gc)));
 		//move a block + Stop run
@@ -224,14 +223,12 @@ class UseCase5 {
 		blockAreaCanvas.handleMouseDragged(500, 50);
 		blockAreaCanvas.handleMouseDragged(450, 70);
 		blockAreaCanvas.handleMouseDragged(400, 100);
-		blockAreaCanvas.handleMousePressed(400, 100);
+		blockAreaCanvas.handleMouseReleased(400, 100);
 		assertEquals(new Vector(399,99),IPB.getPosition(IB.getPresentationBlock(moveBlock)));
 		assertEquals(new Vector(399,119),IPB.getPosition(IB.getPresentationBlock(leftBlock)));
 		//undo movement 
 		KeyEvent c = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_Z,'z');
 		blockAreaCanvas.handleKeyPressed(c);
-		System.out.println(IPB.getPosition(IB.getPresentationBlock(moveBlock)).getX()+" "+IPB.getPosition(IB.getPresentationBlock(moveBlock)).getY());
-		System.out.println(IPB.getPosition(IB.getPresentationBlock(leftBlock)).getX()+" "+IPB.getPosition(IB.getPresentationBlock(moveBlock)).getY());
 		assertEquals(new Vector(499,49),IPB.getPosition(IB.getPresentationBlock(moveBlock)));
 		assertEquals(new Vector(499,69),IPB.getPosition(IB.getPresentationBlock(leftBlock)));
 		//undo add before running
