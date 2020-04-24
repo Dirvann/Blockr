@@ -6,6 +6,18 @@ import presentation.block.PresentationBlock;
 
 public class DraggingCommand implements Command {
 
+	/**
+	 * A class that holds all the information about the action where a block gets
+	 * dragged from one place to another. This means also when a block gets
+	 * disconnected from one place and connected to another place, or made and
+	 * deleted. This information consists of the objects newPos, OldPos, PreCommand
+	 * and postComand. The class also specifies what must happen to undo and execute
+	 * this command.
+	 * 
+	 * @version 3.0
+	 * @author Andreas Awouters, Thomas Van Erum, Dirk Vanbeveren, Geert Wesemael
+	 *
+	 */
 	ImplementationPresentationBlock BPF = new ImplementationPresentationBlock();
 	Command preCommand;
 	Command postCommand;
@@ -28,7 +40,7 @@ public class DraggingCommand implements Command {
 	 *                    released. This can be deleting or connecting a block.
 	 * @return A draggingComand that holds the given information. If the given
 	 *         information is complete, This command can be undone and redone.
-	 *         
+	 * 
 	 * @post This command will hold the information of the preCommand,
 	 *       draggingCommand and postCommand together in one command.
 	 */
