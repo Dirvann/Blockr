@@ -28,30 +28,48 @@ public class ProgramArea {
 	protected ExecutionCommand exeCmd = null;
 	/**
 	 * Creates a new ProgramArea
+	 * 
+	 * @post There are no top level blocks.
+	 * 		 | new.topLevelBlocks.size() == null
 	 */
 	protected ProgramArea() {
 		this.topLevelBlocks = new ArrayList<Block>();
 	}
 
 	/**
+	 * The number of top level blocks
 	 * 
 	 * @return number of top level blocks
+	 * 		   | result = topLevelBlocks.size()
 	 */
 	protected int nbTopLevelBlocks() {
 		return topLevelBlocks.size();
 	}
 
 	/**
+	 * Returns true if the program is running.
 	 * 
-	 * @return nextToExecute != null
+	 * @return true if there is no next block to execute. 
+	 * 		   | nextToExecute != null
 	 */
 	protected Boolean programInProgress() {
 		return nextToExecute != null;
 	}
 
 	/**
+	 * Set the next block to execute to the top level block.
+	 * This only works if there is only one top level block and
+	 * the block is a sequence block.
+	 * 
+	 * @post   The next block to execute is the top level block
+	 * 		   |nextToExecute = topLevelBlocks.get(0)
+	 * @post   There are no currently executed blocks if the program wasn't running
+	 * 		   | if (!programInProgress())
+	 * 		   |    then currentExe = null && exeCmd = null
 	 * @throws Exception 
-	 * @post nextToExecute != null
+	 * 		   When there is more than one top level block,
+	 * 		   the top level block is not a sequence block or
+	 * 		   the top level block is not a valid starting block.
 	 */
 	protected void startExecution() throws Exception {
 		// programInProgress() should in theory never return true, but it's there to make sure;
@@ -81,9 +99,19 @@ public class ProgramArea {
 	}
 
 	/**
+	 * Execute the next block to execute and set
+	 * the next/previous/current execute to the right blocks.
 	 * 
-	 * @param gameController gameController to execute the next function in
-	 * @throws Exception when execute is not possible
+	 * @param  gameController 
+	 * 		   The gameController to execute the next function in.
+	 * @post   The currently executed block is equal to the previous executed block.
+	 * 		   |new.previousExe = currentExe
+	 * @post   The currently executed block is equal to the previous executed block.
+	 * 		   |new.currentExe = nextToExecute
+	 * @return The execution command of the executed command.
+	 * 		   | return = programArea.exeCmd
+	 * @throws Exception 
+	 * 		   When execute is not possible.
 	 */
 	protected ExecutionCommand executeNextBlock(GameController GC) throws Exception {
 		//undo redo info collect
@@ -102,19 +130,44 @@ public class ProgramArea {
 	}
 
 	/**
-	 * @post nextToExecute == null
+	 * Stop the execution of the program.
+	 * 
+	 *@post There is no block to execute next.
+	 *		|nextToExecute == null
 	 */
 	protected void stopExecution() {
 		if (programInProgress()) {
 			nextToExecute = null;
 		}
 	}
-
+	/**
+	 * Add a block to the top level blocks. The block
+	 * is associated to the given presentationBlock.
+	 * 
+	 * @param pBlock
+	 * 		  The given presentationblock.
+	 * @post The list of top level blocks contains the 
+	 * 		 block associated to the given presentationblock
+	 * 		 | new.getTopBlocks().contains(BFP.getBlock(pBlock))
+	 * @post The amount of blocks left is lowered by one.
+	 * 		 | new.blocksLeft = blocksLeft - 1
+	 */
 	protected void addBlock(PresentationBlock<?> pBlock) {
 		addTopLevelBlock(BFP.getBlock(pBlock));
 		blocksLeft -= BF.getAllNextBlocks(BFP.getBlock(pBlock)).size();
 	}
-
+	/**
+	 * Remove a block from the top level blocks. The block
+	 * is associated to the given presentationBlock.
+	 * 
+	 * @param pBlock
+	 * 		  The given presentationblock.
+	 * @post The list of top level blocks does not contain the 
+	 * 		 block associated to the given presentationblock
+	 * 		 | !new.getTopBlocks().contains(BFP.getBlock(pBlock))
+	 * @post One is added to the amount of blocks left.
+	 * 		 | new.blocksLeft = blocksLeft + 1
+	 */
 	protected void removeBlock(PresentationBlock<?> pBlock) {
 		Block block = BFP.getBlock(pBlock);
 		BF.disconnect(BFP.getBlock(pBlock));
@@ -124,13 +177,18 @@ public class ProgramArea {
 			removeTopLevelBlock(block);
 			System.out.println("a block is correctly removed");
 		} catch (Exception e) {
-			System.out.println("Something is not right, a bug may happen soon.");
+			System.out.println("Something is not right.");
 		}
 	}
 
 	/**
+	 * Add the given block to the list of top level blocks.
 	 * 
-	 * @param block, block to add to topLevelBlocks
+	 * @param  block
+	 * 		   The block to add to topLevelBlocks.
+	 * @post   The list of top level blocks contains the given block
+	 * 		   | new.getTopBlocks().contains(block)
+	 * @throws Exception block is not a top level block
 	 */
 	protected void addTopLevelBlock(Block block) {
 		try {
@@ -141,9 +199,12 @@ public class ProgramArea {
 	}
 
 	/**
+	 * Remove the given block from the list of top level blocks.
 	 * 
-	 * @param block, block to remove from topLevelBlocks
-	 * @throws Exception block is not a top level block
+	 * @param block
+	 * 		  The block to remove from topLevelBlocks
+	 * @post  The list of top level blocks does not contain the given block
+	 * 		  | !new.getTopBlocks().contains(block)
 	 */
 	protected void removeTopLevelBlock(Block block) {
 		if (topLevelBlocks.contains(block)) {
@@ -152,15 +213,19 @@ public class ProgramArea {
 	}
 
 	/**
+	 * Check if the given block is a top level block.
 	 * 
-	 * @param block block to check
-	 * @return topLevelBlocks.contains(block)
+	 * @param  block 
+	 * 		   The block to check
+	 * @return true if the list of top level blocks contains the given block.
+	 * 		   |topLevelBlocks.contains(block)
 	 */
 	protected boolean isTopLevelBlock(Block block) {
 		return topLevelBlocks.contains(block);
 	}
 
 	/**
+	 * The next block to execute.
 	 * 
 	 * @return nextToExecute
 	 */
@@ -169,6 +234,7 @@ public class ProgramArea {
 	}
 
 	/**
+	 * The list of top level blocks.
 	 * 
 	 * @return topLevelBlocks
 	 */
@@ -177,6 +243,7 @@ public class ProgramArea {
 	}
 
 	/**
+	 * 
 	 * 
 	 * @return copy of topLevelBlocks
 	 */
