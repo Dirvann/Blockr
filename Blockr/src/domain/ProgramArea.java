@@ -12,7 +12,16 @@ import exceptions.domainExceptions.CantRunConditionException;
 import exceptions.domainExceptions.NotOneStartingBlockException;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
-
+/**
+ * A class of ProgramArea that has a list of top level blocks.
+ * It also contains the currently executed and next to execute blocks.
+ *
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ */
 public class ProgramArea {
 
 	private int blocksLeft = 15;
@@ -243,7 +252,7 @@ public class ProgramArea {
 	}
 
 	/**
-	 * 
+	 * A copy of all the blocks in the programArea
 	 * 
 	 * @return copy of topLevelBlocks
 	 */
@@ -255,15 +264,30 @@ public class ProgramArea {
 
 		return list;
 	}
-
+	/**
+	 * The amount of blocks you can add to the programArea.
+	 * 
+	 * @return blocksLeft
+	 */
 	protected int getBlocksLeft() {
 		return blocksLeft;
 	}
-
+	/**
+	 * The execution command of the current execution.
+	 * 
+	 * @return exeCmd
+	 */
 	protected ExecutionCommand getExecutionCommand() {
 		return exeCmd;
 	}
-
+	/**
+	 * Set the execution command to the given execution command.
+	 * 
+	 * @param exeCmd
+	 * 		  The execution command
+	 * @post The execution command is equal to the given execution command.
+	 * 		 | new.getExecutionCommand() = exeCmd
+	 */
 	protected void setExecutionCommand(ExecutionCommand exeCmd) {
 		this.exeCmd = exeCmd;
 	}
