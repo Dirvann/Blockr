@@ -7,9 +7,19 @@ import command.DraggingCommand;
 import domain.block.ImplementationBlock;
 import presentation.block.PresentationBlock;
 
-// This class is specially made for the creation of the block structure in programArea. 
-//This means dragging, connecting, disconnecting, making and deleting blocks. 
-//If a block is disconnected, dragged and again connected, this counts as one execution step.
+/**
+ * This class is specially made for the creation of the block structure in programArea. 
+ * This means dragging, connecting, disconnecting, making and deleting blocks. 
+ * If a block is disconnected, dragged and again connected, this counts as one execution step.
+ * It has a stack of the commands, the cursor and number of the undone commands.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 public class CommandProcessor {
 	GameController gameController;
 	ImplementationBlock BF = new ImplementationBlock();

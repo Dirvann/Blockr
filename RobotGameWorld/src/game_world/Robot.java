@@ -3,6 +3,11 @@ package game_world;
 /**
  * A class of the Robot, containing the location and the direction of the Robot.
  *
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
  */
 public class Robot {
 	

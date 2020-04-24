@@ -5,18 +5,37 @@ import domain.GameController;
 import domain.ImplementationGameController;
 import game_world.api.ActionResult;
 import game_world.api.FacadeGameWorld;
-
+/**
+ * A class of Actionblocks that extends SequenceBlock.
+ * An action block can perform actions and has a name.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 public class ActionBlock extends SequenceBlock{
 	
 	String name;
-	
+	/**
+	 * Create a ActionBlock with the given name.
+	 * 
+	 * @param name
+	 * 		  The name for the actionblock.
+	 * @post  The name is equal to the given name.
+	 * 		  |new.getName() = name
+	 */
 	protected ActionBlock(String name) {
 		this.name = name;
 	}
 	
 	/**
+	 * Perform the action of this block.
 	 * 
-	 * @param gameController The gameController where the block is in.
+	 * @param gameController 
+	 * 		  The gameController where the block is in.
 	 * @throws Exception If action is not possible.
 	 * @post The action of the block will be performed
 	 */

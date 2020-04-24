@@ -4,7 +4,16 @@ import java.util.List;
 
 import domain.GameController;
 import presentation.block.PresentationBlock;
-
+/**
+ * The Facade of the ImplemenationBlock class.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 public interface FacadeBlock {
 
 	// Make The Blocks:

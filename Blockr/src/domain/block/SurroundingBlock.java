@@ -2,15 +2,27 @@ package domain.block;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * An abstract class of SurroundingBlocks that extends SequenceBlock.
+ * It has a conditionblock and a bodyblock.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 public abstract class SurroundingBlock extends SequenceBlock {
 
 	protected ConditionBlock condition = null;
 	protected SequenceBlock bodyBlock = null;
 
 	/**
+	 * Set the given block as first body block.
 	 * 
-	 * @param block Sets this block as first (of a sequence) under the if statement.
+	 * @param block 
+	 * 		  Sets this block as first (of a sequence) under the statement.
 	 */
 	protected void setBodyBlock(SequenceBlock block) {
 		if (this.bodyBlock != null) {
@@ -26,8 +38,9 @@ public abstract class SurroundingBlock extends SequenceBlock {
 	}
 
 	/**
+	 * The first block inside of this block.
 	 * 
-	 * @return The first block which is surrounded by this if block
+	 * @return The first block which is surrounded by this block
 	 */
 	protected SequenceBlock getBodyBlock() {
 		SequenceBlock copy = this.bodyBlock; // TODO: decent copy
@@ -35,9 +48,10 @@ public abstract class SurroundingBlock extends SequenceBlock {
 	}
 
 	/**
+	 * Remove all blocks inside of this block.
 	 * 
-	 * @Post removes all blocks which are surrounded by this if block. Sets the pointer
-	 * to the first block to null.
+	 * @post removes all blocks which are surrounded by this block. Sets the pointer
+	 *       to the first block to null.
 	 */
 	protected void removeBodyBlock() {
 		if (this.bodyBlock != null) {
@@ -47,6 +61,7 @@ public abstract class SurroundingBlock extends SequenceBlock {
 	}
 
 	/**
+	 * The first condition block attached to this block.
 	 * 
 	 * @return Returns the first condition block (might be of a sequence accessible
 	 *         by block.next()).
@@ -57,9 +72,11 @@ public abstract class SurroundingBlock extends SequenceBlock {
 	}
 
 	/**
+	 * Set the condition block to the given condition block.
 	 * 
-	 * @param block The block that needs to be added. @ sets this block as the first
-	 *              block in the sequence which is surrounded by the if block.
+	 * @param block 
+	 * 		  The block that needs to be added. 
+	 * @post  sets this block as the first block in the sequence which is surrounded by the if block.
 	 */
 	protected void setConditionBlock(ConditionBlock block) {
 		block.setSurroundingBlock(this);
@@ -69,9 +86,10 @@ public abstract class SurroundingBlock extends SequenceBlock {
 	}
 
 	/**
+	 * Removes the condition block(s).
 	 * 
-	 * @Post removes the condition block and sets this to null. The surroundingBlock of
-	 * the condition will be null too.
+	 * @post removes the condition block and sets this to null. The surroundingBlock of
+	 *       the condition will be null too.
 	 */
 	protected void removeConditionBlock() {
 		if (condition != null)
@@ -81,6 +99,7 @@ public abstract class SurroundingBlock extends SequenceBlock {
 	}
 
 	/**
+	 * Checks if the condition is valid.
 	 * 
 	 * @return True if the condition can be evaluated.
 	 */
@@ -109,6 +128,7 @@ public abstract class SurroundingBlock extends SequenceBlock {
 	}
 
 	/**
+	 * The block that needs to be executed next, when everything in the body is done executing.
 	 * 
 	 * @return The block that needs to be executed or checked after the body has
 	 *         been executed.

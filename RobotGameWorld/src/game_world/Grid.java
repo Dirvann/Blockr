@@ -11,6 +11,11 @@ import game_world.cell.*;
  * 
  * @invar The location of each cell is inside the Gird [height][width]
  *
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
  */
 public class Grid {
 

@@ -1,5 +1,14 @@
 package domain.block;
-
+/**
+ * An abstract class of SequenceBlocks that extends Block and has a next and previous block.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 public abstract class SequenceBlock extends Block {
 	protected SequenceBlock next = null;
 	protected SequenceBlock previous = null;
@@ -40,6 +49,7 @@ public abstract class SequenceBlock extends Block {
 	}
 
 	/**
+	 * The block directly underneath
 	 * 
 	 * @return The next block directly underneath
 	 */
@@ -48,7 +58,9 @@ public abstract class SequenceBlock extends Block {
 	}
 
 	/**
-	 * @Postremoves all the next blocks on the same level (same surrounding bloc). This
+	 * Removes all the next blocks on the same level.
+	 * 
+	 * @Post removes all the next blocks on the same level (same surrounding bloc). This
 	 * keeps the sequence of the next blocks, but they are now independent.
 	 */
 	protected void removeNextBlock() {

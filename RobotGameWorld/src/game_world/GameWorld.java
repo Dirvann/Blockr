@@ -14,6 +14,11 @@ import game_world.cell.*;
  * A class of gameWorlds, containing the grid, robot and startRobot.
  * The startrobot is used to reset the game world.
  *
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
  */
 public class GameWorld {
 	

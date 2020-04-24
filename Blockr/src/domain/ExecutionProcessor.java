@@ -4,7 +4,17 @@ import java.util.ArrayList;
 
 import command.ExecutionCommand;
 
-//This class is specially made to control the commands during the execution. 
+/**
+ * A class that is specially made to control the commands during the execution.
+ * It has a stack of the commands, the cursor and number of the undone commands.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 public class ExecutionProcessor {
 
 	ImplementationGameController GCF = new ImplementationGameController();
