@@ -2,27 +2,38 @@ package game_world.api;
 
 import java.awt.Graphics;
 import java.util.List;
-
+/**
+ * The Facade for the GameWorld.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 public interface FacadeGameWorld {
-	
+	/**
+	 * Initialize a new GameWorld.
+	 */
 	public void makeNewGameWorld();
 	
 	/**
-	 * List of all valid actions
+	 * List of all valid actions.
 	 * 
 	 * @return a list of Strings with all valid action names
 	 */
 	public List<String> getAllActions();
 	
 	/**
-	 * List of all valid predicates
+	 * List of all valid predicates.
 	 * 
 	 * @return a list of Strings with all valid predicate names
 	 */
 	public List<String> getAllPRedicates();
 	
 	/**
-	 * Execute an action in the gameWorld
+	 * Execute an action in the gameWorld.
 	 * 
 	 * @param action 
 	 * 		  | name of the action to be executed
@@ -35,7 +46,7 @@ public interface FacadeGameWorld {
 	public ActionResult executeAction(String action);
 	
 	/**
-	 * Evaluate a predicate in the gameWorld
+	 * Evaluate a predicate in the gameWorld.
 	 * 
 	 * @param predicate
 	 * 		  | name of the predicate to be evaluated
@@ -47,14 +58,14 @@ public interface FacadeGameWorld {
 	public PredicateResult evaluatePredicate(String predicate);
 	
 	/**
-	 * 
+	 * Check if the goal is reached.
 	 * 
 	 * @return true if the goal is reached in the current game state
 	 */
 	public boolean goalReached();
 	
 	/**
-	 * Undo an action in the gameWorld
+	 * Undo an action in the gameWorld.
 	 * 
 	 * @param action 
 	 * 		  | name of the action to be undone
@@ -66,7 +77,7 @@ public interface FacadeGameWorld {
 	public ActionResult undoAction(String action);
 	
 	/**
-	 * Draw the gameWorld onto a Graphics object
+	 * Draw the gameWorld onto a Graphics object.
 	 * 
 	 * @param g
 	 * 		  | Graphics object to draw the gameWorld on
@@ -79,7 +90,7 @@ public interface FacadeGameWorld {
 	public void drawGameWorld(Graphics g, int width, int height);
 	
 	/**
-	 * reset the gameWorld
+	 * Reset the gameWorld.
 	 */
 	public void resetGameWorld();
 	
@@ -91,7 +102,7 @@ public interface FacadeGameWorld {
 	public String makeSnapshot();
 	
 	/**
-	 * make a snapshot of the current gameWorld state
+	 * Make a snapshot of the current gameWorld state
 	 * 
 	 * @param snapshotID
 	 *        | taken snapshots ID is equal to given ID
@@ -99,14 +110,14 @@ public interface FacadeGameWorld {
 	public void   makeSnapshot(String snapshotID);
 	
 	/**
-	 * get all snapshot IDs
+	 * Get all snapshot IDs.
 	 * 
 	 * @return List of all snapshot IDs
 	 */
 	public List<String> getAllSnapshots();
 	
 	/**
-	 * Load the game state from the snapshot with given snapshotID
+	 * Load the game state from the snapshot with given snapshotID.
 	 * 
 	 * @param snapshotID
 	 * 		  | ID of snapshot to load
@@ -115,7 +126,7 @@ public interface FacadeGameWorld {
 	public void loadSnapshot(String snapshotID);
 	
 	/**
-	 * remove the snapshot with the given snapshotID
+	 * Remove the snapshot with the given snapshotID.
 	 * 
 	 * @param snapshotID
 	 * 		  | iD of snapshot to remove
@@ -124,7 +135,8 @@ public interface FacadeGameWorld {
 	public void removeSnapshot(String snapshotID);
 	
 	/**
-	 * return a new instance of a FacadeGameWorld Implementation using a given Implementation class.
+	 * Return a new instance of a FacadeGameWorld Implementation using a given Implementation class.
+	 * 
 	 * @param implClass
 	 * 		  Class of the Game World implementation.
 	 * @return a new instance of FacadeGameWorld
