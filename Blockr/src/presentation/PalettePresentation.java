@@ -10,12 +10,29 @@ import game_world.api.FacadeGameWorld;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 
+/**
+ * PalettePresentation is intended to be used as a part of a BlockAreaCanvas.
+ * PalettePresentation handles activities concerning the palette.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 public class PalettePresentation {
 
 	private List<PresentationBlock<?>> paletteBlocks;
 	private ImplementationPresentationBlock iPresentationBlock = new ImplementationPresentationBlock();
 
-	
+	/**
+	 * Create a new instance of PalettePresentation
+	 * 
+	 * @param iGameWorld
+	 *  	  | Interface used by the BlockAreaCanvas
+	 * 
+	 */
 	public PalettePresentation(FacadeGameWorld iGameWorld) {
 		paletteBlocks = new ArrayList<PresentationBlock<?>>();
 
@@ -65,7 +82,15 @@ public class PalettePresentation {
 		*/
 	}
 	
-	
+	/**
+	 * Returns the presentationBlock from the palette if the presentationBlock covers this position
+	 * 
+	 * @param position
+	 *  	  | position to get the block from
+	 * @return
+	 * 		  | paletteBlock at given position
+	 * 		  | null if no block exists at given position
+	 */
 	public PresentationBlock<?> GetClickedPaletteBlock(Vector position) {
 		for (PresentationBlock<?> pBlock: paletteBlocks) {
 			if (iPresentationBlock.collidesWithPosition(position, pBlock)) {
@@ -76,7 +101,12 @@ public class PalettePresentation {
 		return null;
 	}
 	
-	
+	/**
+	 * Draw the palette on the given Graphics object
+	 * 
+	 * @param g
+	 * 	      | Graphics object to draw palette on
+	 */
 	public void paint(Graphics g) {
 		for (PresentationBlock<?> pBlock: paletteBlocks) {
 			iPresentationBlock.draw(g, pBlock);;

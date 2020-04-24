@@ -8,7 +8,17 @@ import domain.GameController;
 import domain.ImplementationGameController;
 import game_world.api.FacadeGameWorld;
 
-
+/**
+ * Panel used as containter for a BlockAreaCanvas and GameWorldCanvas.
+ * This panel fills the operating system window.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 public class BlockrPanel extends Panel {
 
 	/**
