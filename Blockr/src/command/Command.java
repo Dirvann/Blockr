@@ -3,12 +3,22 @@ package command;
 public interface Command {
 
 	/**
-	 * @post This function does all of the things needed to execute this command.
+	 * Executes this command and makes the required changes for this command. This
+	 * command can be a connectingCommand, disconnectingCommand, MakeBlock,
+	 * drag Block etc.
+	 * 
+	 * @post This function does all of the things needed to do the execution of
+	 *       this command.
 	 */
 	public void execute();
-	
+
 	/**
-	 * @post This function does all of the things needed to undo the execution of this command.
+	 * Undoes this command and makes the required changes for this Command.This
+	 * command can be a connectingCommand, disconnectingCommand, MakeBlock,
+	 * drag Block etc.
+	 * 
+	 * @post This function does all of the things needed to undo the execution of
+	 *       this command.
 	 */
 	public void undo();
 }

@@ -5,24 +5,29 @@ import domain.ImplementationGameController;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
 
-public class ConnectCommand implements Command{
+public class ConnectCommand implements Command {
 	ImplementationBlock BF = new ImplementationBlock();
-	//first block of group of blocks that gets connected.
+	// first block of group of blocks that gets connected.
 	Block blockToConnect;
-	//block before group of blocks connected
+	// block before group of blocks connected
 	Block blockToConnectTo;
-	//block after group of blocks connected
+	// block after group of blocks connected
 	Block nextBlock;
-	//The gamecontroller wher the blocks exist
+	// The gamecontroller wher the blocks exist
 	GameController GC;
 	ImplementationGameController GCF = new ImplementationGameController();
-	
+
 	/**
+	 * Makes a new command consisting of all of the information to undo and redo
+	 * this Command.
 	 * 
 	 * @param blockToConnectTo block before group of blocks connected
-	 * @param blockToConnect first block of group of blocks that gets connected.
-	 * @param nextBlock block after group of blocks connected
-	 * @param lastBlock last block of group of blocks
+	 * @param blockToConnect   first block of group of blocks that gets connected.
+	 * @param nextBlock        block after group of blocks connected
+	 * @param lastBlock        last block of group of blocks
+	 * 
+	 * @Post The objects blockToConnectTo, blockToConnect, nextBlock and GC are
+	 *       saved in this command for later use.
 	 */
 	public ConnectCommand(Block blockToConnectTo, Block blockToConnect, Block nextBlock, GameController GC) {
 		this.blockToConnect = blockToConnect;
@@ -33,14 +38,14 @@ public class ConnectCommand implements Command{
 
 	@Override
 	public void execute() {
-		GCF.connect(blockToConnectTo, blockToConnect, GC);		
+		GCF.connect(blockToConnectTo, blockToConnect, GC);
 	}
 
 	@Override
 	public void undo() {
-		GCF.disconnect(blockToConnect,GC);
+		GCF.disconnect(blockToConnect, GC);
 		GCF.disconnect(nextBlock, GC);
-		GCF.connect(blockToConnectTo, nextBlock,GC);
+		GCF.connect(blockToConnectTo, nextBlock, GC);
 	}
-	
+
 }

@@ -16,9 +16,13 @@ public class disconnectCommand implements Command{
 	ImplementationGameController GCF = new ImplementationGameController();
 	
 	/**
+	 * Makes a disconnect block Commmand. This Command includes all of the info needed
+	 * to undo and redo a block disconnecting Command.
 	 * 
 	 * @param blockToConnectTo block before group of blocks connected
 	 * @param blockToConnect first block of group of blocks that gets connected.
+	 * 
+	 * @Post The objects blockToDisconnectTo, blockToDisconnect and GC are stored in this command for later use.
 	 */
 	public disconnectCommand(Block blockToDisconnectTo, Block blockToDisconnect, GameController GC) {
 		this.blockToDisconnect = blockToDisconnect;
