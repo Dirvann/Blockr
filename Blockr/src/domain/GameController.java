@@ -4,6 +4,7 @@ import client.main.ClientMainClass;
 import command.ExecutionCommand;
 import domain.block.Block;
 import game_world.api.FacadeGameWorld;
+import presentation.BlockrPanel;
 
 public class GameController {
 
@@ -12,7 +13,7 @@ public class GameController {
 
 	protected GameController() throws InstantiationException, IllegalAccessException {
 		this.programArea = new ProgramArea();
-		this.iGameWorld = FacadeGameWorld.newInstance(ClientMainClass.getImplementationClass());
+		this.iGameWorld = FacadeGameWorld.newInstance(BlockrPanel.getImplementationClass());
 	}
 
 	protected GameController(FacadeGameWorld iGameWorld) {

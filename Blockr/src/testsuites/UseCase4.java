@@ -57,7 +57,12 @@ class UseCase4 {
 	BlockAreaCanvas blockAreaCanvas;
 	
 	private void setup() {
-		blockrPanel = new BlockrPanel();
+		try {
+			blockrPanel = new BlockrPanel(ImplementationGameWorld.class);
+		} catch (InstantiationException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		GC = new ImplementationGameController();
 		gc = blockrPanel.getGameController();
 		blockAreaCanvas = blockrPanel.getBlockAreaCanvas();	
