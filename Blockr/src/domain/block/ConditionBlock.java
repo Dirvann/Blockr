@@ -17,12 +17,14 @@ public abstract class ConditionBlock extends Block {
 	protected ChainConditionBlock previous = null;
 
 	/**
+	 * Returns true if the condition is valid.
 	 * 
 	 * @return true if it would be possible to evaluate.
 	 */
 	abstract protected boolean isValidCondition();
 
 	/**
+	 * Evaluates this condition.
 	 * 
 	 * @param iGameWorld
 	 * @return true if the condition is true;

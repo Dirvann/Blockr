@@ -14,7 +14,9 @@ import game_world.api.FacadeGameWorld;
  */
 class NotBlock extends ChainConditionBlock {
 	
-
+	/**
+	 * Initialize an Not-block.
+	 */
 	protected NotBlock() {
 		super();
 	}

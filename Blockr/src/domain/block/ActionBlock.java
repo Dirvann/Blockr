@@ -19,14 +19,23 @@ import game_world.api.FacadeGameWorld;
 public class ActionBlock extends SequenceBlock{
 	
 	String name;
-	
+	/**
+	 * Create a ActionBlock with the given name.
+	 * 
+	 * @param name
+	 * 		  The name for the actionblock.
+	 * @post  The name is equal to the given name.
+	 * 		  |new.getName() = name
+	 */
 	protected ActionBlock(String name) {
 		this.name = name;
 	}
 	
 	/**
+	 * Perform the action of this block.
 	 * 
-	 * @param gameController The gameController where the block is in.
+	 * @param gameController 
+	 * 		  The gameController where the block is in.
 	 * @throws Exception If action is not possible.
 	 * @post The action of the block will be performed
 	 */

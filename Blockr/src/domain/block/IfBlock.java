@@ -16,9 +16,9 @@ import exceptions.domainExceptions.NoConditionBlockException;
  *
  */
 class IfBlock extends SingleSurroundingBlock {
-	
-	
-
+	/**
+	 * Initialize an If-block.
+	 */
 	protected IfBlock() {
 		super();
 	}
