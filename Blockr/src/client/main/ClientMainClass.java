@@ -3,26 +3,27 @@ package client.main;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+import presentation.BlockrPanel;
 
-import simpleui.MainPanel;
+public class  ClientMainClass {
 
-public class ClientMainClass {
-
-	private static MainPanel mainPanel;
+	private static BlockrPanel blockrPanel;
+	
 	private static Class<?> ImplementationGameWorld;
 
 	public static void main(String[] args) {
+		
 		if(args.length > 0) {
 			try {
 				ClassLoader loader = ClientMainClass.class.getClassLoader();
 				ImplementationGameWorld = loader.loadClass(args[0]);
 	            
-	            JFrame frame = new JFrame("SimpleUI");
-	    		mainPanel = new MainPanel();
-	    		frame.add(mainPanel);
-	    		frame.pack();
-	    		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-	    		frame.setVisible(true);
+				JFrame frame = new JFrame("Blockr");
+				blockrPanel = new BlockrPanel();
+				frame.add(blockrPanel);
+				frame.pack();
+				frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+				frame.setVisible(true);
 				
 			}  catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -38,10 +39,6 @@ public class ClientMainClass {
 	}
 	
 	public static Class<?> getImplementationClass() {
-		return ImplementationGameWorld;
-	}
-	
-	public static Class<?> getClas() {
 		return ImplementationGameWorld;
 	}
 

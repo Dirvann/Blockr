@@ -362,6 +362,4 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	public boolean goalReached() {
 		return this.gameWorld.robotOnGoal();
 	}
-
-	
 }

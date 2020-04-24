@@ -1,22 +1,21 @@
 package domain;
 
+import client.main.ClientMainClass;
 import command.ExecutionCommand;
 import domain.block.Block;
-import impl.root.ImplementationGameWorld;
+import game_world.api.FacadeGameWorld;
 
 public class GameController {
 
 	private ProgramArea programArea;
-	private ImplementationGameWorld iGameWorld;
+	private FacadeGameWorld iGameWorld;
 
-	ImplementationGameWorld gameWorldFunctions = new ImplementationGameWorld();
-
-	protected GameController() {
+	protected GameController() throws InstantiationException, IllegalAccessException {
 		this.programArea = new ProgramArea();
-		this.iGameWorld = new ImplementationGameWorld();
+		this.iGameWorld = FacadeGameWorld.newInstance(ClientMainClass.getImplementationClass());
 	}
 
-	protected GameController(ImplementationGameWorld iGameWorld) {
+	protected GameController(FacadeGameWorld iGameWorld) {
 		this.programArea = new ProgramArea();
 		this.iGameWorld = iGameWorld;
 	}	
@@ -46,11 +45,11 @@ public class GameController {
 		return programArea.getNextBlockToExecute();
 	}
 
-	protected void setGameWorldImplementation(ImplementationGameWorld iGameWorld) {
+	protected void setGameWorldImplementation(FacadeGameWorld iGameWorld) {
 		this.iGameWorld = iGameWorld;
 	}
 
-	protected ImplementationGameWorld getGameWorldImplementation() {
+	protected FacadeGameWorld getGameWorldImplementation() {
 		return this.iGameWorld;
 	}
 

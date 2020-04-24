@@ -7,16 +7,16 @@ import domain.block.Block;
 import domain.block.ConditionBlock;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
-import impl.root.ImplementationGameWorld;
+import game_world.api.FacadeGameWorld;
 import presentation.block.PresentationBlock;
 
 public interface FacadeGameController {
 	
-	public GameController makeGameController(ImplementationGameWorld iGameWorld);
-	public GameController makeGameController();
+	public GameController makeGameController(FacadeGameWorld iGameWorld);
+	public GameController makeGameController() throws InstantiationException, IllegalAccessException;
 	
-	public void setGameWorldImplementation(GameController gameController, ImplementationGameWorld iGameWorld);
-	public ImplementationGameWorld getGameWorldImplementation(GameController gameController);
+	public void setGameWorldImplementation(GameController gameController, FacadeGameWorld iGameWorld);
+	public FacadeGameWorld getGameWorldImplementation(GameController gameController);
 	public ProgramArea getProgramArea(GameController gameController);
 	
 	public void addBlockToProgramArea(GameController gameController,PresentationBlock<?> pBlock);

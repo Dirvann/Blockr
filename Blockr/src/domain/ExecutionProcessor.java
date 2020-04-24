@@ -1,8 +1,9 @@
 package domain;
 
 import java.util.ArrayList;
+
 import command.ExecutionCommand;
-import impl.root.ImplementationGameWorld;
+
 
 //This class is specially made to control the commands during the execution. 
 public class ExecutionProcessor {
@@ -10,7 +11,6 @@ public class ExecutionProcessor {
 	ImplementationGameController GCF = new ImplementationGameController();
 	int cursor;
 	ArrayList<ExecutionCommand> undoStack = new ArrayList<>();
-	ImplementationGameWorld GWF = new ImplementationGameWorld();
 	int nbCommandsUndone;
 
 	/**

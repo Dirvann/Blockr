@@ -2,7 +2,7 @@ package simpleui;
 import java.awt.Canvas;
 import java.awt.Graphics;
 
-import impl.root.ImplementationGameWorld;
+import game_world.api.FacadeGameWorld;
 
 public class GameWorldCanvas extends Canvas {
 
@@ -11,9 +11,9 @@ public class GameWorldCanvas extends Canvas {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private ImplementationGameWorld iGameWorld;
+	private FacadeGameWorld iGameWorld;
 
-	public GameWorldCanvas(ImplementationGameWorld iGameWorld) {
+	public GameWorldCanvas(FacadeGameWorld iGameWorld) {
 		this.iGameWorld = iGameWorld;
 	}
 	
