@@ -1,7 +1,17 @@
 package domain.block;
 
 import game_world.api.FacadeGameWorld;
-
+/**
+ * An class of NotBlocks that extends ChainConditionBlock.
+ * It has a specified evaluation and a name.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 class NotBlock extends ChainConditionBlock {
 	
 

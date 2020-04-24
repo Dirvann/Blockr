@@ -2,7 +2,16 @@ package domain.block;
 
 import domain.GameController;
 import game_world.api.FacadeGameWorld;
-
+/**
+ * An abstract class of ConditionBlocks that extends Block and has a previous block.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 public abstract class ConditionBlock extends Block {
 
 	protected ChainConditionBlock previous = null;

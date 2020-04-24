@@ -5,7 +5,17 @@ import domain.GameController;
 import domain.ImplementationGameController;
 import exceptions.domainExceptions.InfiniteLoopWhileException;
 import exceptions.domainExceptions.NoConditionBlockException;
-
+/**
+ * An class of WhileBlocks that extends SingleSurroundingBlock.
+ * It has a specified execution and a name.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 class WhileBlock extends SingleSurroundingBlock {
 	
 	

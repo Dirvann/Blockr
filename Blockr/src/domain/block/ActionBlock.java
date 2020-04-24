@@ -5,7 +5,17 @@ import domain.GameController;
 import domain.ImplementationGameController;
 import game_world.api.ActionResult;
 import game_world.api.FacadeGameWorld;
-
+/**
+ * A class of Actionblocks that extends SequenceBlock.
+ * An action block can perform actions and has a name.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 public class ActionBlock extends SequenceBlock{
 	
 	String name;

@@ -2,7 +2,17 @@ package domain.block;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * An abstract class of SurroundingBlocks that extends SequenceBlock.
+ * It has a conditionblock and a bodyblock.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 public abstract class SurroundingBlock extends SequenceBlock {
 
 	protected ConditionBlock condition = null;

@@ -123,6 +123,14 @@ public interface FacadeGameWorld {
 	 */
 	public void removeSnapshot(String snapshotID);
 	
+	/**
+	 * return a new instance of a FacadeGameWorld Implementation using a given Implementation class.
+	 * @param implClass
+	 * 		  Class of the Game World implementation.
+	 * @return a new instance of FacadeGameWorld
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 */
 	public static FacadeGameWorld newInstance(Class<?> implClass) throws InstantiationException, IllegalAccessException {
 		return (FacadeGameWorld)implClass.newInstance();
 	}
