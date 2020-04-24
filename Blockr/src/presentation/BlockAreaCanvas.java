@@ -26,6 +26,17 @@ import game_world.api.FacadeGameWorld;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 
+/**
+ * Canvas used to draw the program blocks on.
+ * Also contains logic to handle mouse and key presses.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotionListener, KeyListener {
 
 	/**

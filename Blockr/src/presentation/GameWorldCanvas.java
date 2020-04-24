@@ -5,7 +5,16 @@ import java.awt.Graphics;
 
 import game_world.api.FacadeGameWorld;
 
-
+/**
+ * Canvas object used to draw the GameWorld on.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 public class GameWorldCanvas extends Canvas {
 
 	/**
