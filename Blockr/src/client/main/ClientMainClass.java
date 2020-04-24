@@ -8,18 +8,16 @@ import presentation.BlockrPanel;
 public class  ClientMainClass {
 
 	private static BlockrPanel blockrPanel;
-	
-	private static Class<?> ImplementationGameWorld;
 
 	public static void main(String[] args) {
 		
 		if(args.length > 0) {
 			try {
 				ClassLoader loader = ClientMainClass.class.getClassLoader();
-				ImplementationGameWorld = loader.loadClass(args[0]);
+				Class<?> gwClass = loader.loadClass(args[0]);
 	            
 				JFrame frame = new JFrame("Blockr");
-				blockrPanel = new BlockrPanel();
+				blockrPanel = new BlockrPanel(gwClass);
 				frame.add(blockrPanel);
 				frame.pack();
 				frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -36,10 +34,6 @@ public class  ClientMainClass {
 				e.printStackTrace();
 			}
 		}
-	}
-	
-	public static Class<?> getImplementationClass() {
-		return ImplementationGameWorld;
 	}
 
 }

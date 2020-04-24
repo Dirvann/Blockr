@@ -7,6 +7,7 @@ import domain.GameController;
 import domain.ImplementationGameController;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
+import impl.root.ImplementationGameWorld;
 import presentation.BlockAreaCanvas;
 import presentation.BlockrPanel;
 import presentation.block.ImplementationPresentationBlock;
@@ -42,7 +43,12 @@ class UseCase1 {
 	
 	private void setup() {
 		//JFrame frame = new JFrame("Blockr");
-		blockrPanel = new BlockrPanel();
+		try {
+			blockrPanel = new BlockrPanel(ImplementationGameWorld.class);
+		} catch (InstantiationException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//frame.add(blockrPanel);
 		//frame.pack();
 		//frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
