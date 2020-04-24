@@ -16,7 +16,9 @@ import game_world.api.PredicateResult;
 public class SingleConditionBlock extends ConditionBlock {
 
 	private String name;
-
+	/**
+	 * Initialize an Single Condition Block.
+	 */
 	public SingleConditionBlock(String name) {
 		this.name = name;
 	}

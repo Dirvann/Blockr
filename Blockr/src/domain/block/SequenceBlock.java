@@ -49,6 +49,7 @@ public abstract class SequenceBlock extends Block {
 	}
 
 	/**
+	 * The block directly underneath
 	 * 
 	 * @return The next block directly underneath
 	 */
@@ -57,6 +58,8 @@ public abstract class SequenceBlock extends Block {
 	}
 
 	/**
+	 * Removes all the next blocks on the same level.
+	 * 
 	 * @Post removes all the next blocks on the same level (same surrounding bloc). This
 	 * keeps the sequence of the next blocks, but they are now independent.
 	 */

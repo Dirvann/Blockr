@@ -18,7 +18,9 @@ import exceptions.domainExceptions.NoConditionBlockException;
  */
 class WhileBlock extends SingleSurroundingBlock {
 	
-	
+	/**
+	 * Initialize a While-block.
+	 */
 	protected WhileBlock() {
 		super();
 	}
