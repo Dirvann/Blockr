@@ -14,6 +14,10 @@ public class DraggingCommand implements Command {
 	PresentationBlock<?> block;
 
 	/**
+	 * This Command consists out of three parts. A precommand is the command done
+	 * before dragging the block, for example making a block or disconnecting one. A
+	 * dragging Command is the movement from an old position to a new one. A
+	 * postCommand is a Command like connecting or deleting a block.
 	 * 
 	 * @param oldPos
 	 * @param newPos
@@ -22,6 +26,9 @@ public class DraggingCommand implements Command {
 	 *                    been dragged. This can be making a block or disconnecting.
 	 * @param postCommand The command that has been executed after the block is
 	 *                    released. This can be deleting or connecting a block.
+	 * @return A draggingComand that holds the given information. If the given
+	 *         information is complete, This command can be undone and redone.
+	 *         
 	 * @post This command will hold the information of the preCommand,
 	 *       draggingCommand and postCommand together in one command.
 	 */
