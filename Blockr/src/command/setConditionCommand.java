@@ -6,6 +6,17 @@ import domain.block.ConditionBlock;
 import domain.block.ImplementationBlock;
 import domain.block.SurroundingBlock;
 
+/**
+ * A class that holds all the information about the action where a block got
+ * connected as a condition to a surroundingBlock. This information consists of
+ * the objects blockToConnect, surroundingBlock and nextBlock (the block that
+ * was previously connected as a condition). The class also specifies what must
+ * happen to undo and execute this command.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters, Thomas Van Erum, Dirk Vanbeveren, Geert Wesemael
+ *
+ */
 public class setConditionCommand implements Command {
 	ImplementationBlock BF = new ImplementationBlock();
 
