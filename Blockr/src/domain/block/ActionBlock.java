@@ -3,8 +3,8 @@ package domain.block;
 import command.ActionBlockCommand;
 import domain.GameController;
 import domain.ImplementationGameController;
-import impl.root.ImplementationGameWorld;
 import game_world.api.ActionResult;
+import game_world.api.FacadeGameWorld;
 
 public class ActionBlock extends SequenceBlock{
 	
@@ -22,7 +22,7 @@ public class ActionBlock extends SequenceBlock{
 	 */
 	protected void performAction(GameController GC) throws Exception {
 		ImplementationGameController GCF = new ImplementationGameController();
-		ImplementationGameWorld iGameWorld = GCF.getGameWorldImplementation(GC);
+		FacadeGameWorld iGameWorld = GCF.getGameWorldImplementation(GC);
 		
 		
 		if (iGameWorld == null) 

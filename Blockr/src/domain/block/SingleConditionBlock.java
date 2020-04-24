@@ -1,6 +1,6 @@
 package domain.block;
 
-import impl.root.ImplementationGameWorld;
+import game_world.api.FacadeGameWorld;
 import game_world.api.PredicateResult;
 
 public class SingleConditionBlock extends ConditionBlock {
@@ -32,7 +32,7 @@ public class SingleConditionBlock extends ConditionBlock {
 	}
 
 	@Override
-	protected boolean evaluate(ImplementationGameWorld iGameWorld) {
+	protected boolean evaluate(FacadeGameWorld iGameWorld) {
 		if (iGameWorld == null) {
 			return false;
 		} else {

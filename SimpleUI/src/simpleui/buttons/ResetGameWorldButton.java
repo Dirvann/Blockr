@@ -2,7 +2,7 @@ package simpleui.buttons;
 
 import java.awt.Color;
 
-import impl.root.ImplementationGameWorld;
+import game_world.api.FacadeGameWorld;
 import simpleui.Vector;
 
 public class ResetGameWorldButton extends Button<Boolean> {
@@ -12,7 +12,7 @@ public class ResetGameWorldButton extends Button<Boolean> {
 	}
 
 	@Override
-	public Boolean execute(ImplementationGameWorld iGameWorld) {
+	public Boolean execute(FacadeGameWorld iGameWorld) {
 		iGameWorld.resetGameWorld();
 		return true;
 	}

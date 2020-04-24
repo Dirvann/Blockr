@@ -2,8 +2,9 @@ package simpleui.buttons;
 import java.awt.Color;
 
 
-import impl.root.ImplementationGameWorld;
+import client.main.ClientMainClass;
 import game_world.api.ActionResult;
+import game_world.api.FacadeGameWorld;
 import simpleui.Vector;
 
 public class ActionButton extends Button<ActionResult>{
@@ -14,7 +15,7 @@ public class ActionButton extends Button<ActionResult>{
 	}
 	
 	@Override
-	public ActionResult execute(ImplementationGameWorld iGameWorld) {
+	public ActionResult execute(FacadeGameWorld iGameWorld) {
 		return iGameWorld.executeAction(getName());
 	}
 	

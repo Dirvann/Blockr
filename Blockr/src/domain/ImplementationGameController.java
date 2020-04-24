@@ -8,7 +8,7 @@ import domain.block.ConditionBlock;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
-import impl.root.ImplementationGameWorld;
+import game_world.api.FacadeGameWorld;
 import presentation.block.PresentationBlock;
 
 public class ImplementationGameController implements FacadeGameController{
@@ -19,22 +19,22 @@ public class ImplementationGameController implements FacadeGameController{
 	public ImplementationGameController() {};
 
 	@Override
-	public GameController makeGameController() {
+	public GameController makeGameController() throws InstantiationException, IllegalAccessException {
 		return new GameController();
 	}
 
 	@Override
-	public GameController makeGameController(ImplementationGameWorld iGameWorld) {
+	public GameController makeGameController(FacadeGameWorld iGameWorld) {
 		return new GameController(iGameWorld);
 	}
 
 	@Override
-	public void setGameWorldImplementation(GameController gameController,ImplementationGameWorld iGameWorld) {
+	public void setGameWorldImplementation(GameController gameController,FacadeGameWorld iGameWorld) {
 		gameController.setGameWorldImplementation(iGameWorld);
 	}
 
 	@Override
-	public ImplementationGameWorld getGameWorldImplementation(GameController gameController) {
+	public FacadeGameWorld getGameWorldImplementation(GameController gameController) {
 		return gameController.getGameWorldImplementation();
 	}
 

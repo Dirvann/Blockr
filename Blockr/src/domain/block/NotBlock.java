@@ -1,7 +1,6 @@
 package domain.block;
 
-import domain.GameController;
-import impl.root.ImplementationGameWorld;
+import game_world.api.FacadeGameWorld;
 
 class NotBlock extends ChainConditionBlock {
 	
@@ -11,11 +10,11 @@ class NotBlock extends ChainConditionBlock {
 	}
 
 	@Override
-	protected boolean evaluate(ImplementationGameWorld gamecontroller) {
+	protected boolean evaluate(FacadeGameWorld iGameWorld) {
 		if (!this.isValidCondition()) {
 			return false;
 		}
-		return !this.next.evaluate(gamecontroller);
+		return !this.next.evaluate(iGameWorld);
 	}
 
 	@Override

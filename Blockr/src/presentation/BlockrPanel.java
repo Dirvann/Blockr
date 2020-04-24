@@ -3,9 +3,10 @@ package presentation;
 import java.awt.Color;
 import java.awt.Panel;
 
+import client.main.ClientMainClass;
 import domain.GameController;
 import domain.ImplementationGameController;
-import impl.root.ImplementationGameWorld;
+import game_world.api.FacadeGameWorld;
 
 
 public class BlockrPanel extends Panel {
@@ -22,21 +23,30 @@ public class BlockrPanel extends Panel {
 	
 	private GameController gameController;
 	private ImplementationGameController GC;
-	private ImplementationGameWorld iGameWorld;
+	private FacadeGameWorld iGameWorld;
 	
 	private int preferredGameWorldWidth = 10;
 	private int preferredGameWorldHeight = 10;
 	
 	public final static String originalSnapshotName = "original";
 	
-	public BlockrPanel() {
+	/**
+	 * Create a new BlockrPanel
+	 * This will in turn create a canvas for the block Area
+	 * and a canvas for the gameWorld to be drawn on.
+	 * Also creates the necessary objects for the program to function.
+	 * 
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 */
+	public BlockrPanel() throws InstantiationException, IllegalAccessException {
 		// Set size of panel
 		this.setSize(1280, 720);
 		this.setBackground(Color.LIGHT_GRAY);
 		
 		// Set variables for game functions
 		GC = new ImplementationGameController();
-		iGameWorld = new ImplementationGameWorld();
+		iGameWorld = FacadeGameWorld.newInstance(ClientMainClass.getImplementationClass());
 		// TODO gameworld init.
 		iGameWorld.makeNewGameWorld();
 		iGameWorld.makeSnapshot(BlockrPanel.originalSnapshotName);
@@ -65,22 +75,45 @@ public class BlockrPanel extends Panel {
 //		return this.GI;
 //	}
 	
+	/**
+	 * get the gameController used by this panel
+	 * 
+	 * @return gameController associated with this BlockrPanel
+	 */
 	public GameController getGameController() {
 		return this.gameController;
 	}
 	
+	/**
+	 * 
+	 * 
+	 * @return width to be used by the gameWorld
+	 */
 	public int getPreferredGameWorldWidth() {
 		return this.preferredGameWorldWidth;
 	}
 	
+	/**
+	 * 
+	 * 
+	 * @return height to be used by the gameWorld
+	 */
 	public int getPreferredGameWorldHeight() {
 		return this.preferredGameWorldHeight;
 	}
 	
+	/**
+	 * Redraw the gameWorldPanel
+	 */
 	public void redrawGameWorld() {
 		gameWorldC.repaint();
 	}
 	
+	/**
+	 * 
+	 * 
+	 * @return block Area Canvas used by this panel
+	 */
 	public BlockAreaCanvas getBlockAreaCanvas() {
 		return blockAreaC;
 	}

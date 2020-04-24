@@ -3,6 +3,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/1-projects/kuleuven/Blockr/jars/gameworld_api.jar"/>
-	<classpathentry kind="lib" path="C:/1-projects/kuleuven/Blockr/jars/gameworld_simple.jar" sourcepath="/SimpleGame/src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
