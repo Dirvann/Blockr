@@ -17,11 +17,22 @@ public class GameWorldCanvas extends Canvas {
 	private BlockrPanel blockrPanel;
 	private ImplementationGameWorld iGameWorld;
 	
+	/**
+	 * Create a new instance of the gameWorldCanvas
+	 * 
+	 * @param blockrPanel
+	 * 		  | Panel to attach this gameWorldCanvas to
+	 * @param iGameWorld
+	 *        | Interface used by the panel
+	 */
 	public GameWorldCanvas(BlockrPanel blockrPanel, ImplementationGameWorld iGameWorld) {
 		this.iGameWorld = iGameWorld;
 		this.blockrPanel = blockrPanel;
 	}
 	
+	/**
+	 * Draw the gameWorld onto this canvas
+	 */
 	public void paint(Graphics g) {
 		iGameWorld.drawGameWorld(g,getWidth(),getHeight());
 	}

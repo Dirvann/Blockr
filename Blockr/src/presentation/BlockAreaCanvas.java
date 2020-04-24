@@ -60,7 +60,14 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	private Vector newPos = null;
 	private Vector oldPos = null;
 	
-	
+	/**
+	 * 
+	 * 
+	 * @param blockrPanel
+	 *  	  | panel to attach this blockAreaCanvas to
+	 * @param iGameWorld
+	 *  	  | Interface used by the panel
+	 */
 	public BlockAreaCanvas(BlockrPanel blockrPanel, ImplementationGameWorld iGameWorld) {
 		paletteP = new PalettePresentation();
 		programAreaP = new ProgramAreaPresentation(blockrPanel.getGameController());
@@ -72,7 +79,11 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		addKeyListener(this);
 	}
 	
-	
+	/**
+	 * Draw the blockArea Canvas
+	 * This includes the blocks from the palette
+	 * and the blocks currently forming the program.
+	 */
 	public void paint(Graphics g) {
 		// Draw vertical line to mark end of palette
 		g.setColor(Color.BLACK);
@@ -103,11 +114,25 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		}
 	}
 
+	/**
+	 * Set the error message shown by the blockAreaCanvas
+	 * 
+	 * @param errorMessage
+	 * 	  	  | String of the errormessage to be shown
+	 */
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 		//repaint();
 	}
 	
+	/**
+	 * Handle a mouse button press at the given location
+	 * 
+	 * @param x
+	 * 		  | horizontal value of the location of the mouse press
+	 * @param y
+	 *        | vertical value of the location of the mouse press
+	 */
 	public void handleMousePressed(int x, int y) {
 		this.errorMessage = "";
 		Vector mousePos = new Vector(x, y);
@@ -147,7 +172,14 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		this.mouseDown = true;
 	}
 	
-	
+	/**
+	 * Handle the mouse being dragged to the given location
+	 * 
+	 * @param x
+	 * 		  | horizontal value of the location the mouse is dragged to
+	 * @param y
+	 * 	      | vertical value of the location the mouse is dragged to
+	 */
 	public void handleMouseDragged(int x, int y) {
 		if (this.mouseDown && this.selectedBlock != null) {
 			Vector moveDifference = new Vector(x - previousMousePos.getX(), y - previousMousePos.getY());
@@ -158,6 +190,14 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	}
 	
 	
+	/**
+	 * handle a mouse being released at the given location
+	 * 
+	 * @param x
+	 * 		  | horizontal value of the location of the mouse release
+	 * @param y
+	 *        | vertical value of the location of the mouse release
+	 */
 	public void handleMouseReleased(int x, int y) {
 		Vector mousePos = new Vector(x, y);
 
@@ -193,6 +233,12 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		repaint();
 	}
 	
+	/**
+	 * Handle a key press
+	 * 
+	 * @param key
+	 * 		  | KeyEvent to be handled
+	 */
 	public void handleKeyPressed(KeyEvent key) {
 		int keyCode = key.getKeyCode();
 		this.errorMessage = "";
@@ -276,6 +322,9 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	}
 
 	
+	/**
+	 * Stop the execution of the current program
+	 */
 	private void stopExecution() {
 		GC.stopExecution(blockrPanel.getGameController());
 		this.exe = new ExecutionProcessor();
@@ -284,6 +333,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		iGameWorld.loadSnapshot(BlockrPanel.originalSnapshotName);
 		
 	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		

@@ -29,6 +29,12 @@ public class BlockrPanel extends Panel {
 	
 	public final static String originalSnapshotName = "original";
 	
+	/**
+	 * Create a new BlockrPanel
+	 * This will in turn create a canvas for the block Area
+	 * and a canvas for the gameWorld to be drawn on.
+	 * Also creates the necessary objects for the program to function.
+	 */
 	public BlockrPanel() {
 		// Set size of panel
 		this.setSize(1280, 720);
@@ -65,22 +71,45 @@ public class BlockrPanel extends Panel {
 //		return this.GI;
 //	}
 	
+	/**
+	 * get the gameController used by this panel
+	 * 
+	 * @return gameController associated with this BlockrPanel
+	 */
 	public GameController getGameController() {
 		return this.gameController;
 	}
 	
+	/**
+	 * 
+	 * 
+	 * @return width to be used by the gameWorld
+	 */
 	public int getPreferredGameWorldWidth() {
 		return this.preferredGameWorldWidth;
 	}
 	
+	/**
+	 * 
+	 * 
+	 * @return height to be used by the gameWorld
+	 */
 	public int getPreferredGameWorldHeight() {
 		return this.preferredGameWorldHeight;
 	}
 	
+	/**
+	 * Redraw the gameWorldPanel
+	 */
 	public void redrawGameWorld() {
 		gameWorldC.repaint();
 	}
 	
+	/**
+	 * 
+	 * 
+	 * @return block Area Canvas used by this panel
+	 */
 	public BlockAreaCanvas getBlockAreaCanvas() {
 		return blockAreaC;
 	}
