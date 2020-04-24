@@ -35,6 +35,9 @@ public class BlockrPanel extends Panel {
 	 * This will in turn create a canvas for the block Area
 	 * and a canvas for the gameWorld to be drawn on.
 	 * Also creates the necessary objects for the program to function.
+	 * 
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
 	 */
 	public BlockrPanel() throws InstantiationException, IllegalAccessException {
 		// Set size of panel
