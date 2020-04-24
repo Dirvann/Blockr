@@ -1,42 +1,14 @@
 # API Spec FacadeGameWorld
 
+## Valid Game World API implementation
 
+A valid game world API implementation must contain a main class `impl.root.ImplementationGameWorld` which implements the `FacadeGameWorld` API interface.
 
+The implementation must also contain the jar file of the API as a dependency. The interface can be accessed with `game_world.api.FacadeGameWorld`.
 
+The main class must correctly implement all the functions from the API Interface for a normal execution of the game.
 
-
-
-## API Usage
-
-To application can be executed using the following command:
-
-```shell
-java -classpath [api].jar;[implementation].jar;[client].jar [Main_UI_Class] [Main_Iml_Class]
-```
-
-with:
-
-- [api] : name of the jar file containing the API
-- [implementation] : name of the jar file containing the game world implementation
-- [client] : name of the jar file containing a correct user Interface
-- [Main_UI_Class] : name of the main class of the user interface in the client. The recommended path of the class is `client.main.ClientMainClass`
-- [Main_Impl_Class] : name of the main class of the implementation which implements the API. The recommended path of the class is `impl.root.ImplementationGameWorld`
-
-
-
-Here is an example command:
-
-```shell
-java -classpath gameworldapi.jar;robotgame.jar;blockr.jar client.main.ClientMainClass impl.root.ImplementationGameWorld
-```
-
-
-
-## valid Game World API implementation
-
-
-
-## valid Game World API client
+## Valid Game World API client
 
 A valid game world API client must contain a runnable main class `client.main.ClientMainClass`.
 
@@ -63,4 +35,18 @@ public static void main(String[] args) {
 
 
 
-The implementation instance can be used to run all the Implementation functions
+The implementation instance can be used to run all the Implementation functions. 
+
+To display the game world the `implementationInstance.draw(Graphics g)` method must be used. This should be in the `paint(Graphics g)`method of a class which extends Canvas.
+
+```java
+// GameWorldCanvas.java    extends Canvas
+//..
+@Override
+public paint(Graphics g) {
+    super.paint();
+    implInstance.draw(g, getWidth(), getHeight());
+}
+//..
+```
+
