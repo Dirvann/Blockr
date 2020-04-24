@@ -4,7 +4,16 @@ import java.util.List;
 
 import domain.GameController;
 import presentation.block.PresentationBlock;
-
+/**
+ * The Implementation of all the block classes.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 public class ImplementationBlock implements FacadeBlock{
 
 	@Override

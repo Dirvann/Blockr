@@ -2,7 +2,17 @@ package domain.block;
 
 import game_world.api.FacadeGameWorld;
 import game_world.api.PredicateResult;
-
+/**
+ * An class of SingleConditionBlocks that extends ConditionBlock.
+ * It has a specified evaluation and a name.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 public class SingleConditionBlock extends ConditionBlock {
 
 	private String name;

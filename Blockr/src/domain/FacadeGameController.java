@@ -9,7 +9,16 @@ import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
 import game_world.api.FacadeGameWorld;
 import presentation.block.PresentationBlock;
-
+/**
+ * The Facade for the Implementation GameController class.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 public interface FacadeGameController {
 	
 	public GameController makeGameController(FacadeGameWorld iGameWorld);

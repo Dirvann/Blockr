@@ -7,6 +7,16 @@ import domain.GameController;
 import domain.ImplementationGameController;
 import presentation.block.PresentationBlock;
 
+/**
+ * An abstract class of Blocks that has a presentation block and a surrounding block.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 public abstract class Block {
 	ImplementationGameController IGC = new ImplementationGameController();
 	protected PresentationBlock<?> presentationBlock = null;
