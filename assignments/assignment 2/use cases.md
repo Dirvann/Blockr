@@ -20,33 +20,33 @@
  1. All blocks disappear from the Palette.
 
 
-## Use Case 2: Run Program
+	## Use Case 2: Run Program
 
-### Main Success Scenario
+	### Main Success Scenario
 
-1. User presses F5
+	1. User presses F5
 
-2. Next block is higlighted
+	2. Next block is higlighted
 
-3. User presses F5
+	3. User presses F5
 
-4. Highlighted block is executed
+	4. Highlighted block is executed
 
-repeat steps 2, 3 and 4 until program is finished.
+	repeat steps 2, 3 and 4 until program is finished.
 
-### Extensions
+	### Extensions
 
-1a. Program Area does not contain exactly one connected block group.
+	1a. Program Area does not contain exactly one connected block group.
 
-	 1. Execution does not start.
+		 1. Execution does not start.
 
-1b. Program Area contains a condition block.
+	1b. Program Area contains a condition block.
 
-	 1. Execution does not start.
+		 1. Execution does not start.
 
-1b. Program Area contains a surrounding block without condition.
+	1b. Program Area contains a surrounding block without condition.
 
-	 1. Execution does not start
+		 1. Execution does not start
 
 
 ## Use Case 3: Reset Game World
