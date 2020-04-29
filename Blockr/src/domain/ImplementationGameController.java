@@ -44,7 +44,10 @@ public class ImplementationGameController implements FacadeGameController{
 
 	@Override
 	public FacadeGameWorld getGameWorldImplementation(GameController gameController) {
-		return gameController.getGameWorldImplementation();
+		if (gameController != null) {
+			return gameController.getGameWorldImplementation();
+		}
+		return null;
 	}
 
 	@Override
@@ -129,6 +132,7 @@ public class ImplementationGameController implements FacadeGameController{
 
 	@Override
 	public void setExecutionCommand(ExecutionCommand exeCmd, GameController GC) {
+		if (GC == null) return;
 		GC.getProgramArea().setExecutionCommand(exeCmd);
 		
 	}

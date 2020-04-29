@@ -40,13 +40,14 @@ public class ActionBlock extends SequenceBlock{
 	 * @post The action of the block will be performed
 	 */
 	protected void performAction(GameController GC) throws Exception {
-		ImplementationGameController GCF = new ImplementationGameController();
-		FacadeGameWorld iGameWorld = GCF.getGameWorldImplementation(GC);
 		
 		
-		if (iGameWorld == null) 
+		if (GC == null) 
 			System.out.println(this.name);
 		else {
+
+			ImplementationGameController GCF = new ImplementationGameController();
+			FacadeGameWorld iGameWorld = GCF.getGameWorldImplementation(GC);
 			ActionResult result = iGameWorld.executeAction(getName());
 			if (result == ActionResult.Illegal) throw new Exception("illegal move");
 			IGC.setExecutionCommand(new ActionBlockCommand(null, null, null, GC), GC);
@@ -56,7 +57,6 @@ public class ActionBlock extends SequenceBlock{
 	@Override
 	protected Block execute(GameController GC) throws Exception {
 		performAction(GC);
-		
 		if (this.getNextBlock() == null) {
 			if (this.getSurroundingBlock() == null) {
 				return null;
