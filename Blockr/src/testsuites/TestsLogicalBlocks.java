@@ -87,6 +87,8 @@ public class TestsLogicalBlocks {
 	// initial code works -> before all && check execution
 	@Test
 	public void executeInit() throws Exception {
+		clearAll();
+		init1();
 		System.out.printf(
 				"\n test init \n" + "____________________________________________________________" + "\n" + "\n");
 		init1();
