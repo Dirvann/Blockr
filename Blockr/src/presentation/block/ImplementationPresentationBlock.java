@@ -4,8 +4,15 @@ import java.awt.Graphics;
 
 import command.Command;
 import domain.GameController;
-import domain.block.*;
 import domain.Vector;
+import domain.block.ActionBlock;
+import domain.block.Block;
+import domain.block.ChainConditionBlock;
+import domain.block.ImplementationBlock;
+import domain.block.SingleConditionBlock;
+import domain.block.SingleSurroundingBlock;
+import game_world.api.Action;
+import game_world.api.Predicate;
 
 public class ImplementationPresentationBlock implements FacadePresentationBlock{
 	private ImplementationBlock BF = new ImplementationBlock();
@@ -84,15 +91,15 @@ public class ImplementationPresentationBlock implements FacadePresentationBlock{
 	}
 
 	@Override
-	public PresentationBlock<ActionBlock> makeActionBlock(String name, Vector pos) {
-		ActionBlock block = BF.makeActionBlock(name);
+	public PresentationBlock<ActionBlock> makeActionBlock(Action action, Vector pos) {
+		ActionBlock block = BF.makeActionBlock(action);
 		PresentationBlock<ActionBlock> presentation = new ActionBlockPresentation(pos, block);
 		return presentation;
 	}
 
 	@Override
-	public PresentationBlock<SingleConditionBlock> makeSingleConditionBlock(String name, Vector pos) {
-		SingleConditionBlock block = BF.makeSingleConditionBlock(name);
+	public PresentationBlock<SingleConditionBlock> makeSingleConditionBlock(Predicate predicate, Vector pos) {
+		SingleConditionBlock block = BF.makeSingleConditionBlock(predicate);
 		PresentationBlock<SingleConditionBlock> presentation = new SingleConditionBlockPresentation(pos, block);
 		return presentation;
 	}

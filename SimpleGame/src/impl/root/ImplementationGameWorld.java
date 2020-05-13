@@ -9,94 +9,80 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import actions.MoveLeftAction;
+import actions.MoveRightAction;
+import actions.StandStillAction;
 import exceptions.OutOfBoundsException;
 import game_world.FallingBlock;
 import game_world.Position;
 import game_world.SimpleGameController;
+import game_world.api.Action;
 import game_world.api.ActionResult;
 import game_world.api.FacadeGameWorld;
+import game_world.api.Predicate;
 import game_world.api.PredicateResult;
+import predicates.BlockAbovePlayerPredicate;
 
 public class ImplementationGameWorld implements FacadeGameWorld {
 
 	private SimpleGameController gameController;
-	
+
 	private Map<String, SimpleGameController> snapshots;
 	private int snapshotIndex;
-	
+
 	public ImplementationGameWorld() {
 		gameController = new SimpleGameController();
 		gameController.startGame();
 		snapshots = new HashMap<>();
 		snapshotIndex = 0;
 	}
-	
+
 	@Override
-	public List<String> getAllActions() {
-		return Arrays.asList("MoveLeft", "MoveRight", "StandStill"/*, "StartGame"*/);
+	public List<Action> getAllActions() {
+		return Arrays.asList(new MoveLeftAction(), new MoveRightAction(), new StandStillAction());
 	}
-	
+
 	@Override
-	public List<String> getAllPRedicates() {
-		return Arrays.asList("BlockAbovePlayer"/*, "GoalReached"*/);
+	public List<Predicate> getAllPRedicates() {
+		return Arrays.asList(new BlockAbovePlayerPredicate());
 	}
-	
+
 	@Override
-	public ActionResult executeAction(String action) {
-		switch (action) {
-		case "MoveLeft": {
+	public ActionResult executeAction(Action action) {
+		if (action instanceof MoveLeftAction) {
 			try {
 				gameController.actionPlayerLeft();
 				return ActionResult.Success;
 			} catch (OutOfBoundsException e) {
 				return ActionResult.Illegal;
 			}
-		}
-		
-		case "MoveRight": {
+		} else if (action instanceof MoveRightAction) {
 			try {
 				gameController.actionPlayerRight();
 				return ActionResult.Success;
 			} catch (OutOfBoundsException e) {
 				return ActionResult.Illegal;
 			}
-		}
-		
-		case "StandStill": {
+		} else if (action instanceof StandStillAction) {
 			gameController.actionPlayerStay();
 			return ActionResult.Success;
-		}
-		
-		/*case "StartGame": {
-			gameController.startGame();
-			return ActionResult.Success;
-		}*/
-		
-		default:
+
+		} else {
 			return ActionResult.UnknownAction;
 		}
+
 	}
-	
+
 	@Override
-	public PredicateResult evaluatePredicate(String predicate) {
-		switch (predicate) {
-		case "BlockAbovePlayer": {
+	public PredicateResult evaluatePredicate(Predicate predicate) {
+
+		if (predicate instanceof BlockAbovePlayerPredicate) {
 			if (gameController.blockAbovePlayer()) {
 				return PredicateResult.True;
 			} else {
 				return PredicateResult.False;
 			}
-		}
-		
-		/*case "GoalReached": {
-			if (gameController.goalReached()) {
-				return PredicateResult.True;
-			} else {
-				return PredicateResult.False;
-			}
-		}*/
-		
-		default:
+		} else {
 			return PredicateResult.BadPredicate;
 		}
 	}
@@ -105,25 +91,25 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	public void drawGameWorld(Graphics g, int width, int height) {
 		int gridWidth = gameController.getWidth();
 		int gridHeight = gameController.getHeight();
-		
+
 		int worldWidth = width;
 		int worldHeight = height;
-		
-		int cellWidth = worldWidth / (gridWidth+1);
+
+		int cellWidth = worldWidth / (gridWidth + 1);
 		int cellHeight = worldHeight / (gridHeight);
-		
+
 		g.setColor(Color.black);
-		
+
 		// Vertical lines
-		for (int i = 0; i < gridWidth +1; i++) {
+		for (int i = 0; i < gridWidth + 1; i++) {
 			g.drawLine(i * cellWidth, 0, i * cellWidth, worldHeight);
 		}
-		
+
 		// Horizontal lines
-		for (int i = 0; i < gridHeight +1; i++) {
+		for (int i = 0; i < gridHeight + 1; i++) {
 			g.drawLine(0, i * cellHeight, worldWidth, i * cellHeight);
 		}
-		
+
 		if (gameController.gameInProgress()) {
 			drawBlocks(g, cellWidth, cellHeight);
 			drawPlayer(g, cellWidth, cellHeight);
@@ -132,32 +118,33 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 			drawStartMessage(g);
 		}
 	}
-	
+
 	private void drawBlocks(Graphics g, int cellWidth, int cellHeight) {
 		g.setColor(Color.black);
 		for (FallingBlock block : gameController.getGameWorld().getAllBlocks()) {
-			g.fillRect(cellWidth * block.getPosition().getX(), cellHeight * block.getPosition().getY(), cellWidth, cellHeight);
+			g.fillRect(cellWidth * block.getPosition().getX(), cellHeight * block.getPosition().getY(), cellWidth,
+					cellHeight);
 		}
 	}
-	
+
 	private void drawPlayer(Graphics g, int cellWidth, int cellHeight) {
 		g.setColor(Color.gray);
 		Position playerPosition = gameController.getGameWorld().getPlayer().getPosition();
 		g.fillRect(cellWidth * playerPosition.getX(), cellHeight * playerPosition.getY(), cellWidth, cellHeight);
 	}
-	
+
 	private void drawDodgeScore(Graphics g) {
 		g.setFont(new Font("Arial", Font.PLAIN, 20));
-		String dodgedString = "Blocks dodged: " + gameController.getCurrentNrDodged() + "/" + gameController.getDodgeGoal();
+		String dodgedString = "Blocks dodged: " + gameController.getCurrentNrDodged() + "/"
+				+ gameController.getDodgeGoal();
 		g.drawString(dodgedString, 10, 25);
 	}
-	
+
 	private void drawStartMessage(Graphics g) {
 		g.setFont(new Font("Arial", Font.PLAIN, 20));
 		g.drawString("press start to begin new game", 10, 25);
 	}
-	
-	
+
 	@Override
 	public void makeNewGameWorld() {
 		gameController = new SimpleGameController();
@@ -169,13 +156,10 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 		return new ArrayList<>(snapshots.keySet());
 	}
 
-
 	@Override
 	public void loadSnapshot(String snapshotName) {
-		this.gameController = snapshots.get(snapshotName).createCopy(); //TODO create copy
+		this.gameController = snapshots.get(snapshotName).createCopy(); // TODO create copy
 	}
-
-
 
 	@Override
 	public String makeSnapshot() {
@@ -185,29 +169,19 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 		return snapshotName;
 	}
 
-
-
 	@Override
 	public void makeSnapshot(String snapshotName) {
 		snapshots.put(snapshotName, gameController.createCopy());
 	}
 
-
-
 	@Override
 	public void removeSnapshot(String snapshotName) {
-		snapshots.remove(snapshotName);		
+		snapshots.remove(snapshotName);
 	}
 
 	@Override
 	public void resetGameWorld() {
 		gameController.startGame();
-	}
-
-	@Override
-	public ActionResult undoAction(String arg0) {
-		// TODO Auto-generated method stub
-		return ActionResult.Success;
 	}
 
 	@Override

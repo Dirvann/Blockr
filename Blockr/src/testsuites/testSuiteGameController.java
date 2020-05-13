@@ -5,8 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.Test;
 
+import actions.MoveForwardAction;
+import actions.TurnLeftAction;
+import actions.TurnRightAction;
 import domain.GameController;
 import domain.ImplementationGameController;
+import domain.Vector;
 import domain.block.ActionBlock;
 import domain.block.Block;
 import domain.block.ChainConditionBlock;
@@ -20,7 +24,7 @@ import exceptions.domainExceptions.BlockColumnNotExecutableException;
 import exceptions.domainExceptions.CantRunConditionException;
 import exceptions.domainExceptions.NotOneStartingBlockException;
 import impl.root.ImplementationGameWorld;
-import domain.Vector;
+import predicates.WallInFrontPredicate;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 
@@ -43,11 +47,11 @@ public class testSuiteGameController {
 
 	private static void setup() {
 		try {
-			left = IPB.makeActionBlock("TurnLeft", null); // create blocks
-			right = IPB.makeActionBlock("TurnRight", null);
-			forward = IPB.makeActionBlock("MoveForward", null);
-			forward2 = IPB.makeActionBlock("MoveForward", null);
-			wallinfront = IPB.makeSingleConditionBlock("WallInFront", null);
+			left = IPB.makeActionBlock(new TurnLeftAction(), null); // create blocks
+			right = IPB.makeActionBlock(new TurnRightAction(), null);
+			forward = IPB.makeActionBlock(new MoveForwardAction(), null);
+			forward2 = IPB.makeActionBlock(new MoveForwardAction(), null);
+			wallinfront = IPB.makeSingleConditionBlock(new WallInFrontPredicate(), null);
 			not = IPB.makeNotBlock(null);
 			ifB = IPB.makeIfBlock(null);
 			whileB = IPB.makeWhileBlock(null);
@@ -175,7 +179,7 @@ public class testSuiteGameController {
 		IGC.connect(IPB.getBlock(forward2), IPB.getBlock(left), gc);
 		
 		IGC.addBlockToProgramArea(gc, ifB);
-		PresentationBlock<SingleConditionBlock> isWall2 = IPB.makeSingleConditionBlock("WallInFront", null);
+		PresentationBlock<SingleConditionBlock> isWall2 = IPB.makeSingleConditionBlock(new WallInFrontPredicate(), null);
 		IGC.setCondition((SurroundingBlock) IPB.getBlock(ifB), (ConditionBlock) IPB.getBlock(isWall2), gc);
 		IGC.setBody((SurroundingBlock) IPB.getBlock(ifB), (SequenceBlock) IPB.getBlock(whileB), gc);
 		
@@ -215,7 +219,7 @@ public class testSuiteGameController {
 		IGC.connect(IPB.getBlock(forward2), IPB.getBlock(left), gc);
 		
 		IGC.addBlockToProgramArea(gc, ifB);
-		PresentationBlock<SingleConditionBlock> isWall2 = IPB.makeSingleConditionBlock("WallInFront", null);
+		PresentationBlock<SingleConditionBlock> isWall2 = IPB.makeSingleConditionBlock(new WallInFrontPredicate(), null);
 		IGC.addBlockToProgramArea(gc, isWall2);
 		IGC.setCondition((SurroundingBlock) IPB.getBlock(ifB), (ConditionBlock) IPB.getBlock(isWall2), gc);
 		IGC.setBody((SurroundingBlock) IPB.getBlock(ifB), (SequenceBlock) IPB.getBlock(whileB), gc);
@@ -250,7 +254,7 @@ public class testSuiteGameController {
 		IGC.connect(IPB.getBlock(forward2), IPB.getBlock(left), gc);
 		
 		IGC.addBlockToProgramArea(gc, ifB);
-		PresentationBlock<SingleConditionBlock> isWall2 = IPB.makeSingleConditionBlock("WallInFront", null);
+		PresentationBlock<SingleConditionBlock> isWall2 = IPB.makeSingleConditionBlock(new WallInFrontPredicate(), null);
 		IGC.addBlockToProgramArea(gc, isWall2);
 		IGC.setCondition((SurroundingBlock) IPB.getBlock(ifB), (ConditionBlock) IPB.getBlock(isWall2), gc);
 		IGC.setBody((SurroundingBlock) IPB.getBlock(ifB), (SequenceBlock) IPB.getBlock(whileB), gc);

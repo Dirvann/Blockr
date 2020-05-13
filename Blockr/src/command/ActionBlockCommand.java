@@ -42,7 +42,8 @@ public class ActionBlockCommand extends ExecutionCommand {
 	public void undo() {
 
 		FacadeGameWorld GWF = GCF.getGameWorldImplementation(GC);
-		GWF.undoAction(BF.getName(currentlyExecuted));
+		// TODO implement snapshots
+		//GWF.undoAction(BF.getName(currentlyExecuted));
 		super.undo();
 	}
 

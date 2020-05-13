@@ -3,6 +3,7 @@ package domain.block;
 import command.ActionBlockCommand;
 import domain.GameController;
 import domain.ImplementationGameController;
+import game_world.api.Action;
 import game_world.api.ActionResult;
 import game_world.api.FacadeGameWorld;
 /**
@@ -19,6 +20,7 @@ import game_world.api.FacadeGameWorld;
 public class ActionBlock extends SequenceBlock{
 	
 	String name;
+	Action action;
 	/**
 	 * Create a ActionBlock with the given name.
 	 * 
@@ -27,8 +29,9 @@ public class ActionBlock extends SequenceBlock{
 	 * @post  The name is equal to the given name.
 	 * 		  |new.getName() = name
 	 */
-	protected ActionBlock(String name) {
-		this.name = name;
+	protected ActionBlock(Action action) {
+		this.action = action;
+		this.name = action.getName();
 	}
 	
 	/**
@@ -48,7 +51,7 @@ public class ActionBlock extends SequenceBlock{
 
 			ImplementationGameController GCF = new ImplementationGameController();
 			FacadeGameWorld iGameWorld = GCF.getGameWorldImplementation(GC);
-			ActionResult result = iGameWorld.executeAction(getName());
+			ActionResult result = iGameWorld.executeAction(action);
 			if (result == ActionResult.Illegal) throw new Exception("illegal move");
 			IGC.setExecutionCommand(new ActionBlockCommand(null, null, null, GC), GC);
 		}
@@ -79,7 +82,7 @@ public class ActionBlock extends SequenceBlock{
 	@Override
 	protected Block getNewBlockOfThisType() {
 		// TODO Auto-generated method stub
-		return new ActionBlock(this.getName());
+		return new ActionBlock(action);
 	}
 
 	@Override

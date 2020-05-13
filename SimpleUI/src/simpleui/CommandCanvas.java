@@ -6,15 +6,16 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import game_world.api.Action;
 import game_world.api.FacadeGameWorld;
-import game_world.api.PredicateResult;
+import game_world.api.Predicate;
 import simpleui.buttons.ActionButton;
-import simpleui.buttons.PredicateButton;
-import simpleui.buttons.ResetGameWorldButton;
-import simpleui.buttons.SnapshotButton;
 import simpleui.buttons.Button;
 import simpleui.buttons.CreateSnapshotButton;
 import simpleui.buttons.NewGameWorldButton;
+import simpleui.buttons.PredicateButton;
+import simpleui.buttons.ResetGameWorldButton;
+import simpleui.buttons.SnapshotButton;
 
 public class CommandCanvas extends Canvas implements MouseListener{
 
@@ -36,19 +37,19 @@ public class CommandCanvas extends Canvas implements MouseListener{
 		this.iGameWorld = iGameWorld;
 		this.gameWorldC = gameWorldC;
 
-		List<String> actions = iGameWorld.getAllActions();
-		List<String> predicates = iGameWorld.getAllPRedicates();
+		List<Action> actions = iGameWorld.getAllActions();
+		List<Predicate> predicates = iGameWorld.getAllPRedicates();
 
 		int index = 0;
 		
 		this.addMouseListener(this);
 
-		for (String action : actions) {
+		for (Action action : actions) {
 			buttons.add(new ActionButton(action, new Vector(actionXOffset, topOffset + (ActionButton.height + seperation)*index++)));
 		}
 		
 		index = 0;
-		for (String predicate : predicates) {
+		for (Predicate predicate : predicates) {
 			buttons.add(new PredicateButton(predicate, new Vector(predicateXOffset, topOffset + (PredicateButton.height + seperation)*index++)));
 		}
 		
@@ -92,7 +93,7 @@ public class CommandCanvas extends Canvas implements MouseListener{
 		} else {
 			for(Button<?> b: buttons) {
 				if(b.collidesWith(pos)) {
-					b.execute(iGameWorld);
+					System.out.println(b.execute(iGameWorld));
 					repaint();
 					gameWorldC.repaint();
 				}

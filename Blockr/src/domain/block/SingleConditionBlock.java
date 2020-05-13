@@ -1,6 +1,7 @@
 package domain.block;
 
 import game_world.api.FacadeGameWorld;
+import game_world.api.Predicate;
 import game_world.api.PredicateResult;
 /**
  * An class of SingleConditionBlocks that extends ConditionBlock.
@@ -16,11 +17,13 @@ import game_world.api.PredicateResult;
 public class SingleConditionBlock extends ConditionBlock {
 
 	private String name;
+	private Predicate predicate;
 	/**
 	 * Initialize an Single Condition Block.
 	 */
-	public SingleConditionBlock(String name) {
-		this.name = name;
+	public SingleConditionBlock(Predicate predicate) {
+		this.predicate = predicate;
+		this.name = predicate.getName();
 	}
 
 	@Override
@@ -48,7 +51,7 @@ public class SingleConditionBlock extends ConditionBlock {
 		if (iGameWorld == null) {
 			return false;
 		} else {
-			PredicateResult p = iGameWorld.evaluatePredicate(getName());
+			PredicateResult p = iGameWorld.evaluatePredicate(predicate);
 			if (p == PredicateResult.True) {
 				return true;
 			} else if(p == PredicateResult.False) {
@@ -65,7 +68,7 @@ public class SingleConditionBlock extends ConditionBlock {
 
 	@Override
 	protected Block getNewBlockOfThisType() {
-		return new SingleConditionBlock(getName());
+		return new SingleConditionBlock(predicate);
 	}
 
 	@Override
