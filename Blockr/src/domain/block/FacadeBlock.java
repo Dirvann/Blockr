@@ -39,6 +39,20 @@ public interface FacadeBlock {
 	 *         body.
 	 */
 	public SingleSurroundingBlock makeWhileBlock();
+	
+	/**
+	 * 
+	 * @param function The function definition block of the caller.
+	 * @return A block that executes the function as a functionCall
+	 */
+	public FunctionCall makeCaller(FunctionDefinition function);
+	
+	/**
+	 * 
+	 * @param ID The ID of the new function definition.
+	 * @return A new function with an empty body and as Id the given ID.
+	 */
+	public FunctionDefinition makeFunctionDefinition(int ID);
 
 	/**
 	 * 
@@ -46,6 +60,8 @@ public interface FacadeBlock {
 	 * @return A block of the same type with no connections at all.
 	 */
 	public Block makeNewBlockOfThisType(Block block);
+	
+	
 
 	// ________________________________________________________________________________________//
 	// Connection of the blocks
@@ -77,7 +93,17 @@ public interface FacadeBlock {
 	 *       front of the current blocks of the body of the surroundingBlock.
 	 * 
 	 */
-	public void addBodyBlock(SurroundingBlock surroundingBlock, SequenceBlock bodyBlock) throws Exception;
+	public void setBodyBlock(SurroundingBlock surroundingBlock, SequenceBlock bodyBlock);
+	
+	
+	/**
+	 * 
+	 * @param function The desired function where you will set the body.
+	 * @param bodyBlock The desired body of the function.
+	 * @throws Exception If bodyBlock is not the first one of a group of blocks.
+	 * @Post The body of the function will be set to the parameter bodyBlock.
+	 */
+	public void setBodyBlock(FunctionDefinition function, SequenceBlock bodyBlock);
 
 	/**
 	 * 

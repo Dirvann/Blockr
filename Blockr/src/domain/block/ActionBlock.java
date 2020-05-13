@@ -57,24 +57,9 @@ public class ActionBlock extends SequenceBlock{
 	@Override
 	protected Block execute(GameController GC) throws Exception {
 		performAction(GC);
-		if (this.getNextBlock() == null) {
-			if (this.getSurroundingBlock() == null) {
-				return null;
-			}
-			
-			return this.getSurroundingBlock().getNextAfterLoop();
-		}
-		return this.getNextBlock();
+		return super.execute(GC);
 	}
 	
-	@Override
-	protected boolean hasValidExecutionColumn() {
-		if (this.getNextBlock() != null) {
-			return this.getNextBlock().hasValidExecutionColumn();
-		} else {
-			return true;
-		}
-	}
 
 	@Override
 	protected Block getNewBlockOfThisType() {

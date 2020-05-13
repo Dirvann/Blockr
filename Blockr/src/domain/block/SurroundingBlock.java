@@ -34,6 +34,7 @@ public abstract class SurroundingBlock extends SequenceBlock {
 		}
 		this.bodyBlock = block;
 		block.setSurroundingBlock(this);
+		block.setFunctionBlock(this.function);
 		block.previous = null;
 	}
 
@@ -56,6 +57,7 @@ public abstract class SurroundingBlock extends SequenceBlock {
 	protected void removeBodyBlock() {
 		if (this.bodyBlock != null) {
 			this.bodyBlock.setSurroundingBlock(null);
+			this.bodyBlock.setFunctionBlock(null);
 			this.bodyBlock = null;
 		}
 	}

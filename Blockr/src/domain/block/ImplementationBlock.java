@@ -57,7 +57,7 @@ public class ImplementationBlock implements FacadeBlock{
 
 
 	@Override
-	public void addBodyBlock(SurroundingBlock surroundingBlock, SequenceBlock block) {
+	public void setBodyBlock(SurroundingBlock surroundingBlock, SequenceBlock block) {
 		if (block != null) {
 			surroundingBlock.setBodyBlock(block);
 		}
@@ -139,6 +139,25 @@ public class ImplementationBlock implements FacadeBlock{
 	@Override
 	public Block getLastBlock(Block block) {
 		return block.getLastBlock();
+	}
+
+
+	@Override
+	public FunctionCall makeCaller(FunctionDefinition function) {
+		return new FunctionCall(function);
+	}
+
+
+	@Override
+	public FunctionDefinition makeFunctionDefinition(int ID) {
+		return new FunctionDefinition(ID);
+	}
+
+
+	@Override
+	public void setBodyBlock(FunctionDefinition function, SequenceBlock bodyBlock) {
+		function.setBodyBlock(bodyBlock);
+		
 	}
 
 

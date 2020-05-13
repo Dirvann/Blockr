@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 
 import domain.block.Block;
 import domain.block.ConditionBlock;
+import domain.block.FunctionCall;
+import domain.block.FunctionDefinition;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
@@ -70,7 +72,7 @@ public class TestsLogicalBlocks {
 		assertEquals(whileBlock1, BF.getSurroundingBlock(iswall1));
 
 		// Simple test: addBodyBlock
-		BF.addBodyBlock(whileBlock1, mF1);
+		BF.setBodyBlock(whileBlock1, mF1);
 		assertEquals(mF1, BF.getBodyBlock(whileBlock1));
 		assertEquals(whileBlock1, BF.getSurroundingBlock(tR1));
 		
@@ -110,7 +112,7 @@ public class TestsLogicalBlocks {
 		init1();
 		BF.connect(mF1, ifBlock1);
 		BF.setConditionBlock(ifBlock1, iswall1);
-		BF.addBodyBlock(ifBlock1, mF2);
+		BF.setBodyBlock(ifBlock1, mF2);
 		;
 
 		Block[] desiredResult = { startBlock, whileBlock1, mF1, ifBlock1, tL1, tR1, whileBlock1, mF1, ifBlock1, tL1,
@@ -157,7 +159,7 @@ public class TestsLogicalBlocks {
 		BF.connect(startBlock, ifBlock1);
 		BF.connect(not1, iswall1);
 		BF.setConditionBlock(ifBlock1, not1);
-		BF.addBodyBlock(ifBlock1, mF1);
+		BF.setBodyBlock(ifBlock1, mF1);
 		BF.connect(tR1, tL1);
 		BF.connect(ifBlock1, mF2);
 
@@ -190,7 +192,7 @@ public class TestsLogicalBlocks {
 		SequenceBlock tL2 = BF.makeActionBlock("TurnLeft");
 		SequenceBlock tL3 = BF.makeActionBlock("TurnLeft");
 		BF.connect(tL2, tL3);
-		BF.addBodyBlock(whileBlock1, tL2);
+		BF.setBodyBlock(whileBlock1, tL2);
 		assertEquals(tL2, BF.getBodyBlock(whileBlock1));
 		assertEquals(whileBlock1, BF.getSurroundingBlock(tR1));
 		assertEquals(whileBlock1, BF.getSurroundingBlock(tL2));
@@ -215,7 +217,7 @@ public class TestsLogicalBlocks {
 		BF.connect(ifBlock1, iswall1);
 		BF.setConditionBlock(ifBlock1, iswall1);
 		BF.setConditionBlock(ifBlock1, not1);
-		BF.addBodyBlock(ifBlock1, mF1);
+		BF.setBodyBlock(ifBlock1, mF1);
 		assertTrue(BF.isValidStartingBlock(startBlock));
 		
 		//test execute
@@ -284,7 +286,7 @@ public class TestsLogicalBlocks {
 			throw new Exception("whileBlock should not be able to execute");
 		} catch (InfiniteLoopWhileException e) {
 		}
-		BF.addBodyBlock(whileBlock1, mF1);
+		BF.setBodyBlock(whileBlock1, mF1);
 		assertEquals(mF1, BF.execute(whileBlock1, null));
 		BF.disconnect(iswall1);
 		BF.setConditionBlock(whileBlock1, iswall1);
@@ -323,7 +325,7 @@ public class TestsLogicalBlocks {
 	void nestedLoops() throws Exception {
 		clearAll();
 		SurroundingBlock if2 = BF.makeIfBlock();
-		BF.addBodyBlock(if2, ifBlock1);
+		BF.setBodyBlock(if2, ifBlock1);
 		BF.setConditionBlock(if2, not1);
 		BF.connect(not1, iswall1);
 		BF.setConditionBlock(ifBlock1, BF.makeSingleConditionBlock("WallInFront"));
@@ -331,5 +333,70 @@ public class TestsLogicalBlocks {
 		assertEquals(mF1, BF.execute(ifBlock1, null));
 	}
 
+	//___________________Function Calls_____________________________
+	
+	@Test
+	void simpleFunction() throws Exception {
+		System.out.println("Testing simple function \n __________________________");
+		clearAll();
+		FunctionDefinition function0 = BF.makeFunctionDefinition(0);
+		System.out.println(BF.getName(function0));
+		BF.setBodyBlock(function0, startBlock);
+		BF.connect(startBlock, tL1);
+		FunctionCall call0 = BF.makeCaller(function0);
+		System.out.println(BF.getName(call0));
+		
+		//test execute
+		Block[] desiredResult1 = { call0, startBlock, tL1, null};
+		Block current1 = call0;
+		int j = 0;
+		while (current1 != null && j < desiredResult1.length) {
+			assertEquals(desiredResult1[j], current1);
+			current1 = BF.execute(current1, null);
+			j += 1;
+		}
+		//end execute
+		
 
+		FunctionCall call01 = BF.makeCaller(function0);
+		BF.connect(call0, tR1);
+		BF.connect(tR1, call01);
+		BF.connect(call01, mF1);
+		
+		//test execute
+				Block[] desiredResult2 = { call0, startBlock, tL1, tR1, call01, startBlock, tL1, mF1};
+				Block current2 = call0;
+				j = 0;
+				while (current2 != null && j < desiredResult2.length) {
+					assertEquals(desiredResult2[j], current2);
+					current2 = BF.execute(current2, null);
+					j += 1;
+				}
+				//end execute
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -1,4 +1,7 @@
 package domain.block;
+
+import domain.GameController;
+
 /**
  * An abstract class of SequenceBlocks that extends Block and has a next and previous block.
  * 
@@ -12,14 +15,18 @@ package domain.block;
 public abstract class SequenceBlock extends Block {
 	protected SequenceBlock next = null;
 	protected SequenceBlock previous = null;
+	protected FunctionDefinition function = null;
 
 	@Override
-	protected SequenceBlock getPreviousBlock() {
+	protected Block getPreviousBlock() {
 		if (previous != null) {
 			return previous;
 		}
 		if (getSurroundingBlock() != null) {
 			return getSurroundingBlock();
+		}
+		if (function != null) {
+			return function;
 		}
 		return null;
 	}
@@ -37,6 +44,7 @@ public abstract class SequenceBlock extends Block {
 		SequenceBlock sBlock = (SequenceBlock) block;
 
 		sBlock.setSurroundingBlock(this.surroundingBlock);
+		sBlock.function = function;
 
 		sBlock.previous = this;
 
@@ -66,7 +74,8 @@ public abstract class SequenceBlock extends Block {
 	protected void removeNextBlock() {
 		if (this.next != null) {
 			this.next.previous = null;
-			this.setSurroundingBlock(null);
+			this.next.setSurroundingBlock(null);
+			this.next.setFunctionBlock(null);
 			this.next = null;
 		}
 	}
@@ -77,7 +86,10 @@ public abstract class SequenceBlock extends Block {
 			previous.removeNextBlock();
 		} else if (getSurroundingBlock() != null) {
 			getSurroundingBlock().removeBodyBlock();
+		} else if (this.function != null) {
+			function.removeBodyBlock();
 		}
+		
 	}
 
 	@Override
@@ -89,4 +101,41 @@ public abstract class SequenceBlock extends Block {
 		}
 	}
 
+	/**
+	 * Set the surrounding block to the given block.
+	 * 
+	 * @param function
+	 * 		  The function that will include this block.
+	 * @Post block is set as the surrounding block of this block and all the next
+	 *       ones after this block.
+	 */
+	protected void setFunctionBlock(FunctionDefinition function) {
+		SequenceBlock iterator = this;
+		while (iterator != null) {
+			iterator.function = function;
+			iterator = iterator.getNextBlock();
+		}
+	}
+	
+	@Override
+	protected boolean hasValidExecutionColumn() {
+		if (this.getNextBlock() != null) {
+			return this.getNextBlock().hasValidExecutionColumn();
+		} else {
+			return true;
+		}
+	}
+	
+	@Override
+	protected Block execute(GameController GC) throws Exception {
+		if (this.getNextBlock() == null) {
+			if (this.getSurroundingBlock() == null) {
+				if (this.function == null) return null;
+				else return this.function.getNextAfterFunction();
+			}
+			
+			return this.getSurroundingBlock().getNextAfterLoop();
+		}
+		return this.getNextBlock();
+	}
 }

@@ -112,7 +112,7 @@ public class ImplementationGameController implements FacadeGameController{
 
 	@Override
 	public void setBody(SurroundingBlock surroundingBlock, SequenceBlock block, GameController GC) {
-		BF.addBodyBlock(surroundingBlock, block);
+		BF.setBodyBlock(surroundingBlock, block);
 		GC.getProgramArea().removeTopLevelBlock(block);
 		
 	}
