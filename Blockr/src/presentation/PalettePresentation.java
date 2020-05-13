@@ -4,9 +4,10 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import client.main.ClientMainClass;
 import domain.Vector;
+import game_world.api.Action;
 import game_world.api.FacadeGameWorld;
+import game_world.api.Predicate;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 
@@ -46,8 +47,8 @@ public class PalettePresentation {
 		final int yOffsetIncrement = 60;
 		
 		
-		List<String> actionList = iGameWorld.getAllActions();
-		List<String> predicateList = iGameWorld.getAllPRedicates();
+		List<Action> actionList = iGameWorld.getAllActions();
+		List<Predicate> predicateList = iGameWorld.getAllPRedicates();
 		
 		int index = 0;
 		for (int i = 0; i < actionList.size(); i++) {

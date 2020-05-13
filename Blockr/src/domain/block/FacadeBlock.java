@@ -3,6 +3,8 @@ package domain.block;
 import java.util.List;
 
 import domain.GameController;
+import game_world.api.Action;
+import game_world.api.Predicate;
 import presentation.block.PresentationBlock;
 /**
  * The Facade of the ImplemenationBlock class.
@@ -209,9 +211,9 @@ public interface FacadeBlock {
 	public SurroundingBlock getSurroundingBlock(Block block);
 
 
-	public SingleConditionBlock makeSingleConditionBlock(String name);
+	public SingleConditionBlock makeSingleConditionBlock(Predicate predicate);
 
 
-	public ActionBlock makeActionBlock(String name);
+	public ActionBlock makeActionBlock(Action action);
 
 }

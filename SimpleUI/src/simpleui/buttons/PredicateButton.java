@@ -3,17 +3,21 @@ import java.awt.Color;
 
 import game_world.api.FacadeGameWorld;
 import game_world.api.PredicateResult;
+import game_world.api.Predicate;
 import simpleui.Vector;
 
 public class PredicateButton extends Button<PredicateResult>{
 	
-	public PredicateButton(String name, Vector pos) {
-		super(name, pos, Color.MAGENTA);
+	Predicate predicate;
+	
+	public PredicateButton(Predicate predicate, Vector pos) {
+		super(predicate.getName(), pos, Color.MAGENTA);
+		this.predicate = predicate;
 	}
 
 	@Override
 	public PredicateResult execute(FacadeGameWorld iGameWorld) {
-		return iGameWorld.evaluatePredicate(getName());
+		return iGameWorld.evaluatePredicate(this.predicate);
 	}
 	
 }

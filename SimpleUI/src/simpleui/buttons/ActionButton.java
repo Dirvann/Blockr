@@ -2,21 +2,23 @@ package simpleui.buttons;
 import java.awt.Color;
 
 
-import client.main.ClientMainClass;
 import game_world.api.ActionResult;
 import game_world.api.FacadeGameWorld;
+import game_world.api.Action;
 import simpleui.Vector;
 
 public class ActionButton extends Button<ActionResult>{
 	
+	Action action;
 	
-	public ActionButton(String name, Vector pos) {
-		super(name, pos, Color.CYAN);
+	public ActionButton(Action action, Vector pos) {
+		super(action.getName(), pos, Color.CYAN);
+		this.action = action;
 	}
 	
 	@Override
 	public ActionResult execute(FacadeGameWorld iGameWorld) {
-		return iGameWorld.executeAction(getName());
+		return iGameWorld.executeAction(this.action);
 	}
 	
 }

@@ -4,12 +4,14 @@ import java.awt.Graphics;
 
 import command.Command;
 import domain.GameController;
+import domain.Vector;
 import domain.block.ActionBlock;
 import domain.block.Block;
 import domain.block.ChainConditionBlock;
 import domain.block.SingleConditionBlock;
 import domain.block.SingleSurroundingBlock;
-import domain.Vector;
+import game_world.api.Action;
+import game_world.api.Predicate;
 
 public interface FacadePresentationBlock {
 	
@@ -38,9 +40,9 @@ public interface FacadePresentationBlock {
 		public PresentationBlock<SingleSurroundingBlock> makeWhileBlock(Vector pos);
 		
 		
-		public PresentationBlock<ActionBlock> makeActionBlock(String name, Vector pos);
+		public PresentationBlock<ActionBlock> makeActionBlock(Action action, Vector pos);
 		
-		public PresentationBlock<SingleConditionBlock> makeSingleConditionBlock(String name, Vector pos);
+		public PresentationBlock<SingleConditionBlock> makeSingleConditionBlock(Predicate predicate, Vector pos);
 		
 
 		

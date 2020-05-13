@@ -9,6 +9,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import actions.MoveForwardAction;
+import actions.TurnLeftAction;
+import actions.TurnRightAction;
 import domain.block.Block;
 import domain.block.ConditionBlock;
 import domain.block.FunctionCall;
@@ -18,31 +21,32 @@ import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
 import exceptions.domainExceptions.InfiniteLoopWhileException;
 import exceptions.domainExceptions.NoConditionBlockException;
+import predicates.WallInFrontPredicate;
 
 public class TestsLogicalBlocks {
 	private static ImplementationBlock BF = new ImplementationBlock();
 
-	static SequenceBlock startBlock = BF.makeActionBlock("MoveForward");
+	static SequenceBlock startBlock = BF.makeActionBlock(new MoveForwardAction());
 	static SurroundingBlock ifBlock1 = BF.makeIfBlock();
 	static SurroundingBlock whileBlock1 = BF.makeWhileBlock();
-	static SequenceBlock mF1 = BF.makeActionBlock("MoveForward");
-	static SequenceBlock mF2 = BF.makeActionBlock("MoveForward");
-	static SequenceBlock tR1 = BF.makeActionBlock("TurnRight");
-	static SequenceBlock tL1 = BF.makeActionBlock("TurnLeft");
+	static SequenceBlock mF1 = BF.makeActionBlock(new MoveForwardAction());
+	static SequenceBlock mF2 = BF.makeActionBlock(new MoveForwardAction());
+	static SequenceBlock tR1 = BF.makeActionBlock(new TurnRightAction());
+	static SequenceBlock tL1 = BF.makeActionBlock(new TurnLeftAction());
 	static ConditionBlock not1 = BF.makeNotBlock();
-	static ConditionBlock iswall1 = BF.makeSingleConditionBlock("WallInFront");
+	static ConditionBlock iswall1 = BF.makeSingleConditionBlock(new WallInFrontPredicate());
 
 	public static void clearAll() {
 
-		startBlock = BF.makeActionBlock("MoveForward");
+		startBlock = BF.makeActionBlock(new MoveForwardAction());
 		ifBlock1 = BF.makeIfBlock();
 		whileBlock1 = BF.makeWhileBlock();
-		mF1 = BF.makeActionBlock("MoveForward");
-		mF2 = BF.makeActionBlock("MoveForward");
-		tR1 = BF.makeActionBlock("TurnRight");
-		tL1 = BF.makeActionBlock("TurnLeft");
+		mF1 = BF.makeActionBlock(new MoveForwardAction());
+		mF2 = BF.makeActionBlock(new MoveForwardAction());
+		tR1 = BF.makeActionBlock(new TurnRightAction());
+		tL1 = BF.makeActionBlock(new TurnLeftAction());
 		not1 = BF.makeNotBlock();
-		iswall1 = BF.makeSingleConditionBlock("WallInFront");
+		iswall1 = BF.makeSingleConditionBlock(new WallInFrontPredicate());
 	}
 
 //	
@@ -135,7 +139,7 @@ public class TestsLogicalBlocks {
 		init1();
 		BF.connect(mF1, ifBlock1);
 		ConditionBlock not2 = BF.makeNotBlock();
-		ConditionBlock isWall2 = BF.makeSingleConditionBlock("WallInFront");
+		ConditionBlock isWall2 = BF.makeSingleConditionBlock(new WallInFrontPredicate());
 		BF.connect(not2, isWall2);
 		BF.setConditionBlock(ifBlock1, not2);
 
@@ -189,8 +193,8 @@ public class TestsLogicalBlocks {
 		clearAll();
 		init1();
 
-		SequenceBlock tL2 = BF.makeActionBlock("TurnLeft");
-		SequenceBlock tL3 = BF.makeActionBlock("TurnLeft");
+		SequenceBlock tL2 = BF.makeActionBlock(new TurnLeftAction());
+		SequenceBlock tL3 = BF.makeActionBlock(new TurnLeftAction());
 		BF.connect(tL2, tL3);
 		BF.setBodyBlock(whileBlock1, tL2);
 		assertEquals(tL2, BF.getBodyBlock(whileBlock1));
@@ -328,7 +332,7 @@ public class TestsLogicalBlocks {
 		BF.setBodyBlock(if2, ifBlock1);
 		BF.setConditionBlock(if2, not1);
 		BF.connect(not1, iswall1);
-		BF.setConditionBlock(ifBlock1, BF.makeSingleConditionBlock("WallInFront"));
+		BF.setConditionBlock(ifBlock1, BF.makeSingleConditionBlock(new WallInFrontPredicate()));
 		BF.connect(if2, mF1);
 		assertEquals(mF1, BF.execute(ifBlock1, null));
 	}

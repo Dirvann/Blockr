@@ -3,6 +3,8 @@ package domain.block;
 import java.util.List;
 
 import domain.GameController;
+import game_world.api.Action;
+import game_world.api.Predicate;
 import presentation.block.PresentationBlock;
 /**
  * The Implementation of all the block classes.
@@ -34,13 +36,13 @@ public class ImplementationBlock implements FacadeBlock{
 	}
 	
 	@Override
-	public SingleConditionBlock makeSingleConditionBlock(String name) {
-		return new SingleConditionBlock(name);
+	public SingleConditionBlock makeSingleConditionBlock(Predicate predicate) {
+		return new SingleConditionBlock(predicate);
 	}
 	
 	@Override
-	public ActionBlock makeActionBlock(String name) {
-		return new ActionBlock(name);
+	public ActionBlock makeActionBlock(Action action) {
+		return new ActionBlock(action);
 	}
 
 	@Override

@@ -23,14 +23,14 @@ public interface FacadeGameWorld {
 	 * 
 	 * @return a list of Strings with all valid action names
 	 */
-	public List<String> getAllActions();
+	public List<Action> getAllActions();
 	
 	/**
 	 * List of all valid predicates.
 	 * 
 	 * @return a list of Strings with all valid predicate names
 	 */
-	public List<String> getAllPRedicates();
+	public List<Predicate> getAllPRedicates();
 	
 	/**
 	 * Execute an action in the gameWorld.
@@ -43,7 +43,7 @@ public interface FacadeGameWorld {
 	 * 		  | GoalReached : 	Action resulted in the reaching of the goal
 	 * 		  | UnknownAction :	Action is not known in the current gameWorld system
 	 */
-	public ActionResult executeAction(String action);
+	public ActionResult executeAction(Action action);
 	
 	/**
 	 * Evaluate a predicate in the gameWorld.
@@ -55,7 +55,7 @@ public interface FacadeGameWorld {
 	 * 		  | False :  		Result of evaluation is false
 	 * 		  | BadPredicate :  Predicate is not known in the current gameWorld system
 	 */
-	public PredicateResult evaluatePredicate(String predicate);
+	public PredicateResult evaluatePredicate(Predicate predicate);
 	
 	/**
 	 * Check if the goal is reached.
@@ -64,17 +64,6 @@ public interface FacadeGameWorld {
 	 */
 	public boolean goalReached();
 	
-	/**
-	 * Undo an action in the gameWorld.
-	 * 
-	 * @param action 
-	 * 		  | name of the action to be undone
-	 * @return ActionResult depending on the result of the undo
-	 * 		  | Success :  		Undo executed successfully
-	 * 		  | Illegal :  		Undo is illegal in the current game state
-	 * 		  | UnknownAction :	Action is not known in the current gameWorld system
-	 */
-	public ActionResult undoAction(String action);
 	
 	/**
 	 * Draw the gameWorld onto a Graphics object.
