@@ -3,7 +3,6 @@ package presentation;
 import java.awt.Color;
 import java.awt.Panel;
 
-import client.main.ClientMainClass;
 import domain.GameController;
 import domain.ImplementationGameController;
 import game_world.api.FacadeGameWorld;
@@ -38,8 +37,6 @@ public class BlockrPanel extends Panel {
 	private int preferredGameWorldWidth = 10;
 	private int preferredGameWorldHeight = 10;
 	
-	public final static String originalSnapshotName = "original";
-	
 	private static Class<?> iGameWorldClass;
 	
 	/**
@@ -63,7 +60,6 @@ public class BlockrPanel extends Panel {
 		iGameWorld = FacadeGameWorld.newInstance(BlockrPanel.getImplementationClass());
 		// TODO gameworld init.
 		iGameWorld.makeNewGameWorld();
-		iGameWorld.makeSnapshot(BlockrPanel.originalSnapshotName);
 		gameController = GC.makeGameController();
 		GC.setGameWorldImplementation(gameController, iGameWorld);
 		

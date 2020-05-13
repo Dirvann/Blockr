@@ -200,4 +200,8 @@ public class Robot {
 		}
 	}
 	
+	public Robot createCopy() {
+		return new Robot(getLocation().createCopy(), this.direction);
+	}
+	
 }

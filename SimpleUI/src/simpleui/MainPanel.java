@@ -18,7 +18,6 @@ public class MainPanel extends JPanel {
 	private GameWorldCanvas gameWorldC;
 	private CommandCanvas commandC;
 	private FacadeGameWorld iGameWorld;
-	private final static String originalSnapshotName = "original";
 	
 	private double worldProportion = 0.4;
 	
@@ -30,7 +29,6 @@ public class MainPanel extends JPanel {
 		// gameworld init
 		iGameWorld = FacadeGameWorld.newInstance(ClientMainClass.getImplementationClass());
 		iGameWorld.makeNewGameWorld();
-		iGameWorld.makeSnapshot(MainPanel.originalSnapshotName);
 		
 		// panel borders
 		int worldPanelStart = (int) (this.getWidth() * (1 - worldProportion));

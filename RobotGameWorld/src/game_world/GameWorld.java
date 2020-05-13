@@ -241,7 +241,7 @@ public class GameWorld {
 	}
 	
 	public GameWorld createCopy() {
-		return new GameWorld(this.getGrid(), this.getRobot());
+		return new GameWorld(this.getGrid().createCopy(), this.getRobot().createCopy());
 	}
 	
 }

@@ -22,6 +22,7 @@ import game_world.api.ActionResult;
 import game_world.api.FacadeGameWorld;
 import game_world.api.Predicate;
 import game_world.api.PredicateResult;
+import game_world.api.Snapshot;
 import game_world.cell.Goal;
 import game_world.cell.Wall;
 import predicates.WallInFrontPredicate;
@@ -35,8 +36,6 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 
 	public ImplementationGameWorld() {
 		makeNewGameWorld();
-		snapshots = new HashMap<>();
-		snapshotIndex = 0;
 	};
 
 	/**
@@ -224,18 +223,7 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 
 	}
 
-	private Map<String, GameWorld> snapshots;
-	private int snapshotIndex;
 
-	/**
-	 * get all snapshot IDs
-	 * 
-	 * @return List of all snapshot IDs
-	 */
-	@Override
-	public List<String> getAllSnapshots() {
-		return new ArrayList<>(snapshots.keySet());
-	}
 
 	/**
 	 * Load the game state from the snapshot with given snapshotID
@@ -244,8 +232,11 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	 * @post if valid ID, corresponding snapshot is loaded
 	 */
 	@Override
-	public void loadSnapshot(String snapshotName) {
-		this.gameWorld = snapshots.get(snapshotName).createCopy();
+	public void loadSnapshot(Snapshot snapshot) {
+		if(snapshot instanceof GameWorldSnapshot) {
+			gameWorld = ((GameWorldSnapshot) snapshot).getState();
+		}
+		
 	}
 
 	/**
@@ -254,32 +245,8 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	 * @return ID of the taken snapshot
 	 */
 	@Override
-	public String makeSnapshot() {
-		String snapshotName = "AutoSnapshot" + snapshotIndex;
-		snapshotIndex += 1;
-		makeSnapshot(snapshotName);
-		return snapshotName;
-	}
-
-	/**
-	 * make a snapshot of the current gameWorld state
-	 * 
-	 * @param snapshotID | taken snapshots ID is equal to given ID
-	 */
-	@Override
-	public void makeSnapshot(String snapshotName) {
-		snapshots.put(snapshotName, gameWorld.createCopy());
-	}
-
-	/**
-	 * remove the snapshot with the given snapshotID
-	 * 
-	 * @param snapshotID | iD of snapshot to remove
-	 * @post if valid ID, corresponding snapshot is removed
-	 */
-	@Override
-	public void removeSnapshot(String snapshotName) {
-		snapshots.remove(snapshotName);
+	public Snapshot makeSnapshot() {
+		return new GameWorldSnapshot(gameWorld.createCopy());
 	}
 
 	/**

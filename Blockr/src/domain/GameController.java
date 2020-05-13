@@ -1,6 +1,5 @@
 package domain;
 
-import client.main.ClientMainClass;
 import command.ExecutionCommand;
 import domain.block.Block;
 import game_world.api.FacadeGameWorld;

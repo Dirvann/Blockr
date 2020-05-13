@@ -23,6 +23,7 @@ import domain.Vector;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
 import game_world.api.FacadeGameWorld;
+import game_world.api.Snapshot;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 
@@ -71,6 +72,8 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	private Vector newPos = null;
 	private Vector oldPos = null;
 	
+	private Snapshot startSnapshot;
+	
 	/**
 	 * 
 	 * 
@@ -83,6 +86,8 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		paletteP = new PalettePresentation(iGameWorld);
 		programAreaP = new ProgramAreaPresentation(blockrPanel.getGameController());
 		this.iGameWorld = iGameWorld;
+		
+		this.startSnapshot = iGameWorld.makeSnapshot();
 		
 		this.blockrPanel = blockrPanel;
 		addMouseListener(this);
@@ -258,7 +263,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		switch (keyCode) {
 		case KeyEvent.VK_ESCAPE: // Esc
 			this.stopExecution();
-			iGameWorld.loadSnapshot(BlockrPanel.originalSnapshotName);
+			iGameWorld.loadSnapshot(startSnapshot);
 			blockrPanel.redrawGameWorld();
 			break;
 
@@ -300,7 +305,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 			blockrPanel.getPreferredGameWorldHeight();
 			// TODO create new gameworld
 			iGameWorld.makeNewGameWorld();
-			iGameWorld.makeSnapshot(BlockrPanel.originalSnapshotName);
+			this.startSnapshot = iGameWorld.makeSnapshot();
 			GC.setGameWorldImplementation(gameController, iGameWorld);
 			this.stopExecution();
 			blockrPanel.redrawGameWorld();
@@ -341,7 +346,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		this.exe = new ExecutionProcessor();
 		
 		// TODO reset gameworld to original state snapshot
-		iGameWorld.loadSnapshot(BlockrPanel.originalSnapshotName);
+		iGameWorld.loadSnapshot(this.startSnapshot);
 		
 	}
 	

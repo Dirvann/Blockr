@@ -88,22 +88,9 @@ public interface FacadeGameWorld {
 	 * 
 	 * @return ID of the taken snapshot
 	 */
-	public String makeSnapshot();
-	
-	/**
-	 * Make a snapshot of the current gameWorld state
-	 * 
-	 * @param snapshotID
-	 *        | taken snapshots ID is equal to given ID
-	 */
-	public void   makeSnapshot(String snapshotID);
-	
-	/**
-	 * Get all snapshot IDs.
-	 * 
-	 * @return List of all snapshot IDs
-	 */
-	public List<String> getAllSnapshots();
+	default public Snapshot makeSnapshot() {
+		return null;
+	}
 	
 	/**
 	 * Load the game state from the snapshot with given snapshotID.
@@ -112,16 +99,7 @@ public interface FacadeGameWorld {
 	 * 		  | ID of snapshot to load
 	 * @post if valid ID, corresponding snapshot is loaded
 	 */
-	public void loadSnapshot(String snapshotID);
-	
-	/**
-	 * Remove the snapshot with the given snapshotID.
-	 * 
-	 * @param snapshotID
-	 * 		  | iD of snapshot to remove
-	 * @post if valid ID, corresponding snapshot is removed
-	 */
-	public void removeSnapshot(String snapshotID);
+	public void loadSnapshot(Snapshot snapshot);
 	
 	/**
 	 * Return a new instance of a FacadeGameWorld Implementation using a given Implementation class.

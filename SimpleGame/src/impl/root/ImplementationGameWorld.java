@@ -3,11 +3,8 @@ package impl.root;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import actions.MoveLeftAction;
 import actions.MoveRightAction;
@@ -21,20 +18,16 @@ import game_world.api.ActionResult;
 import game_world.api.FacadeGameWorld;
 import game_world.api.Predicate;
 import game_world.api.PredicateResult;
+import game_world.api.Snapshot;
 import predicates.BlockAbovePlayerPredicate;
 
 public class ImplementationGameWorld implements FacadeGameWorld {
 
 	private SimpleGameController gameController;
 
-	private Map<String, SimpleGameController> snapshots;
-	private int snapshotIndex;
-
 	public ImplementationGameWorld() {
 		gameController = new SimpleGameController();
 		gameController.startGame();
-		snapshots = new HashMap<>();
-		snapshotIndex = 0;
 	}
 
 	@Override
@@ -151,32 +144,17 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 		gameController.startGame();
 	}
 
+
 	@Override
-	public List<String> getAllSnapshots() {
-		return new ArrayList<>(snapshots.keySet());
+	public void loadSnapshot(Snapshot snapshot) {
+		if(snapshot instanceof GameSnapshot) {
+			this.gameController = ((GameSnapshot)snapshot).getState().createCopy();
+		}
 	}
 
 	@Override
-	public void loadSnapshot(String snapshotName) {
-		this.gameController = snapshots.get(snapshotName).createCopy(); // TODO create copy
-	}
-
-	@Override
-	public String makeSnapshot() {
-		String snapshotName = "AutoSnapshot" + snapshotIndex;
-		snapshotIndex += 1;
-		makeSnapshot(snapshotName);
-		return snapshotName;
-	}
-
-	@Override
-	public void makeSnapshot(String snapshotName) {
-		snapshots.put(snapshotName, gameController.createCopy());
-	}
-
-	@Override
-	public void removeSnapshot(String snapshotName) {
-		snapshots.remove(snapshotName);
+	public Snapshot makeSnapshot() {
+		return (Snapshot)new GameSnapshot(gameController.createCopy());
 	}
 
 	@Override

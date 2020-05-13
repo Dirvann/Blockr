@@ -110,4 +110,12 @@ public final class Vector {
 	public double distanceTo(Vector other) {
 		return Math.sqrt(Math.pow(getX() - other.getX(), 2) + Math.pow(getY() - other.getY(),2));
 	}
+	
+	/**
+	 * Returns a copy of this vector
+	 * @return
+	 */
+	public Vector createCopy() {
+		return new Vector(this.getX(), this.getY());
+	}
 }
