@@ -163,6 +163,12 @@ public class ImplementationBlock implements FacadeBlock{
 	}
 
 
+	@Override
+	public SequenceBlock getBodyBlock(FunctionDefinition block) {
+		return block.getBodyBlock();
+	}
+
+
 
 	
 	

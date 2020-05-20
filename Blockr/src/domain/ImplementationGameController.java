@@ -5,6 +5,7 @@ import java.util.List;
 import command.ExecutionCommand;
 import domain.block.Block;
 import domain.block.ConditionBlock;
+import domain.block.FunctionDefinition;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
@@ -112,6 +113,13 @@ public class ImplementationGameController implements FacadeGameController{
 
 	@Override
 	public void setBody(SurroundingBlock surroundingBlock, SequenceBlock block, GameController GC) {
+		BF.setBodyBlock(surroundingBlock, block);
+		GC.getProgramArea().removeTopLevelBlock(block);
+		
+	}
+	
+	@Override
+	public void setBody(FunctionDefinition surroundingBlock, SequenceBlock block, GameController GC) {
 		BF.setBodyBlock(surroundingBlock, block);
 		GC.getProgramArea().removeTopLevelBlock(block);
 		

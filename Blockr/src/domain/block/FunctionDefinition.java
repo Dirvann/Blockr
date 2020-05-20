@@ -105,4 +105,8 @@ public class FunctionDefinition extends Block{
 		
 	}
 
+	public SequenceBlock getBodyBlock() {
+		return body;
+	}
+
 }

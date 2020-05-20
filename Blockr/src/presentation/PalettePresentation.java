@@ -67,7 +67,8 @@ public class PalettePresentation {
 		// While
 		list.add(iPresentationBlock.makeWhileBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
 		//functioncall test
-		list.add(iPresentationBlock.makeFunctionCallBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
+		list.add(iPresentationBlock.makeFunctionDefinitionBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
+		//list.add(iPresentationBlock.makeFunctionCallBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
 		
 	}
 	
