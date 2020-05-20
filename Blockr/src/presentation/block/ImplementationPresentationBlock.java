@@ -106,14 +106,14 @@ public class ImplementationPresentationBlock implements FacadePresentationBlock{
 		return presentation;
 	}
 
-	public PresentationBlock<FunctionCall> makeFunctionCallBlock(Vector pos) {
-		FunctionCall block = BF.makeCaller(null); //TODO: null right now
+	public PresentationBlock<FunctionCall> makeFunctionCallBlock(FunctionDefinition definition,Vector pos) {
+		FunctionCall block = BF.makeCaller(definition);
 		PresentationBlock<FunctionCall> presentation = new FunctionCallBlockPresentation(pos, block);
 		return presentation;
 	}
 
 	public PresentationBlock<FunctionDefinition> makeFunctionDefinitionBlock(Vector pos) {
-		FunctionDefinition block = BF.makeFunctionDefinition(0);
+		FunctionDefinition block = BF.makeFunctionDefinition(0);//TODO: fix
 		PresentationBlock<FunctionDefinition> presentation = new FunctionDefinitionBlockPresentation(pos, block);
 		return presentation;
 	}

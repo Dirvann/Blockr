@@ -21,9 +21,11 @@ import domain.GameController;
 import domain.ImplementationGameController;
 import domain.Vector;
 import domain.block.Block;
+import domain.block.FunctionDefinition;
 import domain.block.ImplementationBlock;
 import game_world.api.FacadeGameWorld;
 import game_world.api.Snapshot;
+import presentation.block.FunctionDefinitionBlockPresentation;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 
@@ -158,6 +160,9 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		// Create functional copy of paletteBlock and add to programArea
 		if (paletteBlockP != null && GC.getAmountOfBlocksLeft(blockrPanel.getGameController()) > 0) {
 			PresentationBlock<?> presentationCopy = BFP.makeCopy(paletteBlockP);
+			if(presentationCopy instanceof FunctionDefinitionBlockPresentation) {
+				paletteP.addFunctionCallToPalette((FunctionDefinition) BFP.getBlock(presentationCopy), iGameWorld);
+			}
 			GC.addBlockToProgramArea(blockrPanel.getGameController(), presentationCopy);
 			selectedBlock = presentationCopy;
 			

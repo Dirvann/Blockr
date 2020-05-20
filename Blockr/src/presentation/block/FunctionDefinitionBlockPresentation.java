@@ -19,6 +19,7 @@ import domain.block.ConditionBlock;
 import domain.block.FunctionDefinition;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
+import presentation.PalettePresentation;
 import domain.Vector;
 
 public class FunctionDefinitionBlockPresentation extends PresentationBlock<FunctionDefinition> {

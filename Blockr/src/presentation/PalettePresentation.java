@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.Vector;
+import domain.block.FunctionDefinition;
 import game_world.api.Action;
 import game_world.api.FacadeGameWorld;
 import game_world.api.Predicate;
@@ -71,6 +72,14 @@ public class PalettePresentation {
 		//list.add(iPresentationBlock.makeFunctionCallBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
 		
 	}
+	
+	public void addFunctionCallToPalette(FunctionDefinition definition,FacadeGameWorld iGameWorld) {
+		final int xOffset = 10; //TODO: dit cleaner
+		final int yOffset = 10;
+		final int yOffsetIncrement = 60;
+		paletteBlocks.add(iPresentationBlock.makeFunctionCallBlock(definition, new Vector(xOffset, yOffset+yOffsetIncrement*5))); //TODO: 5fixen, index privaat voor heel de classe maken
+	}
+	
 	
 	/**
 	 * Returns the presentationBlock from the palette if the presentationBlock covers this position
