@@ -66,21 +66,9 @@ public class PalettePresentation {
 		list.add(iPresentationBlock.makeIfBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
 		// While
 		list.add(iPresentationBlock.makeWhileBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
+		//functioncall test
+		list.add(iPresentationBlock.makeFunctionCallBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
 		
-		/*
-		// Move Forward
-		list.add(BFP.makeMoveForwardBlock(new Vector(xOffset, yOffset)));
-		// Turn Left
-		list.add(BFP.makeTurnLeftBlock(new Vector(xOffset, yOffset+yOffsetIncrement)));		
-		// Turn Right
-		list.add(BFP.makeTurnRightBlock(new Vector(xOffset, yOffset+yOffsetIncrement*2)));
-		// If
-		
-		// Not
-		
-		// Wall In Front
-		list.add(BFP.makeWallInFrontBlock(new Vector(xOffset, yOffset+yOffsetIncrement*6)));
-		*/
 	}
 	
 	/**
