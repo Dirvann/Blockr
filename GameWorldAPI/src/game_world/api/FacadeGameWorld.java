@@ -88,9 +88,7 @@ public interface FacadeGameWorld {
 	 * 
 	 * @return ID of the taken snapshot
 	 */
-	default public Snapshot makeSnapshot() {
-		return null;
-	}
+	public Snapshot makeSnapshot();
 	
 	/**
 	 * Load the game state from the snapshot with given snapshotID.
