@@ -212,6 +212,8 @@ public interface FacadeBlock {
 
 
 	public SingleConditionBlock makeSingleConditionBlock(Predicate predicate);
+	
+	public void RemoveFunctionBlock(FunctionDefinition function);
 
 
 	public ActionBlock makeActionBlock(Action action);

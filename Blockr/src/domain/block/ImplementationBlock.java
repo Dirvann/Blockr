@@ -164,6 +164,11 @@ public class ImplementationBlock implements FacadeBlock{
 
 
 	@Override
+	public void RemoveFunctionBlock(FunctionDefinition function) {
+		function.removeFunctionDefinition();
+		
+	}
+	@Override
 	public SequenceBlock getBodyBlock(FunctionDefinition block) {
 		return block.getBodyBlock();
 	}
