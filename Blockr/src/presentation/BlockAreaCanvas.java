@@ -25,6 +25,7 @@ import domain.block.FunctionDefinition;
 import domain.block.ImplementationBlock;
 import game_world.api.FacadeGameWorld;
 import game_world.api.Snapshot;
+import presentation.block.FunctionCallBlockPresentation;
 import presentation.block.FunctionDefinitionBlockPresentation;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
@@ -236,6 +237,9 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 			if (mousePos.getX() < paletteBorder) {
 				this.postCommand = new DeleteBlock(blockrPanel.getGameController(), selectedBlock);
 				GC.removeBlockFromProgramArea(blockrPanel.getGameController(), selectedBlock);
+				if(selectedBlock instanceof FunctionDefinitionBlockPresentation) {
+					paletteP.removeFunctionCallFromPalette((FunctionDefinition) BFP.getBlock(selectedBlock), iGameWorld);
+				}
 			}
 
 

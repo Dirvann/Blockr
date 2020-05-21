@@ -169,6 +169,17 @@ public class ImplementationBlock implements FacadeBlock{
 	}
 
 
+	public int getID(FunctionDefinition definition) {
+		return definition.ID;
+	}
+
+
+	public int getID(FunctionCall block) {
+		return block.getFunctionDefinition().ID;
+		
+	}
+
+
 
 	
 	

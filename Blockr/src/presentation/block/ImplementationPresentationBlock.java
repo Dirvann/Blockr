@@ -112,8 +112,8 @@ public class ImplementationPresentationBlock implements FacadePresentationBlock{
 		return presentation;
 	}
 
-	public PresentationBlock<FunctionDefinition> makeFunctionDefinitionBlock(Vector pos) {
-		FunctionDefinition block = BF.makeFunctionDefinition(0);//TODO: fix
+	public PresentationBlock<FunctionDefinition> makeFunctionDefinitionBlock(int id,Vector pos) {
+		FunctionDefinition block = BF.makeFunctionDefinition(id);
 		PresentationBlock<FunctionDefinition> presentation = new FunctionDefinitionBlockPresentation(pos, block);
 		return presentation;
 	}
