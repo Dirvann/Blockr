@@ -39,24 +39,18 @@ public class FunctionDefinitionBlockPresentation extends PresentationBlock<Funct
 		int height = getTotalHeight();
 		
 		Area top = new Area(new Rectangle(pos.getX(), pos.getY(), getBlockWidth(), getBlockHeight()));
-		
+		// top bottom plug
 		top.subtract(new Area(new Rectangle(pos.getX() + getBlockSideWidth() + getBlockWidth()/2 - getPlugWidth()/2, pos.getY() + getBlockHeight() - getPlugHeight(), getPlugWidth(), getPlugHeight())));
-		
-		top.subtract(new Area(new Rectangle(pos.getX() + getBlockWidth() - getPlugHeight(), pos.getY() + getBlockHeight() / 2 - getPlugWidth()/2, getPlugHeight(), getPlugWidth())));
-		
 		g.fill(top);
-		// top Plug
-		g.fillRect(pos.getX() + getBlockWidth()/2 - getPlugWidth()/2, pos.getY() - getPlugHeight(), getPlugWidth(), getPlugHeight());
-
 		
+		//???
 		g.fillRect(pos.getX() + getBlockWidth() - getPlugHeight(), pos.getY() + getBlockHeight()/2 + getPlugWidth()/2, getPlugHeight(), getBlockHeight()/2 - getPlugWidth()/2);
+		
 		// side
 		g.fillRect(pos.getX(), pos.getY() + getBlockHeight(), getBlockSideWidth(), height - 2 * getBlockHeight());
 		
 		// bottom
 		Area bottom = new Area(new Rectangle(pos.getX(), pos.getY() + height - getBlockHeight(), getBlockWidth(), getBlockHeight()));
-		bottom.subtract(new Area(new Rectangle(pos.getX() + getBlockWidth()/2 - getPlugWidth()/2 , pos.getY() - getPlugHeight() + height, getPlugWidth(), getPlugHeight())));
-		
 		g.fill(bottom);
 		
 		// bottom top plug
@@ -82,23 +76,11 @@ public class FunctionDefinitionBlockPresentation extends PresentationBlock<Funct
 	}
 
 	@Override
-	public boolean collisionWithLowerPart(Vector position) {
-		int xValueLowerPart = getPosition().getX();
-		int yValueLowerPart = getPosition().getY() + getTotalHeight() - getBlockHeight();
-		if (position.getX() > this.getPosition().getX() && position.getX() < (getBlockWidth() + xValueLowerPart)
-				&& position.getY() > yValueLowerPart && position.getY() < (yValueLowerPart + getBlockHeight())) {
-			return true;
-		}
-		return false;
-	}
-
-	@Override
 	protected Vector getNextBlockPosition(PresentationBlock<?> presentationBlock) {
 		if (presentationBlock.getBlock() == BF.getBodyBlock(getBlock())) {
 			Vector pos = getPosition();
 			return new Vector(pos.getX() + getBlockSideWidth(), pos.getY() + PresentationBlock.getBlockHeight());
 		}
-
 		if (presentationBlock.getBlock() == BF.getNextBlock(getBlock())) {
 			Vector pos = getPosition();
 			return new Vector(pos.getX(), pos.getY() + getTotalHeight());
