@@ -76,23 +76,11 @@ public class FunctionDefinitionBlockPresentation extends PresentationBlock<Funct
 	}
 
 	@Override
-	public boolean collisionWithLowerPart(Vector position) {
-		int xValueLowerPart = getPosition().getX();
-		int yValueLowerPart = getPosition().getY() + getTotalHeight() - getBlockHeight();
-		if (position.getX() > this.getPosition().getX() && position.getX() < (getBlockWidth() + xValueLowerPart)
-				&& position.getY() > yValueLowerPart && position.getY() < (yValueLowerPart + getBlockHeight())) {
-			return true;
-		}
-		return false;
-	}
-
-	@Override
 	protected Vector getNextBlockPosition(PresentationBlock<?> presentationBlock) {
 		if (presentationBlock.getBlock() == BF.getBodyBlock(getBlock())) {
 			Vector pos = getPosition();
 			return new Vector(pos.getX() + getBlockSideWidth(), pos.getY() + PresentationBlock.getBlockHeight());
 		}
-
 		if (presentationBlock.getBlock() == BF.getNextBlock(getBlock())) {
 			Vector pos = getPosition();
 			return new Vector(pos.getX(), pos.getY() + getTotalHeight());
