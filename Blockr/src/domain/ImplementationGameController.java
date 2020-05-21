@@ -127,6 +127,14 @@ public class ImplementationGameController implements FacadeGameController{
 		}
 		return false;
 	}
+	
+	public boolean connect(Block firstBlock, Block secondBlock, ProgramArea programArea) {
+		if(BF.connect(firstBlock, secondBlock)) {
+			programArea.removeTopLevelBlock(secondBlock);
+			return true;
+		}
+		return false;
+	}
 
 	@Override
 	public void setBody(SurroundingBlock surroundingBlock, SequenceBlock block, GameController GC) {
@@ -135,10 +143,23 @@ public class ImplementationGameController implements FacadeGameController{
 		
 	}
 	
+	public void setBody(SurroundingBlock surroundingBlock, SequenceBlock block, ProgramArea programArea) {
+		BF.setBodyBlock(surroundingBlock, block);
+		programArea.removeTopLevelBlock(block);
+		
+	}
+	
 	@Override
 	public void setBody(FunctionDefinition surroundingBlock, SequenceBlock block, GameController GC) {
 		BF.setBodyBlock(surroundingBlock, block);
 		GC.getProgramArea().removeTopLevelBlock(block);
+		
+	}
+	
+
+	public void setBody(FunctionDefinition funct, SequenceBlock block, ProgramArea programArea) {
+		BF.setBodyBlock(funct, block);
+		programArea.removeTopLevelBlock(block);
 		
 	}
 
@@ -175,6 +196,8 @@ public class ImplementationGameController implements FacadeGameController{
 		GC.getProgramArea().nextToExecute = nextToExecute;
 		
 	}
+
+
 
 
 }

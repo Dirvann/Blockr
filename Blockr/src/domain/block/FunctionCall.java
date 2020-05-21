@@ -44,15 +44,15 @@ public class FunctionCall extends SequenceBlock{
 		if (prev == null) {
 			if (surr == null) {
 				if (funct != null) {
-					funct.setBodyBlock(nextBlock);
+					IGC.setBody(funct, nextBlock, programArea);
 				}
 			}
 			else {
-				surr.setBodyBlock(nextBlock);
+				IGC.setBody(surr, nextBlock, programArea);
 			}
 		}
 		else {
-			prev.setNextBlock(nextBlock);
+			IGC.connect(prev, nextBlock, programArea);
 		}
 		
 	}
