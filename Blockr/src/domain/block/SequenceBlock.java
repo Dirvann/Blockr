@@ -128,6 +128,10 @@ public abstract class SequenceBlock extends Block {
 	
 	@Override
 	protected Block execute(GameController GC) throws Exception {
+		return this.getNextToExecute();
+	}
+	
+	protected SequenceBlock getNextToExecute() {
 		if (this.getNextBlock() == null) {
 			if (this.getSurroundingBlock() == null) {
 				if (this.function == null) return null;

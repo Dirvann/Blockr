@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.GameController;
+import domain.ProgramArea;
 
 public class FunctionDefinition extends Block{
 	//the ID of the function
@@ -32,9 +33,9 @@ public class FunctionDefinition extends Block{
 	 * @Post All the callers will be removed from the program. The function will not be called again.
 	 * 
 	 */
-	protected void removeFunctionDefinition() {
+	protected void removeFunctionDefinition(ProgramArea programArea) {
 		for (FunctionCall caller : allCallers) {
-			caller.delete();
+			caller.delete(programArea);
 		}
 	}
 

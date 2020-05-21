@@ -52,4 +52,5 @@ public interface FacadeGameController {
 	public ExecutionCommand getExecutionCommand(GameController GC);
 	public void setExecutionCommand(ExecutionCommand exeCmd, GameController GC);
 	public void setNewExecution(Block currentlyExecuted, Block nextToExecute, GameController GC);
+	void disconnect(Block block, ProgramArea programArea);
 }

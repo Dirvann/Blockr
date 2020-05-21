@@ -5,11 +5,13 @@ import java.util.List;
 import command.ExecutionCommand;
 import domain.block.Block;
 import domain.block.ConditionBlock;
+import domain.block.FunctionCall;
 import domain.block.FunctionDefinition;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
 import game_world.api.FacadeGameWorld;
+import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 /**
  * The Implementation GameController.
@@ -79,7 +81,13 @@ public class ImplementationGameController implements FacadeGameController{
 
 	@Override
 	public void removeBlockFromProgramArea(GameController gameController, PresentationBlock<?> pBlock) {
-		gameController.getProgramArea().removeBlock(pBlock);
+		ImplementationPresentationBlock BFP = new ImplementationPresentationBlock();
+		gameController.getProgramArea().removeBlock(BFP.getBlock(pBlock));
+		
+	}
+	
+	public void removeBlockFromProgramArea(ProgramArea programArea, Block block) {
+		programArea.removeBlock(block);
 		
 	}
 
@@ -97,6 +105,15 @@ public class ImplementationGameController implements FacadeGameController{
 	public void disconnect(Block block, GameController gamecontroller) {
 		if (block != null) {
 			gamecontroller.getProgramArea().addTopLevelBlock(block);
+			BF.disconnect(block);
+		}
+		
+	}
+	
+	@Override
+	public void disconnect(Block block, ProgramArea programArea) {
+		if (block != null) {
+			programArea.addTopLevelBlock(block);
 			BF.disconnect(block);
 		}
 		

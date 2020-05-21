@@ -156,27 +156,8 @@ public class ProgramArea {
 	 */
 	protected void addBlock(PresentationBlock<?> pBlock) {
 		Block block = BFP.getBlock(pBlock);
-		if (block instanceof FunctionDefinition) {
-			addFunctionBlock((FunctionDefinition) block);
-		} else {
-			addTopLevelBlock(BFP.getBlock(pBlock));
-		}
+		addTopLevelBlock(BFP.getBlock(pBlock));
 		blocksLeft -= BF.getAllNextBlocks(BFP.getBlock(pBlock)).size();
-	}
-
-	/**
-	 * Add the given block to the list of function blocks.
-	 * 
-	 * @param block The block to add to topLevelBlocks.
-	 * @post The list of function blocks contains the given block
-	 */
-	protected void addFunctionBlock(FunctionDefinition block) {
-		try {
-			if (!functionBlocks.contains(block))
-				functionBlocks.add(block);
-		} catch (Exception e) {
-		}
-
 	}
 
 	/**
@@ -190,8 +171,7 @@ public class ProgramArea {
 	 * @post One is added to the amount of blocks left. | new.blocksLeft =
 	 *       blocksLeft + 1
 	 */
-	protected void removeBlock(PresentationBlock<?> pBlock) {
-		Block block = BFP.getBlock(pBlock);
+	protected void removeBlock(Block block) {
 		BF.disconnect(block);
 		blocksLeft += BF.getAllNextBlocks(block).size();
 
@@ -199,7 +179,7 @@ public class ProgramArea {
 			removeTopLevelBlock(block);
 		}
 		else {
-			BF.RemoveFunctionBlock((FunctionDefinition) block);
+			BF.RemoveFunctionBlock((FunctionDefinition) block, this);
 			this.functionBlocks.remove(block);
 		}
 	}
@@ -213,8 +193,13 @@ public class ProgramArea {
 	 */
 	protected void addTopLevelBlock(Block block) {
 		try {
-			if (!topLevelBlocks.contains(block))
-				topLevelBlocks.add(block);
+			if (!topLevelBlocks.contains(block) && !functionBlocks.contains(block)) {
+				if (block instanceof FunctionDefinition) {
+					functionBlocks.add((FunctionDefinition) block);
+				}
+				else
+					topLevelBlocks.add(block);
+			}
 		} catch (Exception e) {
 		}
 		;

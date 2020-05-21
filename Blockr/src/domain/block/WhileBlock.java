@@ -43,7 +43,9 @@ class WhileBlock extends SingleSurroundingBlock {
 			return this.getBodyBlock();
 		}
 		IGC.setExecutionCommand(new ExecutionCommand(null, null, null, GC), GC);
-		return this.getNextBlock();
+		
+		
+		return this.getNextToExecute();
 	}
 
 	@Override

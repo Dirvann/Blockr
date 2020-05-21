@@ -223,8 +223,8 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 					paletteP.removeFunctionCallFromPalette((FunctionDefinition) BFP.getBlock(selectedBlock), iGameWorld);
 				} else {
 					this.postCommand = new DeleteBlock(blockrPanel.getGameController(), selectedBlock);
-					GC.removeBlockFromProgramArea(blockrPanel.getGameController(), selectedBlock);
 				}
+				GC.removeBlockFromProgramArea(blockrPanel.getGameController(), selectedBlock);
 			}
 
 			this.cmd.dragCommand(oldPos, newPos, selectedBlock, preCommand, postCommand);

@@ -3,6 +3,7 @@ package domain.block;
 import java.util.List;
 
 import domain.GameController;
+import domain.ProgramArea;
 import game_world.api.Action;
 import game_world.api.Predicate;
 import presentation.block.PresentationBlock;
@@ -164,8 +165,8 @@ public class ImplementationBlock implements FacadeBlock{
 
 
 	@Override
-	public void RemoveFunctionBlock(FunctionDefinition function) {
-		function.removeFunctionDefinition();
+	public void RemoveFunctionBlock(FunctionDefinition function, ProgramArea programArea) {
+		function.removeFunctionDefinition(programArea);
 		
 	}
 	@Override

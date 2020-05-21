@@ -1,6 +1,8 @@
 package domain.block;
 
 import domain.GameController;
+import domain.ImplementationGameController;
+import domain.ProgramArea;
 
 public class FunctionCall extends SequenceBlock{
 	
@@ -11,7 +13,6 @@ public class FunctionCall extends SequenceBlock{
 	protected FunctionCall(FunctionDefinition def){
 		this.ID = def.ID;
 		this.definition = def;
-		this.definition.allCallers.add(this);
 	}
 	
 	protected FunctionDefinition getFunctionDefinition() {
@@ -27,17 +28,19 @@ public class FunctionCall extends SequenceBlock{
 		return super.execute(GC);
 	}
 	
-	protected void delete() {
+	protected void delete(ProgramArea programArea) {
+		ImplementationGameController IGC = new ImplementationGameController();
 		SequenceBlock prev = this.previous;
 		SequenceBlock nextBlock = this.next;
 		SurroundingBlock surr = this.surroundingBlock;
 		FunctionDefinition funct = this.function;
-		
-		this.disconnect();
 
 		if (nextBlock != null) {
-			nextBlock.disconnect();
+			IGC.disconnect(this.next, programArea);
 		}
+		
+		IGC.disconnect(this, programArea);
+		IGC.removeBlockFromProgramArea(programArea, this);
 		if (prev == null) {
 			if (surr == null) {
 				if (funct != null) {
@@ -58,7 +61,9 @@ public class FunctionCall extends SequenceBlock{
 
 	@Override
 	protected Block getNewBlockOfThisType() {
-		return new FunctionCall(definition);
+		FunctionCall copy = new FunctionCall(definition);
+		definition.allCallers.add(copy);
+		return copy;
 	}
 
 	@Override
