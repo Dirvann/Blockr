@@ -5,9 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.Vector;
+import domain.block.FunctionCall;
+import domain.block.FunctionDefinition;
+import domain.block.ImplementationBlock;
 import game_world.api.Action;
 import game_world.api.FacadeGameWorld;
 import game_world.api.Predicate;
+import presentation.block.FunctionCallBlockPresentation;
+import presentation.block.FunctionDefinitionBlockPresentation;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 
@@ -26,7 +31,13 @@ public class PalettePresentation {
 
 	private List<PresentationBlock<?>> paletteBlocks;
 	private ImplementationPresentationBlock iPresentationBlock = new ImplementationPresentationBlock();
+	private ImplementationBlock iBlock = new ImplementationBlock();
 
+	private int index = 0;
+	private final int xOffset = 10;
+	private final int yOffset = 10;
+	private final int yOffsetIncrement = 60;
+	private int functionID = 0;
 	/**
 	 * Create a new instance of PalettePresentation
 	 * 
@@ -42,15 +53,11 @@ public class PalettePresentation {
 	}
 	
 	private void initialisePaletteBlocksList(List<PresentationBlock<?>> list, FacadeGameWorld iGameWorld) {
-		final int xOffset = 10;
-		final int yOffset = 10;
-		final int yOffsetIncrement = 60;
 		
-		
+		index = 0;
 		List<Action> actionList = iGameWorld.getAllActions();
 		List<Predicate> predicateList = iGameWorld.getAllPRedicates();
 		
-		int index = 0;
 		for (int i = 0; i < actionList.size(); i++) {
 			list.add(iPresentationBlock.makeActionBlock(actionList.get(i),new Vector(xOffset, yOffset + yOffsetIncrement*index)));
 			index++;
@@ -66,21 +73,46 @@ public class PalettePresentation {
 		list.add(iPresentationBlock.makeIfBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
 		// While
 		list.add(iPresentationBlock.makeWhileBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
+		// FunctionDefinition
+		list.add(iPresentationBlock.makeFunctionDefinitionBlock(functionID, new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
 		
-		/*
-		// Move Forward
-		list.add(BFP.makeMoveForwardBlock(new Vector(xOffset, yOffset)));
-		// Turn Left
-		list.add(BFP.makeTurnLeftBlock(new Vector(xOffset, yOffset+yOffsetIncrement)));		
-		// Turn Right
-		list.add(BFP.makeTurnRightBlock(new Vector(xOffset, yOffset+yOffsetIncrement*2)));
-		// If
-		
-		// Not
-		
-		// Wall In Front
-		list.add(BFP.makeWallInFrontBlock(new Vector(xOffset, yOffset+yOffsetIncrement*6)));
-		*/
+	}
+	
+	
+	public void addFunctionCallToPalette(FunctionDefinition definition,FacadeGameWorld iGameWorld) {
+		paletteBlocks.add(iPresentationBlock.makeFunctionCallBlock(definition, new Vector(xOffset, yOffset+yOffsetIncrement*(index++))));
+		setNextDefinition();
+	}
+	
+	public void removeFunctionCallFromPalette(FunctionDefinition definition,FacadeGameWorld iGameWorld) {
+		int id = iBlock.getID(definition);
+		removeFunctionCallWithIDFromList(id);
+	}
+	
+	private void removeFunctionCallWithIDFromList(int id) {
+		for(int i=0;i<paletteBlocks.size();i++) {
+			PresentationBlock<?> pb = paletteBlocks.get(i);
+			if(pb instanceof FunctionCallBlockPresentation && id == iBlock.getID((FunctionCall) iPresentationBlock.getBlock(pb))) {
+				paletteBlocks.remove(i);
+				i--;
+			}
+		} 
+	}
+	
+	private void setNextDefinition() {
+		Vector position = null;
+		for(int i=0;i<paletteBlocks.size();i++) {
+			PresentationBlock<?> pb = paletteBlocks.get(i);
+			if(pb instanceof FunctionDefinitionBlockPresentation && functionID == iBlock.getID((FunctionDefinition) iPresentationBlock.getBlock(pb))) {
+				position = iPresentationBlock.getPosition(pb);
+				paletteBlocks.remove(i);
+				break;
+			}
+		} 
+		if(position != null) {
+			functionID++;
+			paletteBlocks.add(iPresentationBlock.makeFunctionDefinitionBlock(functionID,position));			
+		}
 	}
 	
 	/**

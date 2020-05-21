@@ -125,4 +125,8 @@ public class FunctionDefinition extends Block{
 		return super.getAllNextBlocks();
 	}
 
+	public SequenceBlock getBodyBlock() {
+		return body;
+	}
+
 }

@@ -218,4 +218,7 @@ public interface FacadeBlock {
 
 	public ActionBlock makeActionBlock(Action action);
 
+
+	public SequenceBlock getBodyBlock(FunctionDefinition functionDefinition);
+
 }

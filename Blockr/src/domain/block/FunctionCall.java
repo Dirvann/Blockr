@@ -14,6 +14,10 @@ public class FunctionCall extends SequenceBlock{
 		this.definition.allCallers.add(this);
 	}
 	
+	protected FunctionDefinition getFunctionDefinition() {
+		return this.definition;
+	}
+	
 	@Override
 	protected Block execute(GameController GC) throws Exception {
 		if (definition != null) {
