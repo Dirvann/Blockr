@@ -81,32 +81,19 @@ public class FunctionDefinitionBlockPresentation extends PresentationBlock<Funct
 			Vector pos = getPosition();
 			return new Vector(pos.getX() + getBlockSideWidth(), pos.getY() + PresentationBlock.getBlockHeight());
 		}
-		if (presentationBlock.getBlock() == BF.getNextBlock(getBlock())) {
-			Vector pos = getPosition();
-			return new Vector(pos.getX(), pos.getY() + getTotalHeight());
-		}
-
 		return null;
 	}
 
 	@Override
 	public Vector getGivingSnapPoint() {
-		Vector pos = getPosition();
-		return new Vector(pos.getX() + (int) (getBlockWidth() / 2), pos.getY());
+		return null;
 	}
 
 	@Override
 	public List<Vector> getReceivingSnapPoints() {
 		List<Vector> snapPoints = new ArrayList<Vector>();
-		snapPoints.add(getConditionSnapPoint());
 		snapPoints.add(getBodySnapPoint());
-		snapPoints.add(getSequenceSnapPoint());
 		return snapPoints;
-	}
-
-	public Vector getConditionSnapPoint() {
-		Vector pos = getPosition();
-		return new Vector(pos.getX() + getBlockWidth(), pos.getY() + (int) (getBlockHeight() / 2));
 	}
 
 	public Vector getBodySnapPoint() {
@@ -115,26 +102,16 @@ public class FunctionDefinitionBlockPresentation extends PresentationBlock<Funct
 				pos.getY() + getBlockHeight());
 	}
 
-	public Vector getSequenceSnapPoint() {
-		Vector pos = getPosition();
-		return new Vector(pos.getX() + (int) (getBlockWidth() / 2), pos.getY() + getTotalHeight());
-	}
 
 	@Override
 	public Command canSnap(PresentationBlock<?> b, GameController GC) {
 		
-		Block next = BF.getNextBlock(getBlock());
-		SequenceBlock body = BF.getBodyBlock(getBlock());
 		ImplementationGameController IGC = new ImplementationGameController();
 		
 		if (b.getBlock() instanceof SequenceBlock) {
 			if (b.getGivingSnapPoint().distanceTo(getBodySnapPoint()) <= getSnapDistance()) {
 				IGC.setBody(getBlock(), (SequenceBlock) b.getBlock(), GC);
 				return null; //TODO: dis
-			}
-			if (b.getGivingSnapPoint().distanceTo(getSequenceSnapPoint()) <= getSnapDistance()) {
-				IGC.connect(getBlock(), b.getBlock(), GC);
-				return new ConnectCommand(getBlock(), b.getBlock(), next, GC);
 			}
 		}
 		return null;
