@@ -121,8 +121,9 @@ public class FunctionDefinition extends Block{
 	@Override
 	protected List<Block> getAllNextBlocks() {
 		List<Block> allBlocks = super.getAllNextBlocks();
-		allBlocks.addAll(this.body.getAllNextBlocks());
-		return super.getAllNextBlocks();
+		if (this.body != null)
+			allBlocks.addAll(this.body.getAllNextBlocks());
+		return allBlocks;
 	}
 
 	public SequenceBlock getBodyBlock() {

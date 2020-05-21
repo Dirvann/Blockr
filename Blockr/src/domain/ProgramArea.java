@@ -24,8 +24,8 @@ import presentation.block.PresentationBlock;
 public class ProgramArea {
 
 	private int blocksLeft = 15;
-	private List<Block> topLevelBlocks;
-	private List<FunctionDefinition> functionBlocks;
+	private List<Block> topLevelBlocks = new ArrayList<Block>();
+	private List<FunctionDefinition> functionBlocks = new ArrayList<FunctionDefinition>();
 
 	protected Block nextToExecute = null;
 	// undo redo info
@@ -259,7 +259,10 @@ public class ProgramArea {
 	 * @return topLevelBlocks
 	 */
 	protected List<Block> getTopBlocks() {
-		return this.topLevelBlocks;
+		List<Block> allTopBlocks = new ArrayList<Block>();
+		allTopBlocks.addAll(this.topLevelBlocks);
+		allTopBlocks.addAll(functionBlocks);
+		return allTopBlocks;
 	}
 
 	/**
