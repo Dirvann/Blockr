@@ -39,24 +39,18 @@ public class FunctionDefinitionBlockPresentation extends PresentationBlock<Funct
 		int height = getTotalHeight();
 		
 		Area top = new Area(new Rectangle(pos.getX(), pos.getY(), getBlockWidth(), getBlockHeight()));
-		
+		// top bottom plug
 		top.subtract(new Area(new Rectangle(pos.getX() + getBlockSideWidth() + getBlockWidth()/2 - getPlugWidth()/2, pos.getY() + getBlockHeight() - getPlugHeight(), getPlugWidth(), getPlugHeight())));
-		
-		top.subtract(new Area(new Rectangle(pos.getX() + getBlockWidth() - getPlugHeight(), pos.getY() + getBlockHeight() / 2 - getPlugWidth()/2, getPlugHeight(), getPlugWidth())));
-		
 		g.fill(top);
-		// top Plug
-		g.fillRect(pos.getX() + getBlockWidth()/2 - getPlugWidth()/2, pos.getY() - getPlugHeight(), getPlugWidth(), getPlugHeight());
-
 		
+		//???
 		g.fillRect(pos.getX() + getBlockWidth() - getPlugHeight(), pos.getY() + getBlockHeight()/2 + getPlugWidth()/2, getPlugHeight(), getBlockHeight()/2 - getPlugWidth()/2);
+		
 		// side
 		g.fillRect(pos.getX(), pos.getY() + getBlockHeight(), getBlockSideWidth(), height - 2 * getBlockHeight());
 		
 		// bottom
 		Area bottom = new Area(new Rectangle(pos.getX(), pos.getY() + height - getBlockHeight(), getBlockWidth(), getBlockHeight()));
-		bottom.subtract(new Area(new Rectangle(pos.getX() + getBlockWidth()/2 - getPlugWidth()/2 , pos.getY() - getPlugHeight() + height, getPlugWidth(), getPlugHeight())));
-		
 		g.fill(bottom);
 		
 		// bottom top plug
