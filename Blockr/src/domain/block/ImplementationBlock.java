@@ -163,6 +163,13 @@ public class ImplementationBlock implements FacadeBlock{
 	}
 
 
+	@Override
+	public void RemoveFunctionBlock(FunctionDefinition function) {
+		function.removeFunctionDefinition();
+		
+	}
+
+
 
 	
 	

@@ -1,16 +1,17 @@
 package domain.block;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import command.ExecutionCommand;
 import domain.GameController;
-import domain.ImplementationGameController;
 
 public class FunctionDefinition extends Block{
 	//the ID of the function
 	protected int ID;
 	//The history of calls
 	private ArrayList<SequenceBlock> callStack = new ArrayList<SequenceBlock>();
+	//List of all possible callers
+	protected ArrayList<FunctionCall> allCallers = new ArrayList<FunctionCall>();
 	//The body of the function
 	protected SequenceBlock body;
 	
@@ -25,6 +26,17 @@ public class FunctionDefinition extends Block{
 		}
 		return callStack.remove(callStack.size() - 1).next; //returns and removes last element in callstack and gets the block after the caller
 	}
+	
+	/**
+	 * Prepares the function definition to be deleted.
+	 * @Post All the callers will be removed from the program. The function will not be called again.
+	 * 
+	 */
+	protected void removeFunctionDefinition() {
+		for (FunctionCall caller : allCallers) {
+			caller.delete();
+		}
+	}
 
 	@Override
 	protected Block execute(GameController GC) throws Exception {
@@ -34,6 +46,7 @@ public class FunctionDefinition extends Block{
 	@Override
 	protected Block getNewBlockOfThisType() {
 		return new FunctionDefinition(this.ID);
+		
 	}
 
 	@Override
@@ -103,6 +116,13 @@ public class FunctionDefinition extends Block{
 	public void addCaller(FunctionCall functionCall) {
 		this.callStack.add(functionCall);
 		
+	}
+	
+	@Override
+	protected List<Block> getAllNextBlocks() {
+		List<Block> allBlocks = super.getAllNextBlocks();
+		allBlocks.addAll(this.body.getAllNextBlocks());
+		return super.getAllNextBlocks();
 	}
 
 }

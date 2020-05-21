@@ -11,6 +11,7 @@ public class FunctionCall extends SequenceBlock{
 	protected FunctionCall(FunctionDefinition def){
 		this.ID = def.ID;
 		this.definition = def;
+		this.definition.allCallers.add(this);
 	}
 	
 	@Override
@@ -21,6 +22,34 @@ public class FunctionCall extends SequenceBlock{
 		}
 		return super.execute(GC);
 	}
+	
+	protected void delete() {
+		SequenceBlock prev = this.previous;
+		SequenceBlock nextBlock = this.next;
+		SurroundingBlock surr = this.surroundingBlock;
+		FunctionDefinition funct = this.function;
+		
+		this.disconnect();
+
+		if (nextBlock != null) {
+			nextBlock.disconnect();
+		}
+		if (prev == null) {
+			if (surr == null) {
+				if (funct != null) {
+					funct.setBodyBlock(nextBlock);
+				}
+			}
+			else {
+				surr.setBodyBlock(nextBlock);
+			}
+		}
+		else {
+			prev.setNextBlock(nextBlock);
+		}
+		
+	}
+	
 
 
 	@Override
