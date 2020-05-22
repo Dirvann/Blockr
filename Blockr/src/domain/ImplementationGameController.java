@@ -196,6 +196,12 @@ public class ImplementationGameController implements FacadeGameController{
 		GC.getProgramArea().nextToExecute = nextToExecute;
 		
 	}
+	
+	@Override
+	public List<FunctionCall> getAllFunctionCallsOfID(int ID, ProgramArea programarea) {
+		return programarea.getAllFunctionCallsWithID(ID);
+	}
+	
 
 
 

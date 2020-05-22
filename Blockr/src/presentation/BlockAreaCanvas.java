@@ -212,8 +212,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 
 			// Check for snapping
 
-			// makes the command for snapping (undo/redo). null if not snapped
-			this.postCommand = programAreaP.snapBlock(selectedBlock);
+			
 
 			// Delete if over palette
 			int paletteBorder = (int) (panelProportion * this.getWidth());
@@ -225,6 +224,10 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 					this.postCommand = new DeleteBlock(blockrPanel.getGameController(), selectedBlock);
 				}
 				GC.removeBlockFromProgramArea(blockrPanel.getGameController(), selectedBlock);
+			}
+			else {
+				// makes the command for snapping (undo/redo). null if not snapped
+				this.postCommand = programAreaP.snapBlock(selectedBlock);
 			}
 
 			this.cmd.dragCommand(oldPos, newPos, selectedBlock, preCommand, postCommand);

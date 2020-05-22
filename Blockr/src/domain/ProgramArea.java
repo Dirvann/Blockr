@@ -5,6 +5,7 @@ import java.util.List;
 
 import command.ExecutionCommand;
 import domain.block.Block;
+import domain.block.FunctionCall;
 import domain.block.FunctionDefinition;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
@@ -156,8 +157,8 @@ public class ProgramArea {
 	 */
 	protected void addBlock(PresentationBlock<?> pBlock) {
 		Block block = BFP.getBlock(pBlock);
-		addTopLevelBlock(BFP.getBlock(pBlock));
-		blocksLeft -= BF.getAllNextBlocks(BFP.getBlock(pBlock)).size();
+		addTopLevelBlock(block);
+		blocksLeft -= BF.getAllNextBlocks(block).size();
 	}
 
 	/**
@@ -177,10 +178,17 @@ public class ProgramArea {
 
 		if (!(block instanceof FunctionDefinition)) {
 			removeTopLevelBlock(block);
-		}
-		else {
+		} else {
+			List<Block> blocksFunction = BF.getAllNextBlocks(block);
+			for (Block blockOfFunction : blocksFunction) {
+				if (blockOfFunction instanceof FunctionCall
+						&& BF.getID((FunctionCall) blockOfFunction) == BF.getID((FunctionDefinition) block)) {
+					blocksLeft--;
+				}
+			}
 			BF.RemoveFunctionBlock((FunctionDefinition) block, this);
 			this.functionBlocks.remove(block);
+
 		}
 	}
 
@@ -196,8 +204,7 @@ public class ProgramArea {
 			if (!topLevelBlocks.contains(block) && !functionBlocks.contains(block)) {
 				if (block instanceof FunctionDefinition) {
 					functionBlocks.add((FunctionDefinition) block);
-				}
-				else
+				} else
 					topLevelBlocks.add(block);
 			}
 		} catch (Exception e) {
@@ -280,6 +287,17 @@ public class ProgramArea {
 	 */
 	protected ExecutionCommand getExecutionCommand() {
 		return exeCmd;
+	}
+
+	protected List<FunctionCall> getAllFunctionCallsWithID(int ID) {
+		List<FunctionCall> allCallers = new ArrayList<FunctionCall>();
+		for (Block block : this.getAllBlocks()) {
+			if (block instanceof FunctionCall && BF.getID((FunctionCall) block) == ID) {
+				allCallers.add((FunctionCall) block);
+			}
+		}
+		return allCallers;
+
 	}
 
 	/**

@@ -62,7 +62,6 @@ public class FunctionCall extends SequenceBlock{
 	@Override
 	protected Block getNewBlockOfThisType() {
 		FunctionCall copy = new FunctionCall(definition);
-		definition.allCallers.add(copy);
 		return copy;
 	}
 

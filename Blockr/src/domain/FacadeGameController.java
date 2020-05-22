@@ -5,6 +5,7 @@ import java.util.List;
 import command.ExecutionCommand;
 import domain.block.Block;
 import domain.block.ConditionBlock;
+import domain.block.FunctionCall;
 import domain.block.FunctionDefinition;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
@@ -53,4 +54,5 @@ public interface FacadeGameController {
 	public void setExecutionCommand(ExecutionCommand exeCmd, GameController GC);
 	public void setNewExecution(Block currentlyExecuted, Block nextToExecute, GameController GC);
 	void disconnect(Block block, ProgramArea programArea);
+	List<FunctionCall> getAllFunctionCallsOfID(int ID, ProgramArea programarea);
 }
