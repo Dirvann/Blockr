@@ -5,6 +5,8 @@ import java.util.List;
 import command.ExecutionCommand;
 import domain.block.Block;
 import domain.block.ConditionBlock;
+import domain.block.FunctionCall;
+import domain.block.FunctionDefinition;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
 import game_world.api.FacadeGameWorld;
@@ -43,6 +45,7 @@ public interface FacadeGameController {
 	public void disconnect(Block block, GameController gamecontroller);
 	public boolean connect(Block firstBlock, Block secondBlock, GameController GC);
 	public void setBody(SurroundingBlock surroundingBlock, SequenceBlock block, GameController GC);
+	public void setBody(FunctionDefinition surroundingBlock, SequenceBlock block, GameController GC);
 	public void setCondition(SurroundingBlock surroundingBlock, ConditionBlock condition, GameController GC);
 	
 	//execution info for undo redo and manipulation of execution
@@ -50,4 +53,6 @@ public interface FacadeGameController {
 	public ExecutionCommand getExecutionCommand(GameController GC);
 	public void setExecutionCommand(ExecutionCommand exeCmd, GameController GC);
 	public void setNewExecution(Block currentlyExecuted, Block nextToExecute, GameController GC);
+	void disconnect(Block block, ProgramArea programArea);
+	List<FunctionCall> getAllFunctionCallsOfID(int ID, ProgramArea programarea);
 }

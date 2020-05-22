@@ -3,6 +3,7 @@ package domain.block;
 import java.util.List;
 
 import domain.GameController;
+import domain.ProgramArea;
 import game_world.api.Action;
 import game_world.api.Predicate;
 import presentation.block.PresentationBlock;
@@ -129,7 +130,7 @@ public interface FacadeBlock {
 	 * @return The block that is connected before this block (on the left side for
 	 *         conditionBlocks or on the upper side of sequenceBlocks).
 	 */
-	public Block getPreviousBlock(Block block);
+	public Block getBlockAbove(Block block);
 	
 	/**
 	 * 
@@ -212,8 +213,20 @@ public interface FacadeBlock {
 
 
 	public SingleConditionBlock makeSingleConditionBlock(Predicate predicate);
+	
+	public void RemoveFunctionBlock(FunctionDefinition function, ProgramArea programArea);
 
 
 	public ActionBlock makeActionBlock(Action action);
+
+
+	public SequenceBlock getBodyBlock(FunctionDefinition functionDefinition);
+
+
+	FunctionDefinition getFunctionBlock(Block block);
+
+
+	void resetFunctionCallers(FunctionDefinition functionDefinition);
+
 
 }

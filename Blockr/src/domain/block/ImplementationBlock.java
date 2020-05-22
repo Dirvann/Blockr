@@ -1,8 +1,10 @@
 package domain.block;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import domain.GameController;
+import domain.ProgramArea;
 import game_world.api.Action;
 import game_world.api.Predicate;
 import presentation.block.PresentationBlock;
@@ -47,7 +49,9 @@ public class ImplementationBlock implements FacadeBlock{
 
 	@Override
 	public boolean connect(Block firstBlock, Block secondBlock) {
-		return firstBlock.setNextBlock(secondBlock);
+		if (firstBlock != null)
+			return firstBlock.setNextBlock(secondBlock);
+		return false;
 		
 	}
 
@@ -94,8 +98,12 @@ public class ImplementationBlock implements FacadeBlock{
 	}
 
 	@Override
+	public Block getBlockAbove(Block block) {
+		return block.getBlockAbove();
+	}
+	
 	public Block getPreviousBlock(Block block) {
-		return block.getPreviousBlock();
+		return block.getPrevious();
 	}
 
 	@Override
@@ -163,6 +171,49 @@ public class ImplementationBlock implements FacadeBlock{
 	}
 
 
+	@Override
+	public void RemoveFunctionBlock(FunctionDefinition function, ProgramArea programArea) {
+		function.removeFunctionDefinition(programArea);
+		
+	}
+	@Override
+	public SequenceBlock getBodyBlock(FunctionDefinition block) {
+		return block.getBodyBlock();
+	}
+
+
+	public int getID(FunctionDefinition definition) {
+		return definition.ID;
+	}
+
+
+	public int getID(FunctionCall block) {
+		return block.getFunctionDefinition().ID;
+		
+	}
+
+	@Override
+	public FunctionDefinition getFunctionBlock(Block block) {
+		if (!(block instanceof SequenceBlock)) return null;
+		return ((SequenceBlock) block).function;
+	}
+
+
+	@Override
+	public void resetFunctionCallers(FunctionDefinition functionDefinition) {
+		functionDefinition.callStack = new ArrayList<SequenceBlock>();
+		
+	}
+
+
+	public void setID(FunctionDefinition function, int id) {
+		function.ID = id;
+		
+	}
+
+	public void deleteFunctionCall(FunctionCall functionCall, ProgramArea programArea) {
+		functionCall.delete(programArea);
+	}
 
 	
 	

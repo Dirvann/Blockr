@@ -8,6 +8,8 @@ import domain.Vector;
 import domain.block.ActionBlock;
 import domain.block.Block;
 import domain.block.ChainConditionBlock;
+import domain.block.FunctionCall;
+import domain.block.FunctionDefinition;
 import domain.block.ImplementationBlock;
 import domain.block.SingleConditionBlock;
 import domain.block.SingleSurroundingBlock;
@@ -101,6 +103,18 @@ public class ImplementationPresentationBlock implements FacadePresentationBlock{
 	public PresentationBlock<SingleConditionBlock> makeSingleConditionBlock(Predicate predicate, Vector pos) {
 		SingleConditionBlock block = BF.makeSingleConditionBlock(predicate);
 		PresentationBlock<SingleConditionBlock> presentation = new SingleConditionBlockPresentation(pos, block);
+		return presentation;
+	}
+
+	public PresentationBlock<FunctionCall> makeFunctionCallBlock(FunctionDefinition definition,Vector pos) {
+		FunctionCall block = BF.makeCaller(definition);
+		PresentationBlock<FunctionCall> presentation = new FunctionCallBlockPresentation(pos, block);
+		return presentation;
+	}
+
+	public PresentationBlock<FunctionDefinition> makeFunctionDefinitionBlock(int id,Vector pos) {
+		FunctionDefinition block = BF.makeFunctionDefinition(id);
+		PresentationBlock<FunctionDefinition> presentation = new FunctionDefinitionBlockPresentation(pos, block);
 		return presentation;
 	}
 

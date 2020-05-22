@@ -47,14 +47,7 @@ class IfBlock extends SingleSurroundingBlock {
 
 	@Override
 	protected SequenceBlock getNextAfterLoop() {
-		if (this.getNextBlock() == null) {
-			if (this.getSurroundingBlock() == null) {
-				return null;
-			}
-			
-			return this.getSurroundingBlock().getNextAfterLoop();
-		}
-		return this.getNextBlock();
+		return this.getNextToExecute();
 	}
 
 

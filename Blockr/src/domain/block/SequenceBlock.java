@@ -18,7 +18,7 @@ public abstract class SequenceBlock extends Block {
 	protected FunctionDefinition function = null;
 
 	@Override
-	protected Block getPreviousBlock() {
+	protected Block getBlockAbove() {
 		if (previous != null) {
 			return previous;
 		}
@@ -128,6 +128,10 @@ public abstract class SequenceBlock extends Block {
 	
 	@Override
 	protected Block execute(GameController GC) throws Exception {
+		return this.getNextToExecute();
+	}
+	
+	protected SequenceBlock getNextToExecute() {
 		if (this.getNextBlock() == null) {
 			if (this.getSurroundingBlock() == null) {
 				if (this.function == null) return null;
@@ -137,5 +141,10 @@ public abstract class SequenceBlock extends Block {
 			return this.getSurroundingBlock().getNextAfterLoop();
 		}
 		return this.getNextBlock();
+	}
+	
+	@Override
+	protected Block getPrevious() {
+		return this.previous;
 	}
 }

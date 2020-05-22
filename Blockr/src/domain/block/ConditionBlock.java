@@ -33,7 +33,7 @@ public abstract class ConditionBlock extends Block {
 
 	@Override
 	protected void disconnect() {
-		Block prev = this.getPreviousBlock();
+		Block prev = this.getBlockAbove();
 		if (prev instanceof SurroundingBlock) {
 			((SurroundingBlock) prev).removeConditionBlock();
 			return;
@@ -44,7 +44,7 @@ public abstract class ConditionBlock extends Block {
 	}
 
 	@Override
-	protected Block getPreviousBlock() {
+	protected Block getBlockAbove() {
 		if (previous != null) {
 			return previous;
 		} else if (surroundingBlock != null) {
@@ -69,4 +69,8 @@ public abstract class ConditionBlock extends Block {
 		return false;
 	}
 	
+	@Override
+	protected Block getPrevious() {
+		return this.previous;
+	}
 }

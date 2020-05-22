@@ -1,16 +1,17 @@
 package domain.block;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import command.ExecutionCommand;
 import domain.GameController;
 import domain.ImplementationGameController;
+import domain.ProgramArea;
 
 public class FunctionDefinition extends Block{
 	//the ID of the function
 	protected int ID;
 	//The history of calls
-	private ArrayList<SequenceBlock> callStack = new ArrayList<SequenceBlock>();
+	protected ArrayList<SequenceBlock> callStack = new ArrayList<SequenceBlock>();
 	//The body of the function
 	protected SequenceBlock body;
 	
@@ -23,7 +24,21 @@ public class FunctionDefinition extends Block{
 		if (callStack.size() == 0) {
 			return null;
 		}
-		return callStack.remove(callStack.size() - 1).next; //returns and removes last element in callstack and gets the block after the caller
+		return callStack.remove(callStack.size() - 1).getNextToExecute(); //returns and removes last element in callstack and gets the block after the caller
+	}
+	
+	/**
+	 * Prepares the function definition to be deleted.
+	 * @Post All the callers will be removed from the program. The function will not be called again.
+	 * 
+	 */
+	protected void removeFunctionDefinition(ProgramArea programArea) {
+		ImplementationGameController GCF = new ImplementationGameController();
+		List<FunctionCall> allCallers = GCF.getAllFunctionCallsOfID(this.ID, programArea);
+		for (int i = 0; i < allCallers.size(); i++) {
+			FunctionCall caller = allCallers.get(i);
+			caller.delete(programArea);
+		}
 	}
 
 	@Override
@@ -34,6 +49,7 @@ public class FunctionDefinition extends Block{
 	@Override
 	protected Block getNewBlockOfThisType() {
 		return new FunctionDefinition(this.ID);
+		
 	}
 
 	@Override
@@ -62,7 +78,7 @@ public class FunctionDefinition extends Block{
 	}
 
 	@Override
-	protected Block getPreviousBlock() {
+	protected Block getBlockAbove() {
 		return null;
 	}
 
@@ -82,6 +98,10 @@ public class FunctionDefinition extends Block{
 	 * 		  Sets this block as first (of a sequence) under the statement.
 	 */
 	protected void setBodyBlock(SequenceBlock block) {
+		if (block == null) {
+			this.removeBodyBlock();
+			return;
+		}
 		if (this.body != null) {
 			SequenceBlock last = block;
 			while (last.getNextBlock() != null) {
@@ -96,13 +116,32 @@ public class FunctionDefinition extends Block{
 	
 
 	public void removeBodyBlock() {
-		this.body.setFunctionBlock(null);;
+		if (this.body != null)
+			this.body.setFunctionBlock(null);
+		this.body = null;
 		
 	}
 
 	public void addCaller(FunctionCall functionCall) {
 		this.callStack.add(functionCall);
 		
+	}
+	
+	@Override
+	protected List<Block> getAllNextBlocks() {
+		List<Block> allBlocks = super.getAllNextBlocks();
+		if (this.body != null)
+			allBlocks.addAll(this.body.getAllNextBlocks());
+		return allBlocks;
+	}
+
+	public SequenceBlock getBodyBlock() {
+		return body;
+	}
+
+	@Override
+	protected Block getPrevious() {
+		return null;
 	}
 
 }
