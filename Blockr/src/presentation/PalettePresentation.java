@@ -37,7 +37,6 @@ public class PalettePresentation {
 	private final int xOffset = 10;
 	private final int yOffset = 10;
 	private final int yOffsetIncrement = 60;
-	private int functionID = 0;
 	private PresentationBlock<FunctionDefinition> paletteFunction;
 	/**
 	 * Create a new instance of PalettePresentation
@@ -75,23 +74,29 @@ public class PalettePresentation {
 		// While
 		list.add(iPresentationBlock.makeWhileBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
 		// FunctionDefinition
-		paletteFunction = iPresentationBlock.makeFunctionDefinitionBlock(functionID, new Vector(xOffset, yOffset+yOffsetIncrement*index++));
+		paletteFunction = iPresentationBlock.makeFunctionDefinitionBlock(0, new Vector(xOffset, yOffset+yOffsetIncrement*index++));
 		list.add(paletteFunction);
 		
 	}
 	
+	public void setFunctionDefinitionId(int ID) {
+		iBlock.setID((FunctionDefinition) iPresentationBlock.getBlock(this.paletteFunction), ID);
+	}
 	
-	public void addFunctionCallToPalette(FunctionDefinition definition,FacadeGameWorld iGameWorld) {
+	public int getFunctionDefinitionId() {
+		return iBlock.getID((FunctionDefinition) iPresentationBlock.getBlock(this.paletteFunction));
+	}
+	public void addFunctionCallToPalette(FunctionDefinition definition) {
 		setNextDefinition();
 		paletteBlocks.add(iPresentationBlock.makeFunctionCallBlock(definition, new Vector(xOffset, yOffset+yOffsetIncrement*(index++))));
 	}
 	
-	public void removeFunctionCallFromPalette(FunctionDefinition definition,FacadeGameWorld iGameWorld) {
+	public void removeFunctionCallFromPalette(FunctionDefinition definition) {
 		int id = iBlock.getID(definition);
 		removeFunctionCallWithIDFromList(id);
 	}
 	
-	private void removeFunctionCallWithIDFromList(int id) {
+	public void removeFunctionCallWithIDFromList(int id) {
 		for(int i=0;i<paletteBlocks.size();i++) {
 			PresentationBlock<?> pb = paletteBlocks.get(i);
 			if(pb instanceof FunctionCallBlockPresentation && id == iBlock.getID((FunctionCall) iPresentationBlock.getBlock(pb))) {

@@ -49,7 +49,9 @@ public class ImplementationBlock implements FacadeBlock{
 
 	@Override
 	public boolean connect(Block firstBlock, Block secondBlock) {
-		return firstBlock.setNextBlock(secondBlock);
+		if (firstBlock != null)
+			return firstBlock.setNextBlock(secondBlock);
+		return false;
 		
 	}
 

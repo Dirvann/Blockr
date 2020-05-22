@@ -15,6 +15,7 @@ import command.DeleteBlock;
 import command.DeleteFunction;
 import command.ExecutionCommand;
 import command.MakeBlock;
+import command.MakeFunctionCommand;
 import command.disconnectCommand;
 import domain.CommandProcessor;
 import domain.ExecutionProcessor;
@@ -151,13 +152,16 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		if (paletteBlockP != null && GC.getAmountOfBlocksLeft(blockrPanel.getGameController()) > 0) {
 			PresentationBlock<?> presentationCopy = BFP.makeCopy(paletteBlockP);
 			if (presentationCopy instanceof FunctionDefinitionBlockPresentation) {
-				paletteP.addFunctionCallToPalette((FunctionDefinition) BFP.getBlock(presentationCopy), iGameWorld);
+				paletteP.addFunctionCallToPalette((FunctionDefinition) BFP.getBlock(presentationCopy));
+				this.preCommand = new MakeFunctionCommand(blockrPanel.getGameController(), (FunctionDefinitionBlockPresentation) presentationCopy, paletteP);
+			}
+			else {
+				this.preCommand = new MakeBlock(blockrPanel.getGameController(), presentationCopy);
 			}
 			GC.addBlockToProgramArea(blockrPanel.getGameController(), presentationCopy);
 			selectedBlock = presentationCopy;
 
 			// redo undo info collecting about current situation
-			this.preCommand = new MakeBlock(blockrPanel.getGameController(), presentationCopy);
 			this.oldPos = BFP.getPosition(presentationCopy);
 
 			System.out.println("New Block made of type: " + BF.getName(BFP.getBlock(selectedBlock)));
@@ -216,8 +220,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 			if (mousePos.getX() < paletteBorder) {
 				if (BFP.getBlock(selectedBlock) instanceof FunctionDefinition) {
 					this.postCommand = new DeleteFunction(blockrPanel.getGameController(), selectedBlock);
-					paletteP.removeFunctionCallFromPalette((FunctionDefinition) BFP.getBlock(selectedBlock),
-							iGameWorld);
+					paletteP.removeFunctionCallFromPalette((FunctionDefinition) BFP.getBlock(selectedBlock));
 				} else {
 					this.postCommand = new DeleteBlock(blockrPanel.getGameController(), selectedBlock);
 				}
