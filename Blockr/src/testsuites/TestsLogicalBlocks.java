@@ -58,15 +58,15 @@ public class TestsLogicalBlocks {
 		// simple test: connect 2 actionblocks
 		BF.connect(startBlock, whileBlock1);
 		assertEquals(whileBlock1, BF.getNextBlock(startBlock));
-		assertEquals(startBlock, BF.getPreviousBlock(whileBlock1));
+		assertEquals(startBlock, BF.getBlockAbove(whileBlock1));
 
 		// simple test: squeeze actionBlock between 2 actionblocks
 		BF.connect(mF1, tR1);
 		BF.connect(mF1, tL1);
 		assertEquals(tL1, BF.getNextBlock(mF1));
 		assertEquals(tR1, BF.getNextBlock(tL1));
-		assertEquals(mF1, BF.getPreviousBlock(tL1));
-		assertEquals(tL1, BF.getPreviousBlock(tR1));
+		assertEquals(mF1, BF.getBlockAbove(tL1));
+		assertEquals(tL1, BF.getBlockAbove(tR1));
 
 		// simple test: connect condition to while
 		BF.setConditionBlock(whileBlock1, not1);

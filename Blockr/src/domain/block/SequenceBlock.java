@@ -18,7 +18,7 @@ public abstract class SequenceBlock extends Block {
 	protected FunctionDefinition function = null;
 
 	@Override
-	protected Block getPreviousBlock() {
+	protected Block getBlockAbove() {
 		if (previous != null) {
 			return previous;
 		}
@@ -141,5 +141,10 @@ public abstract class SequenceBlock extends Block {
 			return this.getSurroundingBlock().getNextAfterLoop();
 		}
 		return this.getNextBlock();
+	}
+	
+	@Override
+	protected Block getPrevious() {
+		return this.previous;
 	}
 }

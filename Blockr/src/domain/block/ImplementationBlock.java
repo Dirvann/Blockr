@@ -1,5 +1,6 @@
 package domain.block;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import domain.GameController;
@@ -95,8 +96,12 @@ public class ImplementationBlock implements FacadeBlock{
 	}
 
 	@Override
+	public Block getBlockAbove(Block block) {
+		return block.getBlockAbove();
+	}
+	
 	public Block getPreviousBlock(Block block) {
-		return block.getPreviousBlock();
+		return block.getPrevious();
 	}
 
 	@Override
@@ -185,6 +190,24 @@ public class ImplementationBlock implements FacadeBlock{
 		
 	}
 
+	@Override
+	public FunctionDefinition getFunctionBlock(Block block) {
+		if (!(block instanceof SequenceBlock)) return null;
+		return ((SequenceBlock) block).function;
+	}
+
+
+	@Override
+	public void resetFunctionCallers(FunctionDefinition functionDefinition) {
+		functionDefinition.callStack = new ArrayList<SequenceBlock>();
+		
+	}
+
+
+	public void setID(FunctionDefinition function, int id) {
+		function.ID = id;
+		
+	}
 
 
 	

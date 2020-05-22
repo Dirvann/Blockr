@@ -72,9 +72,9 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	private Command postCommand = null;
 	private Vector newPos = null;
 	private Vector oldPos = null;
-	
+
 	private Snapshot startSnapshot;
-	
+
 	/**
 	 * 
 	 * 
@@ -85,9 +85,9 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		paletteP = new PalettePresentation(iGameWorld);
 		programAreaP = new ProgramAreaPresentation(blockrPanel.getGameController());
 		this.iGameWorld = iGameWorld;
-		
+
 		this.startSnapshot = iGameWorld.makeSnapshot();
-		
+
 		this.blockrPanel = blockrPanel;
 		addMouseListener(this);
 		addMouseMotionListener(this);
@@ -150,7 +150,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		// Create functional copy of paletteBlock and add to programArea
 		if (paletteBlockP != null && GC.getAmountOfBlocksLeft(blockrPanel.getGameController()) > 0) {
 			PresentationBlock<?> presentationCopy = BFP.makeCopy(paletteBlockP);
-			if(presentationCopy instanceof FunctionDefinitionBlockPresentation) {
+			if (presentationCopy instanceof FunctionDefinitionBlockPresentation) {
 				paletteP.addFunctionCallToPalette((FunctionDefinition) BFP.getBlock(presentationCopy), iGameWorld);
 			}
 			GC.addBlockToProgramArea(blockrPanel.getGameController(), presentationCopy);
@@ -168,9 +168,8 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 				selectedBlock = programBlockP;
 
 				// info collecting redo undo
-				if (BF.getPreviousBlock(BFP.getBlock(programBlockP)) != null)
-					this.preCommand = new disconnectCommand(BF.getPreviousBlock(BFP.getBlock(programBlockP)),
-							BFP.getBlock(programBlockP), blockrPanel.getGameController());
+				this.preCommand = new disconnectCommand(BF.getPreviousBlock(BFP.getBlock(programBlockP)),
+						BFP.getBlock(programBlockP), blockrPanel.getGameController());
 				this.oldPos = BFP.getPosition(programBlockP);
 
 				GC.disconnect(BFP.getBlock(selectedBlock), blockrPanel.getGameController());
@@ -212,20 +211,18 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 
 			// Check for snapping
 
-			
-
 			// Delete if over palette
 			int paletteBorder = (int) (panelProportion * this.getWidth());
 			if (mousePos.getX() < paletteBorder) {
 				if (BFP.getBlock(selectedBlock) instanceof FunctionDefinition) {
 					this.postCommand = new DeleteFunction(blockrPanel.getGameController(), selectedBlock);
-					paletteP.removeFunctionCallFromPalette((FunctionDefinition) BFP.getBlock(selectedBlock), iGameWorld);
+					paletteP.removeFunctionCallFromPalette((FunctionDefinition) BFP.getBlock(selectedBlock),
+							iGameWorld);
 				} else {
 					this.postCommand = new DeleteBlock(blockrPanel.getGameController(), selectedBlock);
 				}
 				GC.removeBlockFromProgramArea(blockrPanel.getGameController(), selectedBlock);
-			}
-			else {
+			} else {
 				// makes the command for snapping (undo/redo). null if not snapped
 				this.postCommand = programAreaP.snapBlock(selectedBlock);
 			}
@@ -341,7 +338,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 
 		// TODO reset gameworld to original state snapshot
 		iGameWorld.loadSnapshot(this.startSnapshot);
-		
+
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.List;
 
+import command.AddToBodyFunctionDefinitionCommand;
 import command.Command;
 import command.ConnectCommand;
 import command.addToBodyCommand;
@@ -107,11 +108,12 @@ public class FunctionDefinitionBlockPresentation extends PresentationBlock<Funct
 	public Command canSnap(PresentationBlock<?> b, GameController GC) {
 		
 		ImplementationGameController IGC = new ImplementationGameController();
+		SequenceBlock body = BF.getBodyBlock(getBlock());
 		
 		if (b.getBlock() instanceof SequenceBlock) {
 			if (b.getGivingSnapPoint().distanceTo(getBodySnapPoint()) <= getSnapDistance()) {
 				IGC.setBody(getBlock(), (SequenceBlock) b.getBlock(), GC);
-				return null; //TODO: dis
+				return new AddToBodyFunctionDefinitionCommand(getBlock(), (SequenceBlock) b.getBlock(), body, GC);
 			}
 		}
 		return null;

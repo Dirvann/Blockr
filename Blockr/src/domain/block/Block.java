@@ -155,7 +155,7 @@ public abstract class Block {
 	 * @return The block that is connected before this block (on the left side for
 	 *         conditionBlocks or on the upper side of sequenceBlocks).
 	 */
-	protected abstract Block getPreviousBlock();
+	protected abstract Block getBlockAbove();
 
 	/**
 	 * Return the last block of the connection chain to this block.
@@ -175,4 +175,6 @@ public abstract class Block {
 	 *       block and surrounding block.
 	 */
 	protected abstract void disconnect();
+
+	protected abstract Block getPrevious();
 }

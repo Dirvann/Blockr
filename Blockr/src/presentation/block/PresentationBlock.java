@@ -58,12 +58,12 @@ public abstract class PresentationBlock<T extends Block> {
 
 	protected Vector getPosition() {
 		// check if it has a previous block
-		if (blockFunctions.getPreviousBlock(getBlock()) == null) {
+		if (blockFunctions.getBlockAbove(getBlock()) == null) {
 			return new Vector(position.getX(), position.getY());
 		}
 
 		// get the position of the block from the upper block
-		Block previous = blockFunctions.getPreviousBlock(getBlock());
+		Block previous = blockFunctions.getBlockAbove(getBlock());
 
 		this.setPosition(blockFunctions.getPresentationBlock(previous).getNextBlockPosition(this));
 

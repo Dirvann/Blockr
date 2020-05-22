@@ -143,6 +143,9 @@ public class ProgramArea {
 		if (programInProgress()) {
 			nextToExecute = null;
 		}
+		for(int i = 0; i < functionBlocks.size(); i++) {
+			BF.resetFunctionCallers(functionBlocks.get(i));
+		}
 	}
 
 	/**

@@ -11,7 +11,7 @@ public class FunctionDefinition extends Block{
 	//the ID of the function
 	protected int ID;
 	//The history of calls
-	private ArrayList<SequenceBlock> callStack = new ArrayList<SequenceBlock>();
+	protected ArrayList<SequenceBlock> callStack = new ArrayList<SequenceBlock>();
 	//The body of the function
 	protected SequenceBlock body;
 	
@@ -78,7 +78,7 @@ public class FunctionDefinition extends Block{
 	}
 
 	@Override
-	protected Block getPreviousBlock() {
+	protected Block getBlockAbove() {
 		return null;
 	}
 
@@ -137,6 +137,11 @@ public class FunctionDefinition extends Block{
 
 	public SequenceBlock getBodyBlock() {
 		return body;
+	}
+
+	@Override
+	protected Block getPrevious() {
+		return null;
 	}
 
 }

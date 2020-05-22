@@ -38,6 +38,7 @@ public class PalettePresentation {
 	private final int yOffset = 10;
 	private final int yOffsetIncrement = 60;
 	private int functionID = 0;
+	private PresentationBlock<FunctionDefinition> paletteFunction;
 	/**
 	 * Create a new instance of PalettePresentation
 	 * 
@@ -74,14 +75,15 @@ public class PalettePresentation {
 		// While
 		list.add(iPresentationBlock.makeWhileBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
 		// FunctionDefinition
-		list.add(iPresentationBlock.makeFunctionDefinitionBlock(functionID, new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
+		paletteFunction = iPresentationBlock.makeFunctionDefinitionBlock(functionID, new Vector(xOffset, yOffset+yOffsetIncrement*index++));
+		list.add(paletteFunction);
 		
 	}
 	
 	
 	public void addFunctionCallToPalette(FunctionDefinition definition,FacadeGameWorld iGameWorld) {
-		paletteBlocks.add(iPresentationBlock.makeFunctionCallBlock(definition, new Vector(xOffset, yOffset+yOffsetIncrement*(index++))));
 		setNextDefinition();
+		paletteBlocks.add(iPresentationBlock.makeFunctionCallBlock(definition, new Vector(xOffset, yOffset+yOffsetIncrement*(index++))));
 	}
 	
 	public void removeFunctionCallFromPalette(FunctionDefinition definition,FacadeGameWorld iGameWorld) {
@@ -100,19 +102,7 @@ public class PalettePresentation {
 	}
 	
 	private void setNextDefinition() {
-		Vector position = null;
-		for(int i=0;i<paletteBlocks.size();i++) {
-			PresentationBlock<?> pb = paletteBlocks.get(i);
-			if(pb instanceof FunctionDefinitionBlockPresentation && functionID == iBlock.getID((FunctionDefinition) iPresentationBlock.getBlock(pb))) {
-				position = iPresentationBlock.getPosition(pb);
-				paletteBlocks.remove(i);
-				break;
-			}
-		} 
-		if(position != null) {
-			functionID++;
-			paletteBlocks.add(iPresentationBlock.makeFunctionDefinitionBlock(functionID,position));			
-		}
+		iBlock.setID((FunctionDefinition) iPresentationBlock.getBlock(paletteFunction), iBlock.getID((FunctionDefinition) iPresentationBlock.getBlock(paletteFunction)) + 1);
 	}
 	
 	/**
@@ -141,7 +131,9 @@ public class PalettePresentation {
 	 * 	      | Graphics object to draw palette on
 	 */
 	public void paint(Graphics g) {
+		int index = 0;
 		for (PresentationBlock<?> pBlock: paletteBlocks) {
+			iPresentationBlock.setPosition(pBlock, new Vector(xOffset, yOffset+yOffsetIncrement*index++));
 			iPresentationBlock.draw(g, pBlock);;
 		}
 	}

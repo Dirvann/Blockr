@@ -130,7 +130,7 @@ public interface FacadeBlock {
 	 * @return The block that is connected before this block (on the left side for
 	 *         conditionBlocks or on the upper side of sequenceBlocks).
 	 */
-	public Block getPreviousBlock(Block block);
+	public Block getBlockAbove(Block block);
 	
 	/**
 	 * 
@@ -221,6 +221,12 @@ public interface FacadeBlock {
 
 
 	public SequenceBlock getBodyBlock(FunctionDefinition functionDefinition);
+
+
+	FunctionDefinition getFunctionBlock(Block block);
+
+
+	void resetFunctionCallers(FunctionDefinition functionDefinition);
 
 
 }
