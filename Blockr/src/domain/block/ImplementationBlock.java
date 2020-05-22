@@ -211,6 +211,9 @@ public class ImplementationBlock implements FacadeBlock{
 		
 	}
 
+	public void deleteFunctionCall(FunctionCall functionCall, ProgramArea programArea) {
+		functionCall.delete(programArea);
+	}
 
 	
 	

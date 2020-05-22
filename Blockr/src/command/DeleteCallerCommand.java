@@ -1,11 +1,12 @@
 package command;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import domain.GameController;
 import domain.ImplementationGameController;
+import domain.block.FunctionCall;
+import domain.block.FunctionDefinition;
 import domain.block.ImplementationBlock;
+import domain.block.SequenceBlock;
+import domain.block.SurroundingBlock;
 import presentation.block.PresentationBlock;
 
 /**
@@ -18,12 +19,15 @@ import presentation.block.PresentationBlock;
  * @author Andreas Awouters, Thomas Van Erum, Dirk Vanbeveren, Geert Wesemael
  *
  */
-public class DeleteFunction implements Command {
+public class DeleteCallerCommand implements Command {
 	GameController GC;
-	PresentationBlock<?> block;
-	List<DeleteBlock> callsOfFunction;
+	FunctionCall caller;
 	ImplementationGameController GCF = new ImplementationGameController();
 	ImplementationBlock BF = new ImplementationBlock();
+	SequenceBlock previous;
+	SequenceBlock next;
+	SurroundingBlock surroundingBlock;
+	FunctionDefinition function;
 
 	/**
 	 * Makes a delete block Commmand. This Command includes all of the info needed
@@ -34,36 +38,35 @@ public class DeleteFunction implements Command {
 	 * 
 	 * @Post The objects block and GC are stored in this command for later use.
 	 */
-	public DeleteFunction(GameController GC, PresentationBlock<?> block) {
+	public DeleteCallerCommand(GameController GC, FunctionCall caller) {
 		this.GC = GC;
-		this.block = block;
-		this.callsOfFunction = new ArrayList<DeleteBlock>();
-	}
-	
-	/**
-	 * Adds a command to the list that keeps all of the function calls that have been deleted. 
-	 * @param command The command of the deletion of the function call block.
-	 */
-	public void addFunctionCall(DeleteBlock command) {
-		this.callsOfFunction.add(command);
+		this.caller = caller;
+		this.previous = (SequenceBlock) BF.getPreviousBlock(caller);
+		this.next = (SequenceBlock) BF.getNextBlock(caller);
+		this.surroundingBlock = BF.getSurroundingBlock(caller);
+		this.function = BF.getFunctionBlock(caller);
 	}
 
 	@Override
 	public void execute() {
-		GCF.removeBlockFromProgramArea(GC, block);
-		
-		for(int i = 0; i < callsOfFunction.size(); i++) {
-			callsOfFunction.get(i).execute();
-		}
-
+		BF.deleteFunctionCall(caller, GCF.getProgramArea(GC));
 	}
 
 	@Override
 	public void undo() {
-		for(int i = callsOfFunction.size() - 1; i <= 0; i--) {
-			callsOfFunction.get(i).undo();
+		if (previous != null) {
+			GCF.connect(previous, caller, GC);
 		}
-		GCF.addBlockToProgramArea(GC, block);
+		else if (surroundingBlock != null) {
+			GCF.setBody(surroundingBlock, caller, GC);
+		}
+		else if (function != null) {
+			GCF.setBody(function, caller, GC);
+		}
+		else {
+			GCF.addBlockToProgramArea(GC, BF.getPresentationBlock(caller));
+			GCF.connect(caller, next, GC);
+		}
 
 	}
 

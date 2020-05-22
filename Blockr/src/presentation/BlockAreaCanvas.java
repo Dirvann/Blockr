@@ -12,7 +12,7 @@ import java.awt.event.MouseMotionListener;
 
 import command.Command;
 import command.DeleteBlock;
-import command.DeleteFunction;
+import command.DeleteFunctionDefinition;
 import command.ExecutionCommand;
 import command.MakeBlock;
 import command.MakeFunctionCommand;
@@ -172,8 +172,7 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 				selectedBlock = programBlockP;
 
 				// info collecting redo undo
-				this.preCommand = new disconnectCommand(BF.getPreviousBlock(BFP.getBlock(programBlockP)),
-						BFP.getBlock(programBlockP), blockrPanel.getGameController());
+				this.preCommand = new disconnectCommand(BFP.getBlock(programBlockP), blockrPanel.getGameController());
 				this.oldPos = BFP.getPosition(programBlockP);
 
 				GC.disconnect(BFP.getBlock(selectedBlock), blockrPanel.getGameController());
@@ -218,8 +217,8 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 			// Delete if over palette
 			int paletteBorder = (int) (panelProportion * this.getWidth());
 			if (mousePos.getX() < paletteBorder) {
-				if (BFP.getBlock(selectedBlock) instanceof FunctionDefinition) {
-					this.postCommand = new DeleteFunction(blockrPanel.getGameController(), selectedBlock);
+				if (selectedBlock instanceof FunctionDefinitionBlockPresentation) {
+					this.postCommand = new DeleteFunctionDefinition(blockrPanel.getGameController(), (FunctionDefinitionBlockPresentation) selectedBlock, paletteP);
 					paletteP.removeFunctionCallFromPalette((FunctionDefinition) BFP.getBlock(selectedBlock));
 				} else {
 					this.postCommand = new DeleteBlock(blockrPanel.getGameController(), selectedBlock);

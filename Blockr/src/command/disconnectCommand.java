@@ -44,9 +44,9 @@ public class disconnectCommand implements Command {
 	 * @Post The objects blockToDisconnectTo, blockToDisconnect and GC are stored in
 	 *       this command for later use.
 	 */
-	public disconnectCommand(Block blockToDisconnectTo, Block blockToDisconnect, GameController GC) {
+	public disconnectCommand(Block blockToDisconnect, GameController GC) {
 		this.blockToDisconnect = blockToDisconnect;
-		this.blockToDisconnectTo = blockToDisconnectTo;
+		this.blockToDisconnectTo = BF.getPreviousBlock(blockToDisconnect);
 		this.surroundingBlock = BF.getSurroundingBlock(blockToDisconnect);
 		this.function = BF.getFunctionBlock(blockToDisconnect);
 		this.GC = GC;
