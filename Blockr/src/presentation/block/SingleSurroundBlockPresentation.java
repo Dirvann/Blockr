@@ -69,15 +69,6 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 		
 	}
 
-//	@Override
-//	public PresentationBlock<SingleSurroundingBlock> getNewBlockOfThisType() {
-//		SingleSurroundingBlock block = (SingleSurroundingBlock) getBlock().getNewBlockOfThisType();
-//		SingleSurroundBlockPresentation blockPresentation = new SingleSurroundBlockPresentation(getPosition(), block);
-//		block.setPresentationBlock(blockPresentation);
-//		return blockPresentation;
-//	}
-
-
 	@Override
 	public int getTotalHeight() {
 		int totalHeight = 2 * getBlockHeight();
@@ -159,22 +150,31 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 		SequenceBlock body = BF.getBodyBlock(getBlock());
 		ImplementationGameController IGC = new ImplementationGameController();
 		
-		if (b.getBlock() instanceof ConditionBlock
-				&& b.getGivingSnapPoint().distanceTo(getConditionSnapPoint()) <= getSnapDistance()) {
+		if (canSnapToCondition(b)) {
 			IGC.setCondition(getBlock(), (ConditionBlock) b.getBlock(), GC);
 			return new setConditionCommand(getBlock(), (ConditionBlock) b.getBlock(), condition, GC);
 		}
-		if (b.getBlock() instanceof SequenceBlock) {
-			if (b.getGivingSnapPoint().distanceTo(getBodySnapPoint()) <= getSnapDistance()) {
-				IGC.setBody(getBlock(), (SequenceBlock) b.getBlock(), GC);
-				return new addToBodyCommand(getBlock(), (SequenceBlock) b.getBlock(), body, GC);
-			}
-			if (b.getGivingSnapPoint().distanceTo(getSequenceSnapPoint()) <= getSnapDistance()) {
-				IGC.connect(getBlock(), b.getBlock(), GC);
-				return new ConnectCommand(getBlock(), b.getBlock(), next, GC);
-			}
+		if (canSnapToBody(b)) {
+			IGC.setBody(getBlock(), (SequenceBlock) b.getBlock(), GC);
+			return new addToBodyCommand(getBlock(), (SequenceBlock) b.getBlock(), body, GC);
+		}
+		if (canSnapToBottom(b)) {
+			IGC.connect(getBlock(), b.getBlock(), GC);
+			return new ConnectCommand(getBlock(), b.getBlock(), next, GC);
 		}
 		return null;
+	}
+	
+	private boolean canSnapToCondition(PresentationBlock<?> b) {
+		return b.getBlock() instanceof ConditionBlock && b.getGivingSnapPoint().distanceTo(getConditionSnapPoint()) <= getSnapDistance();
+	}
+	
+	private boolean canSnapToBody(PresentationBlock<?> b) {
+		return b.getBlock() instanceof SequenceBlock && b.getGivingSnapPoint().distanceTo(getBodySnapPoint()) <= getSnapDistance();
+	}
+	
+	private boolean canSnapToBottom(PresentationBlock<?> b) {
+		return b.getBlock() instanceof SequenceBlock && b.getGivingSnapPoint().distanceTo(getSequenceSnapPoint()) <= getSnapDistance();
 	}
 
 	@Override

@@ -191,16 +191,19 @@ public abstract class PresentationBlock<T extends Block> {
 			return null;
 		// redo undo info collect
 		Block next = blockFunctions.getNextBlock(getBlock());
-		Vector givingSnappoint = b.getGivingSnapPoint();
-		Vector receivingSnapPoint = getReceivingSnapPoints().get(0);
 
-		if (givingSnappoint != null && receivingSnapPoint != null) {
-			if (givingSnappoint.distanceTo(receivingSnapPoint) <= getSnapDistance()
-					&& IGC.connect(getBlock(), b.getBlock(), GC)) {
-				return new ConnectCommand(getBlock(), b.getBlock(), next, GC);
-			}
+		if (canSnapToPoint(b,GC)) {
+			return new ConnectCommand(getBlock(), b.getBlock(), next, GC);
 		}
 		return null;
+	}
+	
+	private boolean canSnapToPoint(PresentationBlock<?> b, GameController GC) {
+		Vector givingSnappoint = b.getGivingSnapPoint();
+		Vector receivingSnapPoint = getReceivingSnapPoints().get(0);
+		return (givingSnappoint != null && receivingSnapPoint != null 
+				&& givingSnappoint.distanceTo(receivingSnapPoint) <= getSnapDistance()
+				&& IGC.connect(getBlock(), b.getBlock(), GC));
 	}
 
 	abstract protected PresentationBlock<T> makeCopyWithoutConnections();
