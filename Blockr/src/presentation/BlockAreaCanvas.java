@@ -9,13 +9,11 @@ import java.awt.event.KeyEvent;
 import command.Command;
 import command.DeleteBlock;
 import command.DeleteFunctionDefinition;
-import command.ExecutionCommand;
 import command.MakeBlock;
 import command.MakeFunctionCommand;
 import command.disconnectCommand;
 import domain.CommandProcessor;
 import domain.ExecutionProcessor;
-import domain.GameController;
 import domain.ImplementationGameController;
 import domain.Vector;
 import domain.block.Block;
@@ -23,7 +21,6 @@ import domain.block.FunctionDefinition;
 import domain.block.ImplementationBlock;
 import game_world.api.FacadeGameWorld;
 import game_world.api.Snapshot;
-import presentation.block.FunctionCallBlockPresentation;
 import presentation.block.FunctionDefinitionBlockPresentation;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
@@ -33,7 +30,10 @@ import presentation.block.PresentationBlock;
  * mouse and key presses.
  * 
  * @version 3.0
- * @author Andreas Awouters Thomas Van Erum Dirk Vanbeveren Geert Wesemael
+ * @author Andreas Awouters 
+ * 	       Thomas Van Erum 
+ * 		   Dirk Vanbeveren 
+ * 		   Geert Wesemael
  *
  */
 public class BlockAreaCanvas extends Canvas {
@@ -137,19 +137,20 @@ public class BlockAreaCanvas extends Canvas {
 		if (paletteBlockP != null && GC.getAmountOfBlocksLeft(blockrPanel.getGameController()) > 0) {
 			copyPaletteBlockIntoProgramArea(paletteBlockP);
 			System.out.println("New Block made of type: " + BF.getName(BFP.getBlock(selectedBlock)));
-			this.stopExecution();
+			stopExecution();
 		}
 		// Clicked block in programArea
 		else {
 			PresentationBlock<?> programBlockP = programAreaP.getBlockAtPosition(mousePos);
 			if (programBlockP != null) {
 				pickBlockUpFromProgramArea(programBlockP);
-				this.stopExecution();
+				stopExecution();
 			}
 		}
-		previousMousePos = mousePos;
+		this.previousMousePos = mousePos;
 		this.mouseDown = true;
 	}
+	
 	/**
 	 * TODO
 	 * 
@@ -168,6 +169,7 @@ public class BlockAreaCanvas extends Canvas {
 		GC.addBlockToProgramArea(blockrPanel.getGameController(), presentationCopy);
 		this.oldPos = BFP.getPosition(presentationCopy);
 	}
+	
 	/**
 	 * TODO
 	 * 
@@ -215,10 +217,10 @@ public class BlockAreaCanvas extends Canvas {
 			this.cmd.dragCommand(oldPos, newPos, selectedBlock, preCommand, postCommand);
 		}
 		// resetting undo redo info, command construction is finished
-		oldPos = null;
-		newPos = null;
-		preCommand = null;
-		postCommand = null;
+		this.oldPos = null;
+		this.newPos = null;
+		this.preCommand = null;
+		this.postCommand = null;
 
 		this.mouseDown = false;
 		this.selectedBlock = null;
@@ -254,66 +256,36 @@ public class BlockAreaCanvas extends Canvas {
 	 * @param key | KeyEvent to be handled
 	 */
 	public void handleKeyPressed(KeyEvent key) {
-		int keyCode = key.getKeyCode();
 		setErrorMessage("");
-		GameController gameController = blockrPanel.getGameController();
-
-		switch (keyCode) {
+		switch (key.getKeyCode()) {
 		case KeyEvent.VK_ESCAPE: // Esc
-			this.stopExecution();
+			stopExecution();
 			iGameWorld.loadSnapshot(startSnapshot);
 			break;
 
 		case KeyEvent.VK_F4: // F4
-			this.stopExecution();
+			stopExecution();
 			break;
 
 		case KeyEvent.VK_F5: // F5
-			try {
-				setErrorMessage("");
-				exe.addExecutionStep(GC.execute(blockrPanel.getGameController()));
-				if (iGameWorld.goalReached()) {
-					setErrorMessage("congratiolations!! You have beaten this level! \n Press F6 to start a new one. ");
-				}
-			} catch (Exception e1) {
-				if (e1.getMessage() == null) {
-					setErrorMessage("null returned");
-				} else {
-					setErrorMessage(e1.getMessage());
-				}
-				System.out.println("Execute in keyPressed failed");
-			}
+			run();
 			break;
 
 		case KeyEvent.VK_F6: // F6
-			System.out.println("Changed gameWorld");
-			blockrPanel.getPreferredGameWorldWidth();
-			blockrPanel.getPreferredGameWorldHeight();
-			iGameWorld.makeNewGameWorld();
-			this.startSnapshot = iGameWorld.makeSnapshot();
-			GC.setGameWorldImplementation(blockrPanel.getGameController(), iGameWorld);
-			this.stopExecution();
+			newGameWorld();
 			break;
 		
 		case KeyEvent.VK_Z: //CTRL + Z / CTRL + SHIFT + Z
 			if(key.isControlDown()) {
 				if(key.isShiftDown()) {
-					if (GC.isExecuting(blockrPanel.getGameController())) {
-						exe.redo();
-					} else {
-						this.cmd.redo();
-					}
+					redo();
 				}
 				else {
-					if (GC.isExecuting(blockrPanel.getGameController())) {
-						exe.undo();
-					} else {
-						this.cmd.undo();
-					}
+					undo();
 				}
 			}
 			break;
-
+			
 		default:
 			break;
 		}
@@ -321,14 +293,66 @@ public class BlockAreaCanvas extends Canvas {
 	}
 	
 	/**
+	 * TODO
+	 */
+	void run() {
+		try {
+			setErrorMessage("");
+			exe.addExecutionStep(GC.execute(blockrPanel.getGameController()));
+			if (iGameWorld.goalReached()) {
+				setErrorMessage("congratiolations!! You have beaten this level! \n Press F6 to start a new one. ");
+			}
+		} catch (Exception e1) {
+			if (e1.getMessage() == null) {
+				setErrorMessage("null returned");
+			} else {
+				setErrorMessage(e1.getMessage());
+			}
+			System.out.println("Execute in keyPressed failed");
+		}
+	}
+	
+	/**
+	 * TODO
+	 */
+	void newGameWorld() {
+		System.out.println("Changed gameWorld");
+		blockrPanel.getPreferredGameWorldWidth();
+		blockrPanel.getPreferredGameWorldHeight();
+		iGameWorld.makeNewGameWorld();
+		this.startSnapshot = iGameWorld.makeSnapshot();
+		GC.setGameWorldImplementation(blockrPanel.getGameController(), iGameWorld);
+		stopExecution();
+	}
+	
+	/**
+	 * TODO
+	 */
+	void undo() {
+		if (GC.isExecuting(blockrPanel.getGameController())) {
+			exe.undo();
+		} else {
+			this.cmd.undo();
+		}
+	}
+	
+	/**
+	 * TODO
+	 */
+	void redo() {
+		if (GC.isExecuting(blockrPanel.getGameController())) {
+			exe.redo();
+		} else {
+			this.cmd.redo();
+		}
+	}
+		
+	/**
 	 * Stop the execution of the current program
 	 */
 	private void stopExecution() {
 		GC.stopExecution(blockrPanel.getGameController());
 		this.exe = new ExecutionProcessor();
-
-		// TODO reset gameworld to original state snapshot
 		iGameWorld.loadSnapshot(this.startSnapshot);
-
 	}
 }
