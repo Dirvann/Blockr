@@ -1,42 +1,40 @@
 package presentation;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
-public class MouseEventListener implements MouseListener {
-	
-	
-	public MouseEventListener() {
-		
-	}
+abstract public class MouseEventListener implements MouseListener, MouseMotionListener, KeyListener {
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println(e.getX() + " " + e.getY());
-	}
+	public void mouseClicked(MouseEvent e) {;}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseEntered(MouseEvent e) {;}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseExited(MouseEvent e) {;}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void mousePressed(MouseEvent e);
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void mouseReleased(MouseEvent e);
+
+	@Override
+	public abstract void mouseDragged(MouseEvent e);
+
+	@Override
+	public void mouseMoved(MouseEvent e) {;}
+
+	@Override
+	public abstract void keyPressed(KeyEvent e);
+
+	@Override
+	public void keyReleased(KeyEvent e) {;}
+
+	@Override
+	public void keyTyped(KeyEvent e) {;}
 
 }
