@@ -99,11 +99,15 @@ public class PalettePresentation {
 	public void removeFunctionCallWithIDFromList(int id) {
 		for(int i=0;i<paletteBlocks.size();i++) {
 			PresentationBlock<?> pb = paletteBlocks.get(i);
-			if(pb instanceof FunctionCallBlockPresentation && id == iBlock.getID((FunctionCall) iPresentationBlock.getBlock(pb))) {
+			if(sameBlockAndID(pb,id)) {
 				paletteBlocks.remove(i);
 				i--;
 			}
 		} 
+	}
+	
+	private boolean sameBlockAndID(PresentationBlock<?> presentationBlock,int idOtherBlock) {
+		return presentationBlock instanceof FunctionCallBlockPresentation && idOtherBlock == iBlock.getID((FunctionCall) iPresentationBlock.getBlock(presentationBlock));
 	}
 	
 	private void setNextDefinition() {

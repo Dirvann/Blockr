@@ -26,7 +26,7 @@ public class disconnectCommand implements Command {
 	Block blockToDisconnect;
 	// block before group of blocks connected
 	Block blockToDisconnectTo;
-	// The gamecontroller wher the blocks exist
+	// The gamecontroller where the blocks exist
 	GameController GC;
 
 	FunctionDefinition function;
@@ -59,7 +59,7 @@ public class disconnectCommand implements Command {
 
 	@Override
 	public void undo() {
-		if (blockToDisconnect instanceof ConditionBlock || (function == null && surroundingBlock == null) || blockToDisconnectTo != null) {
+		if (canReconnectPreviousAndCurrentBlock()) {
 			GCF.connect(blockToDisconnectTo, blockToDisconnect, GC);
 		}
 		else if (surroundingBlock != null) {
@@ -69,6 +69,10 @@ public class disconnectCommand implements Command {
 			GCF.setBody(function, (SequenceBlock) blockToDisconnect, GC);
 		}
 
+	}
+	
+	private boolean canReconnectPreviousAndCurrentBlock() {
+		return (blockToDisconnect instanceof ConditionBlock || (function == null && surroundingBlock == null) || blockToDisconnectTo != null);
 	}
 
 }
