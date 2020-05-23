@@ -258,7 +258,6 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		case KeyEvent.VK_ESCAPE: // Esc
 			this.stopExecution();
 			iGameWorld.loadSnapshot(startSnapshot);
-			blockrPanel.redrawGameWorld();
 			break;
 
 		case KeyEvent.VK_F4: // F4
@@ -270,7 +269,6 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 				setErrorMessage("");
 				ExecutionCommand exeCmd = GC.execute(gameController);
 				exe.addExecutionStep(exeCmd);
-				blockrPanel.redrawGameWorld();
 
 				/*
 				 * if (iGameWorld.robotOnGoal(GC.getGameWorldImplementation(blockrPanel.
@@ -304,7 +302,6 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 			this.startSnapshot = iGameWorld.makeSnapshot();
 			GC.setGameWorldImplementation(gameController, iGameWorld);
 			this.stopExecution();
-			blockrPanel.redrawGameWorld();
 			break;
 
 		default:
@@ -314,7 +311,6 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		if (key.getKeyCode() == KeyEvent.VK_Z && key.isControlDown() && key.isShiftDown()) {
 			if (GC.isExecuting(blockrPanel.getGameController())) {
 				exe.redo();
-				blockrPanel.redrawGameWorld();
 			} else {
 				this.cmd.redo();
 			}
@@ -323,7 +319,6 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		else if (key.getKeyCode() == KeyEvent.VK_Z && key.isControlDown() && !key.isShiftDown()) {
 			if (GC.isExecuting(blockrPanel.getGameController())) {
 				exe.undo();
-				blockrPanel.redrawGameWorld();
 			} else {
 				this.cmd.undo();
 			}

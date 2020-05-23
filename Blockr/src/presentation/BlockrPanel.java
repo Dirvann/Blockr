@@ -112,12 +112,6 @@ public class BlockrPanel extends Panel {
 		return this.preferredGameWorldHeight;
 	}
 	
-	/**
-	 * Redraw the gameWorldPanel
-	 */
-	public void redrawGameWorld() {
-		gameWorldC.repaint();
-	}
 	
 	/**
 	 * 
