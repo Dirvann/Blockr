@@ -185,7 +185,6 @@ public class ImplementationGameController implements FacadeGameController{
 
 	@Override
 	public Boolean isExecuting(GameController GC) {
-		// TODO Auto-generated method stub
 		return GC.getProgramArea().programInProgress();
 	}
 

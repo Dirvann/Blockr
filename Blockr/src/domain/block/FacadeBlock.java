@@ -223,10 +223,22 @@ public interface FacadeBlock {
 	public SequenceBlock getBodyBlock(FunctionDefinition functionDefinition);
 
 
-	FunctionDefinition getFunctionBlock(Block block);
+	public FunctionDefinition getFunctionBlock(Block block);
 
 
-	void resetFunctionCallers(FunctionDefinition functionDefinition);
+	public void resetFunctionCallers(FunctionDefinition functionDefinition);
+
+
+	public int getID(FunctionDefinition definition);
+
+
+	public int getID(FunctionCall block);
+
+
+	public void setID(FunctionDefinition function, int id);
+
+
+	public void deleteFunctionCall(FunctionCall functionCall, ProgramArea programArea);
 
 
 }
