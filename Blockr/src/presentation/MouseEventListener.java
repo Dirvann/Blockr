@@ -5,8 +5,35 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+ 
+public class MouseEventListener implements MouseListener, MouseMotionListener, KeyListener {
+	
+	private BlockAreaCanvas blockAreaCanvas;
 
-abstract public class MouseEventListener implements MouseListener, MouseMotionListener, KeyListener {
+	public MouseEventListener(BlockAreaCanvas blockAreaCanvas){
+		this.blockAreaCanvas = blockAreaCanvas;
+	}
+	
+	@Override
+	public void mousePressed(MouseEvent e) {
+		blockAreaCanvas.handleMousePressed(e.getX(), e.getY());
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		blockAreaCanvas.handleMouseReleased(e.getX(), e.getY());
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		blockAreaCanvas.handleMouseDragged(e.getX(), e.getY());
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		blockAreaCanvas.handleKeyPressed(e);
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {;}
 
@@ -17,19 +44,7 @@ abstract public class MouseEventListener implements MouseListener, MouseMotionLi
 	public void mouseExited(MouseEvent e) {;}
 
 	@Override
-	public abstract void mousePressed(MouseEvent e);
-
-	@Override
-	public abstract void mouseReleased(MouseEvent e);
-
-	@Override
-	public abstract void mouseDragged(MouseEvent e);
-
-	@Override
 	public void mouseMoved(MouseEvent e) {;}
-
-	@Override
-	public abstract void keyPressed(KeyEvent e);
 
 	@Override
 	public void keyReleased(KeyEvent e) {;}

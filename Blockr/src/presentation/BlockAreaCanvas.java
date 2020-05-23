@@ -40,7 +40,7 @@ import presentation.block.PresentationBlock;
  * @author Andreas Awouters Thomas Van Erum Dirk Vanbeveren Geert Wesemael
  *
  */
-public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotionListener, KeyListener {
+public class BlockAreaCanvas extends Canvas {
 
 	/**
 	 * 
@@ -90,9 +90,11 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		this.startSnapshot = iGameWorld.makeSnapshot();
 
 		this.blockrPanel = blockrPanel;
-		addMouseListener(this);
-		addMouseMotionListener(this);
-		addKeyListener(this);
+		
+		MouseEventListener mel = new MouseEventListener(this);
+		addMouseListener(mel);
+		addMouseMotionListener(mel);
+		addKeyListener(mel);
 	}
 
 	/**
@@ -337,61 +339,4 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 		iGameWorld.loadSnapshot(this.startSnapshot);
 
 	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		this.handleMousePressed(e.getX(), e.getY());
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		this.handleMouseReleased(e.getX(), e.getY());
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		this.handleMouseDragged(e.getX(), e.getY());
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		handleKeyPressed(e);
-
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
 }
