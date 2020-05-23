@@ -103,7 +103,6 @@ public class CommandCanvas extends Canvas implements MouseListener {
 				if (b.collidesWith(pos)) {
 					snapshotData.remove(b.getSnapshot());
 					repaint();
-					gameWorldC.repaint();
 				}
 			}
 		} else {
@@ -118,7 +117,6 @@ public class CommandCanvas extends Canvas implements MouseListener {
 						
 					}
 					repaint();
-					gameWorldC.repaint();
 
 				}
 			}
@@ -126,7 +124,6 @@ public class CommandCanvas extends Canvas implements MouseListener {
 				if (b.collidesWith(pos)) {
 					b.execute(iGameWorld);
 					repaint();
-					gameWorldC.repaint();
 				}
 			}
 		}
