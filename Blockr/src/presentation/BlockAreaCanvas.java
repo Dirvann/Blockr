@@ -67,14 +67,31 @@ public class BlockAreaCanvas extends Canvas {
 	private Snapshot startSnapshot;
 
 	/**
+	 * Initialize the BlockAreaCanvas with the given Blockr Panel and Gameworld Facade.
 	 * 
-	 * 
-	 * @param blockrPanel | panel to attach this blockAreaCanvas to
-	 * @param iGameWorld  | Interface used by the panel
+	 * @param  blockrPanel
+	 * 		   panel to attach this blockAreaCanvas to.
+	 * @param  iGameWorld
+	 * 		   Interface used by the panel.
+	 * @post   The Palette Presentation is set to a new Palette Presentation with 
+	 * 		   the given GameWorld Facade.
+	 * 		   | new.PaletteP = new PalettePresentation(iGameWorld)
+	 * @post   The ProgramArea Presentation is set to a new ProgramArea Presentation
+	 * 		    with the GameController from the given BlockrPanel.
+	 * 		   | new.programAreaP = new ProgramAreaPresentation(blockrPanel.getGameController())
+	 * @post   The GameWorld Implementation is equal to the given iGameWorld.
+	 * 		   | new.iGameWorld == iGameWorld
+	 * @post   A snapshot of the given GameWorld is saved.
+	 * 		   | new.startSnapshot == iGameWorld.makeSnapshot()
+	 * @post   The BlockrPanel is equal to the given blockrPanel.
+	 * 		   | new.blockrPanel == blockrPanel
+	 * @post   The error message is equal to "The error message will appear here!"
+	 * 		   | new.errorMessage == "The error message will appear here!"
+	 * @effect A MouseEventListener is set to this class. 
 	 */
 	public BlockAreaCanvas(BlockrPanel blockrPanel, FacadeGameWorld iGameWorld) {
-		paletteP = new PalettePresentation(iGameWorld);
-		programAreaP = new ProgramAreaPresentation(blockrPanel.getGameController());
+		this.paletteP = new PalettePresentation(iGameWorld);
+		this.programAreaP = new ProgramAreaPresentation(blockrPanel.getGameController());
 		this.iGameWorld = iGameWorld;
 		this.startSnapshot = iGameWorld.makeSnapshot();
 		this.blockrPanel = blockrPanel;
@@ -93,21 +110,18 @@ public class BlockAreaCanvas extends Canvas {
 		// Draw vertical line to mark end of palette
 		g.setColor(Color.BLACK);
 		g.drawLine((int) (panelProportion * this.getWidth()), 0, (int) (panelProportion * this.getWidth()),this.getHeight());
-
 		// Draw number of blocks left
 		g.setFont(new Font("Arial", Font.PLAIN, (int) (this.getHeight() / 20)));
 		g.drawString("" + GC.getAmountOfBlocksLeft(blockrPanel.getGameController()), getWidth() / 18, 17 * getHeight() / 18);
 		g.setFont(new Font("Arial", Font.PLAIN, (int) (getHeight() / 40)));
 		g.drawString(errorMessage, getWidth() / 4, 17 * getHeight() / 18);
-
 		// Draw palette only if max number of blocks not reached
 		if (GC.getAmountOfBlocksLeft(blockrPanel.getGameController()) > 0) {
 			paletteP.paint(g);
 		}
-
 		// Draw programArea
 		programAreaP.paint(g);
-
+		// Highlight block
 		Block nextToExecute = GC.getNextBlockToExecute(blockrPanel.getGameController());
 		if (nextToExecute != null) {
 			BFP.highLight(BF.getPresentationBlock(nextToExecute), g);
@@ -117,17 +131,45 @@ public class BlockAreaCanvas extends Canvas {
 	/**
 	 * Set the error message shown by the blockAreaCanvas
 	 * 
-	 * @param errorMessage | String of the errormessage to be shown
+	 * @param errorMessage
+	 * 		  String of the error message to be shown.
+	 * @post  The error message is equal to the given errorMessage.
+	 * 		  | new.errorMessage == errorMessage
 	 */
 	private void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}
 
 	/**
-	 * Handle a mouse button press at the given location
+	 * Handle a mouse button press at the given location.
 	 * 
-	 * @param x | horizontal value of the location of the mouse press
-	 * @param y | vertical value of the location of the mouse press
+	 * When a block is clicked in the palette a functional copy of
+	 * that block is created at the mouse location. When a block in 
+	 * the programArea is clicked, the block is picked up.
+	 * 
+	 * @param  x 
+	 * 		   Horizontal value of the location of the mouse press.
+	 * @param  y
+	 * 		   Vertical value of the location of the mouse press.
+	 * @post   The execution is stopped if the mouse is located where
+	 * 		   a Palette Block or Program Block is located.
+	 * 		   |if (paletteBlock on mouse position != null
+	 * 		   |    && GC.getAmountOfBlocksLeft(blockrPanel.getGameController()) > 0) 
+	 * 		   |    || programBlock on mouse position != null)
+	 * 		   |then stopExecution()
+	 * @post   The previousMousePosition is the current position.
+	 * 		   | new.previousMousePos == new Vector(x, y)
+	 * @post   The mouse is down.
+	 * 		   | new.mouseDown == True
+	 * @effect Copy the presentation block where the mouse is located
+	 * 		   and add it to the programArea if there are enough
+	 * 		   blocks left.
+	 * 		   |if (paletteBlock Presentation on mouse position != null
+	 * 		   |    && GC.getAmountOfBlocksLeft(blockrPanel.getGameController()) > 0))
+	 * 		   |then copyPaletteBlockIntoProgramArea(paletteBlockP)
+	 * @effect Pick the presentation block up where the mouse is located.
+	 * 		   |if programBlock Presentation on mouse position != null
+	 * 		   |then copyPaletteBlockIntoProgramArea(paletteBlockP)
 	 */
 	public void handleMousePressed(int x, int y) {
 		setErrorMessage("");
