@@ -110,13 +110,15 @@ public class FunctionDefinitionBlockPresentation extends PresentationBlock<Funct
 		ImplementationGameController IGC = new ImplementationGameController();
 		SequenceBlock body = BF.getBodyBlock(getBlock());
 		
-		if (b.getBlock() instanceof SequenceBlock) {
-			if (b.getGivingSnapPoint().distanceTo(getBodySnapPoint()) <= getSnapDistance()) {
-				IGC.setBody(getBlock(), (SequenceBlock) b.getBlock(), GC);
-				return new AddToBodyFunctionDefinitionCommand(getBlock(), (SequenceBlock) b.getBlock(), body, GC);
-			}
+		if (canSnapBody(b)) {
+			IGC.setBody(getBlock(), (SequenceBlock) b.getBlock(), GC);
+			return new AddToBodyFunctionDefinitionCommand(getBlock(), (SequenceBlock) b.getBlock(), body, GC);
 		}
 		return null;
+	}
+	
+	private boolean canSnapBody(PresentationBlock<?> b) {
+		return (b.getBlock() instanceof SequenceBlock && b.getGivingSnapPoint().distanceTo(getBodySnapPoint()) <= getSnapDistance());
 	}
 
 	@Override

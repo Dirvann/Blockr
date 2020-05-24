@@ -5,21 +5,15 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 import command.Command;
 import command.DeleteBlock;
 import command.DeleteFunctionDefinition;
-import command.ExecutionCommand;
 import command.MakeBlock;
 import command.MakeFunctionCommand;
 import command.disconnectCommand;
 import domain.CommandProcessor;
 import domain.ExecutionProcessor;
-import domain.GameController;
 import domain.ImplementationGameController;
 import domain.Vector;
 import domain.block.Block;
@@ -27,7 +21,6 @@ import domain.block.FunctionDefinition;
 import domain.block.ImplementationBlock;
 import game_world.api.FacadeGameWorld;
 import game_world.api.Snapshot;
-import presentation.block.FunctionCallBlockPresentation;
 import presentation.block.FunctionDefinitionBlockPresentation;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
@@ -37,14 +30,14 @@ import presentation.block.PresentationBlock;
  * mouse and key presses.
  * 
  * @version 3.0
- * @author Andreas Awouters Thomas Van Erum Dirk Vanbeveren Geert Wesemael
+ * @author Andreas Awouters 
+ * 	       Thomas Van Erum 
+ * 		   Dirk Vanbeveren 
+ * 		   Geert Wesemael
  *
  */
-public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotionListener, KeyListener {
+public class BlockAreaCanvas extends Canvas {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6133416834652649432L;
 
 	private final double panelProportion = 0.2;
@@ -57,14 +50,11 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	private ImplementationGameController GC = new ImplementationGameController();
 
 	private BlockrPanel blockrPanel;
-
 	private PresentationBlock<?> selectedBlock = null;
+	private String errorMessage = "";
 
-	private final String defaultMessage = "The error message will appear here!";
-	String errorMessage = defaultMessage;
-
-	Vector previousMousePos = null;
-	boolean mouseDown = false;
+	private Vector previousMousePos = null;
+	private boolean mouseDown = false;
 
 	// these are needed for redo and undo dragging commands
 	private ExecutionProcessor exe = new ExecutionProcessor();
@@ -77,22 +67,39 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	private Snapshot startSnapshot;
 
 	/**
+	 * Initialize the BlockAreaCanvas with the given Blockr Panel and Gameworld Facade.
 	 * 
-	 * 
-	 * @param blockrPanel | panel to attach this blockAreaCanvas to
-	 * @param iGameWorld  | Interface used by the panel
+	 * @param  blockrPanel
+	 * 		   panel to attach this blockAreaCanvas to.
+	 * @param  iGameWorld
+	 * 		   Interface used by the panel.
+	 * @post   The Palette Presentation is set to a new Palette Presentation with 
+	 * 		   the given GameWorld Facade.
+	 * 		   | new.PaletteP = new PalettePresentation(iGameWorld)
+	 * @post   The ProgramArea Presentation is set to a new ProgramArea Presentation
+	 * 		    with the GameController from the given BlockrPanel.
+	 * 		   | new.programAreaP = new ProgramAreaPresentation(blockrPanel.getGameController())
+	 * @post   The GameWorld Implementation is equal to the given iGameWorld.
+	 * 		   | new.iGameWorld == iGameWorld
+	 * @post   A snapshot of the given GameWorld is saved.
+	 * 		   | new.startSnapshot == iGameWorld.makeSnapshot()
+	 * @post   The BlockrPanel is equal to the given blockrPanel.
+	 * 		   | new.blockrPanel == blockrPanel
+	 * @post   The error message is equal to "The error message will appear here!"
+	 * 		   | new.errorMessage == "The error message will appear here!"
+	 * @effect A MouseEventListener is set to this class. 
 	 */
 	public BlockAreaCanvas(BlockrPanel blockrPanel, FacadeGameWorld iGameWorld) {
-		paletteP = new PalettePresentation(iGameWorld);
-		programAreaP = new ProgramAreaPresentation(blockrPanel.getGameController());
+		this.paletteP = new PalettePresentation(iGameWorld);
+		this.programAreaP = new ProgramAreaPresentation(blockrPanel.getGameController());
 		this.iGameWorld = iGameWorld;
-
 		this.startSnapshot = iGameWorld.makeSnapshot();
-
 		this.blockrPanel = blockrPanel;
-		addMouseListener(this);
-		addMouseMotionListener(this);
-		addKeyListener(this);
+		setErrorMessage("The error message will appear here!");
+		MouseEventListener mel = new MouseEventListener(this);
+		addMouseListener(mel);
+		addMouseMotionListener(mel);
+		addKeyListener(mel);
 	}
 
 	/**
@@ -102,24 +109,19 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	public void paint(Graphics g) {
 		// Draw vertical line to mark end of palette
 		g.setColor(Color.BLACK);
-		g.drawLine((int) (panelProportion * this.getWidth()), 0, (int) (panelProportion * this.getWidth()),
-				this.getHeight());
-
+		g.drawLine((int) (panelProportion * this.getWidth()), 0, (int) (panelProportion * this.getWidth()),this.getHeight());
 		// Draw number of blocks left
 		g.setFont(new Font("Arial", Font.PLAIN, (int) (this.getHeight() / 20)));
-		g.drawString("" + GC.getAmountOfBlocksLeft(blockrPanel.getGameController()), getWidth() / 18,
-				17 * getHeight() / 18);
+		g.drawString("" + GC.getAmountOfBlocksLeft(blockrPanel.getGameController()), getWidth() / 18, 17 * getHeight() / 18);
 		g.setFont(new Font("Arial", Font.PLAIN, (int) (getHeight() / 40)));
 		g.drawString(errorMessage, getWidth() / 4, 17 * getHeight() / 18);
-
 		// Draw palette only if max number of blocks not reached
 		if (GC.getAmountOfBlocksLeft(blockrPanel.getGameController()) > 0) {
 			paletteP.paint(g);
 		}
-
 		// Draw programArea
 		programAreaP.paint(g);
-
+		// Highlight block
 		Block nextToExecute = GC.getNextBlockToExecute(blockrPanel.getGameController());
 		if (nextToExecute != null) {
 			BFP.highLight(BF.getPresentationBlock(nextToExecute), g);
@@ -129,66 +131,145 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	/**
 	 * Set the error message shown by the blockAreaCanvas
 	 * 
-	 * @param errorMessage | String of the errormessage to be shown
+	 * @param errorMessage
+	 * 		  String of the error message to be shown.
+	 * @post  The error message is equal to the given errorMessage.
+	 * 		  | new.errorMessage == errorMessage
 	 */
-	public void setErrorMessage(String errorMessage) {
+	private void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
-		// repaint();
 	}
 
 	/**
-	 * Handle a mouse button press at the given location
+	 * Handle a mouse button press at the given location.
 	 * 
-	 * @param x | horizontal value of the location of the mouse press
-	 * @param y | vertical value of the location of the mouse press
+	 * When a block is clicked in the palette a functional copy of
+	 * that block is created at the mouse location. When a block in 
+	 * the programArea is clicked, the block is picked up.
+	 * 
+	 * @param  x 
+	 * 		   Horizontal value of the location of the mouse press.
+	 * @param  y
+	 * 		   Vertical value of the location of the mouse press.
+	 * @post   The execution is stopped if the mouse is located where
+	 * 		   a Palette Block or Program Block is located.
+	 * 		   |if (paletteBlock on mouse position != null
+	 * 		   |    && GC.getAmountOfBlocksLeft(blockrPanel.getGameController()) > 0) 
+	 * 		   |    || programBlock on mouse position != null)
+	 * 		   |then stopExecution()
+	 * @post   The previousMousePosition is the current position.
+	 * 		   | new.previousMousePos == new Vector(x, y)
+	 * @post   The mouse is down.
+	 * 		   | new.mouseDown
+	 * @effect Copy the presentation block where the mouse is located
+	 * 		   and add it to the programArea if there are enough
+	 * 		   blocks left.
+	 * 		   |if (paletteBlock Presentation on mouse position != null
+	 * 		   |    && GC.getAmountOfBlocksLeft(blockrPanel.getGameController()) > 0))
+	 * 		   |then copyPaletteBlockIntoProgramArea(paletteBlockP)
+	 * @effect Pick the presentation block up where the mouse is located.
+	 * 		   |if programBlock Presentation on mouse position != null
+	 * 		   |then copyPaletteBlockIntoProgramArea(paletteBlockP)
 	 */
 	public void handleMousePressed(int x, int y) {
-		this.errorMessage = "";
+		setErrorMessage("");
 		Vector mousePos = new Vector(x, y);
-
-		PresentationBlock<?> paletteBlockP = paletteP.GetClickedPaletteBlock(mousePos);
 		// Clicked block in palette
-		// Create functional copy of paletteBlock and add to programArea
+		PresentationBlock<?> paletteBlockP = paletteP.GetClickedPaletteBlock(mousePos);
 		if (paletteBlockP != null && GC.getAmountOfBlocksLeft(blockrPanel.getGameController()) > 0) {
-			PresentationBlock<?> presentationCopy = BFP.makeCopy(paletteBlockP);
-			if (presentationCopy instanceof FunctionDefinitionBlockPresentation) {
-				paletteP.addFunctionCallToPalette((FunctionDefinition) BFP.getBlock(presentationCopy));
-				this.preCommand = new MakeFunctionCommand(blockrPanel.getGameController(), (FunctionDefinitionBlockPresentation) presentationCopy, paletteP);
-			}
-			else {
-				this.preCommand = new MakeBlock(blockrPanel.getGameController(), presentationCopy);
-			}
-			GC.addBlockToProgramArea(blockrPanel.getGameController(), presentationCopy);
-			selectedBlock = presentationCopy;
-
-			// redo undo info collecting about current situation
-			this.oldPos = BFP.getPosition(presentationCopy);
-
+			copyPaletteBlockIntoProgramArea(paletteBlockP);
 			System.out.println("New Block made of type: " + BF.getName(BFP.getBlock(selectedBlock)));
-			this.stopExecution();
-		} else {
+			stopExecution();
+		}
+		// Clicked block in programArea
+		else {
 			PresentationBlock<?> programBlockP = programAreaP.getBlockAtPosition(mousePos);
 			if (programBlockP != null) {
-				selectedBlock = programBlockP;
-
-				// info collecting redo undo
-				this.preCommand = new disconnectCommand(BFP.getBlock(programBlockP), blockrPanel.getGameController());
-				this.oldPos = BFP.getPosition(programBlockP);
-
-				GC.disconnect(BFP.getBlock(selectedBlock), blockrPanel.getGameController());
-				this.stopExecution();
+				pickBlockUpFromProgramArea(programBlockP);
+				stopExecution();
 			}
 		}
-
-		previousMousePos = mousePos;
+		this.previousMousePos = mousePos;
 		this.mouseDown = true;
 	}
-
+	
 	/**
-	 * Handle the mouse being dragged to the given location
+	 * Make a copy from the given PresentationBlock and add it to the ProgramArea.
+	 * If the given block is a Presentation of the FunctionDefinitonBlock, create
+	 * a FunctionCall PresentationBlock in the Palette with the same ID.
 	 * 
-	 * @param x | horizontal value of the location the mouse is dragged to
-	 * @param y | vertical value of the location the mouse is dragged to
+	 * @param  paletteBlockP
+	 * 		   The block that is getting copied in the ProgramArea.
+	 * @post   The oldPos is equal to the position of the given programBlockP.
+	 *		   | new.oldPos == BFP.getPosition(programBlockP)
+	 * @post   The selectedBlock is not connected to any blocks.
+	 * 		   | selectedBlock.getPrevious() == null
+	 * @post   If the given paletteBlockP is a FunctionDefinition PresentationBlock then
+	 * 		   a FunctionCall with the same ID is in the palette.
+	 * @effect The selectedBlock is a copy of the given paletteBlockP.
+	 * 		   | selectedBlock = BFP.makeCopy(paletteBlockP)
+	 * @effect A copy of the given paletteBlockP is added to the ProgramArea, 
+	 * 		   the action is then saved as a preCommand.
+	 * 		   If the given paletteBlockP is a FunctionDefinition PresentationBlock then
+	 * 		   | preCommand = new MakeFunctionCommand(blockrPanel.getGameController(), presentationCopy, paletteP)
+	 * 		   Otherwise
+	 * 		   | preCommand = new MakeBlock(blockrPanel.getGameController(), presentationCopy)
+	 */
+	private void copyPaletteBlockIntoProgramArea(PresentationBlock<?> paletteBlockP) {
+		PresentationBlock<?> presentationCopy = BFP.makeCopy(paletteBlockP);
+		selectedBlock = presentationCopy;
+		if (presentationCopy instanceof FunctionDefinitionBlockPresentation) {
+			paletteP.addFunctionCallToPalette((FunctionDefinition) BFP.getBlock(presentationCopy));
+			this.preCommand = new MakeFunctionCommand(blockrPanel.getGameController(), (FunctionDefinitionBlockPresentation) presentationCopy, paletteP);
+		}
+		else {
+			this.preCommand = new MakeBlock(blockrPanel.getGameController(), presentationCopy);
+		}
+		GC.addBlockToProgramArea(blockrPanel.getGameController(), presentationCopy);
+		this.oldPos = BFP.getPosition(presentationCopy);
+	}
+	
+	/**
+	 * Pick up the selected block from the programArea.
+	 * 
+	 * @param  programBlockP
+	 * 		   The presentation Block in the ProgramArea that we are going to pick up.
+	 * @post   The selected block is equal to the given programBlockP.
+	 * 		   | new.selectedBlock == programBlockP
+	 * @post   The selectedBlock is not connected to any blocks.
+	 * 		   |selectedBlock.getPrevious() == null
+	 * @post   The oldPos is equal to the position of the given programBlockP.
+	 *		   |new.oldPos == BFP.getPosition(programBlockP)
+	 * @effect The selected block is disconnected if possible, the action is then
+	 * 		   saved as a preCommand.
+	 * 		   | preCommand = new disconnectCommand(BFP.getBlock(programBlockP), blockrPanel.getGameController())
+	 */
+	private void pickBlockUpFromProgramArea(PresentationBlock<?> programBlockP) {
+		selectedBlock = programBlockP;
+		this.preCommand = new disconnectCommand(BFP.getBlock(programBlockP), blockrPanel.getGameController());
+		GC.disconnect(BFP.getBlock(selectedBlock), blockrPanel.getGameController());
+		this.oldPos = BFP.getPosition(programBlockP);
+	}
+	
+	/**
+	 * Handle the mouse being dragged to the given location.
+	 * 
+	 * When a block is selected, the block will be repainted at the new location.
+	 * 
+	 * @param x
+	 * 	      horizontal value of the location the mouse is dragged to.
+	 * @param y
+	 * 	      vertical value of the location the mouse is dragged to.
+	 * @post  The previous mouse position equal to the given position,
+	 * 		  if the mouse is down and a block is selected.
+	 * 		  | if (this.mouseDown && this.selectedBlock != null)
+	 * 		  | then new.previousMousePos == new Vector(x, y)
+	 * @post  The selectedBlock's location is moved to the current location,
+	 * 		  if there is a block selected and the mouse is down.
+	 * 		  | if (this.mouseDown && this.selectedBlock != null)
+	 * 		  | then selectedBlock.getPosition().getX += x-previousMousePos.getX()
+	 * 		  |  and selectedBlock.getPosition().getY += y-previousMousePos.getY()
+	 * @effect repaint()
 	 */
 	public void handleMouseDragged(int x, int y) {
 		if (this.mouseDown && this.selectedBlock != null) {
@@ -200,203 +281,256 @@ public class BlockAreaCanvas extends Canvas implements MouseListener, MouseMotio
 	}
 
 	/**
-	 * handle a mouse being released at the given location
+	 * Handle a mouse being released at the given location.
 	 * 
-	 * @param x | horizontal value of the location of the mouse release
-	 * @param y | vertical value of the location of the mouse release
+	 * Reset all the command and information about the mouse.
+	 * When a block is selected delete it when the given location
+	 * is over the palette, drop the block otherwise.
+	 * 
+	 * @param  x
+	 * 		   Horizontal value of the location of the mouse release.
+	 * @param  y 
+	 * 		   Vertical value of the location of the mouse release.
+	 * @post   The mouse is not down.
+	 * 		   | new.mouseDown
+	 * @post   There is no block selected.
+	 * 		   | new.selectedBlock == null
+	 * @post   There are no pre and post commands.
+	 * 		   | new.preCommand == null
+	 *	       | new.postCommand == null
+	 * @post   Theres is no old and new position for the mouse.
+	 * 		   | new.oldPos == null;
+	 *         | new.newPos == null;
+	 * @effect When a block is selected and the given location is over the palette,
+	 *         then the selected block is removed from the program area.
+	 *         | if (this.selectedBlock != null && 
+	 *         |	 mousePos.getX() < (panelProportion * this.getWidth()))
+	 *         | then removeSelectedBlockFromProgramArea()
+	 * @effect When a block is selected and the given location is not over the palette,
+	 *         then the selected block is removed from the program area.
+	 *         | if (this.selectedBlock != null && 
+	 *         |	 !(mousePos.getX() < (panelProportion * this.getWidth())))
+	 *         | then dropBlockInProgramArea()	
+	 * @effect When a block is selected a dragCommand is added to the Command Processor.
+	 * 		   | if (this.selectedBlock != null)
+	 * 		   | then this.cmd.dragCommand(oldPos, newPos, selectedBlock, preCommand, postCommand)
+	 * @effect repaint()
 	 */
 	public void handleMouseReleased(int x, int y) {
 		Vector mousePos = new Vector(x, y);
-
 		if (this.selectedBlock != null) {
-			// undo redo info collect
-			this.newPos = BFP.getPosition(selectedBlock);
-
-			// Check for snapping
-
 			// Delete if over palette
-			int paletteBorder = (int) (panelProportion * this.getWidth());
-			if (mousePos.getX() < paletteBorder) {
-				if (selectedBlock instanceof FunctionDefinitionBlockPresentation) {
-					this.postCommand = new DeleteFunctionDefinition(blockrPanel.getGameController(), (FunctionDefinitionBlockPresentation) selectedBlock, paletteP);
-					paletteP.removeFunctionCallFromPalette((FunctionDefinition) BFP.getBlock(selectedBlock));
-				} else {
-					this.postCommand = new DeleteBlock(blockrPanel.getGameController(), selectedBlock);
-				}
-				GC.removeBlockFromProgramArea(blockrPanel.getGameController(), selectedBlock);
-			} else {
-				// makes the command for snapping (undo/redo). null if not snapped
-				this.postCommand = programAreaP.snapBlock(selectedBlock);
+			if (mousePos.getX() < (int) (panelProportion * this.getWidth())) {
+				removeSelectedBlockFromProgramArea();
+			} 
+			// Move block
+			else {
+				dropBlockInProgramArea();
 			}
-
 			this.cmd.dragCommand(oldPos, newPos, selectedBlock, preCommand, postCommand);
-
 		}
-
 		// resetting undo redo info, command construction is finished
-		oldPos = null;
-		newPos = null;
-		preCommand = null;
-		postCommand = null;
+		this.oldPos = null;
+		this.newPos = null;
+		this.preCommand = null;
+		this.postCommand = null;
 
 		this.mouseDown = false;
 		this.selectedBlock = null;
 		repaint();
 	}
-
+	
 	/**
-	 * Handle a key press
+	 * Remove the selected block from the programArea.
 	 * 
-	 * @param key | KeyEvent to be handled
+	 * @post   the newPos is equal to the position of the selected block.
+	 * 		   | new.newPos == BFP.getPosition(selectedBlock)
+	 * @post   The selected block is not in the ProgramArea.
+	 * @post   If the selectedBlock is a FunctionDefinition Block Presentation then there are no FunctionCalls
+	 * 		   with the same ID as the selectedBlock in the ProgramArea.
+	 * 		   | if selectedBlock instanceof FunctionDefinitionBlockPresentation
+	 * 		   | then 0 ==  GC.getAllFunctionCallsOfID(blockrPanel.getGameController().getProgramArea(),selectedBlock.ID)
+	 * @effect The selected block is removed if possible, the action is then
+	 * 		   saved as a postCommand.
+	 * 		   | postCommand = new DeleteBlock(blockrPanel.getGameController(), selectedBlock)
+	 * 		   | OR postCommand = new DeleteFunctionDefinition(blockrPanel.getGameController(),selectedBlock)
 	 */
-	public void handleKeyPressed(KeyEvent key) {
-		int keyCode = key.getKeyCode();
-		this.errorMessage = "";
-		GameController gameController = blockrPanel.getGameController();
-
-		switch (keyCode) {
-		case KeyEvent.VK_ESCAPE: // Esc
-			this.stopExecution();
-			iGameWorld.loadSnapshot(startSnapshot);
-			blockrPanel.redrawGameWorld();
-			break;
-
-		case KeyEvent.VK_F4: // F4
-			this.stopExecution();
-			break;
-
-		case KeyEvent.VK_F5: // F5
-			try {
-				setErrorMessage("");
-				ExecutionCommand exeCmd = GC.execute(gameController);
-				exe.addExecutionStep(exeCmd);
-				blockrPanel.redrawGameWorld();
-
-				/*
-				 * if (iGameWorld.robotOnGoal(GC.getGameWorldImplementation(blockrPanel.
-				 * getGameController()))){
-				 * setErrorMessage("congratiolations!! You have beaten this level! \n Press F6 to start a new one. "
-				 * ); }
-				 */
-				// if (!GC.isExecuting(gameController)) {
-				// this.stopExecution();
-				// }
-				if (iGameWorld.goalReached()) {
-					setErrorMessage("congratiolations!! You have beaten this level! \n Press F6 to start a new one. ");
-				}
-
-			} catch (Exception e1) {
-				if (e1.getMessage() == null) {
-					setErrorMessage("null returned");
-				} else {
-					setErrorMessage(e1.getMessage());
-				}
-				System.out.println("Execute in keyPressed failed");
-			}
-			break;
-
-		case KeyEvent.VK_F6: // F6
-			System.out.println("Changed gameWorld");
-			blockrPanel.getPreferredGameWorldWidth();
-			blockrPanel.getPreferredGameWorldHeight();
-			// TODO create new gameworld
-			iGameWorld.makeNewGameWorld();
-			this.startSnapshot = iGameWorld.makeSnapshot();
-			GC.setGameWorldImplementation(gameController, iGameWorld);
-			this.stopExecution();
-			blockrPanel.redrawGameWorld();
-			break;
-
-		default:
-			break;
+	private void removeSelectedBlockFromProgramArea() {
+		this.newPos = BFP.getPosition(selectedBlock);
+		if (selectedBlock instanceof FunctionDefinitionBlockPresentation) {
+			this.postCommand = new DeleteFunctionDefinition(blockrPanel.getGameController(), (FunctionDefinitionBlockPresentation) selectedBlock, paletteP);
+			paletteP.removeFunctionCallFromPalette((FunctionDefinition) BFP.getBlock(selectedBlock));
+		} else {
+			this.postCommand = new DeleteBlock(blockrPanel.getGameController(), selectedBlock);
 		}
-		// redo ctrl + shift + z
-		if (key.getKeyCode() == KeyEvent.VK_Z && key.isControlDown() && key.isShiftDown()) {
-			if (GC.isExecuting(blockrPanel.getGameController())) {
-				exe.redo();
-				blockrPanel.redrawGameWorld();
-			} else {
-				this.cmd.redo();
-			}
-		}
-		// undo ctrl + z
-		else if (key.getKeyCode() == KeyEvent.VK_Z && key.isControlDown() && !key.isShiftDown()) {
-			if (GC.isExecuting(blockrPanel.getGameController())) {
-				exe.undo();
-				blockrPanel.redrawGameWorld();
-			} else {
-				this.cmd.undo();
-			}
-		}
-		repaint();
+		GC.removeBlockFromProgramArea(blockrPanel.getGameController(), selectedBlock);
+	}
+	
+	/**
+	 * Drop the selected block in the ProgramArea.
+	 * 
+	 * @post   the newPos is equal to the position of the selected block.
+	 * 		   |new.newPos == BFP.getPosition(selectedBlock)
+	 * @effect The selected block is snapped if possible, the action is then
+	 * 		   saved as a postCommand.
+	 * 		   | postCommand = programAreaP.snapBlock(selectedBlock)
+	 */
+	private void dropBlockInProgramArea() {
+		this.newPos = BFP.getPosition(selectedBlock);
+		// makes the command for snapping (undo/redo). null if not snapped
+		this.postCommand = programAreaP.snapBlock(selectedBlock);
 	}
 
 	/**
-	 * Stop the execution of the current program
+	 * Handle a key press.
+	 * 
+	 * @param key
+	 * 		  KeyEvent to be handled.
+	 * @post  When the keycode was equal to escape or F4, the game is not running.
+	 * 		 | !GC.isExecuting(blockrPanel.getGameController())
+	 * @post The GameWorld is equal to the GameWorld from the startSnapshot.
+	 * 		 | new.iGameWorld.makeSnapshot() == startSnapshot
+	 * @effect When the keycode is equal to F5 then run()
+	 * @effect When the keycode is equal to F6 then newGameWorld()
+	 * @effect When the keycode is equal to Z and CTRL and SHIFT are down then redo()
+	 * @effect When the keycode is equal to Z and CTRL is down and SHIFT is not then redo()
+	 */
+	public void handleKeyPressed(KeyEvent key) {
+		setErrorMessage("");
+		switch (key.getKeyCode()) {
+		case KeyEvent.VK_ESCAPE: // Esc
+			stopExecution();
+			iGameWorld.loadSnapshot(startSnapshot);
+			break;
+
+		case KeyEvent.VK_F4: // F4
+			stopExecution();
+			break;
+
+		case KeyEvent.VK_F5: // F5
+			run();
+			break;
+
+		case KeyEvent.VK_F6: // F6
+			newGameWorld();
+			break;
+		
+		case KeyEvent.VK_Z: //CTRL + Z / CTRL + SHIFT + Z
+			if(key.isControlDown()) {
+				if(key.isShiftDown()) {
+					redo();
+				}
+				else {
+					undo();
+				}
+			}
+			break;
+			
+		default:
+			break;
+		}
+		repaint();
+	}
+	
+	/**
+	 * When possible run the program, otherwise set the error message 
+	 * to the reason why the game can't run.
+	 *
+	 * @post   The errorMessage is equal to
+	 * 		   "congratiolations!! You have beaten this level! \n Press F6 to start a new one. "
+	 * 		   when the goal is reached.
+	 * 		   | if iGameWorld.goalReached()
+	 * 		   | then new.errorMessage == 
+	 * 		   |      "congratiolations!! You have beaten this level! \n Press F6 to start a new one. "
+	 * @effect Execute the highlighted block and add the step to the Execution Processor.
+	 * 		   | exe.addExecutionStep(GC.execute(blockrPanel.getGameController()))
+	 * @catch  Exception and set the message it as errorMessage.
+	 * 		   | setErrorMessage(exception.getMessage())
+	 */
+	void run() {
+		try {
+			setErrorMessage("");
+			exe.addExecutionStep(GC.execute(blockrPanel.getGameController()));
+			if (iGameWorld.goalReached()) {
+				setErrorMessage("congratiolations!! You have beaten this level! \n Press F6 to start a new one. ");
+			}
+		} catch (Exception e1) {
+			if (e1.getMessage() == null) {
+				setErrorMessage("null returned");
+			} else {
+				setErrorMessage(e1.getMessage());
+			}
+			System.out.println("Execute in keyPressed failed");
+		}
+	}
+	
+	/**
+	 * Set a new random GameWorld.
+	 * 
+	 * @post   The startSnapshot is equal to a snapshot of the new gameworld.
+	 * 		   |new.startSnapshot != old.startSnapshot
+	 * @post   The GameControllers GameWorld Implementation is set to iGameWorld.
+	 * 		   | blockrPanel.getGameController().getGameWorldImplementation == iGameWorld
+	 * @post   The game is not running.
+	 * 		   | !GC.isExecuting(blockrPanel.getGameController())
+	 * @effect A new GameWorld is set for the iGameWorld.
+	 * 		   | iGameWorld.makeNewGameWorld()
+	 */
+	void newGameWorld() {
+		System.out.println("Changed gameWorld");
+		iGameWorld.makeNewGameWorld();
+		this.startSnapshot = iGameWorld.makeSnapshot();
+		GC.setGameWorldImplementation(blockrPanel.getGameController(), iGameWorld);
+		stopExecution();
+	}
+	
+	/**
+	 * Undo the last change.
+	 * 
+	 *@effect When the game is running undo the last execution.
+	 *   	  | if GC.isExecuting(blockrPanel.getGameController()
+	 * 		  | then exe.undo()
+	 * 		  Otherwise undo the last command.
+	 * 		  | cmd.undo()
+	 */
+	void undo() {
+		if (GC.isExecuting(blockrPanel.getGameController())) {
+			exe.undo();
+		} else {
+			cmd.undo();
+		}
+	}
+	
+	/**
+	 * Redo the last undo.
+	 * 
+	 * @effect When the game is running redo the last undone execution.
+	 * 		   | if GC.isExecuting(blockrPanel.getGameController()
+	 * 		   | then exe.redo()
+	 * 		   Otherwise redo the last undone command.
+	 * 		   | cmd.redo()
+	 */
+	void redo() {
+		if (GC.isExecuting(blockrPanel.getGameController())) {
+			exe.redo();
+		} else {
+			cmd.redo();
+		}
+	}
+		
+	/**
+	 * Stop the execution of the current program.
+	 * 
+	 * @post The game is not running.
+	 * 		 | !GC.isExecuting(blockrPanel.getGameController())
+	 * @post The exe is set to a new ExecutionProcessor.
+	 * 		 | new.exe = new ExecutionProcessor()
+	 * @post The GameWorld is equal to the GameWorld from the startSnapshot.
+	 * 		 | new.iGameWorld.makeSnapshot() == startSnapshot
 	 */
 	private void stopExecution() {
 		GC.stopExecution(blockrPanel.getGameController());
 		this.exe = new ExecutionProcessor();
-
-		// TODO reset gameworld to original state snapshot
 		iGameWorld.loadSnapshot(this.startSnapshot);
-
 	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		this.handleMousePressed(e.getX(), e.getY());
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		this.handleMouseReleased(e.getX(), e.getY());
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		this.handleMouseDragged(e.getX(), e.getY());
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		handleKeyPressed(e);
-
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

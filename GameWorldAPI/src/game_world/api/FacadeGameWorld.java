@@ -112,4 +112,21 @@ public interface FacadeGameWorld {
 		return (FacadeGameWorld)implClass.newInstance();
 	}
 	
+	/**
+	 * Add a listener to the gameWorld
+	 * 
+	 * @param listener
+	 * 		  Listener to add
+	 */
+	public void addListener(GameWorldListener listener);
+	
+	/**
+	 * Remove a listener from the gameWorld
+	 * 
+	 * @param listener
+	 * 		  Listener to remove
+	 */
+	public void removeListener(GameWorldListener listener);
+	
+	
 }

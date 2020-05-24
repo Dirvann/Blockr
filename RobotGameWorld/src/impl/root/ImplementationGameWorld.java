@@ -20,6 +20,7 @@ import game_world.Vector;
 import game_world.api.Action;
 import game_world.api.ActionResult;
 import game_world.api.FacadeGameWorld;
+import game_world.api.GameWorldListener;
 import game_world.api.Predicate;
 import game_world.api.PredicateResult;
 import game_world.api.Snapshot;
@@ -33,6 +34,8 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	private final int gameWorldHeight = 10;
 
 	private GameWorld gameWorld;
+	
+	private List<GameWorldListener> listeners = new ArrayList<>();
 
 	public ImplementationGameWorld() {
 		makeNewGameWorld();
@@ -78,12 +81,15 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 			} catch (RobotEnteringWallException | RobotMovingOffGridException e) {
 				return ActionResult.Illegal;
 			}
+			fireGameWorldChanged();
 			return ActionResult.Success;
 		} else if (action instanceof TurnLeftAction) {
 			gameWorld.robotTurnLeft();
+			fireGameWorldChanged();
 			return ActionResult.Success;
 		} else if (action instanceof TurnRightAction) {
 			gameWorld.robotTurnRight();
+			fireGameWorldChanged();
 			return ActionResult.Success;
 		} else {
 			return ActionResult.UnknownAction;
@@ -118,6 +124,7 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	@Override
 	public void makeNewGameWorld() {
 		this.gameWorld = new GameWorld(gameWorldWidth, gameWorldHeight);
+		fireGameWorldChanged();
 	}
 
 	/**
@@ -236,7 +243,7 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 		if(snapshot instanceof GameWorldSnapshot) {
 			gameWorld = ((GameWorldSnapshot) snapshot).getState();
 		}
-		
+		fireGameWorldChanged();
 	}
 
 	/**
@@ -266,4 +273,21 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	public boolean goalReached() {
 		return this.gameWorld.robotOnGoal();
 	}
+
+	@Override
+	public void addListener(GameWorldListener listener) {
+		listeners.add(listener);
+	}
+
+	@Override
+	public void removeListener(GameWorldListener listener) {
+		listeners.remove(listener);
+	}
+	
+	private void fireGameWorldChanged() {
+		for (GameWorldListener listener: new ArrayList<>(listeners)) {
+			listener.gameWorldChanged();
+		}
+	}
+	
 }

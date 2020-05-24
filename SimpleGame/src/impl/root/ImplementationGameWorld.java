@@ -3,6 +3,7 @@ package impl.root;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import game_world.SimpleGameController;
 import game_world.api.Action;
 import game_world.api.ActionResult;
 import game_world.api.FacadeGameWorld;
+import game_world.api.GameWorldListener;
 import game_world.api.Predicate;
 import game_world.api.PredicateResult;
 import game_world.api.Snapshot;
@@ -24,6 +26,8 @@ import predicates.BlockAbovePlayerPredicate;
 public class ImplementationGameWorld implements FacadeGameWorld {
 
 	private SimpleGameController gameController;
+	
+	private List<GameWorldListener> listeners = new ArrayList<>();
 
 	public ImplementationGameWorld() {
 		gameController = new SimpleGameController();
@@ -45,6 +49,7 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 		if (action instanceof MoveLeftAction) {
 			try {
 				gameController.actionPlayerLeft();
+				fireGameWorldChanged();
 				return ActionResult.Success;
 			} catch (OutOfBoundsException e) {
 				return ActionResult.Illegal;
@@ -52,12 +57,14 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 		} else if (action instanceof MoveRightAction) {
 			try {
 				gameController.actionPlayerRight();
+				fireGameWorldChanged();
 				return ActionResult.Success;
 			} catch (OutOfBoundsException e) {
 				return ActionResult.Illegal;
 			}
 		} else if (action instanceof StandStillAction) {
 			gameController.actionPlayerStay();
+			fireGameWorldChanged();
 			return ActionResult.Success;
 
 		} else {
@@ -142,6 +149,7 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	public void makeNewGameWorld() {
 		gameController = new SimpleGameController();
 		gameController.startGame();
+		fireGameWorldChanged();
 	}
 
 
@@ -150,6 +158,7 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 		if(snapshot instanceof GameSnapshot) {
 			this.gameController = ((GameSnapshot)snapshot).getState().createCopy();
 		}
+		fireGameWorldChanged();
 	}
 
 	@Override
@@ -160,11 +169,28 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	@Override
 	public void resetGameWorld() {
 		gameController.startGame();
+		fireGameWorldChanged();
 	}
 
 	@Override
 	public boolean goalReached() {
 		return gameController.goalReached();
+	}
+
+	@Override
+	public void addListener(GameWorldListener listener) {
+		listeners.add(listener);
+	}
+
+	@Override
+	public void removeListener(GameWorldListener listener) {
+		listeners.remove(listener);
+	}
+	
+	private void fireGameWorldChanged() {
+		for (GameWorldListener listener: new ArrayList<>(listeners)) {
+			listener.gameWorldChanged();
+		}
 	}
 
 }
