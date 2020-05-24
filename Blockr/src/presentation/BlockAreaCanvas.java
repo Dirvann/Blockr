@@ -160,7 +160,7 @@ public class BlockAreaCanvas extends Canvas {
 	 * @post   The previousMousePosition is the current position.
 	 * 		   | new.previousMousePos == new Vector(x, y)
 	 * @post   The mouse is down.
-	 * 		   | new.mouseDown == True
+	 * 		   | new.mouseDown
 	 * @effect Copy the presentation block where the mouse is located
 	 * 		   and add it to the programArea if there are enough
 	 * 		   blocks left.
@@ -225,10 +225,24 @@ public class BlockAreaCanvas extends Canvas {
 	}
 	
 	/**
-	 * Handle the mouse being dragged to the given location
+	 * Handle the mouse being dragged to the given location.
 	 * 
-	 * @param x | horizontal value of the location the mouse is dragged to
-	 * @param y | vertical value of the location the mouse is dragged to
+	 * When a block is selected, the block will be repainted at the new location.
+	 * 
+	 * @param x
+	 * 	      horizontal value of the location the mouse is dragged to.
+	 * @param y
+	 * 	      vertical value of the location the mouse is dragged to.
+	 * @post  The previous mouse position equal to the given position,
+	 * 		  if the mouse is down and a block is selected.
+	 * 		  | if (this.mouseDown && this.selectedBlock != null)
+	 * 		  | then new.previousMousePos == new Vector(x, y)
+	 * @post  The selectedBlock's location is moved to the current location,
+	 * 		  if there is a block selected and the mouse is down.
+	 * 		  | if (this.mouseDown && this.selectedBlock != null)
+	 * 		  | then selectedBlock.getPosition().getX += x-previousMousePos.getX()
+	 * 		  |  and selectedBlock.getPosition().getY += y-previousMousePos.getY()
+	 * @effect repaint()
 	 */
 	public void handleMouseDragged(int x, int y) {
 		if (this.mouseDown && this.selectedBlock != null) {
@@ -240,10 +254,40 @@ public class BlockAreaCanvas extends Canvas {
 	}
 
 	/**
-	 * handle a mouse being released at the given location
+	 * Handle a mouse being released at the given location.
 	 * 
-	 * @param x | horizontal value of the location of the mouse release
-	 * @param y | vertical value of the location of the mouse release
+	 * Reset all the command and information about the mouse.
+	 * When a block is selected delete it when the given location
+	 * is over the palette, drop the block otherwise.
+	 * 
+	 * @param  x
+	 * 		   Horizontal value of the location of the mouse release.
+	 * @param  y 
+	 * 		   Vertical value of the location of the mouse release.
+	 * @post   The mouse is not down.
+	 * 		   | new.mouseDown
+	 * @post   There is no block selected.
+	 * 		   | new.selectedBlock == null
+	 * @post   There are no pre and post commands.
+	 * 		   | new.preCommand == null
+	 *	       | new.postCommand == null
+	 * @post   Theres is no old and new position for the mouse.
+	 * 		   | new.oldPos == null;
+	 *         | new.newPos == null;
+	 * @effect When a block is selected and the given location is over the palette,
+	 *         then the selected block is removed from the program area.
+	 *         | if (this.selectedBlock != null && 
+	 *         |	 mousePos.getX() < (panelProportion * this.getWidth()))
+	 *         | then removeSelectedBlockFromProgramArea()
+	 * @effect When a block is selected and the given location is not over the palette,
+	 *         then the selected block is removed from the program area.
+	 *         | if (this.selectedBlock != null && 
+	 *         |	 !(mousePos.getX() < (panelProportion * this.getWidth())))
+	 *         | then dropBlockInProgramArea()	
+	 * @effect When a block is selected a dragCommand is added to the Command Processor.
+	 * 		   | if (this.selectedBlock != null)
+	 * 		   | then this.cmd.dragCommand(oldPos, newPos, selectedBlock, preCommand, postCommand)
+	 * @effect repaint()
 	 */
 	public void handleMouseReleased(int x, int y) {
 		Vector mousePos = new Vector(x, y);
@@ -293,9 +337,18 @@ public class BlockAreaCanvas extends Canvas {
 	}
 
 	/**
-	 * Handle a key press
+	 * Handle a key press.
 	 * 
-	 * @param key | KeyEvent to be handled
+	 * @param key
+	 * 		  KeyEvent to be handled.
+	 * @post  When the keycode was equal to escape or F4, the game is not running.
+	 * 		 | !GC.isExecuting(blockrPanel.getGameController())
+	 * @post The GameWorld is equal to the GameWorld from the startSnapshot.
+	 * 		 | new.iGameWorld.makeSnapshot() == startSnapshot
+	 * @effect When the keycode is equal to F5 then run()
+	 * @effect When the keycode is equal to F6 then newGameWorld()
+	 * @effect When the keycode is equal to Z and CTRL and SHIFT are down then redo()
+	 * @effect When the keycode is equal to Z and CTRL is down and SHIFT is not then redo()
 	 */
 	public void handleKeyPressed(KeyEvent key) {
 		setErrorMessage("");
@@ -335,7 +388,19 @@ public class BlockAreaCanvas extends Canvas {
 	}
 	
 	/**
-	 * TODO
+	 * When possible run the program, otherwise set the error message 
+	 * to the reason why the game can't run.
+	 *
+	 * @post   The errorMessage is equal to
+	 * 		   "congratiolations!! You have beaten this level! \n Press F6 to start a new one. "
+	 * 		   when the goal is reached.
+	 * 		   | if iGameWorld.goalReached()
+	 * 		   | then new.errorMessage == 
+	 * 		   |      "congratiolations!! You have beaten this level! \n Press F6 to start a new one. "
+	 * @effect Execute the highlighted block and add the step to the Execution Processor.
+	 * 		   | exe.addExecutionStep(GC.execute(blockrPanel.getGameController()))
+	 * @catch  Exception and set the message it as errorMessage.
+	 * 		   | setErrorMessage(exception.getMessage())
 	 */
 	void run() {
 		try {
@@ -355,12 +420,19 @@ public class BlockAreaCanvas extends Canvas {
 	}
 	
 	/**
-	 * TODO
+	 * Set a new random GameWorld.
+	 * 
+	 * @post   The startSnapshot is equal to a snapshot of the new gameworld.
+	 * 		   |new.startSnapshot != old.startSnapshot
+	 * @post   The GameControllers GameWorld Implementation is set to iGameWorld.
+	 * 		   | blockrPanel.getGameController().getGameWorldImplementation == iGameWorld
+	 * @post   The game is not running.
+	 * 		   | !GC.isExecuting(blockrPanel.getGameController())
+	 * @effect A new GameWorld is set for the iGameWorld.
+	 * 		   | iGameWorld.makeNewGameWorld()
 	 */
 	void newGameWorld() {
 		System.out.println("Changed gameWorld");
-		blockrPanel.getPreferredGameWorldWidth();
-		blockrPanel.getPreferredGameWorldHeight();
 		iGameWorld.makeNewGameWorld();
 		this.startSnapshot = iGameWorld.makeSnapshot();
 		GC.setGameWorldImplementation(blockrPanel.getGameController(), iGameWorld);
@@ -368,29 +440,48 @@ public class BlockAreaCanvas extends Canvas {
 	}
 	
 	/**
-	 * TODO
+	 * Undo the last change.
+	 * 
+	 *@effect When the game is running undo the last execution.
+	 *   	  | if GC.isExecuting(blockrPanel.getGameController()
+	 * 		  | then exe.undo()
+	 * 		  Otherwise undo the last command.
+	 * 		  | cmd.undo()
 	 */
 	void undo() {
 		if (GC.isExecuting(blockrPanel.getGameController())) {
 			exe.undo();
 		} else {
-			this.cmd.undo();
+			cmd.undo();
 		}
 	}
 	
 	/**
-	 * TODO
+	 * Redo the last undo.
+	 * 
+	 * @effect When the game is running redo the last undone execution.
+	 * 		   | if GC.isExecuting(blockrPanel.getGameController()
+	 * 		   | then exe.redo()
+	 * 		   Otherwise redo the last undone command.
+	 * 		   | cmd.redo()
 	 */
 	void redo() {
 		if (GC.isExecuting(blockrPanel.getGameController())) {
 			exe.redo();
 		} else {
-			this.cmd.redo();
+			cmd.redo();
 		}
 	}
 		
 	/**
-	 * Stop the execution of the current program
+	 * Stop the execution of the current program.
+	 * 
+	 * @post The game is not running.
+	 * 		 | !GC.isExecuting(blockrPanel.getGameController())
+	 * @post The exe is set to a new ExecutionProcessor.
+	 * 		 | new.exe = new ExecutionProcessor()
+	 * @post The GameWorld is equal to the GameWorld from the startSnapshot.
+	 * 		 | new.iGameWorld.makeSnapshot() == startSnapshot
 	 */
 	private void stopExecution() {
 		GC.stopExecution(blockrPanel.getGameController());
