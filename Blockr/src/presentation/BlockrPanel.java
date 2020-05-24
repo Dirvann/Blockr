@@ -20,9 +20,6 @@ import game_world.api.FacadeGameWorld;
  */
 public class BlockrPanel extends Panel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3195415750744263154L;
 	
 	private BlockAreaCanvas blockAreaC;

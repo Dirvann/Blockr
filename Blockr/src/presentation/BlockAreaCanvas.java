@@ -194,9 +194,26 @@ public class BlockAreaCanvas extends Canvas {
 	}
 	
 	/**
-	 * TODO
+	 * Make a copy from the given PresentationBlock and add it to the ProgramArea.
+	 * If the given block is a Presentation of the FunctionDefinitonBlock, create
+	 * a FunctionCall PresentationBlock in the Palette with the same ID.
 	 * 
-	 * @param paletteBlockP
+	 * @param  paletteBlockP
+	 * 		   The block that is getting copied in the ProgramArea.
+	 * @post   The oldPos is equal to the position of the given programBlockP.
+	 *		   | new.oldPos == BFP.getPosition(programBlockP)
+	 * @post   The selectedBlock is not connected to any blocks.
+	 * 		   | selectedBlock.getPrevious() == null
+	 * @post   If the given paletteBlockP is a FunctionDefinition PresentationBlock then
+	 * 		   a FunctionCall with the same ID is in the palette.
+	 * @effect The selectedBlock is a copy of the given paletteBlockP.
+	 * 		   | selectedBlock = BFP.makeCopy(paletteBlockP)
+	 * @effect A copy of the given paletteBlockP is added to the ProgramArea, 
+	 * 		   the action is then saved as a preCommand.
+	 * 		   If the given paletteBlockP is a FunctionDefinition PresentationBlock then
+	 * 		   | preCommand = new MakeFunctionCommand(blockrPanel.getGameController(), presentationCopy, paletteP)
+	 * 		   Otherwise
+	 * 		   | preCommand = new MakeBlock(blockrPanel.getGameController(), presentationCopy)
 	 */
 	private void copyPaletteBlockIntoProgramArea(PresentationBlock<?> paletteBlockP) {
 		PresentationBlock<?> presentationCopy = BFP.makeCopy(paletteBlockP);
@@ -213,9 +230,19 @@ public class BlockAreaCanvas extends Canvas {
 	}
 	
 	/**
-	 * TODO
+	 * Pick up the selected block from the programArea.
 	 * 
-	 * @param programBlockP
+	 * @param  programBlockP
+	 * 		   The presentation Block in the ProgramArea that we are going to pick up.
+	 * @post   The selected block is equal to the given programBlockP.
+	 * 		   | new.selectedBlock == programBlockP
+	 * @post   The selectedBlock is not connected to any blocks.
+	 * 		   |selectedBlock.getPrevious() == null
+	 * @post   The oldPos is equal to the position of the given programBlockP.
+	 *		   |new.oldPos == BFP.getPosition(programBlockP)
+	 * @effect The selected block is disconnected if possible, the action is then
+	 * 		   saved as a preCommand.
+	 * 		   | preCommand = new disconnectCommand(BFP.getBlock(programBlockP), blockrPanel.getGameController())
 	 */
 	private void pickBlockUpFromProgramArea(PresentationBlock<?> programBlockP) {
 		selectedBlock = programBlockP;
@@ -314,7 +341,19 @@ public class BlockAreaCanvas extends Canvas {
 	}
 	
 	/**
-	 * TODO
+	 * Remove the selected block from the programArea.
+	 * 
+	 * @post   the newPos is equal to the position of the selected block.
+	 * 		   | new.newPos == BFP.getPosition(selectedBlock)
+	 * @post   The selected block is not in the ProgramArea.
+	 * @post   If the selectedBlock is a FunctionDefinition Block Presentation then there are no FunctionCalls
+	 * 		   with the same ID as the selectedBlock in the ProgramArea.
+	 * 		   | if selectedBlock instanceof FunctionDefinitionBlockPresentation
+	 * 		   | then 0 ==  GC.getAllFunctionCallsOfID(blockrPanel.getGameController().getProgramArea(),selectedBlock.ID)
+	 * @effect The selected block is removed if possible, the action is then
+	 * 		   saved as a postCommand.
+	 * 		   | postCommand = new DeleteBlock(blockrPanel.getGameController(), selectedBlock)
+	 * 		   | OR postCommand = new DeleteFunctionDefinition(blockrPanel.getGameController(),selectedBlock)
 	 */
 	private void removeSelectedBlockFromProgramArea() {
 		this.newPos = BFP.getPosition(selectedBlock);
@@ -328,7 +367,13 @@ public class BlockAreaCanvas extends Canvas {
 	}
 	
 	/**
-	 * TODO
+	 * Drop the selected block in the ProgramArea.
+	 * 
+	 * @post   the newPos is equal to the position of the selected block.
+	 * 		   |new.newPos == BFP.getPosition(selectedBlock)
+	 * @effect The selected block is snapped if possible, the action is then
+	 * 		   saved as a postCommand.
+	 * 		   | postCommand = programAreaP.snapBlock(selectedBlock)
 	 */
 	private void dropBlockInProgramArea() {
 		this.newPos = BFP.getPosition(selectedBlock);
