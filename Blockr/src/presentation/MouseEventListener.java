@@ -5,7 +5,16 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
- 
+/**
+ * A class that handles mouse and key presses.
+ * 
+ * @version 3.0
+ * @author Andreas Awouters 
+ * 	       Thomas Van Erum 
+ * 		   Dirk Vanbeveren 
+ * 		   Geert Wesemael
+ *
+ */
 public class MouseEventListener implements MouseListener, MouseMotionListener, KeyListener {
 	
 	private BlockAreaCanvas blockAreaCanvas;

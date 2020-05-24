@@ -83,7 +83,7 @@ public class BlockrPanel extends Panel {
 //	}
 	
 	/**
-	 * get the gameController used by this panel
+	 * The gameController associated with this BlockrPanel.
 	 * 
 	 * @return gameController associated with this BlockrPanel
 	 */
@@ -92,7 +92,7 @@ public class BlockrPanel extends Panel {
 	}
 	
 	/**
-	 * 
+	 * The width to be used by the gameWorld.
 	 * 
 	 * @return width to be used by the gameWorld
 	 */
@@ -101,7 +101,7 @@ public class BlockrPanel extends Panel {
 	}
 	
 	/**
-	 * 
+	 * The height to be used by the gameWorld.
 	 * 
 	 * @return height to be used by the gameWorld
 	 */
@@ -111,7 +111,7 @@ public class BlockrPanel extends Panel {
 	
 	
 	/**
-	 * 
+	 * The block Area Canvas used by this panel.
 	 * 
 	 * @return block Area Canvas used by this panel
 	 */

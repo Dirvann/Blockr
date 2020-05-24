@@ -31,7 +31,6 @@ public class ProgramAreaPresentation {
 	private GameController gameController;
 	
 	/**
-	 * 
 	 * Create a new instance of ProgramAreaPresentation
 	 * 
 	 * @param gameController
@@ -76,6 +75,7 @@ public class ProgramAreaPresentation {
 	
 	/**
 	 * 
+	 * TODO
 	 * 
 	 * @param block
 	 * @return

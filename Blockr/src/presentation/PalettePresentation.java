@@ -51,7 +51,15 @@ public class PalettePresentation {
 		
 		initialisePaletteBlocksList(paletteBlocks, iGameWorld);
 	}
-	
+	/**
+	 * Initialize all the Presentation Blocks in the palette.
+	 * 
+	 * @param list
+	 * 		  List of all the blocks to be shown in the palette.
+	 * @param iGameWorld
+	 * 		  The given GameWorld Facade.
+	 * @effect Add all Blocks to the palette.
+	 */
 	private void initialisePaletteBlocksList(List<PresentationBlock<?>> list, FacadeGameWorld iGameWorld) {
 		
 		index = 0;
@@ -78,24 +86,56 @@ public class PalettePresentation {
 		list.add(paletteFunction);
 		
 	}
-	
+	/**
+	 * Set the ID of the Block.
+	 * 
+	 * @param ID
+	 * 		  The given ID to set iBlock to.
+	 * @post  The id of the Block is equal to the given ID.
+	 * 		  | iPresentationBlock.getBlock(this.paletteFunction) == ID
+	 */
 	public void setFunctionDefinitionId(int ID) {
 		iBlock.setID((FunctionDefinition) iPresentationBlock.getBlock(this.paletteFunction), ID);
 	}
-	
+	/**
+	 * The current ID for FunctionDefinitionBlocks in the palette.
+	 * 
+	 * @return the current ID for FunctionDefinitionBlocks in the palette.
+	 * 		   |iBlock.getID(iPresentationBlock.getBlock(paletteFunction))
+	 */
 	public int getFunctionDefinitionId() {
 		return iBlock.getID((FunctionDefinition) iPresentationBlock.getBlock(this.paletteFunction));
 	}
+	/**
+	 * Higher the ID of the FunctionDefinition PresentationBlock in the palette.
+	 * Add a caller PresentationBlock to the  
+	 * 
+	 * @param definition
+	 */
 	public void addFunctionCallToPalette(FunctionDefinition definition) {
 		setNextDefinition();
 		paletteBlocks.add(iPresentationBlock.makeFunctionCallBlock(definition, new Vector(xOffset, yOffset+yOffsetIncrement*(index++))));
 	}
-	
+	/**
+	 * Remove all FunctionCall PresentationBlocks from the paletteBlock list
+	 * with the same id as the given definition 
+	 * 
+	 * @param definition
+	 * 		  The definition with the same id as the callers that are being removed.
+	 * @post  There are no FuncionCallBlocks in paletteBlocks with the same id as the definition.
+	 * 		  |For all blocks: !paletteBlocks.contains(blocks) && sameBlockAndID(block,iBlock.getID(definition))
+	 */
 	public void removeFunctionCallFromPalette(FunctionDefinition definition) {
-		int id = iBlock.getID(definition);
-		removeFunctionCallWithIDFromList(id);
+		removeFunctionCallWithIDFromList(iBlock.getID(definition));
 	}
-	
+	/**
+	 * Remove all Function Calls from the paletteBlock list with the given id.
+	 * 
+	 * @param id
+	 * 		  The ID of the FunctionCall blocks that need to be removed.
+	 * @post  There are no FuncionCallBlocks in paletteBlocks with the given id
+	 * 		  |For all blocks: !paletteBlocks.contains(blocks) && sameBlockAndID(block,id)
+	 */
 	public void removeFunctionCallWithIDFromList(int id) {
 		for(int i=0;i<paletteBlocks.size();i++) {
 			PresentationBlock<?> pb = paletteBlocks.get(i);
@@ -105,11 +145,26 @@ public class PalettePresentation {
 			}
 		} 
 	}
-	
+	/**
+	 * Return True if the given block is of the same type and
+	 * has the same ID as the given ID.
+	 * 
+	 * @param  presentationBlock
+	 * 		   The given block to check the ID of.
+	 * @param  idOtherBlock
+	 * 		   The ID to compare to.
+	 * @return True if the given block is of the same type and
+	 * 		   has the same ID as the given ID.
+	 */
 	private boolean sameBlockAndID(PresentationBlock<?> presentationBlock,int idOtherBlock) {
 		return presentationBlock instanceof FunctionCallBlockPresentation && idOtherBlock == iBlock.getID((FunctionCall) iPresentationBlock.getBlock(presentationBlock));
 	}
-	
+	/**
+	 * Set the Definition of the DefinitionBlock in te palette one higher.
+	 * 
+	 * @post The id of the functionBlock in the palette is one higher.
+	 * 		 |iBlock.getID(iPresentationBlock.getBlock(paletteFunction)) ++
+	 */
 	private void setNextDefinition() {
 		iBlock.setID((FunctionDefinition) iPresentationBlock.getBlock(paletteFunction), iBlock.getID((FunctionDefinition) iPresentationBlock.getBlock(paletteFunction)) + 1);
 	}
