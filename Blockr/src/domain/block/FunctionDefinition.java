@@ -65,7 +65,7 @@ public class FunctionDefinition extends Block{ //TODO: Thomas nog enkele functie
 
 	@Override
 	protected String getName() {
-		return "Definition function: " + ID;
+		return "Function Def: " + ID;
 	}
 
 	@Override
