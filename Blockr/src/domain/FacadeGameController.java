@@ -22,26 +22,15 @@ import presentation.block.PresentationBlock;
  *
  */
 public interface FacadeGameController {
-	
-//	public GameController makeGameController(FacadeGameWorld iGameWorld);
-//	public GameController makeGameController() throws InstantiationException, IllegalAccessException;
-//	
-//	public void setGameWorldImplementation(GameController gameController, FacadeGameWorld iGameWorld);
 	public FacadeGameWorld getGameWorldImplementation();
 	public ProgramArea getProgramArea();
-	
 	public void addBlockToProgramArea(PresentationBlock<?> pBlock);
 	public void removeBlockFromProgramArea(PresentationBlock<?> pBlock);
-	public void removeBlockFromProgramArea(Block block);
 	public void setGameWorldImplementation(FacadeGameWorld iGameWorld);
-
-	
 	public List<Block> getCopyOfAllBlocks();
-
 	public ExecutionCommand execute() throws Exception;
 	public Boolean isExecuting();
 	public void stopExecution();
-	
 	public int getAmountOfBlocksLeft();
 	
 	//functions for connecting and disconnecting blocks
@@ -53,7 +42,6 @@ public interface FacadeGameController {
 	
 	//execution info for undo redo and manipulation of execution
 	public Block getNextBlockToExecute();
-	public ExecutionCommand getExecutionCommand();
 	public void setExecutionCommand(ExecutionCommand exeCmd);
 	public void setNewExecution(Block currentlyExecuted, Block nextToExecute);
 	public List<FunctionCall> getAllFunctionCallsOfID(int ID);
