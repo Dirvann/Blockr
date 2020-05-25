@@ -110,7 +110,14 @@ public class ExecutionCommand {
 	public void setNext(Block block) {
 		this.nextToExecute = block;
 	}
-
+	/**
+	 * Set the snapshot.
+	 * 
+	 * @param snapshot 
+	 * 		  The snapshot to be saved.
+	 * @post  snapshot is equal to the given snapshot.
+	 * 	      | new.snapshot == snapshot
+	 */
 	public void setSnapshot(Snapshot snapshot) {
 		this.snapshot = snapshot;
 		
