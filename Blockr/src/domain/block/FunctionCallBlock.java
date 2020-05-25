@@ -12,10 +12,10 @@ import domain.GameController;
  * 		   Geert Wesemael
  *
  */
-public class FunctionCall extends SequenceBlock{
+public class FunctionCallBlock extends SequenceBlock{
 	
 	private int ID;
-	private FunctionDefinition definition;
+	private FunctionDefinitionBlock definition;
 	
 	/**
 	 * Initialize a Function Call Block. The definition of this block is 
@@ -28,7 +28,7 @@ public class FunctionCall extends SequenceBlock{
 	 * @post  The ID is equal to the ID of the given def.
 	 * 		  | new.ID = def.ID
 	 */
-	protected FunctionCall(FunctionDefinition def){
+	protected FunctionCallBlock(FunctionDefinitionBlock def){
 		this.ID = def.ID;
 		this.definition = def;
 	}
@@ -37,7 +37,7 @@ public class FunctionCall extends SequenceBlock{
 	 * 
 	 * @return the definition connected to this FunctionCall.
 	 */
-	protected FunctionDefinition getFunctionDefinition() {
+	protected FunctionDefinitionBlock getFunctionDefinition() {
 		return this.definition;
 	}
 	
@@ -54,7 +54,7 @@ public class FunctionCall extends SequenceBlock{
 		SequenceBlock prev = this.previous;
 		SequenceBlock nextBlock = this.next;
 		SurroundingBlock surr = this.surroundingBlock;
-		FunctionDefinition funct = this.function;
+		FunctionDefinitionBlock funct = this.function;
 
 		if (nextBlock != null) {
 			GC.disconnect(this.next);
@@ -82,7 +82,7 @@ public class FunctionCall extends SequenceBlock{
 
 	@Override
 	protected Block getNewBlockOfThisType() {
-		FunctionCall copy = new FunctionCall(definition);
+		FunctionCallBlock copy = new FunctionCallBlock(definition);
 		return copy;
 	}
 

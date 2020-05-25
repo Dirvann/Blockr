@@ -152,64 +152,64 @@ public class ImplementationBlock implements FacadeBlock{
 
 
 	@Override
-	public FunctionCall makeCaller(FunctionDefinition function) {
-		return new FunctionCall(function);
+	public FunctionCallBlock makeCaller(FunctionDefinitionBlock function) {
+		return new FunctionCallBlock(function);
 	}
 
 
 	@Override
-	public FunctionDefinition makeFunctionDefinition(int ID) {
-		return new FunctionDefinition(ID);
+	public FunctionDefinitionBlock makeFunctionDefinition(int ID) {
+		return new FunctionDefinitionBlock(ID);
 	}
 
 
 	@Override
-	public void setBodyBlock(FunctionDefinition function, SequenceBlock bodyBlock) {
+	public void setBodyBlock(FunctionDefinitionBlock function, SequenceBlock bodyBlock) {
 		function.setBodyBlock(bodyBlock);
 		
 	}
 
 
 	@Override
-	public void RemoveFunctionBlock(FunctionDefinition function, GameController GC) {
+	public void RemoveFunctionBlock(FunctionDefinitionBlock function, GameController GC) {
 		function.removeFunctionDefinition(GC);
 		
 	}
 	@Override
-	public SequenceBlock getBodyBlock(FunctionDefinition block) {
+	public SequenceBlock getBodyBlock(FunctionDefinitionBlock block) {
 		return block.getBodyBlock();
 	}
 
 	@Override
-	public int getID(FunctionDefinition definition) {
+	public int getID(FunctionDefinitionBlock definition) {
 		return definition.ID;
 	}
 
 	@Override
-	public int getID(FunctionCall block) {
+	public int getID(FunctionCallBlock block) {
 		return block.getFunctionDefinition().ID;
 		
 	}
 
 	@Override
-	public FunctionDefinition getFunctionBlock(Block block) {
+	public FunctionDefinitionBlock getFunctionBlock(Block block) {
 		if (!(block instanceof SequenceBlock)) return null;
 		return ((SequenceBlock) block).function;
 	}
 
 
 	@Override
-	public void resetFunctionCallers(FunctionDefinition functionDefinition) {
+	public void resetFunctionCallers(FunctionDefinitionBlock functionDefinition) {
 		functionDefinition.callStack = new ArrayList<SequenceBlock>();
 	}
 
 	@Override
-	public void setID(FunctionDefinition function, int id) {
+	public void setID(FunctionDefinitionBlock function, int id) {
 		function.ID = id;
 		
 	}
 	@Override
-	public void deleteFunctionCall(FunctionCall functionCall, GameController GC) {
+	public void deleteFunctionCall(FunctionCallBlock functionCall, GameController GC) {
 		functionCall.delete(GC);
 	}
 

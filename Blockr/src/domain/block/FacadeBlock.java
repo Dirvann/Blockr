@@ -47,14 +47,14 @@ public interface FacadeBlock {
 	 * @param function The function definition block of the caller.
 	 * @return A block that executes the function as a functionCall
 	 */
-	public FunctionCall makeCaller(FunctionDefinition function);
+	public FunctionCallBlock makeCaller(FunctionDefinitionBlock function);
 	
 	/**
 	 * 
 	 * @param ID The ID of the new function definition.
 	 * @return A new function with an empty body and as Id the given ID.
 	 */
-	public FunctionDefinition makeFunctionDefinition(int ID);
+	public FunctionDefinitionBlock makeFunctionDefinition(int ID);
 
 	/**
 	 * 
@@ -105,7 +105,7 @@ public interface FacadeBlock {
 	 * @throws Exception If bodyBlock is not the first one of a group of blocks.
 	 * @Post The body of the function will be set to the parameter bodyBlock.
 	 */
-	public void setBodyBlock(FunctionDefinition function, SequenceBlock bodyBlock);
+	public void setBodyBlock(FunctionDefinitionBlock function, SequenceBlock bodyBlock);
 
 	/**
 	 * 
@@ -214,23 +214,23 @@ public interface FacadeBlock {
 
 	public SingleConditionBlock makeSingleConditionBlock(Predicate predicate);
 	
-	public void RemoveFunctionBlock(FunctionDefinition function, GameController GC);
+	public void RemoveFunctionBlock(FunctionDefinitionBlock function, GameController GC);
 
 	public ActionBlock makeActionBlock(Action action);
 
-	public SequenceBlock getBodyBlock(FunctionDefinition functionDefinition);
+	public SequenceBlock getBodyBlock(FunctionDefinitionBlock functionDefinition);
 
-	public FunctionDefinition getFunctionBlock(Block block);
+	public FunctionDefinitionBlock getFunctionBlock(Block block);
 
-	public void resetFunctionCallers(FunctionDefinition functionDefinition);
+	public void resetFunctionCallers(FunctionDefinitionBlock functionDefinition);
 
-	public int getID(FunctionDefinition definition);
+	public int getID(FunctionDefinitionBlock definition);
 
-	public int getID(FunctionCall block);
+	public int getID(FunctionCallBlock block);
 
-	public void setID(FunctionDefinition function, int id);
+	public void setID(FunctionDefinitionBlock function, int id);
 
-	public void deleteFunctionCall(FunctionCall functionCall, GameController GC);
+	public void deleteFunctionCall(FunctionCallBlock functionCall, GameController GC);
 
 
 }

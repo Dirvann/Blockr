@@ -8,12 +8,12 @@ import java.awt.geom.Area;
 import java.util.Arrays;
 import java.util.List;
 
-import domain.block.FunctionCall;
+import domain.block.FunctionCallBlock;
 import domain.block.ImplementationBlock;
 import game_world.api.Vector;
 
-public class FunctionCallBlockPresentation extends PresentationBlock<FunctionCall> {
-	public FunctionCallBlockPresentation(Vector pos, FunctionCall block) {
+public class FunctionCallBlockPresentation extends PresentationBlock<FunctionCallBlock> {
+	public FunctionCallBlockPresentation(Vector pos, FunctionCallBlock block) {
 		super(pos, block);
 	}
 
@@ -44,9 +44,9 @@ public class FunctionCallBlockPresentation extends PresentationBlock<FunctionCal
 	}
 
 	@Override
-	protected PresentationBlock<FunctionCall> makeCopyWithoutConnections() {
+	protected PresentationBlock<FunctionCallBlock> makeCopyWithoutConnections() {
 		ImplementationBlock BF = new ImplementationBlock();
-		return new FunctionCallBlockPresentation(getPosition(), (FunctionCall) BF.makeNewBlockOfThisType(getBlock())) ;
+		return new FunctionCallBlockPresentation(getPosition(), (FunctionCallBlock) BF.makeNewBlockOfThisType(getBlock())) ;
 	}
 
 }

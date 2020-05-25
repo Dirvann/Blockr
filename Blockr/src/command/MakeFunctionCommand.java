@@ -1,7 +1,7 @@
 package command;
 
 import domain.GameController;
-import domain.block.FunctionDefinition;
+import domain.block.FunctionDefinitionBlock;
 import domain.block.ImplementationBlock;
 import presentation.PalettePresentation;
 import presentation.block.ImplementationPresentationBlock;
@@ -22,7 +22,7 @@ public class MakeFunctionCommand implements Command {
 	 *
 	 */
 	GameController GC;
-	PresentationBlock<FunctionDefinition> function;
+	PresentationBlock<FunctionDefinitionBlock> function;
 	PalettePresentation palette;
 	
 	ImplementationBlock BF = new ImplementationBlock();
@@ -41,7 +41,7 @@ public class MakeFunctionCommand implements Command {
 	 * 		  | new.function == function
 	 * 		  | new.palette == palette
 	 */
-	public MakeFunctionCommand(GameController GC, PresentationBlock<FunctionDefinition> function, PalettePresentation palette) {
+	public MakeFunctionCommand(GameController GC, PresentationBlock<FunctionDefinitionBlock> function, PalettePresentation palette) {
 		this.GC = GC;
 		this.function = function;
 		this.palette = palette;
@@ -50,13 +50,13 @@ public class MakeFunctionCommand implements Command {
 	@Override
 	public void execute() {
 		GC.addBlockToProgramArea(function);
-		palette.addFunctionCallToPalette((FunctionDefinition) BFP.getBlock(function));
+		palette.addFunctionCallToPalette((FunctionDefinitionBlock) BFP.getBlock(function));
 
 	}
 
 	@Override
 	public void undo() {
-		int ID = BF.getID((FunctionDefinition) BFP.getBlock(function));
+		int ID = BF.getID((FunctionDefinitionBlock) BFP.getBlock(function));
 		palette.removeFunctionCallWithIDFromList(ID);
 		palette.setFunctionDefinitionId(ID);
 		GC.removeBlockFromProgramArea(function);

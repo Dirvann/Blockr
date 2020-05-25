@@ -11,13 +11,13 @@ import command.DeleteBlock;
 import command.DeleteFunctionDefinition;
 import command.MakeBlock;
 import command.MakeFunctionCommand;
-import command.disconnectCommand;
+import command.DisconnectCommand;
 import domain.CommandProcessor;
 import domain.ExecutionProcessor;
 import domain.GameController;
 import game_world.api.Vector;
 import domain.block.Block;
-import domain.block.FunctionDefinition;
+import domain.block.FunctionDefinitionBlock;
 import domain.block.ImplementationBlock;
 import game_world.api.FacadeGameWorld;
 import game_world.api.Snapshot;
@@ -218,7 +218,7 @@ public class BlockAreaCanvas extends Canvas {
 		PresentationBlock<?> presentationCopy = BFP.makeCopy(paletteBlockP);
 		selectedBlock = presentationCopy;
 		if (presentationCopy instanceof FunctionDefinitionBlockPresentation) {
-			paletteP.addFunctionCallToPalette((FunctionDefinition) BFP.getBlock(presentationCopy));
+			paletteP.addFunctionCallToPalette((FunctionDefinitionBlock) BFP.getBlock(presentationCopy));
 			this.preCommand = new MakeFunctionCommand(GC, (FunctionDefinitionBlockPresentation) presentationCopy, paletteP);
 		}
 		else {
@@ -245,7 +245,7 @@ public class BlockAreaCanvas extends Canvas {
 	 */
 	private void pickBlockUpFromProgramArea(PresentationBlock<?> programBlockP) {
 		selectedBlock = programBlockP;
-		this.preCommand = new disconnectCommand(BFP.getBlock(programBlockP), GC);
+		this.preCommand = new DisconnectCommand(BFP.getBlock(programBlockP), GC);
 		GC.disconnect(BFP.getBlock(selectedBlock));
 		this.oldPos = BFP.getPosition(programBlockP);
 	}
@@ -358,7 +358,7 @@ public class BlockAreaCanvas extends Canvas {
 		this.newPos = BFP.getPosition(selectedBlock);
 		if (selectedBlock instanceof FunctionDefinitionBlockPresentation) {
 			this.postCommand = new DeleteFunctionDefinition(GC, (FunctionDefinitionBlockPresentation) selectedBlock, paletteP);
-			paletteP.removeFunctionCallFromPalette((FunctionDefinition) BFP.getBlock(selectedBlock));
+			paletteP.removeFunctionCallFromPalette((FunctionDefinitionBlock) BFP.getBlock(selectedBlock));
 		} else {
 			this.postCommand = new DeleteBlock(GC, selectedBlock);
 		}

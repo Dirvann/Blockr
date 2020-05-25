@@ -14,7 +14,7 @@ import domain.GameController;
  * 		   Geert Wesemael
  *
  */
-public class FunctionDefinition extends Block{ //TODO: Thomas nog enkele functies documenteren hier (de niet overwritten)
+public class FunctionDefinitionBlock extends Block{ //TODO: Thomas nog enkele functies documenteren hier (de niet overwritten)
 	protected int ID;
 	protected ArrayList<SequenceBlock> callStack = new ArrayList<SequenceBlock>();
 	protected SequenceBlock body;
@@ -27,7 +27,7 @@ public class FunctionDefinition extends Block{ //TODO: Thomas nog enkele functie
 	 * @post  The ID is equal to the given ID.
 	 * 		  | new.ID = def.ID
 	 */
-	protected FunctionDefinition(int ID) {
+	protected FunctionDefinitionBlock(int ID) {
 		this.ID = ID;
 	}
 
@@ -45,9 +45,9 @@ public class FunctionDefinition extends Block{ //TODO: Thomas nog enkele functie
 	 * 
 	 */
 	protected void removeFunctionDefinition(GameController GC) {
-		List<FunctionCall> allCallers = GC.getAllFunctionCallsOfID(this.ID);
+		List<FunctionCallBlock> allCallers = GC.getAllFunctionCallsOfID(this.ID);
 		for (int i = 0; i < allCallers.size(); i++) {
-			FunctionCall caller = allCallers.get(i);
+			FunctionCallBlock caller = allCallers.get(i);
 			caller.delete(GC);
 		}
 	}
@@ -59,7 +59,7 @@ public class FunctionDefinition extends Block{ //TODO: Thomas nog enkele functie
 
 	@Override
 	protected Block getNewBlockOfThisType() {
-		return new FunctionDefinition(this.ID);
+		return new FunctionDefinitionBlock(this.ID);
 		
 	}
 
@@ -133,7 +133,7 @@ public class FunctionDefinition extends Block{ //TODO: Thomas nog enkele functie
 		
 	}
 
-	public void addCaller(FunctionCall functionCall) {
+	public void addCaller(FunctionCallBlock functionCall) {
 		this.callStack.add(functionCall);
 		
 	}

@@ -1,8 +1,8 @@
 package command;
 
 import domain.GameController;
-import domain.block.FunctionCall;
-import domain.block.FunctionDefinition;
+import domain.block.FunctionCallBlock;
+import domain.block.FunctionDefinitionBlock;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
@@ -22,12 +22,12 @@ import domain.block.SurroundingBlock;
  */
 public class DeleteCallerCommand implements Command {
 	GameController GC;
-	FunctionCall caller;
+	FunctionCallBlock caller;
 	ImplementationBlock BF = new ImplementationBlock();
 	SequenceBlock previous;
 	SequenceBlock next;
 	SurroundingBlock surrounding;
-	FunctionDefinition function;
+	FunctionDefinitionBlock function;
 
 	/**
 	 * Makes a delete block Commmand. This Command includes all of the info needed
@@ -47,7 +47,7 @@ public class DeleteCallerCommand implements Command {
 	 * 		  | surrounding = BF.getSurroundingBlock(caller)
 	 * 		  | function = BF.getFunctionBlock(caller)
 	 */
-	public DeleteCallerCommand(GameController GC, FunctionCall caller) {
+	public DeleteCallerCommand(GameController GC, FunctionCallBlock caller) {
 		this.GC = GC;
 		this.caller = caller;
 		this.previous = (SequenceBlock) BF.getPreviousBlock(caller);

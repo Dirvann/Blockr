@@ -17,7 +17,7 @@ import domain.block.SurroundingBlock;
  * 		   Geert Wesemael
  *
  */
-public class addToBodyCommand implements Command {
+public class AddToBodyCommand implements Command {
 
 	SequenceBlock blockToConnect;
 	SurroundingBlock surroundingBlock;
@@ -43,7 +43,7 @@ public class addToBodyCommand implements Command {
 	 * 		  | new.nextBlock == nextBlock
 	 * 		  | new.GC == GC
 	 */
-	public addToBodyCommand(SurroundingBlock surroundingBlock, SequenceBlock blockToConnect, SequenceBlock nextBlock,
+	public AddToBodyCommand(SurroundingBlock surroundingBlock, SequenceBlock blockToConnect, SequenceBlock nextBlock,
 			GameController GC) {
 		this.blockToConnect = blockToConnect;
 		this.surroundingBlock = surroundingBlock;

@@ -15,7 +15,7 @@ import domain.GameController;
 public abstract class SequenceBlock extends Block {
 	protected SequenceBlock next = null;
 	protected SequenceBlock previous = null;
-	protected FunctionDefinition function = null;
+	protected FunctionDefinitionBlock function = null;
 
 	@Override
 	protected Block getBlockAbove() {
@@ -111,7 +111,7 @@ public abstract class SequenceBlock extends Block {
 	 *        ones after this block.
 	 *        | this.function == function
 	 */
-	protected void setFunctionBlock(FunctionDefinition function) {
+	protected void setFunctionBlock(FunctionDefinitionBlock function) {
 		SequenceBlock iterator = this;
 		while (iterator != null) {
 			iterator.function = function;
