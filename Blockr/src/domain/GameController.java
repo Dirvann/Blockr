@@ -50,22 +50,6 @@ public class GameController implements FacadeGameController{
 		this.iGameWorld = FacadeGameWorld.newInstance(BlockrPanel.getImplementationClass());
 	}
 	/**
-	 * Initialize a new GameController with a new ProgramArea and
-	 * a new instance of the gameWorld.
-	 * 
-	 * @param iGameWorld
-	 * 		  The GameWorld Implementation for this GameController.
-	 * @post The ProgramArea of this GameController is a new ProgramArea
-	 * 		 | new.getProgramArea = new ProgramArea()
-	 * @post The GameWorld Implementation of this GameController is set to the given Implementation.
-	 * 		 | new.getGameWorldImplementation = iGameWorld
-	 */
-	
-	public GameController(FacadeGameWorld iGameWorld) {
-		this.programArea = new ProgramArea();
-		this.iGameWorld = iGameWorld;
-	}	
-	/**
 	 * Execute the next block if the program is in progress.
 	 * If this execution fails the execution stops and the 
 	 * gameWorld resets.
@@ -167,11 +151,7 @@ public class GameController implements FacadeGameController{
 	public void removeBlockFromProgramArea(PresentationBlock<?> pBlock) {
 		getProgramArea().removeBlock(BFP.getBlock(pBlock), this);
 	}
-	@Override
-	public void removeBlockFromProgramArea(Block block) {
-		getProgramArea().removeBlock(block, this);
-	}
-	
+
 	@Override
 	public int getAmountOfBlocksLeft() {
 		return getProgramArea().getBlocksLeft();
@@ -210,11 +190,6 @@ public class GameController implements FacadeGameController{
 	public void setCondition(SurroundingBlock surroundingBlock, ConditionBlock condition) {
 		BF.setConditionBlock(surroundingBlock, condition);
 		getProgramArea().removeTopLevelBlock(condition);
-	}
-	
-	@Override
-	public ExecutionCommand getExecutionCommand() {
-		return getProgramArea().getExecutionCommand();
 	}
 	
 	@Override
