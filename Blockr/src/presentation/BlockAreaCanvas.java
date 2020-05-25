@@ -73,13 +73,16 @@ public class BlockAreaCanvas extends Canvas {
 	 * 		   panel to attach this blockAreaCanvas to.
 	 * @param  iGameWorld
 	 * 		   Interface used by the panel.
-	 * @param GC 
+	 * @param  GC 
+	 * 		   The GameController used by the panel.
 	 * @post   The Palette Presentation is set to a new Palette Presentation with 
 	 * 		   the given GameWorld Facade.
 	 * 		   | new.PaletteP = new PalettePresentation(iGameWorld)
 	 * @post   The ProgramArea Presentation is set to a new ProgramArea Presentation
 	 * 		    with the GameController from the given BlockrPanel.
 	 * 		   | new.programAreaP = new ProgramAreaPresentation(blockrPanel.getGameController())
+	 * @post   The GameController is equal to the given GC.
+	 * 		   | new.GC == GC
 	 * @post   The GameWorld Implementation is equal to the given iGameWorld.
 	 * 		   | new.iGameWorld == iGameWorld
 	 * @post   A snapshot of the given GameWorld is saved.
@@ -91,7 +94,7 @@ public class BlockAreaCanvas extends Canvas {
 	 * @effect A MouseEventListener is set to this class. 
 	 */
 	public BlockAreaCanvas(BlockrPanel blockrPanel, FacadeGameWorld iGameWorld, GameController GC) {
-		this.GC = GC; //TODO:doc
+		this.GC = GC;
 		this.paletteP = new PalettePresentation(iGameWorld);
 		this.programAreaP = new ProgramAreaPresentation(blockrPanel.getGameController());
 		this.iGameWorld = iGameWorld;
