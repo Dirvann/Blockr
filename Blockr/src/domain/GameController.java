@@ -36,6 +36,8 @@ public class GameController implements FacadeGameController{
 	/**
 	 * Initialize a new GameController with a new ProgramArea and
 	 * a new instance of the gameWorld.
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 * 
 	 * @post The ProgramArea of this GameController is a new ProgramArea
 	 * 		 | new.getProgramArea = new ProgramArea()
@@ -43,14 +45,9 @@ public class GameController implements FacadeGameController{
 	 * 		 | new.getGameWorldImplementation = FacadeGameWorld.newInstance(ClientMainClass.getImplementationClass())
 	 */
 	
-	public GameController() { //TODO:exceptions zijn hier weggehaald
+	public GameController() throws InstantiationException, IllegalAccessException {
 		this.programArea = new ProgramArea();
-		try {
-			this.iGameWorld = FacadeGameWorld.newInstance(BlockrPanel.getImplementationClass());
-		} catch (InstantiationException | IllegalAccessException e) {
-			// TODO fix dit
-			e.printStackTrace();
-		}
+		this.iGameWorld = FacadeGameWorld.newInstance(BlockrPanel.getImplementationClass());
 	}
 	/**
 	 * Initialize a new GameController with a new ProgramArea and
