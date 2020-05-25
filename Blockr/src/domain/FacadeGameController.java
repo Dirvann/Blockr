@@ -14,7 +14,7 @@ import presentation.block.PresentationBlock;
 /**
  * The Facade for the Implementation GameController class.
  * 
- * @version 3.0
+ * @version 4.0
  * @author Andreas Awouters
  * 		   Thomas Van Erum
  * 		   Dirk Vanbeveren

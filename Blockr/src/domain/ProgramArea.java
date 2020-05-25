@@ -20,8 +20,11 @@ import presentation.block.PresentationBlock;
  * A class of ProgramArea that has a list of top level blocks. It also contains
  * the currently executed and next to execute blocks.
  *
- * @version 3.0
- * @author Andreas Awouters Thomas Van Erum Dirk Vanbeveren Geert Wesemael
+ * @version 4.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum 
+ * 		   Dirk Vanbeveren 
+ * 		   Geert Wesemael
  */
 public class ProgramArea {
 
@@ -41,7 +44,8 @@ public class ProgramArea {
 	/**
 	 * Creates a new ProgramArea
 	 * 
-	 * @post There are no top level blocks. | new.topLevelBlocks.size() == null
+	 * @post There are no top level blocks. 
+	 * 		 | new.topLevelBlocks.size() == null
 	 */
 	protected ProgramArea() {
 		this.topLevelBlocks = new ArrayList<Block>();
@@ -50,7 +54,8 @@ public class ProgramArea {
 	/**
 	 * The number of top level blocks
 	 * 
-	 * @return number of top level blocks | result = topLevelBlocks.size()
+	 * @return number of top level blocks 
+	 * 		   | result = topLevelBlocks.size()
 	 */
 	protected int nbTopLevelBlocks() {
 		return topLevelBlocks.size();
@@ -59,7 +64,8 @@ public class ProgramArea {
 	/**
 	 * Returns true if the program is running.
 	 * 
-	 * @return true if there is no next block to execute. | nextToExecute != null
+	 * @return true if there is no next block to execute. 
+	 * 		   | nextToExecute != null
 	 */
 	protected Boolean programInProgress() {
 		return nextToExecute != null;
@@ -69,35 +75,29 @@ public class ProgramArea {
 	 * Set the next block to execute to the top level block. This only works if
 	 * there is only one top level block and the block is a sequence block.
 	 * 
-	 * @post The next block to execute is the top level block |nextToExecute =
-	 *       topLevelBlocks.get(0)
-	 * @post There are no currently executed blocks if the program wasn't running |
-	 *       if (!programInProgress()) | then currentExe = null && exeCmd = null
+	 * @post The next block to execute is the top level block 
+	 * 		 |nextToExecute = topLevelBlocks.get(0)
+	 * @post There are no currently executed blocks if the program wasn't running 
+	 * 		 | if (!programInProgress()) 
+	 * 		 | then currentExe = null && exeCmd = null
 	 * @throws Exception When there is more than one top level block, the top level
 	 *                   block is not a sequence block or the top level block is not
 	 *                   a valid starting block.
 	 */
 	protected void startExecution() throws Exception {
-		// programInProgress() should in theory never return true, but it's there to
-		// make sure;
 		if (programInProgress()) {
 			return;
 		}
-
 		if (this.nbTopLevelBlocks() != 1) {
 			throw new NotOneStartingBlockException();
 		}
-
 		Block topLevelBlock = topLevelBlocks.get(0);
-
 		if (!(topLevelBlock instanceof SequenceBlock)) {
 			throw new CantRunConditionException();
 		}
-
 		if (!BF.isValidStartingBlock(topLevelBlock)) {
 			throw new BlockColumnNotExecutableException();
 		}
-
 		else {
 			nextToExecute = topLevelBlocks.get(0);
 			currentExe = null;
@@ -109,13 +109,14 @@ public class ProgramArea {
 	 * Execute the next block to execute and set the next/previous/current execute
 	 * to the right blocks.
 	 * 
-	 * @param gameController The gameController to execute the next function in.
-	 * @post The currently executed block is equal to the previous executed block.
-	 *       |new.previousExe = currentExe
-	 * @post The currently executed block is equal to the previous executed block.
-	 *       |new.currentExe = nextToExecute
-	 * @return The execution command of the executed command. | return =
-	 *         programArea.exeCmd
+	 * @param  gameController 
+	 * 		   The gameController to execute the next function in.
+	 * @post   The currently executed block is equal to the previous executed block.
+	 *         |new.previousExe = currentExe
+	 * @post   The currently executed block is equal to the previous executed block.
+	 *         |new.currentExe = nextToExecute
+	 * @return The execution command of the executed command. 
+	 * 		   | return = programArea.exeCmd
 	 * @throws Exception When execute is not possible.
 	 */
 	protected ExecutionCommand executeNextBlock(GameController GC) throws Exception {
@@ -140,7 +141,8 @@ public class ProgramArea {
 	/**
 	 * Stop the execution of the program.
 	 * 
-	 * @post There is no block to execute next. |nextToExecute == null
+	 * @post There is no block to execute next. 
+	 * 		 |nextToExecute == null
 	 */
 	protected void stopExecution() {
 		if (programInProgress()) {
@@ -155,11 +157,13 @@ public class ProgramArea {
 	 * Add a block to the top level blocks. The block is associated to the given
 	 * presentationBlock.
 	 * 
-	 * @param pBlock The given presentationblock.
-	 * @post The list of top level blocks contains the block associated to the given
-	 *       presentationblock | new.getTopBlocks().contains(BFP.getBlock(pBlock))
-	 * @post The amount of blocks left is lowered by one. | new.blocksLeft =
-	 *       blocksLeft - 1
+	 * @param pBlock 
+	 * 		  The given presentationblock.
+	 * @post  The list of top level blocks contains the block associated to the given
+	 *        presentationblock 
+	 *        | new.getTopBlocks().contains(BFP.getBlock(pBlock))
+	 * @post  The amount of blocks left is lowered by one. 
+	 * 		  | new.blocksLeft = blocksLeft - 1
 	 */
 	protected void addBlock(PresentationBlock<?> pBlock) {
 		Block block = BFP.getBlock(pBlock);
@@ -171,12 +175,13 @@ public class ProgramArea {
 	 * Remove a block from the top level blocks. The block is associated to the
 	 * given presentationBlock.
 	 * 
-	 * @param pBlock The given presentationblock.
-	 * @post The list of top level blocks does not contain the block associated to
-	 *       the given presentationblock |
-	 *       !new.getTopBlocks().contains(BFP.getBlock(pBlock))
-	 * @post One is added to the amount of blocks left. | new.blocksLeft =
-	 *       blocksLeft + 1
+	 * @param pBlock 
+	 * 		  The given presentationblock.
+	 * @post  The list of top level blocks does not contain the block associated to
+	 *        the given presentationblock 
+	 *        | !new.getTopBlocks().contains(BFP.getBlock(pBlock))
+	 * @post One is added to the amount of blocks left. 
+	 * 		  | new.blocksLeft = blocksLeft + 1
 	 */
 	protected void removeBlock(Block block,GameController GC) {
 		BF.disconnect(block);
@@ -201,9 +206,10 @@ public class ProgramArea {
 	/**
 	 * Add the given block to the list of top level blocks.
 	 * 
-	 * @param block The block to add to topLevelBlocks.
-	 * @post The list of top level blocks contains the given block |
-	 *       new.getTopBlocks().contains(block)
+	 * @param block
+	 * 		  The block to add to topLevelBlocks.
+	 * @post  The list of top level blocks contains the given block 
+	 * 		  | new.getTopBlocks().contains(block)
 	 */
 	protected void addTopLevelBlock(Block block) {
 		try {
@@ -222,8 +228,8 @@ public class ProgramArea {
 	 * Remove the given block from the list of top level blocks.
 	 * 
 	 * @param block The block to remove from topLevelBlocks
-	 * @post The list of top level blocks does not contain the given block |
-	 *       !new.getTopBlocks().contains(block)
+	 * @post  The list of top level blocks does not contain the given block 
+	 * 		  | !new.getTopBlocks().contains(block)
 	 */
 	protected void removeTopLevelBlock(Block block) {
 		if (topLevelBlocks.contains(block)) {
@@ -234,9 +240,9 @@ public class ProgramArea {
 	/**
 	 * Check if the given block is a top level block.
 	 * 
-	 * @param block The block to check
+	 * @param  block The block to check
 	 * @return true if the list of top level blocks contains the given block.
-	 *         |topLevelBlocks.contains(block)
+	 *         | topLevelBlocks.contains(block)
 	 */
 	protected boolean isTopLevelBlock(Block block) {
 		return topLevelBlocks.contains(block);
@@ -310,8 +316,8 @@ public class ProgramArea {
 	 * Set the execution command to the given execution command.
 	 * 
 	 * @param exeCmd The execution command
-	 * @post The execution command is equal to the given execution command. |
-	 *       new.getExecutionCommand() = exeCmd
+	 * @post The execution command is equal to the given execution command. 
+	 * 		 | new.getExecutionCommand() = exeCmd
 	 */
 	protected void setExecutionCommand(ExecutionCommand exeCmd) {
 		this.exeCmd = exeCmd;
