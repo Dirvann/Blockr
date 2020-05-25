@@ -17,7 +17,6 @@ import command.ExecutionCommand;
  */
 public class ExecutionProcessor {
 
-	ImplementationGameController GCF = new ImplementationGameController();
 	int cursor;
 	ArrayList<ExecutionCommand> undoStack = new ArrayList<>();
 	int nbCommandsUndone;

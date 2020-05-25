@@ -1,7 +1,6 @@
 package command;
 
 import domain.GameController;
-import domain.ImplementationGameController;
 import domain.block.ImplementationBlock;
 import presentation.block.PresentationBlock;
 
@@ -18,7 +17,6 @@ public class MakeBlock implements Command {
 	 */
 	GameController GC;
 	PresentationBlock<?> block;
-	ImplementationGameController GCF = new ImplementationGameController();
 	ImplementationBlock BF = new ImplementationBlock();
 
 	/**
@@ -36,13 +34,13 @@ public class MakeBlock implements Command {
 
 	@Override
 	public void execute() {
-		GCF.addBlockToProgramArea(GC, block);
+		GC.addBlockToProgramArea(block);
 
 	}
 
 	@Override
 	public void undo() {
-		GCF.removeBlockFromProgramArea(GC, block);
+		GC.removeBlockFromProgramArea(block);
 
 	}
 

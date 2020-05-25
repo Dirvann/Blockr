@@ -5,7 +5,6 @@ import java.util.List;
 
 import command.Command;
 import domain.GameController;
-import domain.ImplementationGameController;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
 import domain.Vector;
@@ -27,8 +26,7 @@ public class ProgramAreaPresentation {
 	
 	private ImplementationPresentationBlock BFP = new ImplementationPresentationBlock();
 	private ImplementationBlock BF = new ImplementationBlock();
-	private ImplementationGameController GC = new ImplementationGameController();
-	private GameController gameController;
+	private GameController GC;
 	
 	/**
 	 * Create a new instance of ProgramAreaPresentation
@@ -37,7 +35,7 @@ public class ProgramAreaPresentation {
 	 * 		  | gameController that will handle action executions
 	 */
 	public ProgramAreaPresentation(GameController gameController) {
-		this.gameController = gameController;
+		this.GC = gameController;
 	}
 	
 	/**
@@ -47,7 +45,7 @@ public class ProgramAreaPresentation {
 	 * 	      | Graphics object to draw the programArea on
 	 */
 	public void paint(Graphics g) {
-		List<Block> programAreaBlocks = GC.getCopyOfAllBlocks(gameController);
+		List<Block> programAreaBlocks = GC.getCopyOfAllBlocks();
 		for (Block pBlock: programAreaBlocks) {
 			BFP.draw(g, BF.getPresentationBlock(pBlock));
 		}
@@ -64,7 +62,7 @@ public class ProgramAreaPresentation {
 	 * 	      | null if no block exists at given position
 	 */
 	public PresentationBlock<?> getBlockAtPosition(Vector position) {
-		for (Block block:  GC.getCopyOfAllBlocks(gameController)) {
+		for (Block block:  GC.getCopyOfAllBlocks()) {
 			if (BFP.collidesWithPosition(position, BF.getPresentationBlock(block))) {
 				return BF.getPresentationBlock(block);
 			}
@@ -82,9 +80,9 @@ public class ProgramAreaPresentation {
 	 */
 	public Command snapBlock(PresentationBlock<?> block){
 		Command cmd = null;
-		for (Block blockListElement:  GC.getCopyOfAllBlocks(gameController)) {
+		for (Block blockListElement:  GC.getCopyOfAllBlocks()) {
 			PresentationBlock<?> pBlock = BF.getPresentationBlock(blockListElement);
-			cmd = BFP.canSnap(pBlock, block, this.gameController);
+			cmd = BFP.canSnap(pBlock, block, this.GC);
 			if (cmd != null) {
 				return cmd;
 			}

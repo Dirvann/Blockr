@@ -23,36 +23,42 @@ import presentation.block.PresentationBlock;
  */
 public interface FacadeGameController {
 	
-	public GameController makeGameController(FacadeGameWorld iGameWorld);
-	public GameController makeGameController() throws InstantiationException, IllegalAccessException;
+//	public GameController makeGameController(FacadeGameWorld iGameWorld);
+//	public GameController makeGameController() throws InstantiationException, IllegalAccessException;
+//	
+//	public void setGameWorldImplementation(GameController gameController, FacadeGameWorld iGameWorld);
+	public FacadeGameWorld getGameWorldImplementation();
+	public ProgramArea getProgramArea();
 	
-	public void setGameWorldImplementation(GameController gameController, FacadeGameWorld iGameWorld);
-	public FacadeGameWorld getGameWorldImplementation(GameController gameController);
-	public ProgramArea getProgramArea(GameController gameController);
-	
-	public void addBlockToProgramArea(GameController gameController,PresentationBlock<?> pBlock);
-	public void removeBlockFromProgramArea(GameController gameController,PresentationBlock<?> pBlock);
-	
-	public List<Block> getCopyOfAllBlocks(GameController gameController);
+	public void addBlockToProgramArea(PresentationBlock<?> pBlock);
+	public void removeBlockFromProgramArea(PresentationBlock<?> pBlock);
+	public void removeBlockFromProgramArea(ProgramArea pa, Block block);
+	public void setGameWorldImplementation(FacadeGameWorld iGameWorld);
 
-	public ExecutionCommand execute(GameController gameController) throws Exception;
-	public Boolean isExecuting(GameController GC);
-	public void stopExecution(GameController gameController);
 	
-	public int getAmountOfBlocksLeft(GameController gameController);
+	public List<Block> getCopyOfAllBlocks();
+
+	public ExecutionCommand execute() throws Exception;
+	public Boolean isExecuting();
+	public void stopExecution();
+	
+	public int getAmountOfBlocksLeft();
 	
 	//functions for connecting and disconnecting blocks
-	public void disconnect(Block block, GameController gamecontroller);
-	public boolean connect(Block firstBlock, Block secondBlock, GameController GC);
-	public void setBody(SurroundingBlock surroundingBlock, SequenceBlock block, GameController GC);
-	public void setBody(FunctionDefinition surroundingBlock, SequenceBlock block, GameController GC);
-	public void setCondition(SurroundingBlock surroundingBlock, ConditionBlock condition, GameController GC);
+	public void disconnect(Block block);
+	public boolean connect(Block firstBlock, Block secondBlock);
+	public boolean connect(Block firstBlock, Block secondBlock, ProgramArea pa);
+	public void setBody(SurroundingBlock surroundingBlock, SequenceBlock block);
+	public void setBody(FunctionDefinition surroundingBlock, SequenceBlock block);
+	public void setBody(SurroundingBlock surroundingBlock, SequenceBlock block, ProgramArea pa);
+	public void setBody(FunctionDefinition funct, SequenceBlock block, ProgramArea pa);
+	public void setCondition(SurroundingBlock surroundingBlock, ConditionBlock condition);
 	
 	//execution info for undo redo and manipulation of execution
-	public Block getNextBlockToExecute(GameController gameController);
-	public ExecutionCommand getExecutionCommand(GameController GC);
-	public void setExecutionCommand(ExecutionCommand exeCmd, GameController GC);
-	public void setNewExecution(Block currentlyExecuted, Block nextToExecute, GameController GC);
-	public void disconnect(Block block, ProgramArea programArea);
-	public List<FunctionCall> getAllFunctionCallsOfID(int ID, ProgramArea programarea);
+	public Block getNextBlockToExecute();
+	public ExecutionCommand getExecutionCommand();
+	public void setExecutionCommand(ExecutionCommand exeCmd);
+	public void setNewExecution(Block currentlyExecuted, Block nextToExecute);
+	public void disconnect(Block block, ProgramArea pa);
+	public List<FunctionCall> getAllFunctionCallsOfID(int ID, ProgramArea pa);
 }

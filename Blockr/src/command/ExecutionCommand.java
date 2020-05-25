@@ -1,7 +1,6 @@
 package command;
 
 import domain.GameController;
-import domain.ImplementationGameController;
 import domain.block.Block;
 /**
  * A class that holds all the information about the execution by a block
@@ -14,7 +13,6 @@ import domain.block.Block;
  *
  */
 public class ExecutionCommand {
-	protected ImplementationGameController GCF = new ImplementationGameController();
 	protected Block previouslyExecuted;
 	protected Block currentlyExecuted;
 	protected Block nextToExecute;
@@ -46,7 +44,7 @@ public class ExecutionCommand {
 	 * @Post all of the changes made by executing this command will be undone.
 	 */
 	public void undo() {
-		GCF.setNewExecution(previouslyExecuted, currentlyExecuted, GC);
+		GC.setNewExecution(previouslyExecuted, currentlyExecuted);
 	}
 
 	/**
@@ -56,7 +54,7 @@ public class ExecutionCommand {
 	 */
 	public void execute() {
 		try {
-			GCF.execute(GC);
+			GC.execute();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

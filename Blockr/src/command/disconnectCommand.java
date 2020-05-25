@@ -1,7 +1,6 @@
 package command;
 
 import domain.GameController;
-import domain.ImplementationGameController;
 import domain.block.Block;
 import domain.block.ConditionBlock;
 import domain.block.FunctionDefinition;
@@ -32,7 +31,6 @@ public class disconnectCommand implements Command {
 	FunctionDefinition function;
 
 	SurroundingBlock surroundingBlock;
-	ImplementationGameController GCF = new ImplementationGameController();
 
 	/**
 	 * Makes a disconnect block Commmand. This Command includes all of the info
@@ -54,19 +52,19 @@ public class disconnectCommand implements Command {
 
 	@Override
 	public void execute() {
-		GCF.disconnect(blockToDisconnect, GC);
+		GC.disconnect(blockToDisconnect);
 	}
 
 	@Override
 	public void undo() {
 		if (canReconnectPreviousAndCurrentBlock()) {
-			GCF.connect(blockToDisconnectTo, blockToDisconnect, GC);
+			GC.connect(blockToDisconnectTo, blockToDisconnect);
 		}
 		else if (surroundingBlock != null) {
-			GCF.setBody(surroundingBlock, (SequenceBlock) blockToDisconnect, GC);
+			GC.setBody(surroundingBlock, (SequenceBlock) blockToDisconnect);
 		}
 		else {
-			GCF.setBody(function, (SequenceBlock) blockToDisconnect, GC);
+			GC.setBody(function, (SequenceBlock) blockToDisconnect);
 		}
 
 	}

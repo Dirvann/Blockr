@@ -2,7 +2,6 @@ package domain.block;
 
 import command.ActionBlockCommand;
 import domain.GameController;
-import domain.ImplementationGameController;
 import game_world.api.Action;
 import game_world.api.ActionResult;
 import game_world.api.FacadeGameWorld;
@@ -48,12 +47,10 @@ public class ActionBlock extends SequenceBlock{
 		if (GC == null) 
 			System.out.println(this.name);
 		else {
-
-			ImplementationGameController GCF = new ImplementationGameController();
-			FacadeGameWorld iGameWorld = GCF.getGameWorldImplementation(GC);
+			FacadeGameWorld iGameWorld = GC.getGameWorldImplementation();
 			ActionResult result = iGameWorld.executeAction(action);
 			if (result == ActionResult.Illegal) throw new Exception("illegal move");
-			IGC.setExecutionCommand(new ActionBlockCommand(null, null, null, GC), GC);
+			GC.setExecutionCommand(new ActionBlockCommand(null, null, null, GC));
 		}
 	}
 	
@@ -66,7 +63,6 @@ public class ActionBlock extends SequenceBlock{
 
 	@Override
 	protected Block getNewBlockOfThisType() {
-		// TODO Auto-generated method stub
 		return new ActionBlock(action);
 	}
 

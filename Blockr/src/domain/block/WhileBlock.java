@@ -32,17 +32,16 @@ class WhileBlock extends SingleSurroundingBlock {
 	}
 	@Override
 	protected Block execute(GameController GC) throws Exception {
-		ImplementationGameController IGC = new ImplementationGameController();
 		if (getConditionBlock() == null || !getConditionBlock().isValidCondition()) {
 			throw new NoConditionBlockException();
 		}
-		if (getConditionBlock().evaluate(IGC.getGameWorldImplementation(GC))) {
+		if (getConditionBlock().evaluate(GC.getGameWorldImplementation())) {
 			if (this.getBodyBlock() == null) throw new InfiniteLoopWhileException();
 			
-			IGC.setExecutionCommand(new ExecutionCommand(null, null, null, GC), GC);
+			GC.setExecutionCommand(new ExecutionCommand(null, null, null, GC));
 			return this.getBodyBlock();
 		}
-		IGC.setExecutionCommand(new ExecutionCommand(null, null, null, GC), GC);
+		GC.setExecutionCommand(new ExecutionCommand(null, null, null, GC));
 		
 		
 		return this.getNextToExecute();

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.GameController;
-import domain.ImplementationGameController;
 import domain.block.FunctionCall;
 import domain.block.FunctionDefinition;
 import domain.block.ImplementationBlock;
@@ -26,7 +25,6 @@ public class DeleteFunctionDefinition implements Command {
 	GameController GC;
 	PresentationBlock<FunctionDefinition> definition;
 	List<DeleteCallerCommand> deletionCommandsOfCalls;
-	ImplementationGameController GCF = new ImplementationGameController();
 	ImplementationBlock BF = new ImplementationBlock();
 	ImplementationPresentationBlock BFP = new ImplementationPresentationBlock();
 	PalettePresentation palette;
@@ -46,7 +44,7 @@ public class DeleteFunctionDefinition implements Command {
 		this.palette = palette;
 		this.deletionCommandsOfCalls = new ArrayList<DeleteCallerCommand>();
 		FunctionDefinition defBlock = (FunctionDefinition) BFP.getBlock(definition);
-		List<FunctionCall> functionCalls = GCF.getAllFunctionCallsOfID(BF.getID(defBlock), GCF.getProgramArea(GC));
+		List<FunctionCall> functionCalls = GC.getAllFunctionCallsOfID(BF.getID(defBlock), GC.getProgramArea());
 		for (FunctionCall functionCall : functionCalls) {
 			deletionCommandsOfCalls.add(new DeleteCallerCommand(GC, functionCall));
 		}
@@ -55,7 +53,7 @@ public class DeleteFunctionDefinition implements Command {
 
 	@Override
 	public void execute() {
-		GCF.removeBlockFromProgramArea(GC, definition);
+		GC.removeBlockFromProgramArea(definition);
 
 		int ID = BF.getID((FunctionDefinition) BFP.getBlock(definition));
 		palette.removeFunctionCallWithIDFromList(ID);
@@ -68,7 +66,7 @@ public class DeleteFunctionDefinition implements Command {
 		for(int i = deletionCommandsOfCalls.size() - 1; i >= 0; i--) {
 			deletionCommandsOfCalls.get(i).undo();
 		}
-		GCF.addBlockToProgramArea(GC, definition);
+		GC.addBlockToProgramArea(definition);
 
 		palette.addFunctionCallToPalette((FunctionDefinition) BFP.getBlock(definition));
 	}

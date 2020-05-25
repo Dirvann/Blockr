@@ -1,7 +1,6 @@
 package command;
 
 import domain.GameController;
-import domain.ImplementationGameController;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
 /**
@@ -25,7 +24,6 @@ public class ConnectCommand implements Command {
 	Block nextBlock;
 	// The gamecontroller wher the blocks exist
 	GameController GC;
-	ImplementationGameController GCF = new ImplementationGameController();
 
 	/**
 	 * Makes a new command consisting of all of the information to undo and redo
@@ -48,14 +46,14 @@ public class ConnectCommand implements Command {
 
 	@Override
 	public void execute() {
-		GCF.connect(blockToConnectTo, blockToConnect, GC);
+		GC.connect(blockToConnectTo, blockToConnect);
 	}
 
 	@Override
 	public void undo() {
-		GCF.disconnect(blockToConnect, GC);
-		GCF.disconnect(nextBlock, GC);
-		GCF.connect(blockToConnectTo, nextBlock, GC);
+		GC.disconnect(blockToConnect);
+		GC.disconnect(nextBlock);
+		GC.connect(blockToConnectTo, nextBlock);
 	}
 
 }

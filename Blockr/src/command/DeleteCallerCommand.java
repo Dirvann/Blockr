@@ -1,7 +1,6 @@
 package command;
 
 import domain.GameController;
-import domain.ImplementationGameController;
 import domain.block.FunctionCall;
 import domain.block.FunctionDefinition;
 import domain.block.ImplementationBlock;
@@ -22,7 +21,6 @@ import presentation.block.PresentationBlock;
 public class DeleteCallerCommand implements Command {
 	GameController GC;
 	FunctionCall caller;
-	ImplementationGameController GCF = new ImplementationGameController();
 	ImplementationBlock BF = new ImplementationBlock();
 	SequenceBlock previous;
 	SequenceBlock next;
@@ -49,23 +47,23 @@ public class DeleteCallerCommand implements Command {
 
 	@Override
 	public void execute() {
-		BF.deleteFunctionCall(caller, GCF.getProgramArea(GC));
+		BF.deleteFunctionCall(caller, GC.getProgramArea());
 	}
 
 	@Override
 	public void undo() {
 		if (previous != null) {
-			GCF.connect(previous, caller, GC);
+			GC.connect(previous, caller);
 		}
 		else if (surroundingBlock != null) {
-			GCF.setBody(surroundingBlock, caller, GC);
+			GC.setBody(surroundingBlock, caller);
 		}
 		else if (function != null) {
-			GCF.setBody(function, caller, GC);
+			GC.setBody(function, caller);
 		}
 		else {
-			GCF.addBlockToProgramArea(GC, BF.getPresentationBlock(caller));
-			GCF.connect(caller, next, GC);
+			GC.addBlockToProgramArea(BF.getPresentationBlock(caller));
+			GC.connect(caller, next);
 		}
 
 	}
