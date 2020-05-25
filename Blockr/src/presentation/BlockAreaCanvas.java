@@ -49,7 +49,6 @@ public class BlockAreaCanvas extends Canvas {
 	private FacadeGameWorld iGameWorld;
 	private GameController GC;
 
-	private BlockrPanel blockrPanel;
 	private PresentationBlock<?> selectedBlock = null;
 	private String errorMessage = "";
 
@@ -70,7 +69,7 @@ public class BlockAreaCanvas extends Canvas {
 	 * Initialize the BlockAreaCanvas with the given Blockr Panel and Gameworld Facade.
 	 * 
 	 * @param  blockrPanel
-	 * 		   panel to attach this blockAreaCanvas to.
+	 * 		   The panel to attach this blockAreaCanvas to.
 	 * @param  iGameWorld
 	 * 		   Interface used by the panel.
 	 * @post   The Palette Presentation is set to a new Palette Presentation with 
@@ -85,8 +84,6 @@ public class BlockAreaCanvas extends Canvas {
 	 * 		   | new.iGameWorld == iGameWorld
 	 * @post   A snapshot of the given GameWorld is saved.
 	 * 		   | new.startSnapshot == iGameWorld.makeSnapshot()
-	 * @post   The BlockrPanel is equal to the given blockrPanel.
-	 * 		   | new.blockrPanel == blockrPanel
 	 * @post   The error message is equal to "The error message will appear here!"
 	 * 		   | new.errorMessage == "The error message will appear here!"
 	 * @effect A MouseEventListener is set to this class. 
@@ -97,7 +94,6 @@ public class BlockAreaCanvas extends Canvas {
 		this.programAreaP = new ProgramAreaPresentation(blockrPanel.getGameController());
 		this.iGameWorld = iGameWorld;
 		this.startSnapshot = iGameWorld.makeSnapshot();
-		this.blockrPanel = blockrPanel;
 		setErrorMessage("The error message will appear here!");
 		MouseEventListener mel = new MouseEventListener(this);
 		addMouseListener(mel);
