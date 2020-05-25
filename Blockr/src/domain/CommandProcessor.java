@@ -14,7 +14,7 @@ import presentation.block.PresentationBlock;
  * If a block is disconnected, dragged and again connected, this counts as one execution step.
  * It has a stack of the commands, the cursor and number of the undone commands.
  * 
- * @version 3.0
+ * @version 4.0
  * @author Andreas Awouters
  * 		   Thomas Van Erum
  * 		   Dirk Vanbeveren
@@ -56,10 +56,11 @@ public class CommandProcessor {
 	 * function makes sure that command is added to the undostack so this command
 	 * can be undone in the future.
 	 * 
-	 * @param command The new command that HAS BEEN executed.
-	 * @post The command will be added to the undoStack. If there were commands
-	 *       undone, they will be removed from the undoStack. command will be the
-	 *       top element of the undoStack.
+	 * @param command 
+	 * 		  The new command that HAS BEEN executed.
+	 * @post  The command will be added to the undoStack. If there were commands
+	 *        undone, they will be removed from the undoStack. command will be the
+	 *        top element of the undoStack.
 	 */
 	void executed(Command command) {
 		for (; nbCommandsUndone > 0; nbCommandsUndone--)
@@ -75,15 +76,20 @@ public class CommandProcessor {
 	 * undoStack.
 	 * 
 	 * @param oldPos
+	 * 		  The previous position of the mouse.
 	 * @param newPos
+	 * 		  The current position of the mouse.
 	 * @param block
-	 * @param preCommand  The command that has been executed before the block has
-	 *                    been dragged. This can be making a block or disconnecting.
-	 * @param postCommand The command that has been executed after the block is
-	 *                    released. This can be deleting or connecting a block.
-	 * @post a new command will be made and added to the undoStack. This command
-	 *       will hold the information of the preCommand, draggingCommand and
-	 *       postCommand.
+	 * 		  The block that is bein dragged
+	 * @param preCommand  
+	 * 		  The command that has been executed before the block has
+	 *        been dragged. This can be making a block or disconnecting.
+	 * @param postCommand 
+	 * 		  The command that has been executed after the block is
+	 *        released. This can be deleting or connecting a block.
+	 * @post  A new command will be made and added to the undoStack. This command
+	 *        will hold the information of the preCommand, draggingCommand and
+	 *        postCommand.
 	 */
 	public void dragCommand(Vector oldPos, Vector newPos, PresentationBlock<?> block, Command preCommand,
 			Command postCommand) {
