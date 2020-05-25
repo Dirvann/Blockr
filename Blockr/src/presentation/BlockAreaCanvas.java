@@ -29,7 +29,7 @@ import presentation.block.PresentationBlock;
  * Canvas used to draw the program blocks on. Also contains logic to handle
  * mouse and key presses.
  * 
- * @version 3.0
+ * @version 4.0
  * @author Andreas Awouters 
  * 	       Thomas Van Erum 
  * 		   Dirk Vanbeveren 
@@ -73,16 +73,14 @@ public class BlockAreaCanvas extends Canvas {
 	 * 		   panel to attach this blockAreaCanvas to.
 	 * @param  iGameWorld
 	 * 		   Interface used by the panel.
-	 * @param  GC 
-	 * 		   The GameController used by the panel.
 	 * @post   The Palette Presentation is set to a new Palette Presentation with 
 	 * 		   the given GameWorld Facade.
 	 * 		   | new.PaletteP = new PalettePresentation(iGameWorld)
 	 * @post   The ProgramArea Presentation is set to a new ProgramArea Presentation
 	 * 		    with the GameController from the given BlockrPanel.
 	 * 		   | new.programAreaP = new ProgramAreaPresentation(blockrPanel.getGameController())
-	 * @post   The GameController is equal to the given GC.
-	 * 		   | new.GC == GC
+	 * @post   The GameController is equal to the GameController of the given blockrPanel.
+	 * 		   | new.GC == blockrPanel.getGameController()
 	 * @post   The GameWorld Implementation is equal to the given iGameWorld.
 	 * 		   | new.iGameWorld == iGameWorld
 	 * @post   A snapshot of the given GameWorld is saved.
@@ -93,8 +91,8 @@ public class BlockAreaCanvas extends Canvas {
 	 * 		   | new.errorMessage == "The error message will appear here!"
 	 * @effect A MouseEventListener is set to this class. 
 	 */
-	public BlockAreaCanvas(BlockrPanel blockrPanel, FacadeGameWorld iGameWorld, GameController GC) {
-		this.GC = GC;
+	public BlockAreaCanvas(BlockrPanel blockrPanel, FacadeGameWorld iGameWorld) {
+		this.GC = blockrPanel.getGameController();
 		this.paletteP = new PalettePresentation(iGameWorld);
 		this.programAreaP = new ProgramAreaPresentation(blockrPanel.getGameController());
 		this.iGameWorld = iGameWorld;
@@ -159,7 +157,7 @@ public class BlockAreaCanvas extends Canvas {
 	 * @post   The execution is stopped if the mouse is located where
 	 * 		   a Palette Block or Program Block is located.
 	 * 		   |if (paletteBlock on mouse position != null
-	 * 		   |    && GC.getAmountOfBlocksLeft(blockrPanel.getGameController()) > 0) 
+	 * 		   |    && GC.getAmountOfBlocksLeft() > 0) 
 	 * 		   |    || programBlock on mouse position != null)
 	 * 		   |then stopExecution()
 	 * @post   The previousMousePosition is the current position.
@@ -170,7 +168,7 @@ public class BlockAreaCanvas extends Canvas {
 	 * 		   and add it to the programArea if there are enough
 	 * 		   blocks left.
 	 * 		   |if (paletteBlock Presentation on mouse position != null
-	 * 		   |    && GC.getAmountOfBlocksLeft(blockrPanel.getGameController()) > 0))
+	 * 		   |    && GC.getAmountOfBlocksLeft() > 0))
 	 * 		   |then copyPaletteBlockIntoProgramArea(paletteBlockP)
 	 * @effect Pick the presentation block up where the mouse is located.
 	 * 		   |if programBlock Presentation on mouse position != null
@@ -216,19 +214,19 @@ public class BlockAreaCanvas extends Canvas {
 	 * @effect A copy of the given paletteBlockP is added to the ProgramArea, 
 	 * 		   the action is then saved as a preCommand.
 	 * 		   If the given paletteBlockP is a FunctionDefinition PresentationBlock then
-	 * 		   | preCommand = new MakeFunctionCommand(blockrPanel.getGameController(), presentationCopy, paletteP)
+	 * 		   | preCommand = new MakeFunctionCommand(GC, presentationCopy, paletteP)
 	 * 		   Otherwise
-	 * 		   | preCommand = new MakeBlock(blockrPanel.getGameController(), presentationCopy)
+	 * 		   | preCommand = new MakeBlock(GC, presentationCopy)
 	 */
 	private void copyPaletteBlockIntoProgramArea(PresentationBlock<?> paletteBlockP) {
 		PresentationBlock<?> presentationCopy = BFP.makeCopy(paletteBlockP);
 		selectedBlock = presentationCopy;
 		if (presentationCopy instanceof FunctionDefinitionBlockPresentation) {
 			paletteP.addFunctionCallToPalette((FunctionDefinition) BFP.getBlock(presentationCopy));
-			this.preCommand = new MakeFunctionCommand(blockrPanel.getGameController(), (FunctionDefinitionBlockPresentation) presentationCopy, paletteP);
+			this.preCommand = new MakeFunctionCommand(GC, (FunctionDefinitionBlockPresentation) presentationCopy, paletteP);
 		}
 		else {
-			this.preCommand = new MakeBlock(blockrPanel.getGameController(), presentationCopy);
+			this.preCommand = new MakeBlock(GC, presentationCopy);
 		}
 		GC.addBlockToProgramArea(presentationCopy);
 		this.oldPos = BFP.getPosition(presentationCopy);
@@ -247,11 +245,11 @@ public class BlockAreaCanvas extends Canvas {
 	 *		   |new.oldPos == BFP.getPosition(programBlockP)
 	 * @effect The selected block is disconnected if possible, the action is then
 	 * 		   saved as a preCommand.
-	 * 		   | preCommand = new disconnectCommand(BFP.getBlock(programBlockP), blockrPanel.getGameController())
+	 * 		   | preCommand = new disconnectCommand(BFP.getBlock(programBlockP),GC)
 	 */
 	private void pickBlockUpFromProgramArea(PresentationBlock<?> programBlockP) {
 		selectedBlock = programBlockP;
-		this.preCommand = new disconnectCommand(BFP.getBlock(programBlockP), blockrPanel.getGameController());
+		this.preCommand = new disconnectCommand(BFP.getBlock(programBlockP), GC);
 		GC.disconnect(BFP.getBlock(selectedBlock));
 		this.oldPos = BFP.getPosition(programBlockP);
 	}
@@ -354,19 +352,19 @@ public class BlockAreaCanvas extends Canvas {
 	 * @post   If the selectedBlock is a FunctionDefinition Block Presentation then there are no FunctionCalls
 	 * 		   with the same ID as the selectedBlock in the ProgramArea.
 	 * 		   | if selectedBlock instanceof FunctionDefinitionBlockPresentation
-	 * 		   | then 0 ==  GC.getAllFunctionCallsOfID(blockrPanel.getGameController().getProgramArea(),selectedBlock.ID) TODO: is deze lijn commentaar correct?
+	 * 		   | then 0 ==  GC.getAllFunctionCallsOfID(ID of slectedBlock).size()
 	 * @effect The selected block is removed if possible, the action is then
 	 * 		   saved as a postCommand.
-	 * 		   | postCommand = new DeleteBlock(blockrPanel.getGameController(), selectedBlock)
-	 * 		   | OR postCommand = new DeleteFunctionDefinition(blockrPanel.getGameController(),selectedBlock)
+	 * 		   | postCommand = new DeleteBlock(GC, selectedBlock)
+	 * 		   | OR postCommand = new DeleteFunctionDefinition(GC,selectedBlock)
 	 */
 	private void removeSelectedBlockFromProgramArea() {
 		this.newPos = BFP.getPosition(selectedBlock);
 		if (selectedBlock instanceof FunctionDefinitionBlockPresentation) {
-			this.postCommand = new DeleteFunctionDefinition(blockrPanel.getGameController(), (FunctionDefinitionBlockPresentation) selectedBlock, paletteP);
+			this.postCommand = new DeleteFunctionDefinition(GC, (FunctionDefinitionBlockPresentation) selectedBlock, paletteP);
 			paletteP.removeFunctionCallFromPalette((FunctionDefinition) BFP.getBlock(selectedBlock));
 		} else {
-			this.postCommand = new DeleteBlock(blockrPanel.getGameController(), selectedBlock);
+			this.postCommand = new DeleteBlock(GC, selectedBlock);
 		}
 		GC.removeBlockFromProgramArea(selectedBlock);
 	}
@@ -392,7 +390,7 @@ public class BlockAreaCanvas extends Canvas {
 	 * @param key
 	 * 		  KeyEvent to be handled.
 	 * @post  When the keycode was equal to escape or F4, the game is not running.
-	 * 		 | !GC.isExecuting(blockrPanel.getGameController())
+	 * 		 | !GC.isExecuting()
 	 * @post The GameWorld is equal to the GameWorld from the startSnapshot.
 	 * 		 | new.iGameWorld.makeSnapshot() == startSnapshot
 	 * @effect When the keycode is equal to F5 then run()
@@ -448,7 +446,7 @@ public class BlockAreaCanvas extends Canvas {
 	 * 		   | then new.errorMessage == 
 	 * 		   |      "congratiolations!! You have beaten this level! \n Press F6 to start a new one. "
 	 * @effect Execute the highlighted block and add the step to the Execution Processor.
-	 * 		   | exe.addExecutionStep(GC.execute(blockrPanel.getGameController()))
+	 * 		   | exe.addExecutionStep(GC.execute())
 	 * @catch  Exception and set the message it as errorMessage.
 	 * 		   | setErrorMessage(exception.getMessage())
 	 */
@@ -477,7 +475,7 @@ public class BlockAreaCanvas extends Canvas {
 	 * @post   The GameControllers GameWorld Implementation is set to iGameWorld.
 	 * 		   | GC.getGameWorldImplementation == iGameWorld
 	 * @post   The game is not running.
-	 * 		   | !GC.isExecuting(blockrPanel.getGameController())
+	 * 		   | !GC.isExecuting()
 	 * @effect A new GameWorld is set for the iGameWorld.
 	 * 		   | iGameWorld.makeNewGameWorld()
 	 */
@@ -527,7 +525,7 @@ public class BlockAreaCanvas extends Canvas {
 	 * Stop the execution of the current program.
 	 * 
 	 * @post The game is not running.
-	 * 		 | !GC.isExecuting(blockrPanel.getGameController())
+	 * 		 | !GC.isExecuting()
 	 * @post The exe is set to a new ExecutionProcessor.
 	 * 		 | new.exe = new ExecutionProcessor()
 	 * @post The GameWorld is equal to the GameWorld from the startSnapshot.

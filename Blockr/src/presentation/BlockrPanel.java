@@ -62,7 +62,7 @@ public class BlockrPanel extends Panel {
 		int worldPanelWidth = (int) (this.getWidth() * worldProportion);
 		
 		// Add block Area Canvas
-		this.blockAreaC = new BlockAreaCanvas(this, iGameWorld,GC);
+		this.blockAreaC = new BlockAreaCanvas(this, iGameWorld);
 		this.add(blockAreaC);
 		blockAreaC.setBounds(0, 0, worldPanelStart, this.getHeight());
 		blockAreaC.setBackground(Color.WHITE);
