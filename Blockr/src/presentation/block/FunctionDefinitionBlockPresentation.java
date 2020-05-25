@@ -33,34 +33,13 @@ public class FunctionDefinitionBlockPresentation extends PresentationBlock<Funct
 	@Override
 	public void draw(Graphics gr) {
 		
-		Graphics2D g = (Graphics2D)gr;
-		g.setColor(Color.BLUE);
-		Vector pos = getPosition();
 		int height = getTotalHeight();
-		
-		Area top = new Area(new Rectangle(pos.getX(), pos.getY(), getBlockWidth(), getBlockHeight()));
-		// top bottom plug
-		top.subtract(new Area(new Rectangle(pos.getX() + getBlockSideWidth() + getBlockWidth()/2 - getPlugWidth()/2, pos.getY() + getBlockHeight() - getPlugHeight(), getPlugWidth(), getPlugHeight())));
-		g.fill(top);
-		
-		//???
-		g.fillRect(pos.getX() + getBlockWidth() - getPlugHeight(), pos.getY() + getBlockHeight()/2 + getPlugWidth()/2, getPlugHeight(), getBlockHeight()/2 - getPlugWidth()/2);
-		
-		// side
-		g.fillRect(pos.getX(), pos.getY() + getBlockHeight(), getBlockSideWidth(), height - 2 * getBlockHeight());
-		
-		// bottom
-		Area bottom = new Area(new Rectangle(pos.getX(), pos.getY() + height - getBlockHeight(), getBlockWidth(), getBlockHeight()));
-		g.fill(bottom);
-		
-		// bottom top plug
-		g.fillRect(pos.getX() + getBlockWidth()/2 - getPlugWidth()/2 + getBlockSideWidth(), pos.getY() - getPlugHeight() + height - getBlockHeight(), getPlugWidth(), getPlugHeight());
-		
-		
-		g.setColor(Color.BLACK);
-		g.setFont(getFont());
-		g.drawString(getPresentationName(), pos.getX(), pos.getY() + (int) (getBlockHeight() * 0.8));
-		
+		Vector pos = getPosition();
+		BlockDrawer b = new BlockDrawer(Color.CYAN, Color.BLACK);
+		b.drawBlock(gr, pos, false, true, false, false, false, true);
+		b.drawSide(gr, pos,height);
+		b.drawBlock(gr, pos.add(new Vector(0,height - getBlockHeight())), true, false, false, false, true, false);
+		b.drawString(gr, getPresentationName(), pos);
 		
 	}
 

@@ -20,16 +20,12 @@ public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
 	@Override
 	public void draw(Graphics gr) {
 		
-		Graphics2D g = (Graphics2D)gr;
-		g.setColor(Color.GREEN);
+		BlockDrawer b = new BlockDrawer(Color.GREEN, Color.BLACK);
+		
 		Vector pos = getPosition();
-		Area a = new Area(new Rectangle(pos.getX(), pos.getY(), PresentationBlock.getBlockWidth(), PresentationBlock.getBlockHeight()));
-		a.subtract(new Area(new Rectangle(pos.getX() + getBlockWidth()/2 - getPlugWidth()/2, pos.getY() + getBlockHeight() - getPlugHeight(), getPlugWidth(), getPlugHeight())));
-		g.fill(a);
-		g.fillRect(pos.getX() + getBlockWidth()/2 - getPlugWidth()/2, pos.getY() - getPlugHeight(), getPlugWidth(), getPlugHeight());
-		g.setColor(Color.BLACK);
-		g.setFont(getFont());
-		g.drawString(getPresentationName(),pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
+		
+		b.drawBlock(gr, pos, true, true, false, false, false, false);
+		b.drawString(gr, getPresentationName(), pos);
 	}
 
 //	@Override

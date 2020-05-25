@@ -19,11 +19,9 @@ public class SingleConditionBlockPresentation extends PresentationBlock<SingleCo
 	public void draw(Graphics g) {
 		g.setColor(Color.ORANGE);
 		Vector pos = getPosition();
-		g.fillRect(pos.getX(), pos.getY(), PresentationBlock.getBlockWidth(), PresentationBlock.getBlockHeight());
-		g.fillRect(pos.getX() - getPlugHeight(), pos.getY() + getBlockHeight()/2 - getPlugWidth()/2, getPlugHeight(), getPlugWidth());
-		g.setColor(Color.BLACK);
-		g.setFont(getFont());
-		g.drawString(getPresentationName(),pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
+		BlockDrawer b = new BlockDrawer(Color.ORANGE, Color.BLACK);
+		b.drawBlock(g, pos, false, false, false, true, false, false);
+		b.drawString(g, getPresentationName(), pos);
 	}
 
 //	@Override

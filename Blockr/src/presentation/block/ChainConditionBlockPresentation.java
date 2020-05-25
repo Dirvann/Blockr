@@ -21,16 +21,11 @@ public class ChainConditionBlockPresentation extends PresentationBlock<ChainCond
 	@Override
 	public void draw(Graphics gr) {
 		
-		Graphics2D g = (Graphics2D)gr;
-		g.setColor(Color.RED);
 		Vector pos = getPosition();
-		Area a = new Area(new Rectangle(pos.getX(), pos.getY(), PresentationBlock.getBlockWidth(), PresentationBlock.getBlockHeight()));
-		a.subtract(new Area(new Rectangle(pos.getX() + getBlockWidth() - getPlugHeight(), pos.getY() + getBlockHeight()/2 - getPlugWidth()/2, getPlugHeight(), getPlugWidth())));
-		g.fill(a);
-		g.fillRect(pos.getX() - getPlugHeight(), pos.getY() + getBlockHeight()/2 - getPlugWidth()/2, getPlugHeight(), getPlugWidth());
-		g.setColor(Color.BLACK);
-		g.setFont(getFont());
-		g.drawString(getPresentationName(),pos.getX(), pos.getY() + (int)(getBlockHeight() * 0.8));
+		BlockDrawer b = new BlockDrawer(Color.RED, Color.BLACK);
+		b.drawBlock(gr, pos, false, false, true, true, false, false);
+		
+		b.drawString(gr, getPresentationName(), pos);
 	}
 
 

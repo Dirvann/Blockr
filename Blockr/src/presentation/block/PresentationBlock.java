@@ -153,7 +153,7 @@ public abstract class PresentationBlock<T extends Block> {
 
 	protected abstract Vector getNextBlockPosition(PresentationBlock<?> presentationBlock);
 
-	protected int getBlockSideWidth() {
+	protected static int getBlockSideWidth() {
 		return blockSideWidth;
 	}
 
