@@ -5,8 +5,8 @@ import java.util.List;
 
 import command.ExecutionCommand;
 import domain.block.Block;
-import domain.block.FunctionCall;
-import domain.block.FunctionDefinition;
+import domain.block.FunctionCallBlock;
+import domain.block.FunctionDefinitionBlock;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
 import exceptions.domainExceptions.BlockColumnNotExecutableException;
@@ -27,7 +27,7 @@ public class ProgramArea {
 
 	private int blocksLeft = 15;
 	private List<Block> topLevelBlocks = new ArrayList<Block>();
-	private List<FunctionDefinition> functionBlocks = new ArrayList<FunctionDefinition>();
+	private List<FunctionDefinitionBlock> functionBlocks = new ArrayList<FunctionDefinitionBlock>();
 
 	protected Block nextToExecute = null;
 	// undo redo info
@@ -182,17 +182,17 @@ public class ProgramArea {
 		BF.disconnect(block);
 		blocksLeft += BF.getAllNextBlocks(block).size();
 
-		if (!(block instanceof FunctionDefinition)) {
+		if (!(block instanceof FunctionDefinitionBlock)) {
 			removeTopLevelBlock(block);
 		} else {
 			List<Block> blocksFunction = BF.getAllNextBlocks(block);
 			for (Block blockOfFunction : blocksFunction) {
-				if (blockOfFunction instanceof FunctionCall
-						&& BF.getID((FunctionCall) blockOfFunction) == BF.getID((FunctionDefinition) block)) {
+				if (blockOfFunction instanceof FunctionCallBlock
+						&& BF.getID((FunctionCallBlock) blockOfFunction) == BF.getID((FunctionDefinitionBlock) block)) {
 					blocksLeft--;
 				}
 			}
-			BF.RemoveFunctionBlock((FunctionDefinition) block, GC);
+			BF.RemoveFunctionBlock((FunctionDefinitionBlock) block, GC);
 			this.functionBlocks.remove(block);
 
 		}
@@ -208,8 +208,8 @@ public class ProgramArea {
 	protected void addTopLevelBlock(Block block) {
 		try {
 			if (!topLevelBlocks.contains(block) && !functionBlocks.contains(block)) {
-				if (block instanceof FunctionDefinition) {
-					functionBlocks.add((FunctionDefinition) block);
+				if (block instanceof FunctionDefinitionBlock) {
+					functionBlocks.add((FunctionDefinitionBlock) block);
 				} else
 					topLevelBlocks.add(block);
 			}
@@ -295,11 +295,11 @@ public class ProgramArea {
 		return exeCmd;
 	}
 
-	protected List<FunctionCall> getAllFunctionCallsWithID(int ID) {
-		List<FunctionCall> allCallers = new ArrayList<FunctionCall>();
+	protected List<FunctionCallBlock> getAllFunctionCallsWithID(int ID) {
+		List<FunctionCallBlock> allCallers = new ArrayList<FunctionCallBlock>();
 		for (Block block : this.getAllBlocks()) {
-			if (block instanceof FunctionCall && BF.getID((FunctionCall) block) == ID) {
-				allCallers.add((FunctionCall) block);
+			if (block instanceof FunctionCallBlock && BF.getID((FunctionCallBlock) block) == ID) {
+				allCallers.add((FunctionCallBlock) block);
 			}
 		}
 		return allCallers;

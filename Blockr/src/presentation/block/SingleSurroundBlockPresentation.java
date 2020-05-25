@@ -10,8 +10,8 @@ import java.util.List;
 
 import command.Command;
 import command.ConnectCommand;
-import command.addToBodyCommand;
-import command.setConditionCommand;
+import command.AddToBodyCommand;
+import command.SetConditionCommand;
 import domain.GameController;
 import domain.block.Block;
 import domain.block.ConditionBlock;
@@ -124,11 +124,11 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 		
 		if (canSnapToCondition(b)) {
 			GC.setCondition(getBlock(), (ConditionBlock) b.getBlock());
-			return new setConditionCommand(getBlock(), (ConditionBlock) b.getBlock(), condition, GC);
+			return new SetConditionCommand(getBlock(), (ConditionBlock) b.getBlock(), condition, GC);
 		}
 		if (canSnapToBody(b)) {
 			GC.setBody(getBlock(), (SequenceBlock) b.getBlock());
-			return new addToBodyCommand(getBlock(), (SequenceBlock) b.getBlock(), body, GC);
+			return new AddToBodyCommand(getBlock(), (SequenceBlock) b.getBlock(), body, GC);
 		}
 		if (canSnapToBottom(b)) {
 			GC.connect(getBlock(), b.getBlock());

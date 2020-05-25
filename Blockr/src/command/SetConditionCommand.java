@@ -16,7 +16,7 @@ import domain.block.SurroundingBlock;
  * @author Andreas Awouters, Thomas Van Erum, Dirk Vanbeveren, Geert Wesemael
  *
  */
-public class setConditionCommand implements Command {
+public class SetConditionCommand implements Command {
 	ImplementationBlock BF = new ImplementationBlock();
 	ConditionBlock blockToConnect;
 	SurroundingBlock surroundingBlock;
@@ -39,7 +39,7 @@ public class setConditionCommand implements Command {
 	 * 	  	 | new.nextBlock == nextBlock
 	 * 		 | new.GC == GC
 	 */
-	public setConditionCommand(SurroundingBlock surroundingBlock, ConditionBlock blockToConnect,
+	public SetConditionCommand(SurroundingBlock surroundingBlock, ConditionBlock blockToConnect,
 			ConditionBlock nextBlock, GameController GC) {
 		this.blockToConnect = blockToConnect;
 		this.surroundingBlock = surroundingBlock;

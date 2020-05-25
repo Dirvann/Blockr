@@ -3,7 +3,7 @@ package command;
 import domain.GameController;
 import domain.block.Block;
 import domain.block.ConditionBlock;
-import domain.block.FunctionDefinition;
+import domain.block.FunctionDefinitionBlock;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
@@ -22,12 +22,12 @@ import domain.block.SurroundingBlock;
  * 		   Geert Wesemael
  *
  */
-public class disconnectCommand implements Command {
+public class DisconnectCommand implements Command {
 	ImplementationBlock BF = new ImplementationBlock();
 	Block blockToDisconnect;
 	Block blockToDisconnectTo;
 	GameController GC;
-	FunctionDefinition function;
+	FunctionDefinitionBlock function;
 	SurroundingBlock surrounding;
 
 	/**
@@ -48,7 +48,7 @@ public class disconnectCommand implements Command {
 	 *  	  | new.surrounding = BF.getSurroundingBlock(blockToDisconnect)
 	 *		  | new.function = BF.getFunctionBlock(blockToDisconnect)
 	 */
-	public disconnectCommand(Block blockToDisconnect, GameController GC) {
+	public DisconnectCommand(Block blockToDisconnect, GameController GC) {
 		this.blockToDisconnect = blockToDisconnect;
 		this.blockToDisconnectTo = BF.getPreviousBlock(blockToDisconnect);
 		this.surrounding = BF.getSurroundingBlock(blockToDisconnect);

@@ -11,22 +11,22 @@ import java.util.List;
 import command.AddToBodyFunctionDefinitionCommand;
 import command.Command;
 import command.ConnectCommand;
-import command.addToBodyCommand;
-import command.setConditionCommand;
+import command.AddToBodyCommand;
+import command.SetConditionCommand;
 import domain.GameController;
 import domain.block.Block;
 import domain.block.ConditionBlock;
-import domain.block.FunctionDefinition;
+import domain.block.FunctionDefinitionBlock;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
 import presentation.PalettePresentation;
 import game_world.api.Vector;
 
-public class FunctionDefinitionBlockPresentation extends PresentationBlock<FunctionDefinition> {
+public class FunctionDefinitionBlockPresentation extends PresentationBlock<FunctionDefinitionBlock> {
 	
 	ImplementationBlock BF = new ImplementationBlock();
 
-	public FunctionDefinitionBlockPresentation(Vector pos, FunctionDefinition block) {
+	public FunctionDefinitionBlockPresentation(Vector pos, FunctionDefinitionBlock block) {
 		super(pos, block);
 	}
 
@@ -99,9 +99,9 @@ public class FunctionDefinitionBlockPresentation extends PresentationBlock<Funct
 	}
 
 	@Override
-	protected PresentationBlock<FunctionDefinition> makeCopyWithoutConnections() {
+	protected PresentationBlock<FunctionDefinitionBlock> makeCopyWithoutConnections() {
 		ImplementationBlock BF = new ImplementationBlock();
-		return new FunctionDefinitionBlockPresentation(getPosition(), (FunctionDefinition) BF.makeNewBlockOfThisType(getBlock())) ;
+		return new FunctionDefinitionBlockPresentation(getPosition(), (FunctionDefinitionBlock) BF.makeNewBlockOfThisType(getBlock())) ;
 	}
 
 }

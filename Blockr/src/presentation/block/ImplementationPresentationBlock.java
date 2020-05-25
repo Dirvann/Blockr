@@ -8,8 +8,8 @@ import game_world.api.Vector;
 import domain.block.ActionBlock;
 import domain.block.Block;
 import domain.block.ChainConditionBlock;
-import domain.block.FunctionCall;
-import domain.block.FunctionDefinition;
+import domain.block.FunctionCallBlock;
+import domain.block.FunctionDefinitionBlock;
 import domain.block.ImplementationBlock;
 import domain.block.SingleConditionBlock;
 import domain.block.SingleSurroundingBlock;
@@ -106,15 +106,15 @@ public class ImplementationPresentationBlock implements FacadePresentationBlock{
 		return presentation;
 	}
 
-	public PresentationBlock<FunctionCall> makeFunctionCallBlock(FunctionDefinition definition,Vector pos) {
-		FunctionCall block = BF.makeCaller(definition);
-		PresentationBlock<FunctionCall> presentation = new FunctionCallBlockPresentation(pos, block);
+	public PresentationBlock<FunctionCallBlock> makeFunctionCallBlock(FunctionDefinitionBlock definition,Vector pos) {
+		FunctionCallBlock block = BF.makeCaller(definition);
+		PresentationBlock<FunctionCallBlock> presentation = new FunctionCallBlockPresentation(pos, block);
 		return presentation;
 	}
 
-	public PresentationBlock<FunctionDefinition> makeFunctionDefinitionBlock(int id,Vector pos) {
-		FunctionDefinition block = BF.makeFunctionDefinition(id);
-		PresentationBlock<FunctionDefinition> presentation = new FunctionDefinitionBlockPresentation(pos, block);
+	public PresentationBlock<FunctionDefinitionBlock> makeFunctionDefinitionBlock(int id,Vector pos) {
+		FunctionDefinitionBlock block = BF.makeFunctionDefinition(id);
+		PresentationBlock<FunctionDefinitionBlock> presentation = new FunctionDefinitionBlockPresentation(pos, block);
 		return presentation;
 	}
 

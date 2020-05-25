@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import game_world.api.Vector;
-import domain.block.FunctionCall;
-import domain.block.FunctionDefinition;
+import domain.block.FunctionCallBlock;
+import domain.block.FunctionDefinitionBlock;
 import domain.block.ImplementationBlock;
 import game_world.api.Action;
 import game_world.api.FacadeGameWorld;
@@ -36,7 +36,7 @@ public class PalettePresentation {
 	private final int xOffset = 10;
 	private final int yOffset = 10;
 	private final int yOffsetIncrement = 60;
-	private PresentationBlock<FunctionDefinition> paletteFunction;
+	private PresentationBlock<FunctionDefinitionBlock> paletteFunction;
 	/**
 	 * Create a new instance of PalettePresentation
 	 * 
@@ -94,7 +94,7 @@ public class PalettePresentation {
 	 * 		  | iPresentationBlock.getBlock(this.paletteFunction) == ID
 	 */
 	public void setFunctionDefinitionId(int ID) {
-		iBlock.setID((FunctionDefinition) iPresentationBlock.getBlock(this.paletteFunction), ID);
+		iBlock.setID((FunctionDefinitionBlock) iPresentationBlock.getBlock(this.paletteFunction), ID);
 	}
 	/**
 	 * The current ID for FunctionDefinitionBlocks in the palette.
@@ -103,7 +103,7 @@ public class PalettePresentation {
 	 * 		   |iBlock.getID(iPresentationBlock.getBlock(paletteFunction))
 	 */
 	public int getFunctionDefinitionId() {
-		return iBlock.getID((FunctionDefinition) iPresentationBlock.getBlock(this.paletteFunction));
+		return iBlock.getID((FunctionDefinitionBlock) iPresentationBlock.getBlock(this.paletteFunction));
 	}
 	/**
 	 * Higher the ID of the FunctionDefinition PresentationBlock in the palette.
@@ -111,7 +111,7 @@ public class PalettePresentation {
 	 * 
 	 * @param definition
 	 */
-	public void addFunctionCallToPalette(FunctionDefinition definition) {
+	public void addFunctionCallToPalette(FunctionDefinitionBlock definition) {
 		setNextDefinition();
 		paletteBlocks.add(iPresentationBlock.makeFunctionCallBlock(definition, new Vector(xOffset, yOffset+yOffsetIncrement*(index++))));
 	}
@@ -124,7 +124,7 @@ public class PalettePresentation {
 	 * @post  There are no FuncionCallBlocks in paletteBlocks with the same id as the definition.
 	 * 		  |For all blocks: !paletteBlocks.contains(blocks) && sameBlockAndID(block,iBlock.getID(definition))
 	 */
-	public void removeFunctionCallFromPalette(FunctionDefinition definition) {
+	public void removeFunctionCallFromPalette(FunctionDefinitionBlock definition) {
 		removeFunctionCallWithIDFromList(iBlock.getID(definition));
 	}
 	/**
@@ -156,7 +156,7 @@ public class PalettePresentation {
 	 * 		   has the same ID as the given ID.
 	 */
 	private boolean sameBlockAndID(PresentationBlock<?> presentationBlock,int idOtherBlock) {
-		return presentationBlock instanceof FunctionCallBlockPresentation && idOtherBlock == iBlock.getID((FunctionCall) iPresentationBlock.getBlock(presentationBlock));
+		return presentationBlock instanceof FunctionCallBlockPresentation && idOtherBlock == iBlock.getID((FunctionCallBlock) iPresentationBlock.getBlock(presentationBlock));
 	}
 	/**
 	 * Set the Definition of the DefinitionBlock in te palette one higher.
@@ -165,7 +165,7 @@ public class PalettePresentation {
 	 * 		 |iBlock.getID(iPresentationBlock.getBlock(paletteFunction)) ++
 	 */
 	private void setNextDefinition() {
-		iBlock.setID((FunctionDefinition) iPresentationBlock.getBlock(paletteFunction), iBlock.getID((FunctionDefinition) iPresentationBlock.getBlock(paletteFunction)) + 1);
+		iBlock.setID((FunctionDefinitionBlock) iPresentationBlock.getBlock(paletteFunction), iBlock.getID((FunctionDefinitionBlock) iPresentationBlock.getBlock(paletteFunction)) + 1);
 	}
 	
 	/**

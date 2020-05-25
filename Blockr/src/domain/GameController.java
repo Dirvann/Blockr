@@ -5,8 +5,8 @@ import java.util.List;
 import command.ExecutionCommand;
 import domain.block.Block;
 import domain.block.ConditionBlock;
-import domain.block.FunctionCall;
-import domain.block.FunctionDefinition;
+import domain.block.FunctionCallBlock;
+import domain.block.FunctionDefinitionBlock;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
@@ -182,7 +182,7 @@ public class GameController implements FacadeGameController{
 		getProgramArea().removeTopLevelBlock(block);
 	}
 	@Override
-	public void setBody(FunctionDefinition surroundingBlock, SequenceBlock block) {
+	public void setBody(FunctionDefinitionBlock surroundingBlock, SequenceBlock block) {
 		BF.setBodyBlock(surroundingBlock, block);
 		getProgramArea().removeTopLevelBlock(block);
 	}
@@ -211,7 +211,7 @@ public class GameController implements FacadeGameController{
 	}
 	
 	@Override
-	public List<FunctionCall> getAllFunctionCallsOfID(int ID) {
+	public List<FunctionCallBlock> getAllFunctionCallsOfID(int ID) {
 		return getProgramArea().getAllFunctionCallsWithID(ID);
 	}
 

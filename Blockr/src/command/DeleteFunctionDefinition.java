@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.GameController;
-import domain.block.FunctionCall;
-import domain.block.FunctionDefinition;
+import domain.block.FunctionCallBlock;
+import domain.block.FunctionDefinitionBlock;
 import domain.block.ImplementationBlock;
 import presentation.PalettePresentation;
 import presentation.block.ImplementationPresentationBlock;
@@ -26,7 +26,7 @@ import presentation.block.PresentationBlock;
  */
 public class DeleteFunctionDefinition implements Command {
 	GameController GC;
-	PresentationBlock<FunctionDefinition> definition;
+	PresentationBlock<FunctionDefinitionBlock> definition;
 	List<DeleteCallerCommand> deletionCommandsOfCalls;
 	ImplementationBlock BF = new ImplementationBlock();
 	ImplementationPresentationBlock BFP = new ImplementationPresentationBlock();
@@ -48,14 +48,14 @@ public class DeleteFunctionDefinition implements Command {
 	 * 		  these commands have the same ID as the definition.
 	 * 		  | new.deletionCommandsOfCalls.contains(DeleteCallerCommand with same ID as definition)
 	 */
-	public DeleteFunctionDefinition(GameController GC, PresentationBlock<FunctionDefinition> definition, PalettePresentation palette) {
+	public DeleteFunctionDefinition(GameController GC, PresentationBlock<FunctionDefinitionBlock> definition, PalettePresentation palette) {
 		this.GC = GC;
 		this.definition = definition;
 		this.palette = palette;
 		this.deletionCommandsOfCalls = new ArrayList<DeleteCallerCommand>();
-		FunctionDefinition defBlock = (FunctionDefinition) BFP.getBlock(definition);
-		List<FunctionCall> functionCalls = GC.getAllFunctionCallsOfID(BF.getID(defBlock));
-		for (FunctionCall functionCall : functionCalls) {
+		FunctionDefinitionBlock defBlock = (FunctionDefinitionBlock) BFP.getBlock(definition);
+		List<FunctionCallBlock> functionCalls = GC.getAllFunctionCallsOfID(BF.getID(defBlock));
+		for (FunctionCallBlock functionCall : functionCalls) {
 			deletionCommandsOfCalls.add(new DeleteCallerCommand(GC, functionCall));
 		}
 		
@@ -65,7 +65,7 @@ public class DeleteFunctionDefinition implements Command {
 	public void execute() {
 		GC.removeBlockFromProgramArea(definition);
 
-		int ID = BF.getID((FunctionDefinition) BFP.getBlock(definition));
+		int ID = BF.getID((FunctionDefinitionBlock) BFP.getBlock(definition));
 		palette.removeFunctionCallWithIDFromList(ID);
 		palette.setFunctionDefinitionId(ID);
 
@@ -78,7 +78,7 @@ public class DeleteFunctionDefinition implements Command {
 		}
 		GC.addBlockToProgramArea(definition);
 
-		palette.addFunctionCallToPalette((FunctionDefinition) BFP.getBlock(definition));
+		palette.addFunctionCallToPalette((FunctionDefinitionBlock) BFP.getBlock(definition));
 	}
 
 }

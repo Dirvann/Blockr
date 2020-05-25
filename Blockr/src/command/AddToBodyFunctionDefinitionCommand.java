@@ -1,7 +1,7 @@
 package command;
 
 import domain.GameController;
-import domain.block.FunctionDefinition;
+import domain.block.FunctionDefinitionBlock;
 import domain.block.SequenceBlock;
 /**
  * A class that holds all the information about the action where a block got
@@ -20,7 +20,7 @@ import domain.block.SequenceBlock;
 public class AddToBodyFunctionDefinitionCommand implements Command {
 
 	SequenceBlock blockToConnect;
-	FunctionDefinition definition;
+	FunctionDefinitionBlock definition;
 	SequenceBlock nextBlock;
 	GameController GC;
 
@@ -41,7 +41,7 @@ public class AddToBodyFunctionDefinitionCommand implements Command {
 	 * 		  | new.nextBlock == nextBlock
 	 * 		  | new.GC == GC
 	 */
-	public AddToBodyFunctionDefinitionCommand(FunctionDefinition definition, SequenceBlock blockToConnect, SequenceBlock nextBlock,
+	public AddToBodyFunctionDefinitionCommand(FunctionDefinitionBlock definition, SequenceBlock blockToConnect, SequenceBlock nextBlock,
 			GameController GC) {
 		this.blockToConnect = blockToConnect;
 		this.definition = definition;
