@@ -2,7 +2,6 @@ package domain.block;
 
 import command.ExecutionCommand;
 import domain.GameController;
-import domain.ImplementationGameController;
 import exceptions.domainExceptions.NoConditionBlockException;
 /**
  * An class of IfBlocks that extends SingleSurroundingBlock.
@@ -25,13 +24,12 @@ class IfBlock extends SingleSurroundingBlock {
 
 	@Override
 	protected Block execute(GameController GC) throws Exception {
-		ImplementationGameController GCF = new ImplementationGameController();
 		if (getConditionBlock() == null || !getConditionBlock().isValidCondition()) {
 			throw new NoConditionBlockException();
 		}
 		if (this.getBodyBlock() != null) {
-			if (getConditionBlock().evaluate(GCF.getGameWorldImplementation(GC))) {
-				GCF.setExecutionCommand(new ExecutionCommand(null, null, null, GC), GC);
+			if (getConditionBlock().evaluate(GC.getGameWorldImplementation())) {
+				GC.setExecutionCommand(new ExecutionCommand(null, null, null, GC));
 				return this.getBodyBlock();
 			}
 		}
@@ -41,7 +39,7 @@ class IfBlock extends SingleSurroundingBlock {
 			}
 			return this.getSurroundingBlock().getNextAfterLoop();
 		}
-		GCF.setExecutionCommand(new ExecutionCommand(null, null, null, GC), GC);
+		GC.setExecutionCommand(new ExecutionCommand(null, null, null, GC));
 		return this.getNextBlock();
 	}
 

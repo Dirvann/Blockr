@@ -14,7 +14,6 @@ import command.ConnectCommand;
 import command.addToBodyCommand;
 import command.setConditionCommand;
 import domain.GameController;
-import domain.ImplementationGameController;
 import domain.block.Block;
 import domain.block.ConditionBlock;
 import domain.block.FunctionDefinition;
@@ -107,11 +106,10 @@ public class FunctionDefinitionBlockPresentation extends PresentationBlock<Funct
 	@Override
 	public Command canSnap(PresentationBlock<?> b, GameController GC) {
 		
-		ImplementationGameController IGC = new ImplementationGameController();
 		SequenceBlock body = BF.getBodyBlock(getBlock());
 		
 		if (canSnapBody(b)) {
-			IGC.setBody(getBlock(), (SequenceBlock) b.getBlock(), GC);
+			GC.setBody(getBlock(), (SequenceBlock) b.getBlock());
 			return new AddToBodyFunctionDefinitionCommand(getBlock(), (SequenceBlock) b.getBlock(), body, GC);
 		}
 		return null;

@@ -1,7 +1,6 @@
 package command;
 
 import domain.GameController;
-import domain.ImplementationGameController;
 import domain.block.ImplementationBlock;
 import presentation.block.PresentationBlock;
 
@@ -18,7 +17,6 @@ import presentation.block.PresentationBlock;
 public class DeleteBlock implements Command {
 	GameController GC;
 	PresentationBlock<?> block;
-	ImplementationGameController GCF = new ImplementationGameController();
 	ImplementationBlock BF = new ImplementationBlock();
 
 	/**
@@ -37,13 +35,13 @@ public class DeleteBlock implements Command {
 
 	@Override
 	public void execute() {
-		GCF.removeBlockFromProgramArea(GC, block);
+		GC.removeBlockFromProgramArea(block);
 
 	}
 
 	@Override
 	public void undo() {
-		GCF.addBlockToProgramArea(GC, block);
+		GC.addBlockToProgramArea(block);
 
 	}
 

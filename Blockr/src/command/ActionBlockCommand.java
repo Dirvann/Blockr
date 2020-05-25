@@ -1,7 +1,6 @@
 package command;
 
 import domain.GameController;
-import domain.ImplementationGameController;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
 import game_world.api.FacadeGameWorld;
@@ -17,7 +16,6 @@ import game_world.api.FacadeGameWorld;
  *
  */
 public class ActionBlockCommand extends ExecutionCommand {
-	ImplementationGameController GCF = new ImplementationGameController();
 	ImplementationBlock BF = new ImplementationBlock();
 
 	/**
@@ -38,13 +36,13 @@ public class ActionBlockCommand extends ExecutionCommand {
 
 	}
 
-	@Override
-	public void undo() {
-
-		FacadeGameWorld GWF = GCF.getGameWorldImplementation(GC);
-		// TODO implement snapshots
-		//GWF.undoAction(BF.getName(currentlyExecuted));
-		super.undo();
-	}
+//	@Override
+//	public void undo() {
+//
+//		FacadeGameWorld GWF = GC.getGameWorldImplementation();
+//		// TODO implement snapshots
+//		//GWF.undoAction(BF.getName(currentlyExecuted));
+//		super.undo();
+//	}
 
 }

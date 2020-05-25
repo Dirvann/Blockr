@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Panel;
 
 import domain.GameController;
-import domain.ImplementationGameController;
 import game_world.api.FacadeGameWorld;
 
 /**
@@ -27,8 +26,7 @@ public class BlockrPanel extends Panel {
 	
 	private final double worldProportion = 0.3;
 	
-	private GameController gameController;
-	private ImplementationGameController GC;
+	private GameController GC;
 	private FacadeGameWorld iGameWorld;
 	
 	private int preferredGameWorldWidth = 10;
@@ -53,19 +51,18 @@ public class BlockrPanel extends Panel {
 		this.setBackground(Color.LIGHT_GRAY);
 		
 		// Set variables for game functions
-		GC = new ImplementationGameController();
+		GC = new GameController();
 		iGameWorld = FacadeGameWorld.newInstance(BlockrPanel.getImplementationClass());
 		// TODO gameworld init.
 		iGameWorld.makeNewGameWorld();
-		gameController = GC.makeGameController();
-		GC.setGameWorldImplementation(gameController, iGameWorld);
+		GC.setGameWorldImplementation(iGameWorld);
 		
 		// Define panel borders
 		int worldPanelStart = (int) (this.getWidth() * (1 - worldProportion));
 		int worldPanelWidth = (int) (this.getWidth() * worldProportion);
 		
 		// Add block Area Canvas
-		this.blockAreaC = new BlockAreaCanvas(this, iGameWorld);
+		this.blockAreaC = new BlockAreaCanvas(this, iGameWorld,GC);
 		this.add(blockAreaC);
 		blockAreaC.setBounds(0, 0, worldPanelStart, this.getHeight());
 		blockAreaC.setBackground(Color.WHITE);
@@ -88,7 +85,7 @@ public class BlockrPanel extends Panel {
 	 * @return gameController associated with this BlockrPanel
 	 */
 	public GameController getGameController() {
-		return this.gameController;
+		return this.GC;
 	}
 	
 	/**

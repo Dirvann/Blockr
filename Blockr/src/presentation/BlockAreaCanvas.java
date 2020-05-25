@@ -14,7 +14,7 @@ import command.MakeFunctionCommand;
 import command.disconnectCommand;
 import domain.CommandProcessor;
 import domain.ExecutionProcessor;
-import domain.ImplementationGameController;
+import domain.GameController;
 import domain.Vector;
 import domain.block.Block;
 import domain.block.FunctionDefinition;
@@ -47,7 +47,7 @@ public class BlockAreaCanvas extends Canvas {
 	private ImplementationBlock BF = new ImplementationBlock();
 	private ImplementationPresentationBlock BFP = new ImplementationPresentationBlock();
 	private FacadeGameWorld iGameWorld;
-	private ImplementationGameController GC = new ImplementationGameController();
+	private GameController GC;
 
 	private BlockrPanel blockrPanel;
 	private PresentationBlock<?> selectedBlock = null;
@@ -73,6 +73,7 @@ public class BlockAreaCanvas extends Canvas {
 	 * 		   panel to attach this blockAreaCanvas to.
 	 * @param  iGameWorld
 	 * 		   Interface used by the panel.
+	 * @param GC 
 	 * @post   The Palette Presentation is set to a new Palette Presentation with 
 	 * 		   the given GameWorld Facade.
 	 * 		   | new.PaletteP = new PalettePresentation(iGameWorld)
@@ -89,7 +90,8 @@ public class BlockAreaCanvas extends Canvas {
 	 * 		   | new.errorMessage == "The error message will appear here!"
 	 * @effect A MouseEventListener is set to this class. 
 	 */
-	public BlockAreaCanvas(BlockrPanel blockrPanel, FacadeGameWorld iGameWorld) {
+	public BlockAreaCanvas(BlockrPanel blockrPanel, FacadeGameWorld iGameWorld, GameController GC) {
+		this.GC = GC; //TODO:doc
 		this.paletteP = new PalettePresentation(iGameWorld);
 		this.programAreaP = new ProgramAreaPresentation(blockrPanel.getGameController());
 		this.iGameWorld = iGameWorld;
@@ -112,17 +114,17 @@ public class BlockAreaCanvas extends Canvas {
 		g.drawLine((int) (panelProportion * this.getWidth()), 0, (int) (panelProportion * this.getWidth()),this.getHeight());
 		// Draw number of blocks left
 		g.setFont(new Font("Arial", Font.PLAIN, (int) (this.getHeight() / 20)));
-		g.drawString("" + GC.getAmountOfBlocksLeft(blockrPanel.getGameController()), getWidth() / 18, 17 * getHeight() / 18);
+		g.drawString("" + GC.getAmountOfBlocksLeft(), getWidth() / 18, 17 * getHeight() / 18);
 		g.setFont(new Font("Arial", Font.PLAIN, (int) (getHeight() / 40)));
 		g.drawString(errorMessage, getWidth() / 4, 17 * getHeight() / 18);
 		// Draw palette only if max number of blocks not reached
-		if (GC.getAmountOfBlocksLeft(blockrPanel.getGameController()) > 0) {
+		if (GC.getAmountOfBlocksLeft() > 0) {
 			paletteP.paint(g);
 		}
 		// Draw programArea
 		programAreaP.paint(g);
 		// Highlight block
-		Block nextToExecute = GC.getNextBlockToExecute(blockrPanel.getGameController());
+		Block nextToExecute = GC.getNextBlockToExecute();
 		if (nextToExecute != null) {
 			BFP.highLight(BF.getPresentationBlock(nextToExecute), g);
 		}
@@ -176,7 +178,7 @@ public class BlockAreaCanvas extends Canvas {
 		Vector mousePos = new Vector(x, y);
 		// Clicked block in palette
 		PresentationBlock<?> paletteBlockP = paletteP.GetClickedPaletteBlock(mousePos);
-		if (paletteBlockP != null && GC.getAmountOfBlocksLeft(blockrPanel.getGameController()) > 0) {
+		if (paletteBlockP != null && GC.getAmountOfBlocksLeft() > 0) {
 			copyPaletteBlockIntoProgramArea(paletteBlockP);
 			System.out.println("New Block made of type: " + BF.getName(BFP.getBlock(selectedBlock)));
 			stopExecution();
@@ -225,7 +227,7 @@ public class BlockAreaCanvas extends Canvas {
 		else {
 			this.preCommand = new MakeBlock(blockrPanel.getGameController(), presentationCopy);
 		}
-		GC.addBlockToProgramArea(blockrPanel.getGameController(), presentationCopy);
+		GC.addBlockToProgramArea(presentationCopy);
 		this.oldPos = BFP.getPosition(presentationCopy);
 	}
 	
@@ -247,7 +249,7 @@ public class BlockAreaCanvas extends Canvas {
 	private void pickBlockUpFromProgramArea(PresentationBlock<?> programBlockP) {
 		selectedBlock = programBlockP;
 		this.preCommand = new disconnectCommand(BFP.getBlock(programBlockP), blockrPanel.getGameController());
-		GC.disconnect(BFP.getBlock(selectedBlock), blockrPanel.getGameController());
+		GC.disconnect(BFP.getBlock(selectedBlock));
 		this.oldPos = BFP.getPosition(programBlockP);
 	}
 	
@@ -363,7 +365,7 @@ public class BlockAreaCanvas extends Canvas {
 		} else {
 			this.postCommand = new DeleteBlock(blockrPanel.getGameController(), selectedBlock);
 		}
-		GC.removeBlockFromProgramArea(blockrPanel.getGameController(), selectedBlock);
+		GC.removeBlockFromProgramArea(selectedBlock);
 	}
 	
 	/**
@@ -450,7 +452,7 @@ public class BlockAreaCanvas extends Canvas {
 	void run() {
 		try {
 			setErrorMessage("");
-			exe.addExecutionStep(GC.execute(blockrPanel.getGameController()));
+			exe.addExecutionStep(GC.execute());
 			if (iGameWorld.goalReached()) {
 				setErrorMessage("congratiolations!! You have beaten this level! \n Press F6 to start a new one. ");
 			}
@@ -480,7 +482,7 @@ public class BlockAreaCanvas extends Canvas {
 		System.out.println("Changed gameWorld");
 		iGameWorld.makeNewGameWorld();
 		this.startSnapshot = iGameWorld.makeSnapshot();
-		GC.setGameWorldImplementation(blockrPanel.getGameController(), iGameWorld);
+		GC.setGameWorldImplementation(iGameWorld);
 		stopExecution();
 	}
 	
@@ -494,7 +496,7 @@ public class BlockAreaCanvas extends Canvas {
 	 * 		  | cmd.undo()
 	 */
 	void undo() {
-		if (GC.isExecuting(blockrPanel.getGameController())) {
+		if (GC.isExecuting()) {
 			exe.undo();
 		} else {
 			cmd.undo();
@@ -511,7 +513,7 @@ public class BlockAreaCanvas extends Canvas {
 	 * 		   | cmd.redo()
 	 */
 	void redo() {
-		if (GC.isExecuting(blockrPanel.getGameController())) {
+		if (GC.isExecuting()) {
 			exe.redo();
 		} else {
 			cmd.redo();
@@ -529,7 +531,7 @@ public class BlockAreaCanvas extends Canvas {
 	 * 		 | new.iGameWorld.makeSnapshot() == startSnapshot
 	 */
 	private void stopExecution() {
-		GC.stopExecution(blockrPanel.getGameController());
+		GC.stopExecution();
 		this.exe = new ExecutionProcessor();
 		iGameWorld.loadSnapshot(this.startSnapshot);
 	}

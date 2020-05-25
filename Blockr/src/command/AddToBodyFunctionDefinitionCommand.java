@@ -1,7 +1,6 @@
 package command;
 
 import domain.GameController;
-import domain.ImplementationGameController;
 import domain.block.FunctionDefinition;
 import domain.block.SequenceBlock;
 /**
@@ -25,7 +24,6 @@ public class AddToBodyFunctionDefinitionCommand implements Command {
 	SequenceBlock nextBlock;
 	// The gamecontroller wher the blocks exist
 	GameController GC;
-	ImplementationGameController GCF = new ImplementationGameController();
 
 	/**
 	 * Makes a command for when a block is added to the body surrounding block. It
@@ -48,14 +46,14 @@ public class AddToBodyFunctionDefinitionCommand implements Command {
 
 	@Override
 	public void execute() {
-		GCF.setBody(definition, blockToConnect, GC);
+		GC.setBody(definition, blockToConnect);
 	}
 
 	@Override
 	public void undo() {
-		GCF.disconnect(blockToConnect, GC);
-		GCF.disconnect(nextBlock, GC);
-		GCF.setBody(definition, nextBlock, GC);
+		GC.disconnect(blockToConnect);
+		GC.disconnect(nextBlock);
+		GC.setBody(definition, nextBlock);
 		;
 	}
 

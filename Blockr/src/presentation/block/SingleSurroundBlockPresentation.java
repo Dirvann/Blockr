@@ -13,7 +13,6 @@ import command.ConnectCommand;
 import command.addToBodyCommand;
 import command.setConditionCommand;
 import domain.GameController;
-import domain.ImplementationGameController;
 import domain.block.Block;
 import domain.block.ConditionBlock;
 import domain.block.ImplementationBlock;
@@ -148,18 +147,17 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 		Block next = BF.getNextBlock(getBlock());
 		ConditionBlock condition = BF.getConditionBlock(getBlock());
 		SequenceBlock body = BF.getBodyBlock(getBlock());
-		ImplementationGameController IGC = new ImplementationGameController();
 		
 		if (canSnapToCondition(b)) {
-			IGC.setCondition(getBlock(), (ConditionBlock) b.getBlock(), GC);
+			GC.setCondition(getBlock(), (ConditionBlock) b.getBlock());
 			return new setConditionCommand(getBlock(), (ConditionBlock) b.getBlock(), condition, GC);
 		}
 		if (canSnapToBody(b)) {
-			IGC.setBody(getBlock(), (SequenceBlock) b.getBlock(), GC);
+			GC.setBody(getBlock(), (SequenceBlock) b.getBlock());
 			return new addToBodyCommand(getBlock(), (SequenceBlock) b.getBlock(), body, GC);
 		}
 		if (canSnapToBottom(b)) {
-			IGC.connect(getBlock(), b.getBlock(), GC);
+			GC.connect(getBlock(), b.getBlock());
 			return new ConnectCommand(getBlock(), b.getBlock(), next, GC);
 		}
 		return null;

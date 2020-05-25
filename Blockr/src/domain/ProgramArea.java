@@ -175,7 +175,7 @@ public class ProgramArea {
 	 * @post One is added to the amount of blocks left. | new.blocksLeft =
 	 *       blocksLeft + 1
 	 */
-	protected void removeBlock(Block block) {
+	protected void removeBlock(Block block,GameController GC) {
 		BF.disconnect(block);
 		blocksLeft += BF.getAllNextBlocks(block).size();
 
@@ -189,7 +189,7 @@ public class ProgramArea {
 					blocksLeft--;
 				}
 			}
-			BF.RemoveFunctionBlock((FunctionDefinition) block, this);
+			BF.RemoveFunctionBlock((FunctionDefinition) block, GC);
 			this.functionBlocks.remove(block);
 
 		}

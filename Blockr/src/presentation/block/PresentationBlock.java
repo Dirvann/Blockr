@@ -8,7 +8,6 @@ import java.util.List;
 import command.Command;
 import command.ConnectCommand;
 import domain.GameController;
-import domain.ImplementationGameController;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
 import domain.Vector;
@@ -33,8 +32,7 @@ public abstract class PresentationBlock<T extends Block> {
 	private Vector position;
 
 	private ImplementationBlock blockFunctions = new ImplementationBlock();
-	private ImplementationGameController IGC = new ImplementationGameController();
-
+	
 	protected PresentationBlock(Vector pos, T block) {
 		this.position = pos;
 		this.block = block;
@@ -203,7 +201,7 @@ public abstract class PresentationBlock<T extends Block> {
 		Vector receivingSnapPoint = getReceivingSnapPoints().get(0);
 		return (givingSnappoint != null && receivingSnapPoint != null 
 				&& givingSnappoint.distanceTo(receivingSnapPoint) <= getSnapDistance()
-				&& IGC.connect(getBlock(), b.getBlock(), GC));
+				&& GC.connect(getBlock(), b.getBlock()));
 	}
 
 	abstract protected PresentationBlock<T> makeCopyWithoutConnections();

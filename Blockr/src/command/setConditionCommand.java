@@ -1,7 +1,6 @@
 package command;
 
 import domain.GameController;
-import domain.ImplementationGameController;
 import domain.block.ConditionBlock;
 import domain.block.ImplementationBlock;
 import domain.block.SurroundingBlock;
@@ -28,7 +27,6 @@ public class setConditionCommand implements Command {
 	ConditionBlock nextBlock;
 	// The gamecontroller wher the blocks exist
 	GameController GC;
-	ImplementationGameController GCF = new ImplementationGameController();
 
 	/**
 	 * Makes a Command used to set the condition of a surrounding block.
@@ -50,13 +48,13 @@ public class setConditionCommand implements Command {
 
 	@Override
 	public void execute() {
-		GCF.setCondition(surroundingBlock, blockToConnect, GC);
+		GC.setCondition(surroundingBlock, blockToConnect);
 	}
 
 	@Override
 	public void undo() {
-		GCF.disconnect(blockToConnect, GC);
-		GCF.disconnect(nextBlock, GC);
-		GCF.setCondition(surroundingBlock, nextBlock, GC);
+		GC.disconnect(blockToConnect);
+		GC.disconnect(nextBlock);
+		GC.setCondition(surroundingBlock, nextBlock);
 	}
 }
