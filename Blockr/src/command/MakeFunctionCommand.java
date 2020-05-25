@@ -4,7 +4,6 @@ import domain.GameController;
 import domain.block.FunctionDefinition;
 import domain.block.ImplementationBlock;
 import presentation.PalettePresentation;
-import presentation.block.FunctionDefinitionBlockPresentation;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 

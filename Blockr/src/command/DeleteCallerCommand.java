@@ -6,7 +6,6 @@ import domain.block.FunctionDefinition;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
-import presentation.block.PresentationBlock;
 
 /**
  * A class that holds all the information about the action where a block is
