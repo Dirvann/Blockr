@@ -6,7 +6,6 @@ import domain.block.FunctionDefinition;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
-import presentation.block.PresentationBlock;
 
 /**
  * A class that holds all the information about the action where a block is
@@ -14,8 +13,11 @@ import presentation.block.PresentationBlock;
  * GameController. The class also specifies what must happen to undo and execute this
  * command.
  * 
- * @version 3.0
- * @author Andreas Awouters, Thomas Van Erum, Dirk Vanbeveren, Geert Wesemael
+ * @version 4.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
  *
  */
 public class DeleteCallerCommand implements Command {
@@ -24,24 +26,33 @@ public class DeleteCallerCommand implements Command {
 	ImplementationBlock BF = new ImplementationBlock();
 	SequenceBlock previous;
 	SequenceBlock next;
-	SurroundingBlock surroundingBlock;
+	SurroundingBlock surrounding;
 	FunctionDefinition function;
 
 	/**
 	 * Makes a delete block Commmand. This Command includes all of the info needed
 	 * to undo and redo a block deletion Command.
 	 * 
-	 * @param GC    the gamecontroller where the block is deleted.
-	 * @param block the block that gets deleted.
-	 * 
-	 * @Post The objects block and GC are stored in this command for later use.
+	 * @param GC    
+	 * 		  The GameController where the block is deleted.
+	 * @param caller 
+	 * 		  The block that gets deleted.
+	 * @post  The objects caller and GC are stored in this command for later use.
+	 * 		  | new.GC == GC
+	 * 		  | new.previous == caller
+	 * @post  The previous, next, surrounding and function Blocks from the
+	 * 		  the caller stored in this command for later use.
+	 * 		  | previous = BF.getPreviousBlock(caller)
+	 * 		  | next = BF.getNextBlock(caller)
+	 * 		  | surrounding = BF.getSurroundingBlock(caller)
+	 * 		  | function = BF.getFunctionBlock(caller)
 	 */
 	public DeleteCallerCommand(GameController GC, FunctionCall caller) {
 		this.GC = GC;
 		this.caller = caller;
 		this.previous = (SequenceBlock) BF.getPreviousBlock(caller);
 		this.next = (SequenceBlock) BF.getNextBlock(caller);
-		this.surroundingBlock = BF.getSurroundingBlock(caller);
+		this.surrounding = BF.getSurroundingBlock(caller);
 		this.function = BF.getFunctionBlock(caller);
 	}
 
@@ -55,8 +66,8 @@ public class DeleteCallerCommand implements Command {
 		if (previous != null) {
 			GC.connect(previous, caller);
 		}
-		else if (surroundingBlock != null) {
-			GC.setBody(surroundingBlock, caller);
+		else if (surrounding != null) {
+			GC.setBody(surrounding, caller);
 		}
 		else if (function != null) {
 			GC.setBody(function, caller);

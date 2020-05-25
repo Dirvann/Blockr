@@ -2,8 +2,11 @@ package command;
 /**
  * A general Command interface having the functions undo and redo.
  * 
- * @version 3.0
- * @author Andreas Awouters, Thomas Van Erum, Dirk Vanbeveren, Geert Wesemael
+ * @version 4.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ *		   Dirk Vanbeveren
+ *		   Geert Wesemael
  *
  */
 public interface Command {

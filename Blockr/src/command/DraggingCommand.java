@@ -3,21 +3,22 @@ package command;
 import domain.Vector;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
-
+/**
+ * A class that holds all the information about the action where a block gets
+ * dragged from one place to another. This means also when a block gets
+ * disconnected from one place and connected to another place, or made and
+ * deleted. This information consists of the objects newPos, OldPos, PreCommand
+ * and postComand. The class also specifies what must happen to undo and execute
+ * this command.
+ * 
+ * @version 4.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 public class DraggingCommand implements Command {
-
-	/**
-	 * A class that holds all the information about the action where a block gets
-	 * dragged from one place to another. This means also when a block gets
-	 * disconnected from one place and connected to another place, or made and
-	 * deleted. This information consists of the objects newPos, OldPos, PreCommand
-	 * and postComand. The class also specifies what must happen to undo and execute
-	 * this command.
-	 * 
-	 * @version 3.0
-	 * @author Andreas Awouters, Thomas Van Erum, Dirk Vanbeveren, Geert Wesemael
-	 *
-	 */
 	ImplementationPresentationBlock BPF = new ImplementationPresentationBlock();
 	Command preCommand;
 	Command postCommand;
@@ -26,23 +27,31 @@ public class DraggingCommand implements Command {
 	PresentationBlock<?> block;
 
 	/**
-	 * This Command consists out of three parts. A precommand is the command done
+	 * This Command consists out of three parts. A preCommand is the command done
 	 * before dragging the block, for example making a block or disconnecting one. A
 	 * dragging Command is the movement from an old position to a new one. A
 	 * postCommand is a Command like connecting or deleting a block.
 	 * 
 	 * @param oldPos
+	 * 		  The old position of the block.
 	 * @param newPos
+	 * 		  The new position of the block.
 	 * @param block
-	 * @param preCommand  The command that has been executed before the block has
-	 *                    been dragged. This can be making a block or disconnecting.
-	 * @param postCommand The command that has been executed after the block is
-	 *                    released. This can be deleting or connecting a block.
-	 * @return A draggingComand that holds the given information. If the given
-	 *         information is complete, This command can be undone and redone.
-	 * 
-	 * @post This command will hold the information of the preCommand,
-	 *       draggingCommand and postCommand together in one command.
+	 * 		  The block being dragged.
+	 * @param preCommand  
+	 * 		  The command that has been executed before the block has
+	 *        been dragged. This can be making a block or disconnecting.
+	 * @param postCommand 
+	 * 		  The command that has been executed after the block is
+	 *        released. This can be deleting or connecting a block.
+	 * @post  This command will hold the information of the preCommand,
+	 *        draggingCommand (The new position, old position and the block)
+	 *        and postCommand together in one command.
+	 * 		  | new.preCommand == preCommand
+	 * 		  | new.postCommand == postCommand
+	 *  	  | new.oldPos == oldPos
+	 *   	  | new.newPos == newPos
+	 *    	  | new.block == block
 	 */
 	public DraggingCommand(Vector oldPos, Vector newPos, PresentationBlock<?> block, Command preCommand,
 			Command postCommand) {

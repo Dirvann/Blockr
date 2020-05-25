@@ -15,7 +15,7 @@ import presentation.block.PresentationBlock;
  * ProgramAreaPresentation is intended to be used as a part of a BlockAreaCanvas.
  * ProgramAreaPresentation handles activities concerning the programArea.
  * 
- * @version 3.0
+ * @version 4.0
  * @author Andreas Awouters
  * 		   Thomas Van Erum
  * 		   Dirk Vanbeveren
@@ -73,7 +73,7 @@ public class ProgramAreaPresentation {
 	
 	/**
 	 * 
-	 * TODO
+	 * TODO Thomas /Dirk
 	 * 
 	 * @param block
 	 * @return

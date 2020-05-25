@@ -17,8 +17,11 @@ import presentation.block.PresentationBlock;
  * GameController. The class also specifies what must happen to undo and execute this
  * command.
  * 
- * @version 3.0
- * @author Andreas Awouters, Thomas Van Erum, Dirk Vanbeveren, Geert Wesemael
+ * @version 4.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
  *
  */
 public class DeleteFunctionDefinition implements Command {
@@ -33,10 +36,17 @@ public class DeleteFunctionDefinition implements Command {
 	 * Makes a delete function definition Commmand. This Command includes all of the info needed
 	 * to undo and redo a block function definition deletion Command.
 	 * 
-	 * @param GC    the gamecontroller where the block is deleted.
-	 * @param caller the block that gets deleted.
-	 * 
-	 * @Post The objects block and GC are stored in this command for later use.
+	 * @param GC    
+	 * 		  The GameController where the block is deleted.
+	 * @param caller 
+	 * 		  The block that gets deleted.
+	 * @post  The objects definition, palette and GC are stored in this command for later use.
+	 * 		  | new.GC == GC
+	 * 		  | new.definition == definition
+	 * 		  | new.palette == palette
+	 * @post  List with DeleteCallerCommands is stored, the Callers from 
+	 * 		  these commands have the same ID as the definition.
+	 * 		  | new.deletionCommandsOfCalls.contains(DeleteCallerCommand with same ID as definition)
 	 */
 	public DeleteFunctionDefinition(GameController GC, PresentationBlock<FunctionDefinition> definition, PalettePresentation palette) {
 		this.GC = GC;

@@ -21,12 +21,14 @@ public class ActionBlock extends SequenceBlock{
 	String name;
 	Action action;
 	/**
-	 * Create a ActionBlock with the given name.
+	 * Create a ActionBlock with the given action.
 	 * 
-	 * @param name
-	 * 		  The name for the actionblock.
-	 * @post  The name is equal to the given name.
-	 * 		  |new.getName() = name
+	 * @param action
+	 * 		  The action for the actionblock.
+	 * @post  The action is equal to the given action.
+	 * 		  |new.action = action
+	 * @post  The name is equal to the name of the given action.
+	 * 		  |new.getName() = action.getName()
 	 */
 	protected ActionBlock(Action action) {
 		this.action = action;
@@ -36,10 +38,10 @@ public class ActionBlock extends SequenceBlock{
 	/**
 	 * Perform the action of this block.
 	 * 
-	 * @param gameController 
-	 * 		  The gameController where the block is in.
+	 * @param  GC 
+	 * 		   The GameController where the block is in.
 	 * @throws Exception If action is not possible.
-	 * @post The action of the block will be performed
+	 * @post   The action of the block will be performed.
 	 */
 	protected void performAction(GameController GC) throws Exception {
 		
