@@ -2,7 +2,7 @@ package domain.block;
 /**
  * An abstract class of SingleSurroundingBlocks that extends SurroundingBlock.
  * 
- * @version 3.0
+ * @version 4.0
  * @author Andreas Awouters
  * 		   Thomas Van Erum
  * 		   Dirk Vanbeveren

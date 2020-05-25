@@ -7,7 +7,7 @@ import exceptions.domainExceptions.NoConditionBlockException;
  * An class of IfBlocks that extends SingleSurroundingBlock.
  * It has a specified execution and a name.
  * 
- * @version 3.0
+ * @version 4.0
  * @author Andreas Awouters
  * 		   Thomas Van Erum
  * 		   Dirk Vanbeveren

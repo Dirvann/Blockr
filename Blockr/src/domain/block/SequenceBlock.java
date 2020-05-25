@@ -5,7 +5,7 @@ import domain.GameController;
 /**
  * An abstract class of SequenceBlocks that extends Block and has a next and previous block.
  * 
- * @version 3.0
+ * @version 4.0
  * @author Andreas Awouters
  * 		   Thomas Van Erum
  * 		   Dirk Vanbeveren
@@ -57,7 +57,7 @@ public abstract class SequenceBlock extends Block {
 	}
 
 	/**
-	 * The block directly underneath
+	 * The block directly underneath.
 	 * 
 	 * @return The next block directly underneath
 	 */
@@ -68,8 +68,9 @@ public abstract class SequenceBlock extends Block {
 	/**
 	 * Removes all the next blocks on the same level.
 	 * 
-	 * @Post removes all the next blocks on the same level (same surrounding bloc). This
+	 * @post removes all the next blocks on the same level (same surrounding bloc). This
 	 * keeps the sequence of the next blocks, but they are now independent.
+	 * 		 |new.next == null
 	 */
 	protected void removeNextBlock() {
 		if (this.next != null) {
@@ -106,8 +107,9 @@ public abstract class SequenceBlock extends Block {
 	 * 
 	 * @param function
 	 * 		  The function that will include this block.
-	 * @Post block is set as the surrounding block of this block and all the next
-	 *       ones after this block.
+	 * @post  block is set as the surrounding block of this block and all the next
+	 *        ones after this block.
+	 *        | this.function == function
 	 */
 	protected void setFunctionBlock(FunctionDefinition function) {
 		SequenceBlock iterator = this;
@@ -130,14 +132,19 @@ public abstract class SequenceBlock extends Block {
 	protected Block execute(GameController GC) throws Exception {
 		return this.getNextToExecute();
 	}
-	
+	/**
+	 * Return the next block to execute. This checks the block underneath first,
+	 * then it checks for a surrounding block and lastly it checks if 
+	 * it is in a function definition.
+	 * 
+	 * @return the next block to execute, this is no block to execute next.
+	 */
 	protected SequenceBlock getNextToExecute() {
 		if (this.getNextBlock() == null) {
 			if (this.getSurroundingBlock() == null) {
 				if (this.function == null) return null;
 				else return this.function.getNextAfterFunction();
 			}
-			
 			return this.getSurroundingBlock().getNextAfterLoop();
 		}
 		return this.getNextBlock();

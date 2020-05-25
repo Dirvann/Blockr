@@ -9,7 +9,7 @@ import presentation.block.PresentationBlock;
 /**
  * An abstract class of Blocks that has a presentation block and a surrounding block.
  * 
- * @version 3.0
+ * @version 4.0
  * @author Andreas Awouters
  * 		   Thomas Van Erum
  * 		   Dirk Vanbeveren
@@ -34,8 +34,8 @@ public abstract class Block {
 	 * 
 	 * @param presentationblock 
 	 * 		  The desired presentation for this Block.
-	 * @post The presentationBlock will be set
-	 * 		 | new.getPresentationBlock = presentationBlock
+	 * @post  The presentationBlock will be set
+	 * 		  | new.getPresentationBlock = presentationBlock
 	 */
 	protected void setPresentationBlock(PresentationBlock<?> presentationBlock) {
 		this.presentationBlock = presentationBlock;
@@ -45,9 +45,9 @@ public abstract class Block {
 	 * Execute this block.
 	 * 
 	 * @param  gameController
-	 * 		   The gamecontroller that executes the current block.
+	 * 		   The GameController that executes the current block.
 	 * @return next block in sequence
-	 * @Post   every necessary command in the block is executed.
+	 * @post   every necessary command in the block is executed.
 	 * @throws Exception 
 	 * 		   If a block in the sequence is not executable.
 	 */
@@ -82,8 +82,7 @@ public abstract class Block {
 	}
 
 	// get info about Connection functions and block attributes
-	// _______________________________________________________//
-
+	
 	/**
 	 * The name of the block.
 	 * 
@@ -107,8 +106,9 @@ public abstract class Block {
 	 * 
 	 * @param block
 	 * 		  The block that is set to surround this block.
-	 * @Post block is set as the surrounding block of this block and all the next
-	 *       ones after this block.
+	 * @post  block is set as the surrounding block of this block and all the next
+	 *        ones after this block.
+	 *        | this.surroundingBlock == block
 	 */
 	protected void setSurroundingBlock(SurroundingBlock block) {
 		Block iterator = this;
@@ -133,15 +133,15 @@ public abstract class Block {
 	 * @param block
 	 * 		  The block to become the next one.
 	 * @return True if possible, else false.
-	 * @Post (This->this.next->this.next.next...) will become
-	 *       (this->Block->block.next->block.next.next...->this.next->this.next.next...)
+	 * @post  (This->this.next->this.next.next...) will become
+	 *        (this->Block->block.next->block.next.next...->this.next->this.next.next...)
 	 */
 	protected abstract boolean setNextBlock(Block block);
 
 	/**
 	 * Remove the next block.
 	 * 
-	 * @Post the next block will be removed. This.next.previous is set to null and
+	 * @post the next block will be removed. This.next.previous is set to null and
 	 *       this.next is set to null.
 	 */
 	protected abstract void removeNextBlock();
@@ -169,7 +169,7 @@ public abstract class Block {
 	/**
 	 * Disconnect this block from all other blocks.
 	 * 
-	 * @Post Disconnects all of the connections between this block and its previous
+	 * @post Disconnects all of the connections between this block and its previous
 	 *       block and surrounding block.
 	 */
 	protected abstract void disconnect();

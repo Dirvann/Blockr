@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * An abstract class of ChainConditionBlocks that extends ConditionBlock and has a next block.
  * 
- * @version 3.0
+ * @version 4.0
  * @author Andreas Awouters
  * 		   Thomas Van Erum
  * 		   Dirk Vanbeveren
@@ -23,8 +23,7 @@ public abstract class ChainConditionBlock extends ConditionBlock {
 		return false;
 	}
 
-	// Function that controls and chacks the connections
-	// ___________________________________________________________________________________________//
+	// Function that controls and checks the connections
 	@Override
 	protected boolean setNextBlock(Block block) {
 		if (block == null) {

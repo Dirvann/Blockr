@@ -5,7 +5,7 @@ import game_world.api.FacadeGameWorld;
 /**
  * An abstract class of ConditionBlocks that extends Block and has a previous block.
  * 
- * @version 3.0
+ * @version 4.0
  * @author Andreas Awouters
  * 		   Thomas Van Erum
  * 		   Dirk Vanbeveren
@@ -27,7 +27,7 @@ public abstract class ConditionBlock extends Block {
 	 * Evaluates this condition.
 	 * 
 	 * @param iGameWorld
-	 * @return true if the condition is true;
+	 * @return true if the condition is true.
 	 */
 	abstract protected boolean evaluate(FacadeGameWorld iGameWorld);
 

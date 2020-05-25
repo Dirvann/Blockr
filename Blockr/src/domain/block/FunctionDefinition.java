@@ -2,19 +2,31 @@ package domain.block;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import domain.GameController;
-import domain.ProgramArea;
-
-public class FunctionDefinition extends Block{
-	//the ID of the function
+/**
+ * An class of FunctionDefinition that extends Block.
+ * It has a specified ID, a callstack and a body.
+ * 
+ * @version 4.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
+public class FunctionDefinition extends Block{ //TODO: Thomas nog enkele functies documenteren hier (de niet overwritten)
 	protected int ID;
-	//The history of calls
 	protected ArrayList<SequenceBlock> callStack = new ArrayList<SequenceBlock>();
-	//The body of the function
 	protected SequenceBlock body;
 	
-	
+	/**
+	 * Initialize a Function Definition Block.
+	 * 
+	 * @param ID
+	 * 		  The ID of this Definition.
+	 * @post  The ID is equal to the given ID.
+	 * 		  | new.ID = def.ID
+	 */
 	protected FunctionDefinition(int ID) {
 		this.ID = ID;
 	}
@@ -28,7 +40,8 @@ public class FunctionDefinition extends Block{
 	
 	/**
 	 * Prepares the function definition to be deleted.
-	 * @Post All the callers will be removed from the program. The function will not be called again.
+	 * 
+	 * @post All the callers will be removed from the program. The function will not be called again.
 	 * 
 	 */
 	protected void removeFunctionDefinition(GameController GC) {

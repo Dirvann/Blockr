@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.GameController;
-import domain.ProgramArea;
 import game_world.api.Action;
 import game_world.api.Predicate;
 import presentation.block.PresentationBlock;
 /**
  * The Implementation of all the block classes.
  * 
- * @version 3.0
+ * @version 4.0
  * @author Andreas Awouters
  * 		   Thomas Van Erum
  * 		   Dirk Vanbeveren

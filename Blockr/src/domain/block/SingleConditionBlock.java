@@ -7,7 +7,7 @@ import game_world.api.PredicateResult;
  * An class of SingleConditionBlocks that extends ConditionBlock.
  * It has a specified evaluation and a name.
  * 
- * @version 3.0
+ * @version 4.0
  * @author Andreas Awouters
  * 		   Thomas Van Erum
  * 		   Dirk Vanbeveren

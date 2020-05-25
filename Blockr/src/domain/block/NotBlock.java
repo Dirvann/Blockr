@@ -5,7 +5,7 @@ import game_world.api.FacadeGameWorld;
  * An class of NotBlocks that extends ChainConditionBlock.
  * It has a specified evaluation and a name.
  * 
- * @version 3.0
+ * @version 4.0
  * @author Andreas Awouters
  * 		   Thomas Van Erum
  * 		   Dirk Vanbeveren

@@ -3,14 +3,13 @@ package domain.block;
 import java.util.List;
 
 import domain.GameController;
-import domain.ProgramArea;
 import game_world.api.Action;
 import game_world.api.Predicate;
 import presentation.block.PresentationBlock;
 /**
  * The Facade of the ImplemenationBlock class.
  * 
- * @version 3.0
+ * @version 4.0
  * @author Andreas Awouters
  * 		   Thomas Van Erum
  * 		   Dirk Vanbeveren
@@ -18,9 +17,9 @@ import presentation.block.PresentationBlock;
  *
  */
 public interface FacadeBlock {
-
+	// ___________________________________________________________________________________________________//
 	// Make The Blocks:
-	// _________________________________________________________________________________________________________\\
+	// ___________________________________________________________________________________________________//
 
 	/**
 	 * 
@@ -210,33 +209,26 @@ public interface FacadeBlock {
 	 *         is a condition) connected to.
 	 */
 	public SurroundingBlock getSurroundingBlock(Block block);
-
+	
+	//TODO: Thomas: hieronder op dezelfde manier doen
 
 	public SingleConditionBlock makeSingleConditionBlock(Predicate predicate);
 	
 	public void RemoveFunctionBlock(FunctionDefinition function, GameController GC);
 
-
 	public ActionBlock makeActionBlock(Action action);
-
 
 	public SequenceBlock getBodyBlock(FunctionDefinition functionDefinition);
 
-
 	public FunctionDefinition getFunctionBlock(Block block);
-
 
 	public void resetFunctionCallers(FunctionDefinition functionDefinition);
 
-
 	public int getID(FunctionDefinition definition);
-
 
 	public int getID(FunctionCall block);
 
-
 	public void setID(FunctionDefinition function, int id);
-
 
 	public void deleteFunctionCall(FunctionCall functionCall, GameController GC);
 

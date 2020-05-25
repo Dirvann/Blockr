@@ -4,12 +4,11 @@ import command.ExecutionCommand;
 import domain.GameController;
 import game_world.api.Action;
 import game_world.api.ActionResult;
-import game_world.api.FacadeGameWorld;
 /**
  * A class of Actionblocks that extends SequenceBlock.
  * An action block can perform actions and has a name.
  * 
- * @version 3.0
+ * @version 4.0
  * @author Andreas Awouters
  * 		   Thomas Van Erum
  * 		   Dirk Vanbeveren
@@ -44,13 +43,10 @@ public class ActionBlock extends SequenceBlock{
 	 * @post   The action of the block will be performed.
 	 */
 	protected void performAction(GameController GC) throws Exception {
-		
-		
 		if (GC == null) 
-			System.out.println(this.name);
+			System.out.println(this.name); //TODO: Thomas
 		else {
-			FacadeGameWorld iGameWorld = GC.getGameWorldImplementation();
-			ActionResult result = iGameWorld.executeAction(action);
+			ActionResult result = GC.getGameWorldImplementation().executeAction(action);
 			if (result == ActionResult.Illegal) throw new Exception("illegal move");
 			GC.setExecutionCommand(new ExecutionCommand(null, null, null, GC));
 		}

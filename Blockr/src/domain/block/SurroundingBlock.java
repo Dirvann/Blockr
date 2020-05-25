@@ -6,7 +6,7 @@ import java.util.List;
  * An abstract class of SurroundingBlocks that extends SequenceBlock.
  * It has a conditionblock and a bodyblock.
  * 
- * @version 3.0
+ * @version 4.0
  * @author Andreas Awouters
  * 		   Thomas Van Erum
  * 		   Dirk Vanbeveren
@@ -14,7 +14,7 @@ import java.util.List;
  *
  */
 public abstract class SurroundingBlock extends SequenceBlock {
-
+	//TODO: Thomas enkele @pos toevoegen bij de grote functies?
 	protected ConditionBlock condition = null;
 	protected SequenceBlock bodyBlock = null;
 
