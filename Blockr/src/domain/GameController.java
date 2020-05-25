@@ -26,7 +26,7 @@ import presentation.block.PresentationBlock;
  * 		   Geert Wesemael
  *
  */
-public class GameController implements FacadeGameController{
+public class GameController {
 	
 	ImplementationBlock BF = new ImplementationBlock();
 	ImplementationPresentationBlock BFP = new ImplementationPresentationBlock();
@@ -73,7 +73,6 @@ public class GameController implements FacadeGameController{
 	 * 		   The execution can't run or the exection can't start.
 	 * 
 	 */
-	@Override
 	public ExecutionCommand execute() throws Exception {
 		if (programArea.programInProgress()) {
 			try {
@@ -96,7 +95,6 @@ public class GameController implements FacadeGameController{
 	 *@post There is no block to execute next.
 	 *		|nextToExecute == null
 	 */
-	@Override
 	public void stopExecution() {
 		programArea.stopExecution();
 	}
@@ -106,7 +104,6 @@ public class GameController implements FacadeGameController{
 	 * @return The next block to execute.
 	 * 		   |Result = programArea.nextToExecute
 	 */
-	@Override
 	public Block getNextBlockToExecute() {
 		return programArea.getNextBlockToExecute();
 	}
@@ -118,7 +115,6 @@ public class GameController implements FacadeGameController{
 	 * @post  The GameWorld Implementation of this GameController is the given gameWorld Implementation.
 	 * 		  |new.getGameWorldImplementation() = iGameWorld
 	 */
-	@Override
 	public void setGameWorldImplementation(FacadeGameWorld iGameWorld) {
 		this.iGameWorld = iGameWorld;
 	}
@@ -128,7 +124,6 @@ public class GameController implements FacadeGameController{
 	 * 
 	 * @return the GameWorld Implementation of this GameController
 	 */
-	@Override
 	public FacadeGameWorld getGameWorldImplementation() {
 		return this.iGameWorld;
 	}
@@ -137,38 +132,38 @@ public class GameController implements FacadeGameController{
 	 * 
 	 * @return the ProgramArea of this GameController
 	 */
-	@Override
+	
 	public ProgramArea getProgramArea() {
 		return this.programArea;
 	}
 	
-	@Override
+	
 	public void addBlockToProgramArea(PresentationBlock<?> pBlock) {
 		getProgramArea().addBlock(pBlock);
 	}
 	
-	@Override
+	
 	public void removeBlockFromProgramArea(PresentationBlock<?> pBlock) {
 		getProgramArea().removeBlock(BFP.getBlock(pBlock), this);
 	}
 
-	@Override
+	
 	public int getAmountOfBlocksLeft() {
 		return getProgramArea().getBlocksLeft();
 	}
 
-	@Override
+	
 	public List<Block> getCopyOfAllBlocks() {
 		return getProgramArea().getAllBlocks();		
 	}
-	@Override
+	
 	public void disconnect(Block block) {
 		if (block != null) {
 			getProgramArea().addTopLevelBlock(block);
 			BF.disconnect(block);
 		}
 	}
-	@Override
+	
 	public boolean connect(Block firstBlock, Block secondBlock) {
 		if(BF.connect(firstBlock, secondBlock)) {
 			getProgramArea().removeTopLevelBlock(secondBlock);
@@ -176,41 +171,41 @@ public class GameController implements FacadeGameController{
 		}
 		return false;
 	}
-	@Override
+	
 	public void setBody(SurroundingBlock surroundingBlock, SequenceBlock block) {
 		BF.setBodyBlock(surroundingBlock, block);
 		getProgramArea().removeTopLevelBlock(block);
 	}
-	@Override
+	
 	public void setBody(FunctionDefinitionBlock surroundingBlock, SequenceBlock block) {
 		BF.setBodyBlock(surroundingBlock, block);
 		getProgramArea().removeTopLevelBlock(block);
 	}
-	@Override
+	
 	public void setCondition(SurroundingBlock surroundingBlock, ConditionBlock condition) {
 		BF.setConditionBlock(surroundingBlock, condition);
 		getProgramArea().removeTopLevelBlock(condition);
 	}
 	
-	@Override
+	
 	public void setExecutionCommand(ExecutionCommand exeCmd) {
 		getProgramArea().setExecutionCommand(exeCmd);
 		
 	}
 
-	@Override
+	
 	public Boolean isExecuting() {
 		return getProgramArea().programInProgress();
 	}
 
-	@Override
+	
 	public void setNewExecution(Block currentlyExecuted, Block nextToExecute) {
 		getProgramArea().currentExe = currentlyExecuted;
 		getProgramArea().nextToExecute = nextToExecute;
 		
 	}
 	
-	@Override
+	
 	public List<FunctionCallBlock> getAllFunctionCallsOfID(int ID) {
 		return getProgramArea().getAllFunctionCallsWithID(ID);
 	}
