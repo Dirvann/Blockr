@@ -354,7 +354,7 @@ public class BlockAreaCanvas extends Canvas {
 	 * @post   If the selectedBlock is a FunctionDefinition Block Presentation then there are no FunctionCalls
 	 * 		   with the same ID as the selectedBlock in the ProgramArea.
 	 * 		   | if selectedBlock instanceof FunctionDefinitionBlockPresentation
-	 * 		   | then 0 ==  GC.getAllFunctionCallsOfID(blockrPanel.getGameController().getProgramArea(),selectedBlock.ID)
+	 * 		   | then 0 ==  GC.getAllFunctionCallsOfID(blockrPanel.getGameController().getProgramArea(),selectedBlock.ID) TODO: is deze lijn commentaar correct?
 	 * @effect The selected block is removed if possible, the action is then
 	 * 		   saved as a postCommand.
 	 * 		   | postCommand = new DeleteBlock(blockrPanel.getGameController(), selectedBlock)
@@ -475,7 +475,7 @@ public class BlockAreaCanvas extends Canvas {
 	 * @post   The startSnapshot is equal to a snapshot of the new gameworld.
 	 * 		   |new.startSnapshot != old.startSnapshot
 	 * @post   The GameControllers GameWorld Implementation is set to iGameWorld.
-	 * 		   | blockrPanel.getGameController().getGameWorldImplementation == iGameWorld
+	 * 		   | GC.getGameWorldImplementation == iGameWorld
 	 * @post   The game is not running.
 	 * 		   | !GC.isExecuting(blockrPanel.getGameController())
 	 * @effect A new GameWorld is set for the iGameWorld.
@@ -493,7 +493,7 @@ public class BlockAreaCanvas extends Canvas {
 	 * Undo the last change.
 	 * 
 	 *@effect When the game is running undo the last execution.
-	 *   	  | if GC.isExecuting(blockrPanel.getGameController()
+	 *   	  | if GC.isExecuting()
 	 * 		  | then exe.undo()
 	 * 		  Otherwise undo the last command.
 	 * 		  | cmd.undo()
@@ -510,7 +510,7 @@ public class BlockAreaCanvas extends Canvas {
 	 * Redo the last undo.
 	 * 
 	 * @effect When the game is running redo the last undone execution.
-	 * 		   | if GC.isExecuting(blockrPanel.getGameController()
+	 * 		   | if GC.isExecuting()
 	 * 		   | then exe.redo()
 	 * 		   Otherwise redo the last undone command.
 	 * 		   | cmd.redo()
