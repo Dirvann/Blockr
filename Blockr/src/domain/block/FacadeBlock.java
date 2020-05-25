@@ -214,7 +214,7 @@ public interface FacadeBlock {
 
 	public SingleConditionBlock makeSingleConditionBlock(Predicate predicate);
 	
-	public void RemoveFunctionBlock(FunctionDefinition function, ProgramArea programArea);
+	public void RemoveFunctionBlock(FunctionDefinition function, GameController GC);
 
 
 	public ActionBlock makeActionBlock(Action action);
@@ -238,7 +238,7 @@ public interface FacadeBlock {
 	public void setID(FunctionDefinition function, int id);
 
 
-	public void deleteFunctionCall(FunctionCall functionCall, ProgramArea programArea);
+	public void deleteFunctionCall(FunctionCall functionCall, GameController GC);
 
 
 }

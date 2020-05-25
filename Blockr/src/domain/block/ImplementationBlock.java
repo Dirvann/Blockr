@@ -172,8 +172,8 @@ public class ImplementationBlock implements FacadeBlock{
 
 
 	@Override
-	public void RemoveFunctionBlock(FunctionDefinition function, ProgramArea programArea) {
-		function.removeFunctionDefinition(programArea);
+	public void RemoveFunctionBlock(FunctionDefinition function, GameController GC) {
+		function.removeFunctionDefinition(GC);
 		
 	}
 	@Override
@@ -202,7 +202,6 @@ public class ImplementationBlock implements FacadeBlock{
 	@Override
 	public void resetFunctionCallers(FunctionDefinition functionDefinition) {
 		functionDefinition.callStack = new ArrayList<SequenceBlock>();
-		
 	}
 
 	@Override
@@ -211,8 +210,8 @@ public class ImplementationBlock implements FacadeBlock{
 		
 	}
 	@Override
-	public void deleteFunctionCall(FunctionCall functionCall, ProgramArea programArea) {
-		functionCall.delete(programArea);
+	public void deleteFunctionCall(FunctionCall functionCall, GameController GC) {
+		functionCall.delete(GC);
 	}
 
 	

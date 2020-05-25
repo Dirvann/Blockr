@@ -168,11 +168,11 @@ public class GameController implements FacadeGameController{
 	
 	@Override
 	public void removeBlockFromProgramArea(PresentationBlock<?> pBlock) {
-		getProgramArea().removeBlock(BFP.getBlock(pBlock));
+		getProgramArea().removeBlock(BFP.getBlock(pBlock), this);
 	}
 	@Override
-	public void removeBlockFromProgramArea(ProgramArea pa, Block block) { //TODO: check of deze weg kan
-		pa.removeBlock(block);
+	public void removeBlockFromProgramArea(Block block) {
+		getProgramArea().removeBlock(block, this);
 	}
 	
 	@Override
@@ -192,24 +192,9 @@ public class GameController implements FacadeGameController{
 		}
 	}
 	@Override
-	public void disconnect(Block block, ProgramArea pa) { //TODO: is deze nodig?
-		if (block != null) {
-			pa.addTopLevelBlock(block);
-			BF.disconnect(block);
-		}		
-	}
-	@Override
 	public boolean connect(Block firstBlock, Block secondBlock) {
 		if(BF.connect(firstBlock, secondBlock)) {
 			getProgramArea().removeTopLevelBlock(secondBlock);
-			return true;
-		}
-		return false;
-	}
-	@Override
-	public boolean connect(Block firstBlock, Block secondBlock, ProgramArea pa) { //TODO: kan deze niet weg?
-		if(BF.connect(firstBlock, secondBlock)) {
-			pa.removeTopLevelBlock(secondBlock);
 			return true;
 		}
 		return false;
@@ -220,23 +205,10 @@ public class GameController implements FacadeGameController{
 		getProgramArea().removeTopLevelBlock(block);
 	}
 	@Override
-	public void setBody(SurroundingBlock surroundingBlock, SequenceBlock block, ProgramArea pa) { //TODO: kan deze niet weg?
-		BF.setBodyBlock(surroundingBlock, block);
-		pa.removeTopLevelBlock(block);
-	}
-	
-	@Override
 	public void setBody(FunctionDefinition surroundingBlock, SequenceBlock block) {
 		BF.setBodyBlock(surroundingBlock, block);
 		getProgramArea().removeTopLevelBlock(block);
 	}
-	
-	@Override
-	public void setBody(FunctionDefinition funct, SequenceBlock block, ProgramArea pa) { //TODO:dees weg?
-		BF.setBodyBlock(funct, block);
-		pa.removeTopLevelBlock(block);
-	}
-	
 	@Override
 	public void setCondition(SurroundingBlock surroundingBlock, ConditionBlock condition) {
 		BF.setConditionBlock(surroundingBlock, condition);
@@ -250,7 +222,6 @@ public class GameController implements FacadeGameController{
 	
 	@Override
 	public void setExecutionCommand(ExecutionCommand exeCmd) {
-		//if (GC == null) return; //TODO: fix dit
 		getProgramArea().setExecutionCommand(exeCmd);
 		
 	}
@@ -268,8 +239,8 @@ public class GameController implements FacadeGameController{
 	}
 	
 	@Override
-	public List<FunctionCall> getAllFunctionCallsOfID(int ID, ProgramArea pa) { //TODO:dees weg?
-		return pa.getAllFunctionCallsWithID(ID);
+	public List<FunctionCall> getAllFunctionCallsOfID(int ID) {
+		return getProgramArea().getAllFunctionCallsWithID(ID);
 	}
 
 }

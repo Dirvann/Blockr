@@ -2,7 +2,6 @@ package domain.block;
 
 import command.ExecutionCommand;
 import domain.GameController;
-import domain.ImplementationGameController;
 import exceptions.domainExceptions.NoConditionBlockException;
 /**
  * An class of IfBlocks that extends SingleSurroundingBlock.

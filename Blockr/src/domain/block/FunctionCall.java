@@ -1,7 +1,6 @@
 package domain.block;
 
 import domain.GameController;
-import domain.ImplementationGameController;
 import domain.ProgramArea;
 
 public class FunctionCall extends SequenceBlock{
@@ -28,31 +27,30 @@ public class FunctionCall extends SequenceBlock{
 		return super.execute(GC);
 	}
 	
-	protected void delete(ProgramArea programArea) {
-		ImplementationGameController IGC = new ImplementationGameController();
+	protected void delete(GameController GC) {
 		SequenceBlock prev = this.previous;
 		SequenceBlock nextBlock = this.next;
 		SurroundingBlock surr = this.surroundingBlock;
 		FunctionDefinition funct = this.function;
 
 		if (nextBlock != null) {
-			IGC.disconnect(this.next, programArea);
+			GC.disconnect(this.next);
 		}
 		
-		IGC.disconnect(this, programArea);
-		IGC.removeBlockFromProgramArea(programArea, this);
+		GC.disconnect(this);
+		GC.removeBlockFromProgramArea(this.getPresentationBlock());
 		if (prev == null) {
 			if (surr == null) {
 				if (funct != null) {
-					IGC.setBody(funct, nextBlock, programArea);
+					GC.setBody(funct, nextBlock);
 				}
 			}
 			else {
-				IGC.setBody(surr, nextBlock, programArea);
+				GC.setBody(surr, nextBlock);
 			}
 		}
 		else {
-			IGC.connect(prev, nextBlock, programArea);
+			GC.connect(prev, nextBlock);
 		}
 		
 	}

@@ -44,7 +44,7 @@ public class DeleteFunctionDefinition implements Command {
 		this.palette = palette;
 		this.deletionCommandsOfCalls = new ArrayList<DeleteCallerCommand>();
 		FunctionDefinition defBlock = (FunctionDefinition) BFP.getBlock(definition);
-		List<FunctionCall> functionCalls = GC.getAllFunctionCallsOfID(BF.getID(defBlock), GC.getProgramArea());
+		List<FunctionCall> functionCalls = GC.getAllFunctionCallsOfID(BF.getID(defBlock));
 		for (FunctionCall functionCall : functionCalls) {
 			deletionCommandsOfCalls.add(new DeleteCallerCommand(GC, functionCall));
 		}

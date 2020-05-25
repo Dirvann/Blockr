@@ -47,7 +47,7 @@ public class DeleteCallerCommand implements Command {
 
 	@Override
 	public void execute() {
-		BF.deleteFunctionCall(caller, GC.getProgramArea());
+		BF.deleteFunctionCall(caller, GC);
 	}
 
 	@Override
