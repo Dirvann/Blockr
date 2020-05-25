@@ -15,8 +15,11 @@ public class MakeFunctionCommand implements Command {
 	 * GameController. The class also specifies what must happen to undo and execute this
 	 * command.
 	 * 
-	 * @version 3.0
-	 * @author Andreas Awouters, Thomas Van Erum, Dirk Vanbeveren, Geert Wesemael
+	 * @version 4.0
+	 * @author Andreas Awouters 
+	 * 		   Thomas Van Erum
+	 * 		   Dirk Vanbeveren
+	 * 		   Geert Wesemael
 	 *
 	 */
 	GameController GC;
@@ -30,9 +33,14 @@ public class MakeFunctionCommand implements Command {
 	 * Makes a Command for the creation of a block. This holds the info to undo and
 	 * redo this action.
 	 * 
-	 * @param blockToConnectTo block before group of blocks connected
-	 * @param blockToConnect   first block of group of blocks that gets connected.
-	 * @Post the objects GC and block will be stored in this Command for later use.
+	 * @param blockToConnectTo 
+	 * 		  Block before group of blocks connected.
+	 * @param blockToConnect   
+	 * 		  First block of group of blocks that gets connected.
+	 * @post  The objects GC, function and palette will be stored in this Command for later use.
+	 * 		  | new.GC == GC
+	 * 		  | new.function == function
+	 * 		  | new.palette == palette
 	 */
 	public MakeFunctionCommand(GameController GC, PresentationBlock<FunctionDefinition> function, PalettePresentation palette) {
 		this.GC = GC;

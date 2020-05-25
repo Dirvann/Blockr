@@ -5,13 +5,15 @@ import javax.swing.WindowConstants;
 
 import presentation.BlockrPanel;
 /**
-* @version 3.0
-* @author Andreas Awouters
-* 		   Thomas Van Erum
-* 		   Dirk Vanbeveren
-* 		   Geert Wesemael
-*
-*/
+ * The class that runs the current version of our Blockr Game.
+ * 
+ * @version 4.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
+ *
+ */
 public class  ClientMainClass {
 
 	private static BlockrPanel blockrPanel;
@@ -31,13 +33,13 @@ public class  ClientMainClass {
 				frame.setVisible(true);
 				
 			}  catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
+				System.out.println("Run failure due to: Class Not Found Exception");
 				e.printStackTrace();
 			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
+				System.out.println("Run failure due to: Instantiation Exception");
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
+				System.out.println("Run failure due to: Illegal Access Exception");
 				e.printStackTrace();
 			}
 		}

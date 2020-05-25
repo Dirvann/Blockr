@@ -10,32 +10,38 @@ import domain.block.ImplementationBlock;
  * was previously connected to blockToConnectTo). The class also specifies what must
  * happen to undo and execute this command.
  * 
- * @version 3.0
- * @author Andreas Awouters, Thomas Van Erum, Dirk Vanbeveren, Geert Wesemael
+ * @version 4.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
  *
  */
 public class ConnectCommand implements Command {
 	ImplementationBlock BF = new ImplementationBlock();
-	// first block of group of blocks that gets connected.
 	Block blockToConnect;
-	// block before group of blocks connected
 	Block blockToConnectTo;
-	// block after group of blocks connected
 	Block nextBlock;
-	// The gamecontroller wher the blocks exist
 	GameController GC;
 
 	/**
 	 * Makes a new command consisting of all of the information to undo and redo
 	 * this Command.
 	 * 
-	 * @param blockToConnectTo block before group of blocks connected
-	 * @param blockToConnect   first block of group of blocks that gets connected.
-	 * @param nextBlock        block after group of blocks connected
-	 * @param lastBlock        last block of group of blocks
-	 * 
-	 * @Post The objects blockToConnectTo, blockToConnect, nextBlock and GC are
-	 *       saved in this command for later use.
+	 * @param blockToConnectTo 
+	 * 		  Block before group of blocks connected.
+	 * @param blockToConnect   
+	 * 		  First block of group of blocks that gets connected.
+	 * @param nextBlock        
+	 * 		  Block after group of blocks connected.
+	 * @param lastBlock        
+	 * 		  Last block of group of blocks.
+	 * @post  The objects blockToConnectTo, blockToConnect, nextBlock and GC are
+	 *        saved in this command for later use.
+	 *        | new.blockToConnectTo == blockToConnectTo
+	 *        | new.blockToConnect == blockToConnect
+	 * 		  | new.nextBlock == nextBlock
+	 * 		  | new.GC == GC
 	 */
 	public ConnectCommand(Block blockToConnectTo, Block blockToConnect, Block nextBlock, GameController GC) {
 		this.blockToConnect = blockToConnect;

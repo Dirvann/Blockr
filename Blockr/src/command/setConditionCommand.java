@@ -18,25 +18,26 @@ import domain.block.SurroundingBlock;
  */
 public class setConditionCommand implements Command {
 	ImplementationBlock BF = new ImplementationBlock();
-
-	// first block of group of blocks that gets connected.
 	ConditionBlock blockToConnect;
-	// the surrounding block blockToConnect will be connected to.
 	SurroundingBlock surroundingBlock;
-	// block after group of blocks connected
 	ConditionBlock nextBlock;
-	// The gamecontroller wher the blocks exist
 	GameController GC;
 
 	/**
 	 * Makes a Command used to set the condition of a surrounding block.
 	 * 
-	 * @param blockToConnectTo block before group of blocks connected
-	 * @param blockToConnect   first block of group of blocks that gets connected.
-	 * @param nextBlock        block after group of blocks connected
-	 * 
-	 * @post the objects surroundingBlock, blockToConnect, nextBlock and GC are
-	 *       stored in this Command for later use.
+	 * @param blockToConnectTo 
+	 * 		  Block before group of blocks connected.
+	 * @param blockToConnect   
+	 * 		  First block of group of blocks that gets connected.
+	 * @param nextBlock        
+	 * 		  Block after group of blocks connected.
+	 * @post  The objects surroundingBlock, blockToConnect, nextBlock and GC are
+	 *        stored in this Command for later use.
+	 *       | new.blockToConnect == blockToConnect
+	 * 		 | new.surroundingBlock == surroundingBlock
+	 * 	  	 | new.nextBlock == nextBlock
+	 * 		 | new.GC == GC
 	 */
 	public setConditionCommand(SurroundingBlock surroundingBlock, ConditionBlock blockToConnect,
 			ConditionBlock nextBlock, GameController GC) {

@@ -10,8 +10,11 @@ import presentation.block.PresentationBlock;
  * GameController. The class also specifies what must happen to undo and execute this
  * command.
  * 
- * @version 3.0
- * @author Andreas Awouters, Thomas Van Erum, Dirk Vanbeveren, Geert Wesemael
+ * @version 4.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
  *
  */
 public class DeleteBlock implements Command {
@@ -23,10 +26,13 @@ public class DeleteBlock implements Command {
 	 * Makes a delete block Commmand. This Command includes all of the info needed
 	 * to undo and redo a block deletion Command.
 	 * 
-	 * @param GC    the gamecontroller where the block is deleted.
-	 * @param block the block that gets deleted.
-	 * 
-	 * @Post The objects block and GC are stored in this command for later use.
+	 * @param GC    
+	 * 		  The GameController where the block is deleted.
+	 * @param block 
+	 * 		  The block that gets deleted.
+	 * @post  The objects block and GC are stored in this command for later use.
+	 * 		  | new.GC == GC
+	 * 		  | new.block == block
 	 */
 	public DeleteBlock(GameController GC, PresentationBlock<?> block) {
 		this.GC = GC;

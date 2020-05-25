@@ -10,31 +10,36 @@ import domain.block.SequenceBlock;
  * was previously connected as a body). The class also specifies what must
  * happen to undo and execute this command.
  * 
- * @version 3.0
- * @author Andreas Awouters, Thomas Van Erum, Dirk Vanbeveren, Geert Wesemael
+ * @version 4.0
+ * @author Andreas Awouters
+ * 		   Thomas Van Erum
+ * 		   Dirk Vanbeveren
+ * 		   Geert Wesemael
  *
  */
 public class AddToBodyFunctionDefinitionCommand implements Command {
 
-	// first block of group of blocks that gets connected.
 	SequenceBlock blockToConnect;
-	// the surrounding block blockToConnect will be connected to.
 	FunctionDefinition definition;
-	// block after group of blocks connected
 	SequenceBlock nextBlock;
-	// The gamecontroller wher the blocks exist
 	GameController GC;
 
 	/**
 	 * Makes a command for when a block is added to the body surrounding block. It
 	 * includes all the info to undo and redo this action.
 	 * 
-	 * @param blockToConnectTo block before group of blocks connected
-	 * @param blockToConnect   first block of group of blocks that gets connected.
-	 * @param nextBlock        block after group of blocks connected
-	 * 
-	 * @Post surroundingBlock, blockToConnect, NextBlock and GC objects will be
-	 *       saved in this object for later use.
+	 * @param blockToConnectTo 
+	 * 		  Block before group of blocks connected.
+	 * @param blockToConnect   
+	 * 		  First block of group of blocks that gets connected.
+	 * @param nextBlock        
+	 * 		  Block after group of blocks connected.
+	 * @post  surroundingBlock, blockToConnect, NextBlock and GC objects will be
+	 *        saved in this object for later use.
+	 *        | new.blockToConnect == blockToConnect
+	 * 		  | new.definition == definition
+	 * 		  | new.nextBlock == nextBlock
+	 * 		  | new.GC == GC
 	 */
 	public AddToBodyFunctionDefinitionCommand(FunctionDefinition definition, SequenceBlock blockToConnect, SequenceBlock nextBlock,
 			GameController GC) {
