@@ -1,4 +1,4 @@
-package domain;
+package game_world.api;
 /**
  * A class of vectors involving an x value and a y value.
  * 
@@ -107,5 +107,13 @@ public final class Vector {
 	 */
 	public double distanceTo(Vector other) {
 		return Math.sqrt(Math.pow(getX() - other.getX(), 2) + Math.pow(getY() - other.getY(),2));
+	}
+	
+	/**
+	 * Creates a copy of this vector
+	 * @return a new copy of the vector
+	 */
+	public Vector createCopy() {
+		return new Vector(getX(), getY());
 	}
 }

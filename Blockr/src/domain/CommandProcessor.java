@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import command.Command;
 import command.DraggingCommand;
 import domain.block.ImplementationBlock;
+import game_world.api.Vector;
 import presentation.block.PresentationBlock;
 
 /**

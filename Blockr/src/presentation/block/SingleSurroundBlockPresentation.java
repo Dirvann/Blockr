@@ -18,7 +18,7 @@ import domain.block.ConditionBlock;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
 import domain.block.SingleSurroundingBlock;
-import domain.Vector;
+import game_world.api.Vector;
 
 public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSurroundingBlock> {
 	

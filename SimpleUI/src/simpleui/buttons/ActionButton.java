@@ -2,10 +2,11 @@ package simpleui.buttons;
 import java.awt.Color;
 
 
+
 import game_world.api.ActionResult;
 import game_world.api.FacadeGameWorld;
 import game_world.api.Action;
-import simpleui.Vector;
+import game_world.api.Vector;
 
 public class ActionButton extends Button<ActionResult>{
 	

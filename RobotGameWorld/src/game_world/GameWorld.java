@@ -6,6 +6,7 @@ import exceptions.domainExceptions.OutOfBoundsException;
 import exceptions.domainExceptions.robotExceptions.RobotEnteringWallException;
 import exceptions.domainExceptions.robotExceptions.RobotMovingOffGridException;
 import game_world.cell.*;
+import game_world.api.Vector;
 
 // GameWorld contains a grid and the entities that move around on that grid
 // Currently only a single Robot moves around

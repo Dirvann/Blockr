@@ -10,7 +10,7 @@ import command.ConnectCommand;
 import domain.GameController;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
-import domain.Vector;
+import game_world.api.Vector;
 import presentation.ProgramAreaPresentation;
 
 public abstract class PresentationBlock<T extends Block> {

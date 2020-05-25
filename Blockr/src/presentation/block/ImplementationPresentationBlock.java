@@ -4,7 +4,7 @@ import java.awt.Graphics;
 
 import command.Command;
 import domain.GameController;
-import domain.Vector;
+import game_world.api.Vector;
 import domain.block.ActionBlock;
 import domain.block.Block;
 import domain.block.ChainConditionBlock;

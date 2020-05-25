@@ -4,6 +4,7 @@ import java.util.Random;
 
 import exceptions.domainExceptions.OutOfBoundsException;
 import game_world.cell.*;
+import game_world.api.Vector;
 
 /**
  * A class of the Grid, containing the cells for the gameworld to use. Each Grid

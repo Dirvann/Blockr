@@ -4,9 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import actions.MoveForwardAction;
 import actions.TurnLeftAction;
@@ -16,7 +14,7 @@ import exceptions.domainExceptions.robotExceptions.RobotEnteringWallException;
 import exceptions.domainExceptions.robotExceptions.RobotMovingOffGridException;
 import game_world.Direction;
 import game_world.GameWorld;
-import game_world.Vector;
+import game_world.api.Vector;
 import game_world.api.Action;
 import game_world.api.ActionResult;
 import game_world.api.FacadeGameWorld;

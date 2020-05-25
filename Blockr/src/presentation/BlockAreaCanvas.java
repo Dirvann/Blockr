@@ -15,7 +15,7 @@ import command.disconnectCommand;
 import domain.CommandProcessor;
 import domain.ExecutionProcessor;
 import domain.GameController;
-import domain.Vector;
+import game_world.api.Vector;
 import domain.block.Block;
 import domain.block.FunctionDefinition;
 import domain.block.ImplementationBlock;

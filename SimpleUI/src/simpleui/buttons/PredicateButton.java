@@ -4,7 +4,7 @@ import java.awt.Color;
 import game_world.api.FacadeGameWorld;
 import game_world.api.PredicateResult;
 import game_world.api.Predicate;
-import simpleui.Vector;
+import game_world.api.Vector;
 
 public class PredicateButton extends Button<PredicateResult>{
 	

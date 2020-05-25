@@ -7,7 +7,7 @@ import java.util.List;
 
 import domain.block.ImplementationBlock;
 import domain.block.SingleConditionBlock;
-import domain.Vector;
+import game_world.api.Vector;
 
 public class SingleConditionBlockPresentation extends PresentationBlock<SingleConditionBlock> {
 	

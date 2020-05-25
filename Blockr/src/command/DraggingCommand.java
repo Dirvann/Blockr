@@ -1,6 +1,6 @@
 package command;
 
-import domain.Vector;
+import game_world.api.Vector;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 /**

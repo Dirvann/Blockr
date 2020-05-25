@@ -10,7 +10,7 @@ import java.util.List;
 
 import domain.block.ActionBlock;
 import domain.block.ImplementationBlock;
-import domain.Vector;
+import game_world.api.Vector;
 
 public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
 	public ActionBlockPresentation(Vector pos, ActionBlock block) {

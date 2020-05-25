@@ -1,5 +1,6 @@
 package game_world;
 
+import game_world.api.Vector;
 /**
  * A class of the Robot, containing the location and the direction of the Robot.
  *

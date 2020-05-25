@@ -8,7 +8,7 @@ import actions.MoveForwardAction;
 import actions.TurnLeftAction;
 import actions.TurnRightAction;
 import domain.GameController;
-import domain.Vector;
+import game_world.api.Vector;
 import domain.block.ActionBlock;
 import domain.block.Block;
 import domain.block.ChainConditionBlock;

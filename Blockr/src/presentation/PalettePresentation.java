@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.Vector;
+import game_world.api.Vector;
 import domain.block.FunctionCall;
 import domain.block.FunctionDefinition;
 import domain.block.ImplementationBlock;

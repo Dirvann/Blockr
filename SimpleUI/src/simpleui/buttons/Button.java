@@ -8,7 +8,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Area;
 
 import game_world.api.FacadeGameWorld;
-import simpleui.Vector;
+import game_world.api.Vector;
 
 public abstract class Button<T> {
 	private String name;

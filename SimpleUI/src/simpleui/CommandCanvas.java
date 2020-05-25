@@ -20,6 +20,7 @@ import simpleui.buttons.NewGameWorldButton;
 import simpleui.buttons.PredicateButton;
 import simpleui.buttons.ResetGameWorldButton;
 import simpleui.buttons.SnapshotButton;
+import game_world.api.Vector;
 
 public class CommandCanvas extends Canvas implements MouseListener {
 

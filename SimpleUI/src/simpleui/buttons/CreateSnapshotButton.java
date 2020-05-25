@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import game_world.api.FacadeGameWorld;
 import game_world.api.Snapshot;
-import simpleui.Vector;
+import game_world.api.Vector;
 
 public class CreateSnapshotButton extends Button<Snapshot> {
 

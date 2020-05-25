@@ -10,7 +10,7 @@ import java.util.List;
 
 import domain.block.FunctionCall;
 import domain.block.ImplementationBlock;
-import domain.Vector;
+import game_world.api.Vector;
 
 public class FunctionCallBlockPresentation extends PresentationBlock<FunctionCall> {
 	public FunctionCallBlockPresentation(Vector pos, FunctionCall block) {

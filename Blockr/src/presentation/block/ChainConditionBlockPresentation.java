@@ -10,7 +10,7 @@ import java.util.List;
 
 import domain.block.ChainConditionBlock;
 import domain.block.ImplementationBlock;
-import domain.Vector;
+import game_world.api.Vector;
 
 public class ChainConditionBlockPresentation extends PresentationBlock<ChainConditionBlock> {
 	

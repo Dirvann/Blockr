@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Area;
 
-import domain.Vector;
+import game_world.api.Vector;
 
 public class BlockDrawer {
 
