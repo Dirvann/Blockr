@@ -74,11 +74,6 @@ public class BlockrPanel extends Panel {
 		gameWorldC.setBackground(Color.WHITE);
 		
 	}
-	
-//	public Implementation getGameInterface() {
-//		return this.GI;
-//	}
-	
 	/**
 	 * The gameController associated with this BlockrPanel.
 	 * 

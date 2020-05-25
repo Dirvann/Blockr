@@ -12,7 +12,6 @@ import game_world.api.Action;
 import game_world.api.FacadeGameWorld;
 import game_world.api.Predicate;
 import presentation.block.FunctionCallBlockPresentation;
-import presentation.block.FunctionDefinitionBlockPresentation;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 
@@ -20,7 +19,7 @@ import presentation.block.PresentationBlock;
  * PalettePresentation is intended to be used as a part of a BlockAreaCanvas.
  * PalettePresentation handles activities concerning the palette.
  * 
- * @version 3.0
+ * @version 4.0
  * @author Andreas Awouters
  * 		   Thomas Van Erum
  * 		   Dirk Vanbeveren

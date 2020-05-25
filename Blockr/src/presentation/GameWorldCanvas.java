@@ -9,7 +9,7 @@ import game_world.api.GameWorldListener;
 /**
  * Canvas object used to draw the GameWorld on.
  * 
- * @version 3.0
+ * @version 4.0
  * @author Andreas Awouters
  * 		   Thomas Van Erum
  * 		   Dirk Vanbeveren
