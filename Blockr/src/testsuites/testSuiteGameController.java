@@ -4,8 +4,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.Test;
-import org.junit.platform.commons.function.Try;
-
 import actions.MoveForwardAction;
 import actions.TurnLeftAction;
 import actions.TurnRightAction;

@@ -7,7 +7,6 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import domain.GameController;
-import domain.ImplementationGameController;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
 import domain.block.SurroundingBlock;
@@ -49,8 +48,7 @@ import presentation.block.ImplementationPresentationBlock;
 class UseCase4 {
 	
 	private static BlockrPanel blockrPanel;
-	private ImplementationGameController GC;
-	private GameController gc;
+	private GameController GC;
 	static ImplementationBlock IB = new ImplementationBlock();
 	static ImplementationPresentationBlock IPB = new ImplementationPresentationBlock();
 	static ImplementationGameWorld IGW = new ImplementationGameWorld();
@@ -63,8 +61,7 @@ class UseCase4 {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		GC = new ImplementationGameController();
-		gc = blockrPanel.getGameController();
+		GC = blockrPanel.getGameController();
 		blockAreaCanvas = blockrPanel.getBlockAreaCanvas();	
 	}
 	@Test
@@ -73,21 +70,21 @@ class UseCase4 {
 		blockAreaCanvas.handleMousePressed(11, 11);
 		blockAreaCanvas.handleMouseDragged(500, 150);
 		blockAreaCanvas.handleMouseReleased(500, 150);
-		assertEquals(new Vector(499,149),IPB.getPosition(IB.getPresentationBlock(GC.getCopyOfAllBlocks(gc).get(0))));
+		assertEquals(new Vector(499,149),IPB.getPosition(IB.getPresentationBlock(GC.getCopyOfAllBlocks().get(0))));
 		//draging block
 		blockAreaCanvas.handleMousePressed(500, 150);
 		blockAreaCanvas.handleMouseDragged(400, 200);
-		List<Block> topLevelBlocks = GC.getCopyOfAllBlocks(gc);
+		List<Block> topLevelBlocks = GC.getCopyOfAllBlocks();
 		//assertEquals(0,topLevelBlocks.size());
 		blockAreaCanvas.handleMouseDragged(355, 40);
 		blockAreaCanvas.handleMouseDragged(200, 40);
 		blockAreaCanvas.handleMouseDragged(400, 250);
 		blockAreaCanvas.handleMouseReleased(400, 250);
-		topLevelBlocks = GC.getCopyOfAllBlocks(gc);
+		topLevelBlocks = GC.getCopyOfAllBlocks();
 		assertEquals(1,topLevelBlocks.size());
-		assertEquals("MoveForward",IB.getName(topLevelBlocks.get(0)));
-		assertEquals(null,GC.getNextBlockToExecute(gc));
-		assertEquals(new Vector(399,249),IPB.getPosition(IB.getPresentationBlock(GC.getCopyOfAllBlocks(gc).get(0))));
+		assertEquals("Move Forward",IB.getName(topLevelBlocks.get(0)));
+		assertEquals(null,GC.getNextBlockToExecute());
+		assertEquals(new Vector(399,249),IPB.getPosition(IB.getPresentationBlock(GC.getCopyOfAllBlocks().get(0))));
 	}
 	
 	@Test
@@ -96,7 +93,7 @@ class UseCase4 {
 		blockAreaCanvas.handleMousePressed(11, 71);
 		blockAreaCanvas.handleMouseDragged(500, 70);
 		blockAreaCanvas.handleMouseReleased(500, 70);
-		Block block = GC.getCopyOfAllBlocks(gc).get(0);
+		Block block = GC.getCopyOfAllBlocks().get(0);
 		blockAreaCanvas.handleMousePressed(11, 131);
 		blockAreaCanvas.handleMouseDragged(500, 90);
 		blockAreaCanvas.handleMouseReleased(500, 90);
@@ -109,7 +106,7 @@ class UseCase4 {
 		blockAreaCanvas.handleMousePressed(500, 70);
 		blockAreaCanvas.handleMouseDragged(400, 250);
 		blockAreaCanvas.handleMouseReleased(400, 250);
-		assertEquals(null,GC.getNextBlockToExecute(gc));
+		assertEquals(null,GC.getNextBlockToExecute());
 		assertEquals(new Vector(399,249),IPB.getPosition(IB.getPresentationBlock(block)));
 		assertEquals(nextBlock,IB.getNextBlock(block));
 		assertEquals(new Vector(399,269),IPB.getPosition(IB.getPresentationBlock(nextBlock)));
@@ -123,12 +120,12 @@ class UseCase4 {
 		blockAreaCanvas.handleMousePressed(11, 71);
 		blockAreaCanvas.handleMouseDragged(500, 70);
 		blockAreaCanvas.handleMouseReleased(500, 70);
-		Block block = GC.getCopyOfAllBlocks(gc).get(0);
+		Block block = GC.getCopyOfAllBlocks().get(0);
 		blockAreaCanvas.handleMousePressed(11, 131);
 		blockAreaCanvas.handleMouseDragged(500, 90);
 		blockAreaCanvas.handleMouseReleased(500, 90);
 		Block nextBlock = IB.getNextBlock(block);
-		assertEquals("TurnRight",IB.getName(nextBlock));
+		assertEquals("Turn Right",IB.getName(nextBlock));
 		assertEquals(new Vector(499,69),IPB.getPosition(IB.getPresentationBlock(block)));
 		assertEquals(new Vector(499,89),IPB.getPosition(IB.getPresentationBlock(nextBlock)));
 //		assertTrue(GC.isTopLevelBlock(gc, block));
@@ -151,7 +148,7 @@ class UseCase4 {
 		blockAreaCanvas.handleMousePressed(11, 251);
 		blockAreaCanvas.handleMouseDragged(500, 70);
 		blockAreaCanvas.handleMouseReleased(500, 70);
-		Block notBlock = GC.getCopyOfAllBlocks(gc).get(0);
+		Block notBlock = GC.getCopyOfAllBlocks().get(0);
 		//drop wall in front block
 		blockAreaCanvas.handleMousePressed(11, 191);
 		blockAreaCanvas.handleMouseDragged(600, 70);
@@ -163,7 +160,7 @@ class UseCase4 {
 		blockAreaCanvas.handleMousePressed(500, 70);
 		blockAreaCanvas.handleMouseDragged(400, 250);
 		blockAreaCanvas.handleMouseReleased(400, 250);
-		assertEquals(null,GC.getNextBlockToExecute(gc));
+		assertEquals(null,GC.getNextBlockToExecute());
 		assertEquals(new Vector(399,249),IPB.getPosition(IB.getPresentationBlock(notBlock)));
 		assertEquals(wallInFrontBlock,IB.getNextBlock(notBlock));
 		assertEquals(new Vector(499,249),IPB.getPosition(IB.getPresentationBlock(wallInFrontBlock)));
@@ -178,7 +175,7 @@ class UseCase4 {
 		blockAreaCanvas.handleMousePressed(11, 251);
 		blockAreaCanvas.handleMouseDragged(500, 70);
 		blockAreaCanvas.handleMouseReleased(500, 70);
-		Block notBlock = GC.getCopyOfAllBlocks(gc).get(0);
+		Block notBlock = GC.getCopyOfAllBlocks().get(0);
 		//drop wall in front block
 		blockAreaCanvas.handleMousePressed(11, 191);
 		blockAreaCanvas.handleMouseDragged(600, 70);
@@ -192,7 +189,7 @@ class UseCase4 {
 		blockAreaCanvas.handleMousePressed(600, 70);
 		blockAreaCanvas.handleMouseDragged(400, 250);
 		blockAreaCanvas.handleMouseReleased(400, 250);
-		assertEquals(null,GC.getNextBlockToExecute(gc));
+		assertEquals(null,GC.getNextBlockToExecute());
 		assertEquals(new Vector(499,69),IPB.getPosition(IB.getPresentationBlock(notBlock)));
 		assertEquals(new Vector(399,249),IPB.getPosition(IB.getPresentationBlock(wallInFrontBlock)));
 //		assertTrue(GC.isTopLevelBlock(gc, notBlock));
@@ -206,13 +203,13 @@ class UseCase4 {
 		blockAreaCanvas.handleMousePressed(11, 311);
 		blockAreaCanvas.handleMouseDragged(500, 70);
 		blockAreaCanvas.handleMouseReleased(500, 70);
-		Block ifBlock = GC.getCopyOfAllBlocks(gc).get(0);
+		Block ifBlock = GC.getCopyOfAllBlocks().get(0);
 		//drop Turn Left block
 		blockAreaCanvas.handleMousePressed(11, 71);
 		blockAreaCanvas.handleMouseDragged(520, 90);
 		blockAreaCanvas.handleMouseReleased(520, 90);
 		Block leftBlock = IB.getBodyBlock((SurroundingBlock) ifBlock);
-		assertEquals("TurnLeft",IB.getName(leftBlock));
+		assertEquals("Turn Left",IB.getName(leftBlock));
 		assertEquals(new Vector(499,69),IPB.getPosition(IB.getPresentationBlock(ifBlock)));
 		assertEquals(new Vector(519,89),IPB.getPosition(IB.getPresentationBlock(leftBlock)));
 //		assertTrue(GC.isTopLevelBlock(gc, ifBlock));
@@ -250,10 +247,10 @@ class UseCase4 {
 		blockAreaCanvas.handleMousePressed(11, 11);
 		blockAreaCanvas.handleMouseDragged(500, 150);
 		blockAreaCanvas.handleMouseReleased(500, 150);
-		assertEquals(new Vector(499,149),IPB.getPosition(IB.getPresentationBlock(GC.getCopyOfAllBlocks(gc).get(0))));
+		assertEquals(new Vector(499,149),IPB.getPosition(IB.getPresentationBlock(GC.getCopyOfAllBlocks().get(0))));
 		blockAreaCanvas.handleMousePressed(500, 150);
 		blockAreaCanvas.handleMouseReleased(11, 11);
-		assertEquals(0,GC.getCopyOfAllBlocks(gc).size());
+		assertEquals(0,GC.getCopyOfAllBlocks().size());
 	}
 	
 	@Test
@@ -263,13 +260,13 @@ class UseCase4 {
 		blockAreaCanvas.handleMousePressed(11, 311);
 		blockAreaCanvas.handleMouseDragged(500, 70);
 		blockAreaCanvas.handleMouseReleased(500, 70);
-		Block ifBlock = GC.getCopyOfAllBlocks(gc).get(0);
+		Block ifBlock = GC.getCopyOfAllBlocks().get(0);
 		//drop Turn Left block
 		blockAreaCanvas.handleMousePressed(11, 71);
 		blockAreaCanvas.handleMouseDragged(520, 90);
 		blockAreaCanvas.handleMouseReleased(520, 90);
 		Block leftBlock = IB.getBodyBlock((SurroundingBlock) ifBlock);
-		assertEquals("TurnLeft",IB.getName(leftBlock));
+		assertEquals("Turn Left",IB.getName(leftBlock));
 		assertEquals(new Vector(499,69),IPB.getPosition(IB.getPresentationBlock(ifBlock)));
 		assertEquals(new Vector(519,89),IPB.getPosition(IB.getPresentationBlock(leftBlock)));
 //		assertTrue(GC.isTopLevelBlock(gc, ifBlock));
@@ -279,7 +276,7 @@ class UseCase4 {
 		blockAreaCanvas.handleMouseDragged(520, 90);
 		blockAreaCanvas.handleMouseReleased(520, 90);
 		Block rightBlock = IB.getBodyBlock((SurroundingBlock) ifBlock);
-		assertEquals("TurnRight",IB.getName(rightBlock));
+		assertEquals("Turn Right",IB.getName(rightBlock));
 		assertEquals(new Vector(499,69),IPB.getPosition(IB.getPresentationBlock(ifBlock)));
 		assertEquals(new Vector(519,89),IPB.getPosition(IB.getPresentationBlock(rightBlock)));
 		assertEquals(new Vector(519,109),IPB.getPosition(IB.getPresentationBlock(leftBlock)));
@@ -305,6 +302,6 @@ class UseCase4 {
 		blockAreaCanvas.handleMousePressed(400, 250);
 		blockAreaCanvas.handleMouseDragged(11, 11);
 		blockAreaCanvas.handleMouseReleased(11,11);
-		assertEquals(0,GC.getCopyOfAllBlocks(gc).size());
+		assertEquals(0,GC.getCopyOfAllBlocks().size());
 	}
 }

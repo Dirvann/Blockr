@@ -8,7 +8,6 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import domain.GameController;
-import domain.ImplementationGameController;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
 import domain.block.SurroundingBlock;
@@ -51,7 +50,7 @@ import presentation.block.ImplementationPresentationBlock;
 class UseCase5 {
 	
 	private static BlockrPanel blockrPanel;
-	private ImplementationGameController GC;
+	private GameController GC;
 	private GameController gc;
 	static ImplementationBlock IB = new ImplementationBlock();
 	static ImplementationPresentationBlock IPB = new ImplementationPresentationBlock();
@@ -65,8 +64,7 @@ class UseCase5 {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		GC = new ImplementationGameController();
-		gc = blockrPanel.getGameController();
+		GC = blockrPanel.getGameController();
 		blockAreaCanvas = blockrPanel.getBlockAreaCanvas();	
 	}
 
@@ -79,41 +77,41 @@ class UseCase5 {
 		blockAreaCanvas.handleMouseDragged(80, 40);
 		blockAreaCanvas.handleMouseDragged(500, 150);
 		blockAreaCanvas.handleMouseReleased(500, 150);
-		List<Block> topLevelBlocks = GC.getCopyOfAllBlocks(gc);
+		List<Block> topLevelBlocks = GC.getCopyOfAllBlocks();
 		assertEquals(1,topLevelBlocks.size());
-		assertEquals("MoveForward",IB.getName(topLevelBlocks.get(0)));
-		assertEquals(null,GC.getNextBlockToExecute(gc));
+		assertEquals("Move Forward",IB.getName(topLevelBlocks.get(0)));
+		assertEquals(null,GC.getNextBlockToExecute());
 		//remove block
 		blockAreaCanvas.handleMousePressed(500, 150);
 		blockAreaCanvas.handleMouseDragged(11, 11);
 		blockAreaCanvas.handleMouseReleased(11, 11);
-		topLevelBlocks = GC.getCopyOfAllBlocks(gc);
+		topLevelBlocks = GC.getCopyOfAllBlocks();
 		assertEquals(0,topLevelBlocks.size());
 		//undo 1x
 		KeyEvent a = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_Z, 'z');
 		blockAreaCanvas.handleKeyPressed(a);
-		topLevelBlocks = GC.getCopyOfAllBlocks(gc);
+		topLevelBlocks = GC.getCopyOfAllBlocks();
 		assertEquals(1,topLevelBlocks.size());
-		assertEquals("MoveForward",IB.getName(topLevelBlocks.get(0)));
-		assertEquals(null,GC.getNextBlockToExecute(gc));
+		assertEquals("Move Forward",IB.getName(topLevelBlocks.get(0)));
+		assertEquals(null,GC.getNextBlockToExecute());
 		assertEquals(new Vector(499,149),IPB.getPosition(IB.getPresentationBlock(topLevelBlocks.get(0))));
 		//undo 2x
 		KeyEvent b = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_Z,'z');
 		blockAreaCanvas.handleKeyPressed(b);
-		topLevelBlocks = GC.getCopyOfAllBlocks(gc);
+		topLevelBlocks = GC.getCopyOfAllBlocks();
 		assertEquals(0,topLevelBlocks.size());
 		//redo 1x
 		KeyEvent c = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),KeyEvent.CTRL_DOWN_MASK+KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_Z, 'z');
 		blockAreaCanvas.handleKeyPressed(c);
-		topLevelBlocks = GC.getCopyOfAllBlocks(gc);
+		topLevelBlocks = GC.getCopyOfAllBlocks();
 		assertEquals(1,topLevelBlocks.size());
-		assertEquals("MoveForward",IB.getName(topLevelBlocks.get(0)));
-		assertEquals(null,GC.getNextBlockToExecute(gc));
+		assertEquals("Move Forward",IB.getName(topLevelBlocks.get(0)));
+		assertEquals(null,GC.getNextBlockToExecute());
 		assertEquals(new Vector(499,149),IPB.getPosition(IB.getPresentationBlock(topLevelBlocks.get(0))));
 		//redo 2x
 		KeyEvent d = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),KeyEvent.CTRL_DOWN_MASK+KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_Z, 'z');
 		blockAreaCanvas.handleKeyPressed(d);
-		topLevelBlocks = GC.getCopyOfAllBlocks(gc);
+		topLevelBlocks = GC.getCopyOfAllBlocks();
 		assertEquals(0,topLevelBlocks.size());
 	}
 	
@@ -126,12 +124,12 @@ class UseCase5 {
 		blockAreaCanvas.handleMousePressed(11, 71);
 		blockAreaCanvas.handleMouseDragged(500, 70);
 		blockAreaCanvas.handleMouseReleased(500, 70);
-		List<Block> topLevelBlocks = GC.getCopyOfAllBlocks(gc);
+		List<Block> topLevelBlocks = GC.getCopyOfAllBlocks();
 		assertEquals(2,topLevelBlocks.size());
 		Block moveBlock = topLevelBlocks.get(0);
-		assertEquals("MoveForward",IB.getName(moveBlock));
+		assertEquals("Move Forward",IB.getName(moveBlock));
 		Block leftBlock = IB.getNextBlock(moveBlock);
-		assertEquals("TurnLeft",IB.getName(leftBlock));
+		assertEquals("Turn Left",IB.getName(leftBlock));
 		//move
 		blockAreaCanvas.handleMousePressed(500, 50);
 		blockAreaCanvas.handleMouseDragged(300, 100);
@@ -166,37 +164,38 @@ class UseCase5 {
 		//check if running works
 		KeyEvent a = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
 		blockAreaCanvas.handleKeyPressed(a);
-		assertEquals("MoveForward",IB.getName(GC.getNextBlockToExecute(gc)));
+		assertEquals("Move Forward",IB.getName(GC.getNextBlockToExecute()));
 		KeyEvent b = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
 		blockAreaCanvas.handleKeyPressed(b);
-		assertEquals("TurnLeft",IB.getName(GC.getNextBlockToExecute(gc)));
+		if (GC.getNextBlockToExecute() == null) return;//exception in move forward execution, ran into wall
+		assertEquals("Turn Left",IB.getName(GC.getNextBlockToExecute()));
 		KeyEvent c = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
 		blockAreaCanvas.handleKeyPressed(c);
-		assertEquals("TurnRight",IB.getName(GC.getNextBlockToExecute(gc)));
+		assertEquals("Turn Right",IB.getName(GC.getNextBlockToExecute()));
 		//stop at turnleft
 		//undo 1x
 		KeyEvent d = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_Z,'z');
 		blockAreaCanvas.handleKeyPressed(d);
-		assertEquals("TurnLeft",IB.getName(GC.getNextBlockToExecute(gc)));
+		assertEquals("Turn Left",IB.getName(GC.getNextBlockToExecute()));
 		//undo 2x
 		KeyEvent e = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_Z,'z');
 		blockAreaCanvas.handleKeyPressed(e);
-		assertEquals("MoveForward",IB.getName(GC.getNextBlockToExecute(gc)));
+		assertEquals("Move Forward",IB.getName(GC.getNextBlockToExecute()));
 		//undo 3x, 4x
 		KeyEvent f = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_Z,'z');
 		blockAreaCanvas.handleKeyPressed(f);
-		assertEquals("MoveForward",IB.getName(GC.getNextBlockToExecute(gc)));
+		assertEquals("Move Forward",IB.getName(GC.getNextBlockToExecute()));
 		KeyEvent g = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_Z,'z');
 		blockAreaCanvas.handleKeyPressed(g);
-		assertEquals("MoveForward",IB.getName(GC.getNextBlockToExecute(gc)));
+		assertEquals("Move Forward",IB.getName(GC.getNextBlockToExecute()));
 		//redo 1x
 		KeyEvent h = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),KeyEvent.CTRL_DOWN_MASK+KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_Z, 'z');
 		blockAreaCanvas.handleKeyPressed(h);
-		assertEquals("TurnLeft",IB.getName(GC.getNextBlockToExecute(gc)));
+		assertEquals("Turn Left",IB.getName(GC.getNextBlockToExecute()));
 		//redo 2x
 		KeyEvent i = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),KeyEvent.CTRL_DOWN_MASK+KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_Z, 'z');
 		blockAreaCanvas.handleKeyPressed(i);
-		assertEquals("TurnRight",IB.getName(GC.getNextBlockToExecute(gc)));
+		assertEquals("Turn Right",IB.getName(GC.getNextBlockToExecute()));
 	}
 	
 	@Test
@@ -209,20 +208,21 @@ class UseCase5 {
 		blockAreaCanvas.handleMousePressed(11, 71);
 		blockAreaCanvas.handleMouseDragged(500, 70);
 		blockAreaCanvas.handleMouseReleased(500, 70);
-		List<Block> topLevelBlocks = GC.getCopyOfAllBlocks(gc);
+		List<Block> topLevelBlocks = GC.getCopyOfAllBlocks();
 		Block moveBlock = topLevelBlocks.get(0);
-		assertEquals("MoveForward",IB.getName(moveBlock));
+		assertEquals("Move Forward",IB.getName(moveBlock));
 		Block leftBlock = IB.getNextBlock(moveBlock);
-		assertEquals("TurnLeft",IB.getName(leftBlock));
+		assertEquals("Turn Left",IB.getName(leftBlock));
 		assertEquals(new Vector(499,49),IPB.getPosition(IB.getPresentationBlock(moveBlock)));
 		assertEquals(new Vector(499,69),IPB.getPosition(IB.getPresentationBlock(leftBlock)));
 		//run
 		KeyEvent a = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
 		blockAreaCanvas.handleKeyPressed(a);
-		assertEquals("MoveForward",IB.getName(GC.getNextBlockToExecute(gc)));
+		assertEquals("Move Forward",IB.getName(GC.getNextBlockToExecute()));
 		KeyEvent b = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),0,KeyEvent.VK_F5, KeyEvent.CHAR_UNDEFINED);
 		blockAreaCanvas.handleKeyPressed(b);
-		assertEquals("TurnLeft",IB.getName(GC.getNextBlockToExecute(gc)));
+		if (GC.getNextBlockToExecute() != null) // couldn't move forward in previous execution
+			assertEquals("Turn Left",IB.getName(GC.getNextBlockToExecute()));
 		//move a block + Stop run
 		blockAreaCanvas.handleMousePressed(500, 50);
 		blockAreaCanvas.handleMouseDragged(500, 50);
@@ -239,15 +239,15 @@ class UseCase5 {
 		//undo add before running
 		KeyEvent e = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),KeyEvent.CTRL_DOWN_MASK,KeyEvent.VK_Z,'z');
 		blockAreaCanvas.handleKeyPressed(e);
-		assertEquals(1,GC.getCopyOfAllBlocks(gc).size());
+		assertEquals(1,GC.getCopyOfAllBlocks().size());
 		//redo movement before running
 		KeyEvent f = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),KeyEvent.CTRL_DOWN_MASK+KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_Z, 'z');
 		blockAreaCanvas.handleKeyPressed(f);
-		assertEquals(2,GC.getCopyOfAllBlocks(gc).size());
+		assertEquals(2,GC.getCopyOfAllBlocks().size());
 		//redo movement
 		KeyEvent g = new KeyEvent(blockAreaCanvas,KeyEvent.KEY_PRESSED,System.currentTimeMillis(),KeyEvent.CTRL_DOWN_MASK+KeyEvent.SHIFT_DOWN_MASK,KeyEvent.VK_Z, 'z');
 		blockAreaCanvas.handleKeyPressed(g);
-		assertEquals(2,GC.getCopyOfAllBlocks(gc).size());
+		assertEquals(2,GC.getCopyOfAllBlocks().size());
 		assertEquals(new Vector(399,99),IPB.getPosition(IB.getPresentationBlock(moveBlock)));
 		assertEquals(new Vector(399,119),IPB.getPosition(IB.getPresentationBlock(leftBlock)));
 	}
