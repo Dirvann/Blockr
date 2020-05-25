@@ -1,6 +1,6 @@
 package domain.block;
 
-import command.ActionBlockCommand;
+import command.ExecutionCommand;
 import domain.GameController;
 import game_world.api.Action;
 import game_world.api.ActionResult;
@@ -50,7 +50,7 @@ public class ActionBlock extends SequenceBlock{
 			FacadeGameWorld iGameWorld = GC.getGameWorldImplementation();
 			ActionResult result = iGameWorld.executeAction(action);
 			if (result == ActionResult.Illegal) throw new Exception("illegal move");
-			GC.setExecutionCommand(new ActionBlockCommand(null, null, null, GC));
+			GC.setExecutionCommand(new ExecutionCommand(null, null, null, GC));
 		}
 	}
 	

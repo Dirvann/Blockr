@@ -2,6 +2,7 @@ package command;
 
 import domain.GameController;
 import domain.block.Block;
+import game_world.api.Snapshot;
 /**
  * A class that holds all the information about the execution by a block
  * (currently executed) that is not an actionBlock. This information consists of the objects
@@ -17,6 +18,7 @@ public class ExecutionCommand {
 	protected Block currentlyExecuted;
 	protected Block nextToExecute;
 	protected GameController GC;
+	protected Snapshot snapshot;
 
 	/**
 	 * ExecutionCommand is a command that is able to hold all of the information to
@@ -44,6 +46,7 @@ public class ExecutionCommand {
 	 * @Post all of the changes made by executing this command will be undone.
 	 */
 	public void undo() {
+		GC.getGameWorldImplementation().loadSnapshot(snapshot);
 		GC.setNewExecution(previouslyExecuted, currentlyExecuted);
 	}
 
@@ -88,5 +91,10 @@ public class ExecutionCommand {
 	 */
 	public void setNext(Block block) {
 		this.nextToExecute = block;
+	}
+
+	public void setSnapshot(Snapshot snapshot) {
+		this.snapshot = snapshot;
+		
 	}
 }

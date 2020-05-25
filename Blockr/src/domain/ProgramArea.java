@@ -12,6 +12,7 @@ import domain.block.SequenceBlock;
 import exceptions.domainExceptions.BlockColumnNotExecutableException;
 import exceptions.domainExceptions.CantRunConditionException;
 import exceptions.domainExceptions.NotOneStartingBlockException;
+import game_world.api.Snapshot;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 
@@ -120,6 +121,7 @@ public class ProgramArea {
 	protected ExecutionCommand executeNextBlock(GameController GC) throws Exception {
 		// undo redo info collect
 		this.exeCmd = null;
+		Snapshot snapshot = GC.getGameWorldImplementation().makeSnapshot();
 		Block previousExe = currentExe;
 		currentExe = nextToExecute;
 		// execute() will also make an empty ExecutionCommand in programArea.
@@ -131,6 +133,7 @@ public class ProgramArea {
 		this.exeCmd.setPrevious(previousExe);
 		this.exeCmd.setCurrent(currentExe);
 		this.exeCmd.setNext(nextToExecute);
+		this.exeCmd.setSnapshot(snapshot);
 		return exeCmd;
 	}
 

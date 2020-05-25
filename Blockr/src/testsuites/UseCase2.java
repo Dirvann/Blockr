@@ -38,7 +38,7 @@ import presentation.BlockrPanel;
 class UseCase2 {
 	
 	private static BlockrPanel blockrPanel;
-	private ImplementationGameController GC;
+	private GameController GC;
 	private GameController gc;
 	static ImplementationBlock IB = new ImplementationBlock();
 	static ImplementationGameWorld IGW = new ImplementationGameWorld();

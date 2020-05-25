@@ -35,7 +35,7 @@ import presentation.block.ImplementationPresentationBlock;
 class UseCase1 {
 	
 	private static BlockrPanel blockrPanel;
-	private ImplementationGameController GC;
+	private GameController GC;
 	private GameController gc;
 	static ImplementationBlock IB = new ImplementationBlock();
 	static ImplementationPresentationBlock IPB = new ImplementationPresentationBlock();
