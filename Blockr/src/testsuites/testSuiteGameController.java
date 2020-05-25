@@ -23,11 +23,15 @@ import exceptions.domainExceptions.CantRunConditionException;
 import exceptions.domainExceptions.NotOneStartingBlockException;
 import impl.root.ImplementationGameWorld;
 import predicates.WallInFrontPredicate;
+import presentation.BlockAreaCanvas;
+import presentation.BlockrPanel;
 import presentation.block.ImplementationPresentationBlock;
 import presentation.block.PresentationBlock;
 
 public class testSuiteGameController {
 	
+	static BlockrPanel blockrPanel;
+	static BlockAreaCanvas blockAreaCanvas;
 	static GameController GC;
 	static ImplementationBlock IB = new ImplementationBlock();
 	static ImplementationPresentationBlock IPB = new ImplementationPresentationBlock();	
@@ -45,6 +49,14 @@ public class testSuiteGameController {
 
 	private static void setup() {
 		try {
+			try {
+				blockrPanel = new BlockrPanel(ImplementationGameWorld.class);
+			} catch (InstantiationException | IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			GC = blockrPanel.getGameController();
+			blockAreaCanvas = blockrPanel.getBlockAreaCanvas();	
 			left = IPB.makeActionBlock(new TurnLeftAction(), null); // create blocks
 			right = IPB.makeActionBlock(new TurnRightAction(), null);
 			forward = IPB.makeActionBlock(new MoveForwardAction(), null);
