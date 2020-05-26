@@ -9,6 +9,16 @@ import domain.block.ImplementationBlock;
 import domain.block.SingleConditionBlock;
 import game_world.api.Vector;
 
+/**
+ * Handles the UI drawing and interaction for the SingleConditionBlock.
+ * 
+ * @version 4.0
+ * @author Andreas Awouters 
+ * 	       Thomas Van Erum 
+ * 		   Dirk Vanbeveren 
+ * 		   Geert Wesemael
+ *
+ */
 public class SingleConditionBlockPresentation extends PresentationBlock<SingleConditionBlock> {
 	
 	public SingleConditionBlockPresentation(Vector pos, SingleConditionBlock block) {
@@ -17,21 +27,11 @@ public class SingleConditionBlockPresentation extends PresentationBlock<SingleCo
 
 	@Override
 	public void draw(Graphics g) {
-		g.setColor(Color.ORANGE);
 		Vector pos = getPosition();
 		BlockDrawer b = new BlockDrawer(Color.ORANGE, Color.BLACK);
 		b.drawBlock(g, pos, false, false, false, true, false, false);
 		b.drawString(g, getPresentationName(), pos);
 	}
-
-//	@Override
-//	public PresentationBlock<SingleConditionBlock> getNewBlockOfThisType() {
-//		SingleConditionBlock block =  (SingleConditionBlock) getBlock().getNewBlockOfThisType();
-//		SingleConditionBlockPresentation blockPresentation = new SingleConditionBlockPresentation(getPosition(), block);
-//		block.setPresentationBlock(blockPresentation);
-//		return blockPresentation;
-//	}
-
 	
 	@Override
 	protected Vector getNextBlockPosition(PresentationBlock<?> presentationBlock) {

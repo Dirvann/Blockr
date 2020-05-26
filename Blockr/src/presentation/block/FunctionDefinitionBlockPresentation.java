@@ -2,26 +2,28 @@ package presentation.block;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.List;
 
 import command.AddToBodyFunctionDefinitionCommand;
 import command.Command;
-import command.ConnectCommand;
-import command.AddToBodyCommand;
-import command.SetConditionCommand;
 import domain.GameController;
 import domain.block.Block;
-import domain.block.ConditionBlock;
 import domain.block.FunctionDefinitionBlock;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
-import presentation.PalettePresentation;
 import game_world.api.Vector;
 
+/**
+ * Handles the UI drawing and interaction for the FunctionDefinitionBlock.
+ * 
+ * @version 4.0
+ * @author Andreas Awouters 
+ * 	       Thomas Van Erum 
+ * 		   Dirk Vanbeveren 
+ * 		   Geert Wesemael
+ *
+ */
 public class FunctionDefinitionBlockPresentation extends PresentationBlock<FunctionDefinitionBlock> {
 	
 	ImplementationBlock BF = new ImplementationBlock();
@@ -74,8 +76,11 @@ public class FunctionDefinitionBlockPresentation extends PresentationBlock<Funct
 		snapPoints.add(getBodySnapPoint());
 		return snapPoints;
 	}
-
-	public Vector getBodySnapPoint() {
+	/**
+	 * Get the receiving snapping point in the hollow part of the block.
+	 * @return The body snap point.
+	 */
+	private Vector getBodySnapPoint() {
 		Vector pos = getPosition();
 		return new Vector(pos.getX() + (int) (getBlockWidth() / 2 + getBlockSideWidth()),
 				pos.getY() + getBlockHeight());

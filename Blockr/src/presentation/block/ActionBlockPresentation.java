@@ -12,6 +12,16 @@ import domain.block.ActionBlock;
 import domain.block.ImplementationBlock;
 import game_world.api.Vector;
 
+/**
+ * Class responsible to handle the visuals and block UI interactions from the ActionBlock.
+ * 
+ * @version 4.0
+ * @author Andreas Awouters 
+ * 	       Thomas Van Erum 
+ * 		   Dirk Vanbeveren 
+ * 		   Geert Wesemael
+ *
+ */
 public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
 	public ActionBlockPresentation(Vector pos, ActionBlock block) {
 		super(pos, block);
@@ -27,21 +37,6 @@ public class ActionBlockPresentation extends PresentationBlock<ActionBlock> {
 		b.drawBlock(gr, pos, true, true, false, false, false, false);
 		b.drawString(gr, getPresentationName(), pos);
 	}
-
-//	@Override
-//	public PresentationBlock<ActionBlock> getNewBlockOfThisType() {
-//		// TODO Auto-generated method stub
-//		ActionBlock block = (ActionBlock) getBlock().getNewBlockOfThisType();
-//		ActionBlockPresentation blockPresentation = new ActionBlockPresentation(getPosition(), block);
-//		
-//		
-//		block.setPresentationBlock(blockPresentation);
-//		if (block.getPresentationBlock() == null) {
-//			System.out.println("block.getPresentationBlock() == null in actionBlockPresentation");
-//		}
-//		return blockPresentation;
-//	}
-
 	
 	@Override
 	protected Vector getNextBlockPosition(PresentationBlock<?> presentationBlock) {

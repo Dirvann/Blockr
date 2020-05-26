@@ -2,9 +2,6 @@ package presentation.block;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.geom.Area;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,6 +9,16 @@ import domain.block.FunctionCallBlock;
 import domain.block.ImplementationBlock;
 import game_world.api.Vector;
 
+/**
+ * Handles the UI drawing and interaction for the FunctionCallBlock.
+ * 
+ * @version 4.0
+ * @author Andreas Awouters 
+ * 	       Thomas Van Erum 
+ * 		   Dirk Vanbeveren 
+ * 		   Geert Wesemael
+ *
+ */
 public class FunctionCallBlockPresentation extends PresentationBlock<FunctionCallBlock> {
 	public FunctionCallBlockPresentation(Vector pos, FunctionCallBlock block) {
 		super(pos, block);

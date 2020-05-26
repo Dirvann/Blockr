@@ -20,6 +20,16 @@ import domain.block.SequenceBlock;
 import domain.block.SingleSurroundingBlock;
 import game_world.api.Vector;
 
+/**
+ * Handles the UI drawing and interaction for the SingleSurroundingBlock.
+ * 
+ * @version 4.0
+ * @author Andreas Awouters 
+ * 	       Thomas Van Erum 
+ * 		   Dirk Vanbeveren 
+ * 		   Geert Wesemael
+ *
+ */
 public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSurroundingBlock> {
 	
 	ImplementationBlock BF = new ImplementationBlock();
@@ -51,17 +61,6 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 			current = BF.getNextBlock(current);
 		}
 		return totalHeight;
-	}
-
-	@Override
-	public boolean collisionWithLowerPart(Vector position) {
-		int xValueLowerPart = getPosition().getX();
-		int yValueLowerPart = getPosition().getY() + getTotalHeight() - getBlockHeight();
-		if (position.getX() > this.getPosition().getX() && position.getX() < (getBlockWidth() + xValueLowerPart)
-				&& position.getY() > yValueLowerPart && position.getY() < (yValueLowerPart + getBlockHeight())) {
-			return true;
-		}
-		return false;
 	}
 
 	@Override
@@ -98,19 +97,28 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 		snapPoints.add(getSequenceSnapPoint());
 		return snapPoints;
 	}
-
-	public Vector getConditionSnapPoint() {
+	/**
+	 * Get the receiving snap point of the condition.
+	 * @return The receiving snap point of the condition.
+	 */
+	private Vector getConditionSnapPoint() {
 		Vector pos = getPosition();
 		return new Vector(pos.getX() + getBlockWidth(), pos.getY() + (int) (getBlockHeight() / 2));
 	}
-
-	public Vector getBodySnapPoint() {
+	/**
+	 * Get the receiving snap point of the body.
+	 * @return The receiving snap point of the body.
+	 */
+	private Vector getBodySnapPoint() {
 		Vector pos = getPosition();
 		return new Vector(pos.getX() + (int) (getBlockWidth() / 2 + getBlockSideWidth()),
 				pos.getY() + getBlockHeight());
 	}
-
-	public Vector getSequenceSnapPoint() {
+	/**
+	 * Get the receiving snap point of the bottom.
+	 * @return The receiving snap point of the bottom.
+	 */
+	private Vector getSequenceSnapPoint() {
 		Vector pos = getPosition();
 		return new Vector(pos.getX() + (int) (getBlockWidth() / 2), pos.getY() + getTotalHeight());
 	}
@@ -137,14 +145,35 @@ public class SingleSurroundBlockPresentation extends PresentationBlock<SingleSur
 		return null;
 	}
 	
+	/**
+	 * Check if given block can snap to the condition.
+	 * @param b
+	 * 		  The PresentationBlock that wants to snap.
+	 * @return True if the block can snap.
+	 *        |False if the given block cannot snap.
+	 */
 	private boolean canSnapToCondition(PresentationBlock<?> b) {
 		return b.getBlock() instanceof ConditionBlock && b.getGivingSnapPoint().distanceTo(getConditionSnapPoint()) <= getSnapDistance();
 	}
 	
+	/**
+	 * Check if given block can snap to the body.
+	 * @param b
+	 * 		  The PresentationBlock that wants to snap.
+	 * @return True if the block can snap.
+	 *        |False if the given block cannot snap.
+	 */
 	private boolean canSnapToBody(PresentationBlock<?> b) {
 		return b.getBlock() instanceof SequenceBlock && b.getGivingSnapPoint().distanceTo(getBodySnapPoint()) <= getSnapDistance();
 	}
 	
+	/**
+	 * Check if given block can snap to the bottom.
+	 * @param b
+	 * 		  The PresentationBlock that wants to snap.
+	 * @return True if the block can snap.
+	 *        |False if the given block cannot snap.
+	 */
 	private boolean canSnapToBottom(PresentationBlock<?> b) {
 		return b.getBlock() instanceof SequenceBlock && b.getGivingSnapPoint().distanceTo(getSequenceSnapPoint()) <= getSnapDistance();
 	}
