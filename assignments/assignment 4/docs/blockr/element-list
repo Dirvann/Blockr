@@ -1,0 +1,8 @@
+client.main
+command
+domain
+domain.block
+exceptions.domainExceptions
+presentation
+presentation.block
+testsuites
