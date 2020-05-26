@@ -27,8 +27,6 @@ public class CommandCanvas extends Canvas implements MouseListener {
 	private static final long serialVersionUID = 1L;
 
 	private FacadeGameWorld iGameWorld;
-	private GameWorldCanvas gameWorldC;
-
 	private ArrayList<Button<?>> buttons = new ArrayList<Button<?>>();
 	private ArrayList<SnapshotButton> snapshots = new ArrayList<SnapshotButton>();
 	private ArrayList<Snapshot> snapshotData = new ArrayList<Snapshot>();
@@ -43,8 +41,6 @@ public class CommandCanvas extends Canvas implements MouseListener {
 
 	public CommandCanvas(FacadeGameWorld iGameWorld, GameWorldCanvas gameWorldC) {
 		this.iGameWorld = iGameWorld;
-		this.gameWorldC = gameWorldC;
-
 		List<Action> actions = iGameWorld.getAllActions();
 		List<Predicate> predicates = iGameWorld.getAllPRedicates();
 
