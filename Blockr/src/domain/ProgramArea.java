@@ -299,7 +299,16 @@ public class ProgramArea {
 	protected ExecutionCommand getExecutionCommand() {
 		return exeCmd;
 	}
-
+	/**
+	 * Return a list with all the Function Call Blocks that have the same ID as the
+	 * given ID.
+	 * 
+	 * @param  ID
+	 * 		   The given ID to return the callers of.
+	 * @return a list with all the Function Call Blocks that have the same ID as the
+	 * 		   given ID.
+	 * 		   |Result = all block in getCopyOfAllBlocks() with block.getID() == ID
+	 */
 	protected List<FunctionCallBlock> getAllFunctionCallsWithID(int ID) {
 		List<FunctionCallBlock> allCallers = new ArrayList<FunctionCallBlock>();
 		for (Block block : this.getCopyOfAllBlocks()) {

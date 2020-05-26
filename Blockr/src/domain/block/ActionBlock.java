@@ -39,12 +39,12 @@ public class ActionBlock extends SequenceBlock{
 	 * 
 	 * @param  GC 
 	 * 		   The GameController where the block is in.
-	 * @throws Exception If action is not possible.
+	 * @throws Exception If action is not possible or gameController is null.
 	 * @post   The action of the block will be performed.
 	 */
 	protected void performAction(GameController GC) throws Exception {
 		if (GC == null) 
-			System.out.println(this.name); //TODO: Thomas
+			throw new Exception("No gameController found");
 		else {
 			ActionResult result = GC.getGameWorldImplementation().executeAction(action);
 			if (result == ActionResult.Illegal) throw new Exception("illegal move");
