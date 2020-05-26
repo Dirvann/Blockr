@@ -131,9 +131,8 @@ public class GameController {
 	 * The ProgramArea of this GameController.
 	 * 
 	 * @return the ProgramArea of this GameController
-	 */
-	
-	public ProgramArea getProgramArea() {
+	 */	
+	private ProgramArea getProgramArea() {
 		return this.programArea;
 	}
 	
