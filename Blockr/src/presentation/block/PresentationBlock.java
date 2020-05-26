@@ -11,7 +11,6 @@ import domain.GameController;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
 import game_world.api.Vector;
-import presentation.ProgramAreaPresentation;
 
 /**
  * Handles the UI drawing and interaction for a given block type.

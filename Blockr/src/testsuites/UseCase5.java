@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import domain.GameController;
 import domain.block.Block;
 import domain.block.ImplementationBlock;
-import domain.block.SurroundingBlock;
 import impl.root.ImplementationGameWorld;
 import game_world.api.Vector;
 import presentation.BlockAreaCanvas;
