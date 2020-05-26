@@ -168,8 +168,7 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 
 	@Override
 	public void resetGameWorld() {
-		gameController.startGame();
-		fireGameWorldChanged();
+		this.makeNewGameWorld();
 	}
 
 	@Override
