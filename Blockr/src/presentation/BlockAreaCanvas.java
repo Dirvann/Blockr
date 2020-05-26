@@ -7,9 +7,9 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 import command.Command;
-import command.DeleteBlock;
-import command.DeleteFunctionDefinition;
-import command.MakeBlock;
+import command.DeleteBlockCommand;
+import command.DeleteFunctionDefinitionCommand;
+import command.MakeBlockCommand;
 import command.MakeFunctionCommand;
 import command.DisconnectCommand;
 import domain.CommandProcessor;
@@ -222,7 +222,7 @@ public class BlockAreaCanvas extends Canvas {
 			this.preCommand = new MakeFunctionCommand(GC, (FunctionDefinitionBlockPresentation) presentationCopy, paletteP);
 		}
 		else {
-			this.preCommand = new MakeBlock(GC, presentationCopy);
+			this.preCommand = new MakeBlockCommand(GC, presentationCopy);
 		}
 		GC.addBlockToProgramArea(presentationCopy);
 		this.oldPos = BFP.getPosition(presentationCopy);
@@ -357,10 +357,10 @@ public class BlockAreaCanvas extends Canvas {
 	private void removeSelectedBlockFromProgramArea() {
 		this.newPos = BFP.getPosition(selectedBlock);
 		if (selectedBlock instanceof FunctionDefinitionBlockPresentation) {
-			this.postCommand = new DeleteFunctionDefinition(GC, (FunctionDefinitionBlockPresentation) selectedBlock, paletteP);
+			this.postCommand = new DeleteFunctionDefinitionCommand(GC, (FunctionDefinitionBlockPresentation) selectedBlock, paletteP);
 			paletteP.removeFunctionCallFromPalette((FunctionDefinitionBlock) BFP.getBlock(selectedBlock));
 		} else {
-			this.postCommand = new DeleteBlock(GC, selectedBlock);
+			this.postCommand = new DeleteBlockCommand(GC, selectedBlock);
 		}
 		GC.removeBlockFromProgramArea(selectedBlock);
 	}

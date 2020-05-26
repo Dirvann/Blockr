@@ -3,9 +3,10 @@ package command;
 import domain.GameController;
 import domain.block.ImplementationBlock;
 import presentation.block.PresentationBlock;
+
 /**
  * A class that holds all the information about the action where a block is
- * made. This information consists of the objects block and
+ * deleted. This information consists of the objects block and
  * GameController. The class also specifies what must happen to undo and execute this
  * command.
  * 
@@ -16,37 +17,37 @@ import presentation.block.PresentationBlock;
  * 		   Geert Wesemael
  *
  */
-public class MakeBlock implements Command {
+public class DeleteBlockCommand implements Command {
 	GameController GC;
 	PresentationBlock<?> block;
 	ImplementationBlock BF = new ImplementationBlock();
 
 	/**
-	 * Makes a Command for the creation of a block. This holds the info to undo and
-	 * redo this action.
+	 * Makes a delete block Commmand. This Command includes all of the info needed
+	 * to undo and redo a block deletion Command.
 	 * 
-	 * @param blockToConnectTo 
-	 * 	      Block before group of blocks connected.
-	 * @param blockToConnect   
-	 * 		  First block of group of blocks that gets connected.
-	 * @post  The objects GC and block will be stored in this Command for later use.
+	 * @param GC    
+	 * 		  The GameController where the block is deleted.
+	 * @param block 
+	 * 		  The block that gets deleted.
+	 * @post  The objects block and GC are stored in this command for later use.
 	 * 		  | new.GC == GC
 	 * 		  | new.block == block
 	 */
-	public MakeBlock(GameController GC, PresentationBlock<?> block) {
+	public DeleteBlockCommand(GameController GC, PresentationBlock<?> block) {
 		this.GC = GC;
 		this.block = block;
 	}
 
 	@Override
 	public void execute() {
-		GC.addBlockToProgramArea(block);
+		GC.removeBlockFromProgramArea(block);
 
 	}
 
 	@Override
 	public void undo() {
-		GC.removeBlockFromProgramArea(block);
+		GC.addBlockToProgramArea(block);
 
 	}
 

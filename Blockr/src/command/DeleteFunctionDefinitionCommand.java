@@ -24,7 +24,7 @@ import presentation.block.PresentationBlock;
  * 		   Geert Wesemael
  *
  */
-public class DeleteFunctionDefinition implements Command {
+public class DeleteFunctionDefinitionCommand implements Command {
 	GameController GC;
 	PresentationBlock<FunctionDefinitionBlock> definition;
 	List<DeleteCallerCommand> deletionCommandsOfCalls;
@@ -48,7 +48,7 @@ public class DeleteFunctionDefinition implements Command {
 	 * 		  these commands have the same ID as the definition.
 	 * 		  | new.deletionCommandsOfCalls.contains(DeleteCallerCommand with same ID as definition)
 	 */
-	public DeleteFunctionDefinition(GameController GC, PresentationBlock<FunctionDefinitionBlock> definition, PalettePresentation palette) {
+	public DeleteFunctionDefinitionCommand(GameController GC, PresentationBlock<FunctionDefinitionBlock> definition, PalettePresentation palette) {
 		this.GC = GC;
 		this.definition = definition;
 		this.palette = palette;
