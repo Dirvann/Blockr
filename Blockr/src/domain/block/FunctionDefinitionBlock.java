@@ -14,7 +14,7 @@ import domain.GameController;
  * 		   Geert Wesemael
  *
  */
-public class FunctionDefinitionBlock extends Block{ //TODO: Thomas nog enkele functies documenteren hier (de niet overwritten)
+public class FunctionDefinitionBlock extends Block{
 	protected int ID;
 	protected ArrayList<SequenceBlock> callStack = new ArrayList<SequenceBlock>();
 	protected SequenceBlock body;
@@ -31,6 +31,12 @@ public class FunctionDefinitionBlock extends Block{ //TODO: Thomas nog enkele fu
 		this.ID = ID;
 	}
 
+	/**
+	 * Gets the next block to be executed after the function definition body has been executed.
+	 * 
+	 * @return the block that has to be executed after this function. | nextToExecute(lastElement(callstack))
+	 * @post last element of callstack is removed.
+	 */
 	protected SequenceBlock getNextAfterFunction() {
 		if (callStack.size() == 0) {
 			return null;
@@ -107,6 +113,8 @@ public class FunctionDefinitionBlock extends Block{ //TODO: Thomas nog enkele fu
 	 * 
 	 * @param block 
 	 * 		  Sets this block as first (of a sequence) under the statement.
+	 * 
+	 * @post connect(block.last, this.body) && this.body = block
 	 */
 	protected void setBodyBlock(SequenceBlock block) {
 		if (block == null) {
@@ -126,6 +134,11 @@ public class FunctionDefinitionBlock extends Block{ //TODO: Thomas nog enkele fu
 	}
 	
 
+	/**
+	 * removes the body block
+	 * 
+	 * @post The body of this function is empty.
+	 */
 	public void removeBodyBlock() {
 		if (this.body != null)
 			this.body.setFunctionBlock(null);
@@ -133,6 +146,11 @@ public class FunctionDefinitionBlock extends Block{ //TODO: Thomas nog enkele fu
 		
 	}
 
+	/**
+	 * Adds a caller of the function.
+	 * @param functionCall
+	 * @post functionCall is added to callStack
+	 */
 	public void addCaller(FunctionCallBlock functionCall) {
 		this.callStack.add(functionCall);
 		
@@ -146,6 +164,10 @@ public class FunctionDefinitionBlock extends Block{ //TODO: Thomas nog enkele fu
 		return allBlocks;
 	}
 
+	/**
+	 * Gets the first block of the body of this function.
+	 * @return The first block of the body of this function.
+	 */
 	public SequenceBlock getBodyBlock() {
 		return body;
 	}

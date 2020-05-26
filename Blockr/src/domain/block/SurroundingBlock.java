@@ -14,7 +14,6 @@ import java.util.List;
  *
  */
 public abstract class SurroundingBlock extends SequenceBlock {
-	//TODO: Thomas enkele @pos toevoegen bij de grote functies?
 	protected ConditionBlock condition = null;
 	protected SequenceBlock bodyBlock = null;
 
@@ -23,6 +22,7 @@ public abstract class SurroundingBlock extends SequenceBlock {
 	 * 
 	 * @param block 
 	 * 		  Sets this block as first (of a sequence) under the statement.
+	 * @post connect(block.last, this.body) && this.body = block
 	 */
 	protected void setBodyBlock(SequenceBlock block) {
 		if (this.bodyBlock != null) {

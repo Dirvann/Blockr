@@ -50,6 +50,12 @@ public class FunctionCallBlock extends SequenceBlock{
 		return super.execute(GC);
 	}
 	
+	/**
+	 * Deletes this blok (functionCall) but the blocks after this are not. It squeezes out this block. 
+	 * 
+	 * @param GC The gamecontroller where block is in.
+	 * @post De socket van de plug boven 'this' is verbonden met de plug van onder 'this'.
+	 */
 	protected void delete(GameController GC) {
 		SequenceBlock prev = this.previous;
 		SequenceBlock nextBlock = this.next;
