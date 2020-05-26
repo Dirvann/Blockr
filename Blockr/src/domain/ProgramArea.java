@@ -33,7 +33,6 @@ public class ProgramArea {
 	private List<FunctionDefinitionBlock> functionBlocks = new ArrayList<FunctionDefinitionBlock>();
 
 	protected Block nextToExecute = null;
-	// undo redo info
 	protected Block currentExe = null;
 
 	private ImplementationPresentationBlock BFP = new ImplementationPresentationBlock();
@@ -160,10 +159,10 @@ public class ProgramArea {
 	 * @param pBlock 
 	 * 		  The given presentationblock.
 	 * @post  The list of top level blocks contains the block associated to the given
-	 *        presentationblock 
+	 *        presentationblock.
 	 *        | new.getTopBlocks().contains(BFP.getBlock(pBlock))
 	 * @post  The amount of blocks left is lowered by one. 
-	 * 		  | new.blocksLeft = blocksLeft - 1
+	 * 		  | new.blocksLeft == blocksLeft - 1
 	 */
 	protected void addBlock(PresentationBlock<?> pBlock) {
 		Block block = BFP.getBlock(pBlock);
@@ -178,10 +177,10 @@ public class ProgramArea {
 	 * @param pBlock 
 	 * 		  The given presentationblock.
 	 * @post  The list of top level blocks does not contain the block associated to
-	 *        the given presentationblock 
+	 *        the given presentationblock.
 	 *        | !new.getTopBlocks().contains(BFP.getBlock(pBlock))
 	 * @post One is added to the amount of blocks left. 
-	 * 		  | new.blocksLeft = blocksLeft + 1
+	 * 		  | new.blocksLeft == blocksLeft + 1
 	 */
 	protected void removeBlock(Block block,GameController GC) {
 		BF.disconnect(block);
@@ -274,7 +273,7 @@ public class ProgramArea {
 	 * 
 	 * @return copy of topLevelBlocks
 	 */
-	protected List<Block> getAllBlocks() {
+	protected List<Block> getCopyOfAllBlocks() {
 		List<Block> list = new ArrayList<Block>();
 		for (Block block : this.getTopBlocks()) {
 			list.addAll(BF.getAllNextBlocks(block));
@@ -303,7 +302,7 @@ public class ProgramArea {
 
 	protected List<FunctionCallBlock> getAllFunctionCallsWithID(int ID) {
 		List<FunctionCallBlock> allCallers = new ArrayList<FunctionCallBlock>();
-		for (Block block : this.getAllBlocks()) {
+		for (Block block : this.getCopyOfAllBlocks()) {
 			if (block instanceof FunctionCallBlock && BF.getID((FunctionCallBlock) block) == ID) {
 				allCallers.add((FunctionCallBlock) block);
 			}

@@ -19,7 +19,7 @@ import presentation.block.PresentationBlock;
  * It contains functions for the execution of the program. This class connects
  * and controls the ProgramArea and the Gameworld.
  * 
- * @version 3.0
+ * @version 4.0
  * @author Andreas Awouters
  * 		   Thomas Van Erum
  * 		   Dirk Vanbeveren
@@ -74,20 +74,20 @@ public class GameController {
 	 * 
 	 */
 	public ExecutionCommand execute() throws Exception {
-		if (programArea.programInProgress()) {
+		if (getProgramArea().programInProgress()) {
 			try {
-				programArea.executeNextBlock(this);
+				getProgramArea().executeNextBlock(this);
 			} catch (Exception e) {
-				programArea.stopExecution();
+				getProgramArea().stopExecution();
 				getGameWorldImplementation().resetGameWorld();
 				throw e;
 			}
 		} else {
 			//after each try reset to original state
 			getGameWorldImplementation().resetGameWorld();
-			programArea.startExecution(); // this also throws exceptions
+			getProgramArea().startExecution(); // this also throws exceptions
 		}
-		return programArea.exeCmd;
+		return getProgramArea().exeCmd;
 	}
 	/**
 	 * Stop the execution of the program.
@@ -96,16 +96,16 @@ public class GameController {
 	 *		|nextToExecute == null
 	 */
 	public void stopExecution() {
-		programArea.stopExecution();
+		getProgramArea().stopExecution();
 	}
 	/**
 	 * The next block to execute.
 	 * 
 	 * @return The next block to execute.
-	 * 		   |Result = programArea.nextToExecute
+	 * 		   |Result = getProgramArea().getNextToExecute()
 	 */
 	public Block getNextBlockToExecute() {
-		return programArea.getNextBlockToExecute();
+		return getProgramArea().getNextBlockToExecute();
 	}
 	/**
 	 * Set the GameWorld Implementation of the current GameController.
@@ -137,33 +137,86 @@ public class GameController {
 		return this.programArea;
 	}
 	
-	
+	/**
+	 * Add the given Block Presentation to the ProgramArea
+	 * 
+	 * @param pBlock
+	 * 		  The Presentation Block to add to the programArea.
+	 * @post  The list of top level blocks in ProgramArea contains the
+	 * 		  block associated to the given pBlock.
+	 *        | !getProgramArea().getTopBlocks().contains(BFP.getBlock(pBlock))
+	 * @post  The amount of blocks left is lowered by one. 
+	 * 		  | new.getAmountOfBlocksLeft() == getAmountOfBlocksLeft() - 1
+	 */
 	public void addBlockToProgramArea(PresentationBlock<?> pBlock) {
 		getProgramArea().addBlock(pBlock);
 	}
 	
-	
+	/**
+	 * Remove the given Block Presentation from the ProgramArea
+	 * 
+	 * @param pBlock 
+	 * 		  The Presentation Block to add to the programArea
+	 * @post  The list of top level blocks in ProgramArea does not contain 
+	 * 		  the block associated to the given pBlock.
+	 *        | !getProgramArea().getTopBlocks().contains(BFP.getBlock(pBlock))
+	 * @post  One is added to the amount of blocks left. 
+	 * 		  | new.getAmountOfBlocksLeft() == getAmountOfBlocksLeft() + 1
+	 */
 	public void removeBlockFromProgramArea(PresentationBlock<?> pBlock) {
 		getProgramArea().removeBlock(BFP.getBlock(pBlock), this);
 	}
 
-	
+	/**
+	 * Return the amount of blocks that can be added to the ProgramArea.
+	 * 
+	 * @return the amount of blocks that can be added to the ProgramArea.
+	 * 		   |Result = getProgramArea().getBlocksLeft()
+	 */
 	public int getAmountOfBlocksLeft() {
 		return getProgramArea().getBlocksLeft();
 	}
 
-	
+	/**
+	 * Return a copy of all the blocks in the ProgramArea.
+	 * 
+	 * @return a copy of all the blocks in the ProgramArea.
+	 * 		   |Result = getProgramArea().getAllBlocks()
+	 */
 	public List<Block> getCopyOfAllBlocks() {
-		return getProgramArea().getAllBlocks();		
+		return getProgramArea().getCopyOfAllBlocks();		
 	}
-	
+	/**
+	 * Disconnect the current block from the blocks above, 
+	 * to the left of or around this block. Add the block as
+	 * a TopLevelBlock in the ProgramArea.
+	 * 
+	 * @param block
+	 * 		  The block to disconnect.
+	 * @post  The given block is a TopLevelBlock.
+	 * 		  | getProgramArea().getTopBlocks().contains(block)
+	 * @post  For all the blocks in the ProgramArea, no block has the
+	 * 		  the given block as it's next block.
+	 */
 	public void disconnect(Block block) {
 		if (block != null) {
 			getProgramArea().addTopLevelBlock(block);
 			BF.disconnect(block);
 		}
 	}
-	
+	/**
+	 * Connect the firstBlock to secondBlock. The secondBlock is
+	 * removed from the ProgramArea. Return true if blocks are connected
+	 * successfully.
+	 * 
+	 * @param firstBlock
+	 * 		  The block that gets connected to.
+	 * @param secondBlock
+	 * 		  The block to connect to the firstBlock.
+	 * @post  For all the blocks in the ProgramArea, no block has the
+	 * 		  the given block as it's next block.
+	 * @return true if blocks are connected successfully.
+	 */
 	public boolean connect(Block firstBlock, Block secondBlock) {
 		if(BF.connect(firstBlock, secondBlock)) {
 			getProgramArea().removeTopLevelBlock(secondBlock);
@@ -171,41 +224,103 @@ public class GameController {
 		}
 		return false;
 	}
-	
+	/**
+	 * Set the body of the given surroundingBlock to the given block.
+	 * 
+	 * @param surroundingBlock
+	 * 		  The SurroundingBlock to add block as body to.
+	 * @param block
+	 * 		  The SequenceBlock to put inside the body of the SurroundingBlock.
+	 * @post  The given block is not a Toplevel Block in programArea.
+	 * 		  | !getProgramArea().getTopBlocks().contains(BFP.getBlock(block))
+	 */
 	public void setBody(SurroundingBlock surroundingBlock, SequenceBlock block) {
 		BF.setBodyBlock(surroundingBlock, block);
 		getProgramArea().removeTopLevelBlock(block);
 	}
-	
-	public void setBody(FunctionDefinitionBlock surroundingBlock, SequenceBlock block) {
-		BF.setBodyBlock(surroundingBlock, block);
+	/**
+	 * Set the body of the given functionDefBlock to the given block.
+	 * 
+	 * @param functionDefBlock
+	 * 		  The FunctionDefinitionBlock to add block as body to.
+	 * @param block
+	 * 		  The SequenceBlock to put inside the body of the FunctionDefinitionBlock.
+	 * @post  The given block is not a Toplevel Block in programArea.
+	 * 		  | !getProgramArea().getTopBlocks().contains(BFP.getBlock(block))
+	 */
+	public void setBody(FunctionDefinitionBlock functionDefBlock, SequenceBlock block) {
+		BF.setBodyBlock(functionDefBlock, block);
 		getProgramArea().removeTopLevelBlock(block);
 	}
-	
+	/**
+	 * Set the ConditionBlock of the given surroundingBlock to the given condition.
+	 * 
+	 * @param surroundingBlock
+	 * 		  The SurroundingBlock to add condition as Condition to.
+	 * @param condition
+	 * 		  The ConditionBlock to put as condition of the SurroundingBlock.
+	 * @post  The given condition is not a Toplevel Block in programArea.
+	 * 		  | !getProgramArea().getTopBlocks().contains(BFP.getBlock(condition))
+	 */
 	public void setCondition(SurroundingBlock surroundingBlock, ConditionBlock condition) {
 		BF.setConditionBlock(surroundingBlock, condition);
 		getProgramArea().removeTopLevelBlock(condition);
 	}
 	
-	
+	/**
+	 * Set the ExecutionCommand of the ProgramArea to 
+	 * the given ExecutionCommand.
+	 * 
+	 * @param exeCmd
+	 * 		  The given executioner command to set.
+	 * @post  The given exeCmd is set as Execution Command for
+	 * 		  the ProgramArea.
+	 * 		  | getProgramArea().getExecutionCommand() == exeCmd
+	 */
 	public void setExecutionCommand(ExecutionCommand exeCmd) {
 		getProgramArea().setExecutionCommand(exeCmd);
 		
 	}
 
-	
+	/**
+	 * Returns true if the program is in progress.
+	 * 
+	 * @return true if the program is in progress.
+	 * 		   |Result = getProgramArea().programInProgress()
+	 */
 	public Boolean isExecuting() {
 		return getProgramArea().programInProgress();
 	}
 
-	
+	/**
+	 * Remember the block that is executed right now and te block
+	 * that is next to be executed.
+	 * 
+	 * @param currentlyExecuted
+	 * 		  The currently executed block.
+	 * @param nextToExecute
+	 * 		  The block to execute after the currently executed block.
+	 * @post  The currentely executed Block of ProgramArea is set to the
+	 * 		  given currentlyExecuted.
+	 * 		  | new.getProgramArea().currentExe == currentlyExecuted
+	 * @post  The Block to execute next in ProgramArea is set to the
+	 * 		  given nextToExecute.
+	 * 		  | new.getProgramArea().nextToExecute == nextToExecute
+	 */
 	public void setNewExecution(Block currentlyExecuted, Block nextToExecute) {
 		getProgramArea().currentExe = currentlyExecuted;
 		getProgramArea().nextToExecute = nextToExecute;
 		
 	}
 	
-	
+	/**
+	 * Return all the FunctionCallBlocks with the same ID as the given ID.
+	 * 
+	 * @param  ID
+	 * 		   The given ID that all the returned FunctionCallBlocks have.
+	 * @return a list of all the FunctionCallBlocks with the same ID as the given ID.
+	 * 		   | Result = getProgramArea().getAllFunctionCallsWithID(ID)
+	 */
 	public List<FunctionCallBlock> getAllFunctionCallsOfID(int ID) {
 		return getProgramArea().getAllFunctionCallsWithID(ID);
 	}
