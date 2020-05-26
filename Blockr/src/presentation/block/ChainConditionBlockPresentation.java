@@ -35,8 +35,6 @@ public class ChainConditionBlockPresentation extends PresentationBlock<ChainCond
 		b.drawString(gr, getPresentationName(), pos);
 	}
 
-
-	
 	@Override
 	protected Vector getNextBlockPosition(PresentationBlock<?> presentationBlock) {
 		Vector pos = getPosition();

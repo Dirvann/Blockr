@@ -6,15 +6,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import actions.ActionExecution;
 import actions.MoveForwardAction;
 import actions.TurnLeftAction;
 import actions.TurnRightAction;
 import exceptions.domainExceptions.OutOfBoundsException;
-import exceptions.domainExceptions.robotExceptions.RobotEnteringWallException;
-import exceptions.domainExceptions.robotExceptions.RobotMovingOffGridException;
 import game_world.Direction;
 import game_world.GameWorld;
-import game_world.api.Vector;
 import game_world.api.Action;
 import game_world.api.ActionResult;
 import game_world.api.FacadeGameWorld;
@@ -22,8 +20,10 @@ import game_world.api.GameWorldListener;
 import game_world.api.Predicate;
 import game_world.api.PredicateResult;
 import game_world.api.Snapshot;
+import game_world.api.Vector;
 import game_world.cell.Goal;
 import game_world.cell.Wall;
+import predicates.PredicateEvaluation;
 import predicates.WallInFrontPredicate;
 
 public class ImplementationGameWorld implements FacadeGameWorld {
@@ -73,22 +73,13 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	 */
 	@Override
 	public ActionResult executeAction(Action action) {
-		if (action instanceof MoveForwardAction) {
-			try {
-				gameWorld.robotStepForwards();
-			} catch (RobotEnteringWallException | RobotMovingOffGridException e) {
-				return ActionResult.Illegal;
-			}
-			fireGameWorldChanged();
-			return ActionResult.Success;
-		} else if (action instanceof TurnLeftAction) {
-			gameWorld.robotTurnLeft();
-			fireGameWorldChanged();
-			return ActionResult.Success;
-		} else if (action instanceof TurnRightAction) {
-			gameWorld.robotTurnRight();
-			fireGameWorldChanged();
-			return ActionResult.Success;
+		
+		if(action instanceof ActionExecution) {
+
+			ActionResult res = ((ActionExecution)action).execute(gameWorld);
+			
+			if(res == ActionResult.Success)fireGameWorldChanged();
+			return res;
 		} else {
 			return ActionResult.UnknownAction;
 		}
@@ -105,12 +96,8 @@ public class ImplementationGameWorld implements FacadeGameWorld {
 	 */
 	@Override
 	public PredicateResult evaluatePredicate(Predicate predicate) {
-		if (predicate instanceof WallInFrontPredicate) {
-			if (gameWorld.robotWallInFront()) {
-				return PredicateResult.True;
-			} else {
-				return PredicateResult.False;
-			}
+		if (predicate instanceof PredicateEvaluation) {
+			return ((PredicateEvaluation)predicate).evaluate(gameWorld);
 		} else {
 			return PredicateResult.BadPredicate;
 		}
