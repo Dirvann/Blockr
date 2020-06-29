@@ -24,7 +24,9 @@ public class ImplementationBlock {
 		return new IfBlock();
 	}
 
-
+	public IfElseBlock makeIfElseBlock() {
+		return new IfElseBlock();
+	}
 	
 	public ChainConditionBlock makeNotBlock() {
 		return new NotBlock();
@@ -211,6 +213,19 @@ public class ImplementationBlock {
 	
 	public void deleteFunctionCall(FunctionCallBlock functionCall, GameController GC) {
 		functionCall.delete(GC);
+	}
+
+	public SequenceBlock getLowerBodyBlock(IfElseBlock block) {
+		return block.getLowerBodyBlock();
+	}
+
+	public void setLowerBodyBlock(IfElseBlock ifelseblock, SequenceBlock block) {
+		if (block != null) {
+			ifelseblock.setLowerBodyBlock(block);
+		}
+		else {
+			ifelseblock.removeLowerBodyBlock();
+		}
 	}
 
 	

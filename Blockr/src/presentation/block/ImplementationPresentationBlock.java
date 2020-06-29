@@ -10,6 +10,7 @@ import domain.block.Block;
 import domain.block.ChainConditionBlock;
 import domain.block.FunctionCallBlock;
 import domain.block.FunctionDefinitionBlock;
+import domain.block.IfElseBlock;
 import domain.block.ImplementationBlock;
 import domain.block.SingleConditionBlock;
 import domain.block.SingleSurroundingBlock;
@@ -159,6 +160,12 @@ public class ImplementationPresentationBlock {
 	public PresentationBlock<FunctionDefinitionBlock> makeFunctionDefinitionBlock(int id,Vector pos) {
 		FunctionDefinitionBlock block = BF.makeFunctionDefinition(id);
 		PresentationBlock<FunctionDefinitionBlock> presentation = new FunctionDefinitionBlockPresentation(pos, block);
+		return presentation;
+	}
+
+	public PresentationBlock<IfElseBlock> makeIfElseBlock(Vector pos) {
+		IfElseBlock block = BF.makeIfElseBlock();
+		PresentationBlock<IfElseBlock> presentation = new IfElseBlockPresentation(pos, block);
 		return presentation;
 	}
 

@@ -78,6 +78,8 @@ public class PalettePresentation {
 		list.add(iPresentationBlock.makeNotBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
 		
 		list.add(iPresentationBlock.makeIfBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
+		
+		list.add(iPresentationBlock.makeIfElseBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
 		// While
 		list.add(iPresentationBlock.makeWhileBlock(new Vector(xOffset, yOffset+yOffsetIncrement*index++)));
 		// FunctionDefinition

@@ -7,6 +7,7 @@ import domain.block.Block;
 import domain.block.ConditionBlock;
 import domain.block.FunctionCallBlock;
 import domain.block.FunctionDefinitionBlock;
+import domain.block.IfElseBlock;
 import domain.block.ImplementationBlock;
 import domain.block.SequenceBlock;
 import domain.block.SurroundingBlock;
@@ -322,6 +323,10 @@ public class GameController {
 	 */
 	public List<FunctionCallBlock> getAllFunctionCallsOfID(int ID) {
 		return getProgramArea().getAllFunctionCallsWithID(ID);
+	}
+	public void setLowerBody(IfElseBlock ifelseblock, SequenceBlock block) {
+		BF.setLowerBodyBlock(ifelseblock, block);
+		getProgramArea().removeTopLevelBlock(block);
 	}
 
 }
